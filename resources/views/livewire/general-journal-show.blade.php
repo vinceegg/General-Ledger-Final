@@ -1,7 +1,9 @@
 <div>
     @include('livewire.generaljournal-modal')
     
-    <input type="search" wire:model="search" wire:keydown.enter="#" class="form-control mx-2" placeholder="Search..." style="width: 230px;">
+    {{-- <input type="search" wire:model="search" wire:keydown.enter="#" class="form-control mx-2" placeholder="Search..." style="width: 230px;"> --}}
+    <input type="search" wire:model="search" wire:keydown.enter="search" class="form-control mx-2" placeholder="Search..." style="width: 230px;"> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+    wire:click="closeModal"></button>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -64,8 +66,10 @@
                                         <td>{{ $general_journals->jevnumber }}</td>
                                         <td>{{ $general_journals->particulars }}</td>
                                         <td>{{ $general_journals->accountcode }}</td>
-                                        <td>{{ $general_journals->debit }}</td>
-                                        <td>{{ $general_journals->credit }}</td>
+                                        {{-- <td>{{ $general_journals->debit }}</td>
+                                        <td>{{ $general_journals->credit }}</td> --}}
+                                        <td>{{ number_format($general_journals->debit, 2, '.', ',') }}</td>
+                                        <td>{{ number_format($general_journals->credit, 2, '.', ',') }}</td>
                                         <td>{{ $general_journals->Journalcol }}</td>
                                         <td>
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#updateGeneralJournalModal" wire:click="editGeneralJournal({{ $general_journals->id }})" class="btn btn-primary">

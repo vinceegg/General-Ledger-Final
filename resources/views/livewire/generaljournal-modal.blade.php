@@ -1,4 +1,5 @@
 <!-- Insert Modal -->
+
 <div wire:ignore.self class="modal fade" id="generaljournalModal" tabindex="-1" aria-labelledby="generaljournalModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -7,6 +8,7 @@
                 <h5 class="modal-title" id="generaljournalModalLabel">Add Transaction</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     wire:click="closeModal"></button>
+                    
             </div>
             <form wire:submit.prevent="saveGeneralJournal">
                 <div class="modal-body">

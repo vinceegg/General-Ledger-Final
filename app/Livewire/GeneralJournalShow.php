@@ -25,7 +25,7 @@ class GeneralJournalShow extends Component
     public $sortDirection = 'desc'; // New property for sorting // KASAMA TOO
     public $softDeletedData;
 
-    // Validation rules
+    // Validation rules dito binago ko and sa migration
     protected function rules()
     {
         return [
@@ -34,8 +34,8 @@ class GeneralJournalShow extends Component
             'jevnumber' => 'nullable|integer',
             'particulars' => 'required|string',
             'accountcode' => 'required|string',
-            'debit' => 'nullable|numeric',
-            'credit' => 'nullable|numeric',
+            'debit' => 'nullable|numeric|min:0|max:100000000',
+            'credit' => 'nullable|numeric|min:0|max:100000000',
             'Journalcol' => 'nullable|string',
         ];
     }

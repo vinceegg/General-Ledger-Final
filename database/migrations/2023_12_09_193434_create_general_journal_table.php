@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('jevnumber')->nullable();
             $table->string('particulars');
             $table->string('accountcode');
-            $table->decimal('debit')->nullable();
-            $table->decimal('credit')->nullable();
+            $table->decimal('debit', 15,2)->nullable();
+            $table->decimal('credit', 15,2)->nullable();
             $table->string('Journalcol')->nullable();
             $table->softDeletes();
             $table->timestamps();
