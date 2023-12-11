@@ -1,7 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
+    <title>RESET PASSWORD | PLM General Ledger</title>
+    @livewireStyles
+    @vite('resources/css/app.css')
+</head>
+<body>
+
+
+<div class="bg-cover bg-center bg-fixed" style="background-image: url('/images/Login-Background.png')">
+
+        <div class="rounded shadow-md w-full md:w-1/2 lg:w-1/3 mb-20">
 <x-guest-layout>
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
 
+        <img src="/images/PLM-Header.png">
+                <h1 class="text-3xl font-bold mb-8 text-left text-blue-800"> <br>PLM Ledger <br>Reset Password</h1>
         <!-- Password Reset Token -->
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
 

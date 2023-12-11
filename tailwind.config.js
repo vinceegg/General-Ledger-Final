@@ -22,3 +22,4 @@ export default {
 
     plugins: [forms],
 };
+

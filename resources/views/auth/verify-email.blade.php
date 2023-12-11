@@ -1,4 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
+    <title>VERIFY EMAIL | PLM General Ledger</title>
+    @livewireStyles
+    @vite('resources/css/app.css')
+</head>
+<body>
 <x-guest-layout>
+<img src="/images/PLM-Header.png">
+                <h1 class="text-3xl font-bold mb-8 text-left text-blue-800">  <br>Verify your Email</h1>
+
     <div class="mb-4 text-sm text-gray-600">
         {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
     </div>

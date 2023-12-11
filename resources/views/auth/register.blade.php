@@ -1,7 +1,23 @@
-<x-guest-layout>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
+    <title>REGISTER | PLM General Ledger</title>
+    @livewireStyles
+    @vite('resources/css/app.css')
+</head>
+<body>
+
+
+
+        <div class="rounded shadow-md h -full w-full md:w-1/2 lg:w-1/3 mb-20">
+            <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
-
+        <img src="/images/PLM-Header.png">
+                <h1 class="text-3xl font-bold mb-8 text-left text-blue-800"> <br>PLM Ledger <br>Register</h1>
         <!-- Name -->
         <div>
             <x-input-label for="employee_id" :value="__('Employee ID')" />
@@ -47,6 +63,9 @@
             <x-primary-button class="ms-4">
                 {{ __('Register') }}
             </x-primary-button>
+
+            
         </div>
     </form>
+</div>
 </x-guest-layout>
