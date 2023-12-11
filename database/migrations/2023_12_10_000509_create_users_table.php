@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('employee_id');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable();           
             $table->string('password');
-            $table->string('code')->nullable();
-            $table->dateTime('expire_at')->nullable();
+            $table->string('usertype')->default('user');
             $table->timestamps();
         });
     }

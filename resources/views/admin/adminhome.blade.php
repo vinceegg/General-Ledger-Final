@@ -3,7 +3,7 @@
     <link href ="/css/main.css" rel ="stylesheet">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Pamantasan ng Lungsod ng Maynila') }}
+            {{ __('Pamantasan ng Lungsod ng Maynila ADMIN') }}
         </h2>
         @csrf 
     <div class ="dashboard-elements">
@@ -46,5 +46,3 @@
         </div>
     </x-slot>
 </x-app-layout>
-
-hello

@@ -69,7 +69,7 @@
                                         {{-- <td>{{ $general_journals->debit }}</td>
                                         <td>{{ $general_journals->credit }}</td> --}}
                                         <td>{{ number_format($general_journals->debit, 2, '.', ',') }}</td>
-                                        <td>{{ number_format($general_journals->credit, 2, '.', ',') }}</td>
+                                        <td>{{ number_format($general_journals->credit, 2, '.', ',') }}</td>z
                                         <td>{{ $general_journals->Journalcol }}</td>
                                         <td>
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#updateGeneralJournalModal" wire:click="editGeneralJournal({{ $general_journals->id }})" class="btn btn-primary">
