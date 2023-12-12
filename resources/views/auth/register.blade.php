@@ -9,9 +9,6 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-
-
-
         <div class="rounded shadow-md h -full w-full md:w-1/2 lg:w-1/3 mb-20">
             <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">

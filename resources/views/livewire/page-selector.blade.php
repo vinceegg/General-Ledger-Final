@@ -1,4 +1,8 @@
 <!-- basically sidebar na 'tong buong component na to imbis na dropdown lang T.T -->
+
+
+
+
 <div>
     <a href = "{{ url('/') }}">Home</a>
     <!-- dropdown icon -->
@@ -42,4 +46,16 @@
 
         <a href = "{{ url('/faqs') }}">Help/FAQs</a><br>
         <a href = "{{ url('/settings') }}">Settings</a>
+        <div>
+            <form action="/logout" method="post">
+                @csrf
+                    <br>
+                    <button  type="submit">Logout</button>
+                </form>
+            </div>
+
+        
+    
+
+
 </div>

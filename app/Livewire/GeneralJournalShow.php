@@ -24,6 +24,8 @@ class GeneralJournalShow extends Component
     public $sortField = 'date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'desc'; // New property for sorting // KASAMA TOO
     public $softDeletedData;
+    public $totalDebit = 0;
+    public $totalCredit = 0;
 
     // Validation rules dito binago ko and sa migration
     protected function rules()
@@ -54,10 +56,22 @@ class GeneralJournalShow extends Component
         $validatedData['debit'] = $validatedData['debit'] ?? null;
 
         GeneralJournalModel::create($validatedData);
+
+         // Update totals
+         $this->updateTotals();
+
         session()->flash('message', 'Added Successfully');
         $this->resetInput();
         $this->dispatch('close-modal');
     }
+
+        // Update totals method
+        private function updateTotals()
+        {
+            // Recalculate totals
+            $this->totalDebit = GeneralJournalModel::sum('debit');
+            $this->totalCredit = GeneralJournalModel::sum('credit');
+        }
 
     // Edit GeneralJournal
     public function editGeneralJournal($general_journal_id)
@@ -197,6 +211,9 @@ class GeneralJournalShow extends Component
         // Get paginated results
         $general_journal = $query->orderBy('id', 'DESC')->paginate(10);
 
-        return view('livewire.general-journal-show', ['general_journal' => $general_journal]);
+        return view('livewire.general-journal-show', ['general_journal' => $general_journal,
+        'totalDebit' => $this->totalDebit,
+        'totalCredit' => $this->totalCredit,
+    ]);
     }
 }

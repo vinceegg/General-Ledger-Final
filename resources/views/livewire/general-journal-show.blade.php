@@ -75,9 +75,9 @@
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#updateGeneralJournalModal" wire:click="editGeneralJournal({{ $general_journals->id }})" class="btn btn-primary">
                                                 Edit
                                             </button>
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModal" wire:click="deleteGeneralJournal({{ $general_journals->id }})" class="btn btn-danger">Delete</button>
+                                            {{-- <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModal" wire:click="deleteGeneralJournal({{ $general_journals->id }})" class="btn btn-danger">Delete</button> --}}
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteGeneralJournalModal" wire:click="softDelete({{ $general_journals->id }})" class="btn btn-warning">
-                                                Soft Delete
+                                                Delete
                                             </button>
                                         </td>                                                         
                                     </tr>
