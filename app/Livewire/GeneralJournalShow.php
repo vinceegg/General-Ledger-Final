@@ -6,39 +6,48 @@ use Livewire\WithPagination;
 use App\Models\GeneralJournalModel;
 use Livewire\Component;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use App\Exports\GeneralJournalExport;
+use App\Imports\GeneralJournalImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GeneralJournalShow extends Component
 {
+
     use WithPagination;
 
 
     protected $paginationTheme = 'bootstrap';
 
     // Declare public properties
-    public $entrynumber, $date, $jevnumber, $particulars, $accountcode, $debit, $credit, $Journalcol;
+    public $gj_entrynum,
+    $gj_entrynum_date,
+    $gj_jevnum,
+    $gj_particulars,
+    $gj_accountcode,
+    $gj_debit,
+    $gj_credit,
+    $general_journal_col;
+
     public $search = '';
     public $general_journal_id; // Add this property
     public $selectedMonth;
-    public $sortField = 'date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
+    public $sortField = 'gj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'desc'; // New property for sorting // KASAMA TOO
     public $softDeletedData;
-    public $totalDebit = 0;
-    public $totalCredit = 0;
 
-    // Validation rules dito binago ko and sa migration
+    // Validation rules
     protected function rules()
     {
         return [
-            'entrynumber' => 'nullable|integer',
-            'date' => 'nullable|date',
-            'jevnumber' => 'nullable|integer',
-            'particulars' => 'required|string',
-            'accountcode' => 'required|string',
-            'debit' => 'nullable|numeric|min:0|max:100000000',
-            'credit' => 'nullable|numeric|min:0|max:100000000',
-            'Journalcol' => 'nullable|string',
+            'gj_entrynum' => 'required|integer',
+            'gj_entrynum_date' => 'nullable|date',
+            'gj_jevnum' => 'nullable|integer',
+            'gj_particulars' => 'required|string',
+            'gj_accountcode' => 'required|string',
+            'gj_debit' => 'nullable|numeric',
+            'gj_credit' => 'nullable|numeric',
+            'general_journal_col' => 'nullable|string',
         ];
     }
 
@@ -53,25 +62,13 @@ class GeneralJournalShow extends Component
     {
         $validatedData = $this->validate();
 
-        $validatedData['debit'] = $validatedData['debit'] ?? null;
+        $validatedData['gj_debit'] = $validatedData['gj_debit'] ?? null;
 
         GeneralJournalModel::create($validatedData);
-
-         // Update totals
-         $this->updateTotals();
-
         session()->flash('message', 'Added Successfully');
         $this->resetInput();
         $this->dispatch('close-modal');
     }
-
-        // Update totals method
-        private function updateTotals()
-        {
-            // Recalculate totals
-            $this->totalDebit = GeneralJournalModel::sum('debit');
-            $this->totalCredit = GeneralJournalModel::sum('credit');
-        }
 
     // Edit GeneralJournal
     public function editGeneralJournal($general_journal_id)
@@ -79,13 +76,14 @@ class GeneralJournalShow extends Component
         $generaljournal = GeneralJournalModel::find($general_journal_id);
         if ($generaljournal) {
             $this->general_journal_id = $generaljournal->id;
-            $this->entrynumber = $generaljournal->entrynumber;
-            $this->date = $generaljournal->date;
-            $this->particulars = $generaljournal->particulars;
-            $this->accountcode = $generaljournal->accountcode;
-            $this->debit = $generaljournal->debit;
-            $this->credit = $generaljournal->credit;
-            $this->Journalcol = $generaljournal->Journalcol;
+            $this->gj_entrynum = $generaljournal->gj_entrynum;
+            $this->gj_entrynum_date = $generaljournal->gj_entrynum_date;
+            $this->gj_jevnum = $generaljournal->gj_jevnum;
+            $this->gj_particulars = $generaljournal->gj_particulars;
+            $this->gj_accountcode = $generaljournal->gj_accountcode;
+            $this->gj_debit = $generaljournal->gj_debit;
+            $this->gj_credit = $generaljournal->gj_credit;
+            $this->general_journal_col = $generaljournal->general_journal_col;
             $this->dispatch('open-modal');
         }
     }
@@ -117,7 +115,7 @@ class GeneralJournalShow extends Component
 
     //ITO NA YUNG DINAGSAG KO 
     // Soft delete GeneralJournal
-    public function softDelete($general_journal_id)
+    public function softDeleteGeneralJournal($general_journal_id)
     {
         $general_journal= GeneralJournalModel::find($general_journal_id);
         if ( $general_journal) {
@@ -131,25 +129,23 @@ class GeneralJournalShow extends Component
 
     //PATI TO
     // View soft deleted GeneralJournals
-    public function trashed()
+    public function trashedGeneralLedger()
     {
     $this->softDeletedData = GeneralJournalModel::onlyTrashed()->get();
     return view('livewire.gjtrashed', ['softDeletedData' => $this->softDeletedData]);
     }
+    
 
-    public function restore($general_journal_id)
+    public function restoreGeneralJournal($general_journal_id)
     {
         GeneralJournalModel::where($general_journal_id)->restore();
         session()->flash('message', 'Restored Successfully');
     }
 
-    // public function restore($id){
-
-    //     Article::whereId($id)->restore();
-        
-    //     return back();
-
-    // }
+    public function GoToGeneralJournalTrashed()
+    {
+        return redirect()->route('general-ledger.trashedGeneralLedger');
+    }
     
 
     // Close modal and reset input
@@ -162,14 +158,14 @@ class GeneralJournalShow extends Component
     // Reset input values
     public function resetInput()
     {
-        $this->entrynumber = '';
-        $this->date = '';
-        $this->jevnumber = '';
-        $this->particulars = '';
-        $this->accountcode = '';
-        $this->debit = '';
-        $this->credit = '';
-        $this->Journalcol = '';
+        $this->gj_entrynum = '';
+        $this->gj_entrynum_date = '';
+        $this->gj_jevnum = '';
+        $this->gj_particulars = '';
+        $this->gj_accountcode = '';
+        $this->gj_debit = '';
+        $this->gj_credit = '';
+        $this->general_journal_col = '';
     }
 
     // Sorting logic SA SORT TO KORINNE HA
@@ -183,10 +179,25 @@ class GeneralJournalShow extends Component
         }
     }
     
+    public function importViewGJ(){
+        return view('journals.GJ');
+    }
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function export() 
+    public function exportGJ() 
     {
-        return Excel::download(new GeneralJournalExport, 'generaljournal.xlsx');
+        return Excel::download(new GeneralJournalExport, 'General Journal.xlsx');
+    }
+
+    public function importGJ()
+    {
+    // Ensure that a file has been uploaded
+        if ($this->file) {
+        $filePath = $this->file->store('files');
+
+        Excel::import(new GeneralJournalImport, $filePath);
+
+        return redirect()->back();
+        }
     }
 
     // Render the component
@@ -211,9 +222,7 @@ class GeneralJournalShow extends Component
         // Get paginated results
         $general_journal = $query->orderBy('id', 'DESC')->paginate(10);
 
-        return view('livewire.general-journal-show', ['general_journal' => $general_journal,
-        'totalDebit' => $this->totalDebit,
-        'totalCredit' => $this->totalCredit,
-    ]);
+        return view('livewire.general-journal-show', ['general_journal' => $general_journal]);
     }
+    
 }

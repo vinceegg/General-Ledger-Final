@@ -21,8 +21,8 @@ return new class extends Migration
             $table->decimal('crj_collection_credit')->nullable();
             $table->decimal('crj_deposit_debit')->nullable();
             $table->decimal('crj_deposit_credit')->nullable();
-            $table->string('crj_accountcode')->nullable();
-            $table->decimal('crj_debit')->nullable();
+            $table->string('crj_accountcode',15,2)->nullable();
+            $table->decimal('crj_debit', 15,2)->nullable();
             $table->decimal('crj_credit')->nullable();
             $table->softDeletes();
             $table->timestamps();

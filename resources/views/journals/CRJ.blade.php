@@ -29,7 +29,7 @@
         @endforeach
         <img src="/images/PLM-LOGO.png" class="h-8 me-3" alt="FlowBite Logo" />
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-blue-800">PLM LEDGER</span>
-        </a>1
+        </a>
       </div>
       <div class="flex items-center">
           <div class="flex items-center ms-3">
@@ -76,7 +76,9 @@
    <div class="h-full px-3 pb-4 overflow-y-auto bg-blue-800 dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
          <li>
-               <a href="#" class="flex items-center p-2 text-white rounded-lg dark:text-white dark:hover:bg-gray-700 group">
+         @foreach([''] as $route) {{ $route }}
+               <a href="{{ url('/' . $route) }}" class="flex items-center p-2 text-white rounded-lg dark:text-white  hover:bg-blue-900 dark:hover:bg-gray-700 group">
+               @endforeach
                <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8v10a1 1 0 0 0 1 1h4v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5h4a1 1 0 0 0 1-1V8M1 10l9-9 9 9"/>
                </svg>
@@ -110,7 +112,7 @@
                     </li>
                   <li>
                   @foreach(['CRJ'] as $route)
-                     <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group bg-blue-700 hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Cash Receipt</a>
+                     <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group bg-blue-700  dark:text-white dark:hover:bg-gray-700">Cash Receipt</a>
                   @endforeach
                     </li>
                   <li>

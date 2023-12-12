@@ -1,43 +1,71 @@
 <div>
     @include('livewire.general-ledger-modal')
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
+        <!-- CONTENT OF PAGE -->
+    
+    <div class="p-4 sm:ml-64">
+       <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+    
+       <!-- Grid wrapper -->
+    <div class="p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex justify-between">
+        <!-- Title -->
+        <div class="flex flex-col items-left justify-between">
+            <p class="font-bold text-blue-800 text-3xl">Ledger Sheet</p>
+            <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet</span></p>
+        </div>
+    
+            <!-- Search -->
+            <div class="flex items-center">
+            <input type="search" wire:model="search" wire:keydown.enter="#" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
+    
+            <!-- Select Date -->        
+            <label for="date-range" class="mb-0"></label>
+    <input type="month" id="date-range" wire:model="selectedMonth" class="form-control" style="width: 150px;">
+    
+    
+            <!-- Sort -->
+            <select wire:model="sortDirection" wire:change="sortDirection" id="sortDirection" class="ml-2 mr-2">
+            <option value="asc">Oldest First</option>
+            <option value="desc">Newest First</option>
+            </select>
+    
+            <button type="button" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-2 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
+            wire:click="closeModal"
+            data-bs-dismiss="modal">Refresh</button> 
+            
+            <!-- Import -->                    
+            <input type="file" wire:model="file" class="custom-file-input" id="customFile" style="width: 115px;">
+            <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" wire:click="importGL">Import</button>
+    
+            <!-- Export -->
+            <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" wire:click="exportGL">Export</button>
+    
+            <!-- Add -->
+            <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
+             data-bs-toggle="modal" data-bs-target="#GeneralLedgerModal">
+            Add Transaction
+            </button>
+    
+    
+    
+        </div>
+    
+    </div>
+            
+    <!-- Table -->
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400">
+            <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    
+    <!-- VINCEKORIN CODE -->
+            <div>
+        @include('livewire.cash-receipt-journal-modal')
+    
                     @if (session()->has('message'))
                         <h5 class="alert alert-success">{{ session('message') }}</h5>
                     @endif
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>General Ledger</h4>
-                            <div class="mt-2">
-                                    {{-- ITO YUNG SA SORT KORINNE NOTICE THIS OK --}}
-                                    <label for="sortField" class="mr-2">Sort By:</label>                        
-                                    <select wire:model="sortDirection" id="sortDirection" class="ml-2">
-                                        <option value="asc">Oldest First</option>
-                                        <option value="desc">Newest First</option>
-                                    </select>
-                                </div>
-                                <div>
-                                <div class="d-flex align-items-center flex-wrap">
-                                    <div class="form-group mb-0 me-2">
-                                        <label for="date-range" class="mb-0"></label>
-                                        <input type="month" id="date-range" wire:model="selectedMonth" class="form-control">
-                                    </div>
-                                    
-                                    {{-- ITO SA EXPORT BUTTON TO HA GUMAGANA TO OK? --}}
-                                    <div class="mt-3">
-                                        <div class="mb-3">
-                                            <input type="file" wire:model="file" class="custom-file-input" id="customFile">
-                                        </div>
-                                        <button class="btn btn-primary" wire:click="importGL">Import</button>
-                                        <button class="btn btn-success" wire:click="exportGL">Export</button>
-                                    </div>
-                                <input type="search" wire:model="search" wire:keydown.enter="#" class="form-control float-end mx-2" placeholder="Search..." style="width: 230px" />
-                                <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#GeneralLedgerModal">
-                                    Add New Entry
-                                </button>
+    
+    
                         </div>
-                        <div class="card-body">
                             <table class="table table-borderd table-striped">
                                 <thead>
                                     <tr>
@@ -73,16 +101,29 @@
                                         <td>{{ $general_ledgers-> gl_debit}}</td>
                                         <td>{{ $general_ledgers-> gl_credit}}</td>
                                         <td>{{ $general_ledgers-> gl_credit_balance}}</td>
-                                                                    
-                                        <td>
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#updateGeneralLedgerModal" wire:click="editGeneralLedger({{ $general_ledgers->id}})" class="btn btn-primary"> 
-                                                Edit
-                                            </button>
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralLedgerModal" wire:click="deleteGeneralLedger({{ $general_ledgers->id  }})" class="btn btn-danger">Delete</button>
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteGeneralLedgerModal" wire:click="softDeleteGeneralLedger({{ $general_ledgers->id }})" class="btn btn-warning">
-                                                    Delete
+                                        
+                                        
+                                        <td class="flex justify-end">
+                                            <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-gray-500 dark:text-gray-400">
+                                                <button @click="open = !open" id="dropdownButton" class="inline-block hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5">
+                                                    <span class="sr-only">Open dropdown</span>
+                                                    <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                                        <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                                                    </svg>
                                                 </button>
+                                                <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
+                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#updateGeneralLedgerModal" wire:click="editGeneralLedger({{ $general_ledgers->id}})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left"> 
+                                                            Edit</button>
+                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteGeneralLedgerModal" wire:click="softDeleteGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                        Archive</button>
+                                                    <button type="button" data-bs-target="#deleteGeneralLedgerModal" wire:click="deleteGeneralLedger({{ $general_ledgers->id  }})" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                        Delete</button>
+    
+                                                    
+                                                </div>
+                                            </div>
                                         </td>
+    
                                     </tr>
                                 @empty
                                     <tr>
@@ -91,10 +132,9 @@
                                 @endforelse                                
                             </tbody>
                         </table>
-                        <button wire:click="GoToGeneralLedgerTrashed" class="btn text-green-500" style="background-color: #A2F5C4;">
-                                Go to Soft Deleted Data
+                        <button wire:click="GoToGeneralLedgerTrashed" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center">
+                                View Archives
                             </button>
-                           
                         <div>
                             {{ $general_ledger->links() }}
                         </div>

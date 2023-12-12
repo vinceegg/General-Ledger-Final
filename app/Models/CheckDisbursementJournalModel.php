@@ -35,11 +35,6 @@ class CheckDisbursementJournalModel extends Model
 
     ];
 
-            public function sundries()
-        {
-            return $this->hasMany(CKDJSundryModel::class, 'check_disbursement_journal_id');
-        }
-
         protected static $logAttributes = ['*'];
             
             
@@ -62,8 +57,4 @@ class CheckDisbursementJournalModel extends Model
         {
             return User::find($this->employee_id);
         }
-
-
-
-
 }

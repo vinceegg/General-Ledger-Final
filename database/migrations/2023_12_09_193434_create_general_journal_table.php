@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('general_journal', function (Blueprint $table) {
             $table->id();
-            $table->integer('entrynumber')->nullable(); 
-            $table->date('date')->nullable();
-            $table->integer('jevnumber')->nullable();
-            $table->string('particulars');
-            $table->string('accountcode');
-            $table->decimal('debit', 15,2)->nullable();
-            $table->decimal('credit', 15,2)->nullable();
-            $table->string('Journalcol')->nullable();
+            $table->integer('gj_entrynum'); 
+            $table->date('gj_entrynum_date')->nullable();
+            $table->integer('gj_jevnum')->nullable();
+            $table->string('gj_particulars');
+            $table->string('gj_accountcode'); 
+            $table->decimal('gj_debit' , 15,2)->nullable();
+            $table->decimal('gj_credit' , 15,2)->nullable();
+            $table->string('general_journal_col')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

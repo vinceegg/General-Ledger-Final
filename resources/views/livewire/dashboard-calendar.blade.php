@@ -17,16 +17,16 @@
         </div>
     </div>
 
-    <div class="flex flex-wrap text-xs text-center transition" wire:loading.class="opacity-20">
+    <div class="flex flex-wrap text-l text-center transition" wire:loading.class="opacity-20">
 
         <div class="flex w-full py-2">
-            <div style="width: 14.28%">Su</div>
-            <div style="width: 14.28%">Mo</div>
-            <div style="width: 14.28%">Tu</div>
-            <div style="width: 14.28%">We</div>
-            <div style="width: 14.28%">Th</div>
-            <div style="width: 14.28%">Fr</div>
-            <div style="width: 14.28%">Sa</div>
+            <div style="width: 14.28%; height: 60px;">Su</div>
+            <div style="width: 14.28%; height: 60px;">Mo</div>
+            <div style="width: 14.28%; height: 60px;">Tu</div>
+            <div style="width: 14.28%; height: 60px;">We</div>
+            <div style="width: 14.28%; height: 60px;">Th</div>
+            <div style="width: 14.28%; height: 60px;">Fr</div>
+            <div style="width: 14.28%; height: 60px;">Sa</div>
         </div>
 
         @php
@@ -37,7 +37,7 @@
         @endphp
 
         @while ($loopdate < $enddate)
-            <div style="width: 14.28%"
+            <div style="width: 14.28%; height: 60px;"
                  class="h-10 hover:font-bold
                      @if ($loopdate->format('Y-m-d') === now()->format('Y-m-d'))
                          bg-blue-200 rounded-full

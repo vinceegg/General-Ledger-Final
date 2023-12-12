@@ -24,8 +24,8 @@ return new class extends Migration
             $table->decimal('cdj_account2')->nullable();
             $table->string('cdj_sundry_accountcode')->nullable();
             $table->string('cdj_pr')->nullable();
-            $table->decimal('cdj_debit')->nullable();
-            $table->decimal('cdj_credit')->nullable();
+            $table->decimal('cdj_debit', 15,2)->nullable();
+            $table->decimal('cdj_credit', 15,2)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

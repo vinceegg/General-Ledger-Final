@@ -22,8 +22,8 @@ return new class extends Migration
             $table->integer('gl_vouchernum')->nullable;
             $table->string('gl_particulars')->nullable;
             $table->decimal('gl_balance_debit')->nullable;
-            $table->decimal('gl_debit')->nullable;
-            $table->decimal('gl_credit')->nullable;
+            $table->decimal('gl_debit', 15,2)->nullable;
+            $table->decimal('gl_credit', 15,2)->nullable;
             $table->decimal('gl_credit_balance')->nullable;
             $table->softDeletes();
             $table->timestamps();

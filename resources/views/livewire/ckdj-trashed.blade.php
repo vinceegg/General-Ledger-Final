@@ -1,5 +1,5 @@
 <!-- resources/views/livewire/crj-trashed.blade.php -->
-@extends('layouts.app') 
+@extends('layouts.app1') 
 
 @section('content')
     <div class="container">

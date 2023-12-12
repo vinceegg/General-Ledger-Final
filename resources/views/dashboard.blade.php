@@ -32,7 +32,7 @@
         @endforeach
         <img src="/images/PLM-LOGO.png" class="h-8 me-3" alt="FlowBite Logo" />
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-blue-800">PLM LEDGER</span>
-        </a>1
+        </a>
       </div>
       <div class="flex items-center">
           <div class="flex items-center ms-3">
@@ -57,9 +57,6 @@
                 </li>
                 <li>
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
                 </li>
                 <li>
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
@@ -168,12 +165,22 @@
             @endforeach
          </li>
          <li>
-            <a href="#" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group">
-            <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+          
+           @foreach([''] as $route) {{ $route }}
+           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+
+            <a href="{{ route('logout' . $route) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+            class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group">
+            
+               {{-- <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a> --}}
+
+            
+               <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
             </svg>
                <span class="ms-3">Log Out</span>
             </a>
+            @endforeach
          </li>
       </ul>
 
@@ -294,198 +301,56 @@
 
    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-5">
    <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
-   <div class="flex gap-2 pb-3">
-         <div class="">
-         <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-         <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-         </svg>
-         </div>
-         <div class="">
-            <text class="white-card-title"> Recent Activities </text> 
-         </div>
+         <div class="flex gap-2 pb-3">
+               <div class="">
+               <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+               <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+               </svg>
+               </div>
+               <div class="">
+                  <text class="white-card-title"> Recent Activities </text> 
+               </div>
+            </div>
+
+            <div class="grid sm:grid-cols-1 mb-10 md:grid-cols-2 gap-4 h-30">
+               <livewire:recent-activities />
+
+               <!-- Second column content -->
+               <div>
+                  <!-- Your content for the second column goes here -->
+                  <livewire:recent-activities />
+
+               </div>
+            </div>
+
+
+
       </div>
 
-         <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-         <div class="recent-activities bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-         <div class="flex">
-         <!-- First Column -->
-         <div class="w-full">
-            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Maria Clara Benin</h5>
-         </div>
 
-         <!-- Second Column -->
-         <div class="w-full text-right">
-            <span class="inline-flex items-right bg-blue-100 text-blue-800 font-small inline-flex items-center px-1 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
-               <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-               <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
-               </svg>
-               2 minutes ago
-            </span>
-         </div>
-         </div>
-      <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Edited Check Disbursement Journal</p>
-      <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-         View Journal
-         <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
-         </svg>
-      </a>
-      <br>
-   </div>
 
-   <div class="recent-activities bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-         <div class="flex">
-         <!-- First Column -->
-         <div class="w-full">
-            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Esperanza Bea</h5>
-         </div>
-
-         <!-- Second Column -->
-         <div class="w-full text-right">
-            <span class="inline-flex items-right bg-blue-100 text-blue-800 font-small inline-flex items-center px-1 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
-               <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-               <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
-               </svg>
-               2 minutes ago
-            </span>
-         </div>
-         </div>
-      <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Edited Cash Disbursement Journal</p>
-      <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-         View Journal
-         <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
-         </svg>
-      </a>
-      <br>
-   </div>
-
-   <div class="recent-activities bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-         <div class="flex">
-         <!-- First Column -->
-         <div class="w-full">
-            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Mara Calinao</h5>
-         </div>
-
-         <!-- Second Column -->
-         <div class="w-full text-right">
-            <span class="inline-flex items-right bg-blue-100 text-blue-800 font-small inline-flex items-center px-1 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
-               <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-               <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
-               </svg>
-               5 minutes ago
-            </span>
-         </div>
-         </div>
-      <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Edited Check Disbursement Journal</p>
-      <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-         View Journal
-         <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
-         </svg>
-      </a>
-      <br>
-   </div>
-
-   <div class="recent-activities bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-         <div class="flex">
-         <!-- First Column -->
-         <div class="w-full">
-            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Mara Calinao</h5>
-         </div>
-
-         <!-- Second Column -->
-         <div class="w-full text-right">
-            <span class="inline-flex items-right bg-blue-100 text-blue-800 font-small inline-flex items-center px-1 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
-               <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-               <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
-               </svg>
-               5 minutes ago
-            </span>
-         </div>
-         </div>
-      <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Edited Check Disbursement Journal</p>
-      <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-         View Journal
-         <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
-         </svg>
-      </a>
-      <br>
-   </div>
-
-   <div class="recent-activities bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-         <div class="flex">
-         <!-- First Column -->
-         <div class="w-full">
-            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Ralyn De Vera</h5>
-         </div>
-
-         <!-- Second Column -->
-         <div class="w-full text-right">
-            <span class="inline-flex items-right bg-blue-100 text-blue-800 font-small inline-flex items-center px-1 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
-               <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-               <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
-               </svg>
-               15 minutes ago
-            </span>
-         </div>
-         </div>
-      <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Edited Check Disbursement Journal</p>
-      <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-         View Journal
-         <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
-         </svg>
-      </a>
-      <br>
-   </div>
-
-   <div class="recent-activities bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-         <div class="flex">
-         <!-- First Column -->
-         <div class="w-full">
-            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Dovie Delos Reyes</h5>
-         </div>
-
-         <!-- Second Column -->
-         <div class="w-full text-right">
-            <span class="inline-flex items-right bg-blue-100 text-blue-800 font-small inline-flex items-center px-1 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
-               <svg class="w-2.5 h-2.5 me-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-               <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
-               </svg>
-               1 hour ago
-            </span>
-         </div>
-         </div>
-      <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Edited Cash Receipt Journal</p>
-      <a href="#" class="inline-flex items-center text-blue-600 hover:underline">
-         View Journal
-         <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
-         </svg>
-      </a>
-      <br>
-   </div>
-
-      </div>
-      </div>
   <div class="p-6 grid sm:col-span-1 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
-   Calendar
-
+  <div class="flex gap-2 pb-3">
+               <div class="">
+               <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+               <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+               </svg>
+               </div>
+               <div class="">
+                  <text class="white-card-title"> Calendar </text> 
+               </div>
+            </div>
 
    
-<div class="relative max-w-sm">
-  <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-      <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-    </svg>
+            <div class="relative max-w-sm mx-auto">
+  <div class="flex justify-center items-center">
+    <livewire:dashboard-calendar class="w-full h-full" />
   </div>
-  <livewire:dashboard-calendar />
   <input datepicker type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
 </div>
 
-      <div class="journal-item"> <text class ="journal-title"> LS </text> <text class="journal-subtitle"> <br> Ledger Sheet </text></div></div>
+
+
 
       
 
@@ -493,9 +358,6 @@
    </div>
 </div>
 
-<div>
-                  <livewire:recent-activities />
-            </div>
 
             
             
@@ -510,4 +372,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/datepicker.min.js"></script>
 <script src="../path/to/flowbite/dist/datepicker.js"></script>
+<a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
 </html>
+
+ 

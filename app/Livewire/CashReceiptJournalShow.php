@@ -52,8 +52,8 @@ class CashReceiptJournalShow extends Component
             'crj_deposit_debit' => 'nullable|numeric',
             'crj_deposit_credit' => 'nullable|numeric',
             'crj_accountcode' => 'nullable|string',
-            'crj_debit' => 'nullable|numeric',
-            'crj_credit' => 'nullable|numeric'
+            'crj_debit' => 'nullable|numeric|min:0|max:100000000',
+            'crj_credit' => 'nullable|numeric|min:0|max:100000000',
         ];
     }
 
@@ -70,9 +70,7 @@ class CashReceiptJournalShow extends Component
         $this->resetInput();
         $this->dispatch('close-modal');
     }
-
-
-
+    
     //PATI TO
     // View soft deleted GeneralJournals
     public function trashedCashReceiptJournal()

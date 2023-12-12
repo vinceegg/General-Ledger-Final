@@ -9,13 +9,14 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Exports\CheckDisbursementJournalExport;
 use App\Imports\CheckDisbursementJournalImport;
-use App\Models\CKDJSundryModel;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
 
 
 class CheckDisbursementJournalShow extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -29,72 +30,39 @@ class CheckDisbursementJournalShow extends Component
     $ckdj_account2,
     $ckdj_account3,
     $ckdj_salary_wages,
-    $ckdj_honoraria;
+    $ckdj_honoraria,
+    $ckdj_sundry_accountcode,
+    $ckdj_debit,
+    $ckdj_credit;
 
     public $search='';
     public $check_disbursement_journal_id;
-    public $ckdj_sundry_id;
-
     public $selectedMonth;
     public $sortField = 'ckdj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'desc'; // New property for sorting // KASAMA TOO
     public $softDeletedData;
     public $file;
 
-
-
-
-//STEP 1
-
-    public $ckdj_sundry_account_code, $ckdj_sundry_debit, $ckdj_sundry_credit;
-    public $inputs = [];
-    
-
-    public function add()
+    protected function rules()
     {
-        $this->inputs[] = [
-            'ckdj_sundry_account_code' => $this->ckdj_sundry_account_code,
-            'ckdj_sundry_debit' => $this->ckdj_sundry_debit,
-            'ckdj_sundry_credit' => $this->ckdj_sundry_credit,
+        return [
+
+            'ckdj_entrynum'=>'required|integer',
+            'ckdj_entrynum_date'=>'nullable|date',
+            'ckdj_checknum'=>'nullable|integer',
+            'ckdj_payee'=>'nullable|string',
+            'ckdj_bur'=>'nullable|integer',
+            'ckdj_cib_lcca'=> 'nullable|numeric',
+            'ckdj_account1'=> 'nullable|numeric',
+            'ckdj_account2'=> 'nullable|numeric',
+            'ckdj_account3'=> 'nullable|numeric',
+            'ckdj_salary_wages'=> 'nullable|numeric',
+            'ckdj_honoraria'=> 'nullable|numeric',
+            'ckdj_sundry_accountcode'=>'nullable|string',
+            'ckdj_debit'=> 'nullable|numeric|min:0|max:100000000',
+            'ckdj_credit'=> 'nullable|numeric|min:0|max:100000000',
         ];
-
-        // Clear input fields
-        $this->ckdj_sundry_account_code = '';
-        $this->ckdj_sundry_debit = '';
-        $this->ckdj_sundry_credit = '';
     }
-
-    public function remove($key)
-    {
-        unset($this->inputs[$key]);
-    }
-
-    public function store()
-    {
-        foreach ($this->inputs as $input) {
-            CKDJSundryModel::create([
-                'ckdj_sundry_account_code' => $input['ckdj_sundry_account_code'],
-                'ckdj_sundry_debit' => $input['ckdj_sundry_debit'],
-                'ckdj_sundry_credit' => $input['ckdj_sundry_credit'],
-            ]);
-        }
-
-        // Reset inputs
-        $this->inputs = [];
-
-        // Clear input fields
-        $this->ckdj_sundry_account_code = '';
-        $this->ckdj_sundry_debit = '';
-        $this->ckdj_sundry_credit = '';
-
-        session()->flash('message', 'Employee data has been saved successfully.');
-    }
-
-
-
-
-
-
 
     public function editCheckDisbursementJournal($check_disbursement_journal_id)
     {
@@ -113,32 +81,12 @@ class CheckDisbursementJournalShow extends Component
             $this->ckdj_account3 = $check_disbursement_journal->ckdj_account3;
             $this->ckdj_salary_wages = $check_disbursement_journal->ckdj_salary_wages;
             $this->ckdj_honoraria = $check_disbursement_journal->ckdj_honoraria;
-            $this->ckdj_sundry_account_code = $check_disbursement_journal->ckdj_sundry_account_code;
-            $this->ckdj_sundry_debit = $check_disbursement_journal->ckdj_sundry_debit;
-            $this->ckdj_sundry_credit = $check_disbursement_journal->ckdj_sundry_credit;
+            $this->ckdj_sundry_accountcode = $check_disbursement_journal->ckdj_sundry_accountcode;
+            $this->ckdj_debit = $check_disbursement_journal->ckdj_debit;
+            $this->ckdj_credit = $check_disbursement_journal->ckdj_credit;
+            $this->dispatch('open-modal');
 
         }
-    }
-            
-    protected function rules()
-    {
-        return [
-
-            'ckdj_entrynum'=>'required|integer',
-            'ckdj_entrynum_date'=>'nullable|date',
-            'ckdj_checknum'=>'nullable|integer',
-            'ckdj_payee'=>'nullable|string',
-            'ckdj_bur'=>'nullable|integer',
-            'ckdj_cib_lcca'=> 'nullable|numeric',
-            'ckdj_account1'=> 'nullable|numeric',
-            'ckdj_account2'=> 'nullable|numeric',
-            'ckdj_account3'=> 'nullable|numeric',
-            'ckdj_salary_wages'=> 'nullable|numeric',
-            'ckdj_honoraria'=> 'nullable|numeric',
-            'ckdj_sundry_account_code'=>'nullable|string',
-            'ckdj_sundry_debit'=> 'nullable|numeric',
-            'ckdj_sundry_credit'=> 'nullable|numeric'
-        ];
     }
 
     public function updated($fields)
@@ -155,8 +103,6 @@ class CheckDisbursementJournalShow extends Component
         $this->resetInput();
         $this->dispatch('close-modal');
     }
-
-    
 
     public function updateCheckDisbursementJournal()
     {
@@ -202,13 +148,6 @@ class CheckDisbursementJournalShow extends Component
         return view('livewire.ckdj-trashed', ['softDeletedData' => $this->softDeletedData]);
     }
 
-    public function restoreCheckDisbursementJournal($check_disbursement_journal_id)
-    {
-        CheckDisbursementJournalModel::where($check_disbursement_journal_id)->restore();
-        session()->flash('message', 'Restored Successfully');
-    }
-
-
     public function closeModal()
     {
         $this->resetInput();
@@ -229,9 +168,9 @@ class CheckDisbursementJournalShow extends Component
         $this->ckdj_account3 = '';
         $this->ckdj_salary_wages = '';
         $this->ckdj_honoraria = '';
-        $this->ckdj_sundry_account_code = '';
-        $this->ckdj_sundry_debit = '';
-        $this->ckdj_sundry_credit = '';
+        $this->ckdj_sundry_accountcode = '';
+        $this->ckdj_debit = '';
+        $this->ckdj_credit = '';
 
     }
 
@@ -292,10 +231,10 @@ class CheckDisbursementJournalShow extends Component
         $query->orderBy($this->sortField , $this->sortDirection);
 
         // Get paginated results with eager loading of 'sundries' relationship
-        $query->with('sundries')->orderBy($this->sortField, $this->sortDirection)->paginate(10);
+        $check_disbursement_journal = $query->paginate(10);
 
     
-        return view('livewire.check-disbursement-journal-show', ['check_disbursement_journal' => $query->paginate(10)]);
+        return view('livewire.check-disbursement-journal-show', ['check_disbursement_journal' => $check_disbursement_journal]);
     }
     
 }

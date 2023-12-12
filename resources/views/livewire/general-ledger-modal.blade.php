@@ -7,8 +7,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="GeneralLedgerModalLabel">Add Transaction</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        wire:click="closeModal"></button>
+                    
+                    <!-- X BUTTON -->
+                    <button type="button" data-bs-dismiss="modal"  wire:click="closeModal" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                    </button>
+
                 </div>
                 <form wire:submit.prevent="saveGeneralLedger">
                     <div class="modal-body">
@@ -74,9 +80,14 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" wire:click="closeModal"
-                            data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <!-- CLOSE BUTTON -->
+                        <button type="button" class="btn btn-secondary bg-gray-500 hover:bg-gray-600 focus:bg-gray-600" wire:click="closeModal"
+                        data-bs-dismiss="modal">Close</button>
+
+                        <!-- ADD BUTTON -->
+                        <button type="submit" class="btn px-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+                            Add</button>
+
                     </div>
                 </form>
             </div>
@@ -90,8 +101,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="updateGeneralLModalLabel">Edit General Ledger Journal</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" wire:click="closeModal"
-                        aria-label="Close"></button>
+                    <!-- X BUTTON -->
+                     <button type="button" data-bs-dismiss="modal"  wire:click="closeModal" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                    </button>
                 </div>
                 <form wire:submit.prevent="updateGeneralLedger">
                 <div class="modal-body">
@@ -157,9 +172,13 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" wire:click="closeModal"
-                            data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <!-- CLOSE BUTTON -->
+                    <button type="button" class="btn btn-secondary bg-gray-500 hover:bg-gray-600 focus:bg-gray-600" wire:click="closeModal"
+                        data-bs-dismiss="modal">Close</button>
+
+                        <!-- UPDATE BUTTON -->
+                        <button type="submit" class="btn px-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+                            Update</button>
                     </div>
                 </form>
             </div>
@@ -173,17 +192,25 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteGeneralLedgerModalLabel">Delete General Ledger Journal</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" wire:click="closeModal"
-                        aria-label="Close"></button>
+                     <!-- X BUTTON -->
+                     <button type="button" data-bs-dismiss="modal"  wire:click="closeModal" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                    </button>
                 </div>
                 <form wire:submit.prevent="destroyGeneralLedger">
                     <div class="modal-body">
                         <h4>Are you sure you want to delete this data ?</h4>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" wire:click="closeModal"
-                            data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Yes! Delete</button>
+                        <!-- CLOSE BUTTON -->
+                    <button type="button" class="btn btn-secondary bg-gray-500 hover:bg-gray-600 focus:bg-gray-600" wire:click="closeModal"
+                        data-bs-dismiss="modal">Close</button>
+
+                        <!-- DELETE BUTTON -->
+                        <button type="submit" class="btn px-3 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-400">
+                            Delete </button>
                     </div>
                 </form>
             </div>

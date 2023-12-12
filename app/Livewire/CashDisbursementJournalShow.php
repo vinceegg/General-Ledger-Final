@@ -55,8 +55,8 @@ class CashDisbursementJournalShow extends Component
             'cdj_account2'=> 'nullable|numeric',
             'cdj_sundry_accountcode'=>'nullable|string',
             'cdj_pr'=>'nullable|string',
-            'cdj_debit'=> 'nullable|numeric',
-            'cdj_credit'=> 'nullable|numeric',
+            'cdj_debit'=> 'nullable|numeric|min:0|max:100000000',            
+            'cdj_credit'=> 'nullable|numeric|min:0|max:100000000',
         ];
     }
 
