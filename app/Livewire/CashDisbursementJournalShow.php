@@ -9,11 +9,13 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Exports\CashDisbursementJournalExport;
 use App\Imports\CashDisbursementJournalImport;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CashDisbursementJournalShow extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
 
