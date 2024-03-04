@@ -15,7 +15,6 @@ class CashReceiptJournalModel extends Model
     use SoftDeletes;
     use LogsActivity;
     
-
     protected $table = 'cash_receipt_journal';
 
     protected $fillable = [
@@ -32,26 +31,24 @@ class CashReceiptJournalModel extends Model
         'crj_credit',
     ];
 
-        protected static $logAttributes = ['*'];
+    protected static $logAttributes = ['*'];
             
-            
-        public function getActivitylogOptions(): LogOptions
-        {
-            return LogOptions::defaults()
-                ->logOnly(self::$logAttributes);
-        }
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(self::$logAttributes);
+    }
 
-        public function getDescriptionForEvent(string $eventName): string
-        {
+    public function getDescriptionForEvent(string $eventName): string
+    {
 
-            $tableName = "Cash Receipt Journal";
-            
-            return "{$tableName}";
-            
-        }
+        $tableName = "Cash Receipt Journal";
+        
+        return "{$tableName}";       
+    }
 
-        protected function getCauser()
-        {
-            return User::find($this->employee_id);
-        }
+    protected function getCauser()
+    {
+        return User::find($this->employee_id);
+    }
 }

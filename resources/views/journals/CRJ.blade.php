@@ -185,33 +185,29 @@
 
 <!-- DITO NA KO -->
 
-                @extends('layouts.app1')
- 
-                @section('content')
+@extends('layouts.app1')
 
-                <div>
-                <livewire:cash-receipt-journal-show/>
-                </div>
+@section('content')
+
+  <div>
+    <livewire:cash-receipt-journal-show/>
+  </div>
+
+@endsection
             
-            @endsection
-            
-            @section('script')
-            <script>
-                window.addEventListener('close-modal', event => {
-            
-                    $('#CashReceiptJournalModal').modal('hide');
-                    $('#updateCashReceiptJournalModal').modal('hide');
-                    $('#deleteCashReceiptJournalModal').modal('hide');
-                    $('#softDeleteCashReceiptJournalModal').modal('hide');
-                })
-            </script>
-            @endsection 
+@section('script')
+<script>
+    window.addEventListener('close-modal', event => {
+
+        $('#CashReceiptJournalModal').modal('hide');
+        $('#updateCashReceiptJournalModal').modal('hide');
+        $('#deleteCashReceiptJournalModal').modal('hide');
+        $('#softDeleteCashReceiptJournalModal').modal('hide');
+    })
+</script>
+@endsection 
 
     @livewireScripts
     @stack('scripts')
-
-
-    
 </body>
-
 </html>

@@ -15,19 +15,19 @@
     
             <!-- Search -->
             <div class="flex items-center">
-            <input type="search" wire:model="search" wire:keydown.enter="#" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
-    
+            {{-- <input type="search" wire:model="search" wire:keydown.enter="#" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" /> --}}
+            <input type="search" wire:model="search" wire:keydown.enter="searchAction" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
+  
             <!-- Select Date -->        
             <label for="date-range" class="mb-0"></label>
-    <input type="month" id="date-range" wire:model="selectedMonth" class="form-control" style="width: 150px;">
-    
-    
-            <!-- Sort -->
-            <select wire:model="sortDirection" wire:change="sortDirection" id="sortDirection" class="ml-2 mr-2">
-            <option value="asc">Oldest First</option>
-            <option value="desc">Newest First</option>
-            </select>
+            <input type="month" id="date-range" wire:model="selectedMonth" wire:keydown.enter="sortDate"class="form-control" style="width: 150px;">  
 
+            <!-- Sort By -->
+            <select wire:model="sortBy" wire:keydown.enter="sortAction" id="sortBy" class="ml-2 mr-2">
+                <option value="asc">Newest First</option>
+                <option value="desc">Oldest First</option>
+            </select>
+            
             <button type="button" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-2 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
             wire:click="closeModal"
             data-bs-dismiss="modal">Refresh</button> 
@@ -44,11 +44,7 @@
              data-bs-toggle="modal" data-bs-target="#GeneralJournalModal">
             Add Transaction
             </button>
-    
-    
-    
-        </div>
-    
+        </div>   
     </div>
             
     <!-- Table -->
@@ -110,9 +106,7 @@
                                                     <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteGeneralJournalModal" wire:click="softDeleteGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                         Archive</button>
                                                     <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModal" wire:click="deleteGeneralJournal({{ $general_journals->id  }})" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                        Delete</button>
-    
-                                                    
+                                                        Delete</button>                                                   
                                                 </div>
                                             </div>
                                         </td>

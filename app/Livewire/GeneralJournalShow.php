@@ -16,7 +16,6 @@ class GeneralJournalShow extends Component
 
     use WithPagination;
 
-
     protected $paginationTheme = 'bootstrap';
 
     // Declare public properties
@@ -29,11 +28,11 @@ class GeneralJournalShow extends Component
     $gj_credit,
     $general_journal_col;
 
-    public $search = '';
+    public $search;
     public $general_journal_id; // Add this property
     public $selectedMonth;
     public $sortField = 'gj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
-    public $sortDirection = 'desc'; // New property for sorting // KASAMA TOO
+    public $sortBy = 'asc'; // New property for sorting // KASAMA TOO
     public $softDeletedData;
 
     // Validation rules
@@ -172,16 +171,36 @@ class GeneralJournalShow extends Component
     public function sortBy($field)
     {
         if ($this->sortField == $field) {
-            $this->sortDirection = $this->sortDirection == 'desc' ? 'asc' : 'desc';
+            $this->sortBy = $this->sortBy == 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortField = $field;
-            $this->sortDirection = 'desc';
+            $this->sortBy = 'asc';
         }
     }
-    
+
+    public function searchAction()
+    {
+        // This method will be triggered when the Enter key is pressed.
+        // Since it's just a placeholder, you don't need to add any code here.
+    }
+
+    public function sortAction()
+    {
+        // This method will be triggered when the Enter key is pressed.
+        // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
+    }
+
+    public function sortDate()
+    {
+        // This method will be triggered when the Enter key is pressed.
+        // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
+    }
+
+    //ITO NAMAN SA IMPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function importViewGJ(){
         return view('journals.GJ');
     }
+
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportGJ() 
     {
@@ -210,19 +229,18 @@ class GeneralJournalShow extends Component
             $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
             $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
             
-            $query->whereBetween('date', [$startOfMonth, $endOfMonth]);
+            $query->whereBetween('gj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
         // Add the search filter
         $query->where('id', 'like', '%' . $this->search . '%');
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
-        $query->orderBy($this->sortField , $this->sortDirection);
+        $query->orderBy($this->sortField , $this->sortBy);
 
         // Get paginated results
-        $general_journal = $query->orderBy('id', 'DESC')->paginate(10);
+        $general_journal = $query->orderBy('id', 'ASC')->paginate(10);
 
         return view('livewire.general-journal-show', ['general_journal' => $general_journal]);
     }
-    
 }
