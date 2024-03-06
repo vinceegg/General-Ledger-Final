@@ -2,16 +2,15 @@
 
 namespace App\Livewire;
 
+use App\Exports\CheckDisbursementJournalExport;
+use App\Imports\CheckDisbursementJournalImport;
 use Livewire\WithPagination;
 use App\Models\CheckDisbursementJournalModel;
 use Livewire\Component;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use App\Exports\CheckDisbursementJournalExport;
-use App\Imports\CheckDisbursementJournalImport;
-use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Illuminate\Http\Request;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
+use Carbon\Carbon;
 
 class CheckDisbursementJournalShow extends Component
 {
@@ -35,7 +34,7 @@ class CheckDisbursementJournalShow extends Component
     $ckdj_debit,
     $ckdj_credit;
 
-    public $search='';
+    public $search;
     public $check_disbursement_journal_id;
     public $selectedMonth;
     public $sortField = 'ckdj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
@@ -64,6 +63,21 @@ class CheckDisbursementJournalShow extends Component
         ];
     }
 
+    public function updated($fields)
+    {
+        $this->validateOnly($fields);
+    }
+
+    public function saveCheckDisbursementJournal()
+    {
+        $validatedData = $this->validate();
+
+        CheckDisbursementJournalModel::create($validatedData);
+        session()->flash('message', 'Added Successfully');
+        $this->resetInput();
+        $this->dispatch('close-modal');
+    }
+
     public function editCheckDisbursementJournal($check_disbursement_journal_id)
     {
         $check_disbursement_journal = CheckDisbursementJournalModel::find($check_disbursement_journal_id);
@@ -84,31 +98,32 @@ class CheckDisbursementJournalShow extends Component
             $this->ckdj_sundry_accountcode = $check_disbursement_journal->ckdj_sundry_accountcode;
             $this->ckdj_debit = $check_disbursement_journal->ckdj_debit;
             $this->ckdj_credit = $check_disbursement_journal->ckdj_credit;
-            $this->dispatch('open-modal');
-
+        } 
+        else {
+            return redirect() -> to('/check_disbursement_journal'); 
         }
-    }
-
-    public function updated($fields)
-    {
-        $this->validateOnly($fields);
-    }
-
-    public function saveCheckDisbursementJournal()
-    {
-        $validatedData = $this->validate();
-
-        CheckDisbursementJournalModel::create($validatedData);
-        session()->flash('message', 'Added Successfully');
-        $this->resetInput();
-        $this->dispatch('close-modal');
     }
 
     public function updateCheckDisbursementJournal()
     {
         $validatedData = $this->validate();
 
-        CheckDisbursementJournalModel::where('id', $this->check_disbursement_journal_id)->update($validatedData);
+        CheckDisbursementJournalModel::where('id', $this->check_disbursement_journal_id)->update([
+            'ckdj_entrynum' => $validatedData['ckdj_entrynum'],
+            'ckdj_entrynum_date' => $validatedData['ckdj_entrynum_date'],
+            'ckdj_checknum' => $validatedData['ckdj_checknum'],
+            'ckdj_payee' => $validatedData['ckdj_payee'],
+            'ckdj_bur' => $validatedData['ckdj_bur'],
+            'ckdj_cib_lcca' => $validatedData['ckdj_cib_lcca'],
+            'ckdj_account1' => $validatedData['ckdj_account1'],
+            'ckdj_account2' => $validatedData['ckdj_account2'],
+            'ckdj_account3' => $validatedData['ckdj_account3'],
+            'ckdj_salary_wages' => $validatedData['ckdj_salary_wages'],
+            'ckdj_honoraria' => $validatedData['ckdj_honoraria'],
+            'ckdj_sundry_accountcode' => $validatedData['ckdj_sundry_accountcode'],
+            'ckdj_debit' => $validatedData['ckdj_debit'],
+            'ckdj_credit' => $validatedData['ckdj_credit'],
+        ]);
         session()->flash('message', 'Updated Successfully');
         $this->resetInput();
         $this->dispatch('close-modal');
@@ -124,28 +139,6 @@ class CheckDisbursementJournalShow extends Component
         CheckDisbursementJournalModel::find($this->check_disbursement_journal_id)->delete();
         session()->flash('message', 'Deleted Successfully');
         $this->dispatch('close-modal');
-    }
-
-    //ITO NA YUNG DINAGSAG KO 
-    // Soft delete GeneralJournal
-    public function softDeleteCheckDisbursementJournal($check_disbursement_journal_id)
-    {
-        $check_disbursement_journal= CheckDisbursementJournalModel::find($check_disbursement_journal_id);
-        if ( $check_disbursement_journal) {
-            $check_disbursement_journal->delete();
-            session()->flash('message', 'Soft Deleted Successfully');
-    }
-    
-        $this->resetInput();
-        $this->dispatch('close-modal');
-    }
-
-    //PATI TO
-    // View soft deleted GeneralJournals
-    public function trashedCheckDisbursementJournal()
-    {
-        $this->softDeletedData = CheckDisbursementJournalModel::onlyTrashed()->get();
-        return view('livewire.ckdj-trashed', ['softDeletedData' => $this->softDeletedData]);
     }
 
     public function closeModal()
@@ -174,25 +167,39 @@ class CheckDisbursementJournalShow extends Component
 
     }
 
+    // Soft delete GeneralJournal
+    public function softDeleteCheckDisbursementJournal($check_disbursement_journal_id)
+    {
+        $check_disbursement_journal= CheckDisbursementJournalModel::find($check_disbursement_journal_id);
+        if ( $check_disbursement_journal) {
+            $check_disbursement_journal->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
+    }
+    
+        $this->resetInput();
+        $this->dispatch('close-modal');
+    }
+
+    // View soft deleted GeneralJournals
+    public function trashedCheckDisbursementJournal()
+    {
+        $this->softDeletedData = CheckDisbursementJournalModel::onlyTrashed()->get();
+        return view('livewire.ckdj-trashed', ['softDeletedData' => $this->softDeletedData]);
+    }
+
+    public function GoToCheckDisbursementJournalTrashed()
+    {
+        return redirect()->route('check-disbursement-journal.trashedCheckDisbursementJournal');
+    }
     // Sorting logic SA SORT TO KORINNE HA
     public function sortBy($field)
     {
         if ($this->sortField == $field) {
-            $this->sortDirection = $this->sortDirection == 'desc' ? 'asc' : 'desc';
+            $this->sortBy = $this->sortDirection == 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortField = $field;
-            $this->sortDirection = 'desc';
+            $this->sortBy = 'asc';
         }
-    }
-
-    public function importViewCKDJ(){
-        return view('journals.CKDJ');
-    }
-    
-    //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportCKDJ() 
-    {
-        return Excel::download(new CheckDisbursementJournalExport, 'generaljournal.xlsx');
     }
 
     public function importCKDJ()
@@ -207,10 +214,34 @@ class CheckDisbursementJournalShow extends Component
         }
     }
 
-    public function GoToCheckDisbursementJournalTrashed()
-    {
-        return redirect()->route('check-disbursement-journal.trashedCheckDisbursementJournal');
+    public function importViewCKDJ(){
+        return view('journals.CKDJ');
     }
+    
+    //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
+    public function exportCKDJ() 
+    {
+        return Excel::download(new CheckDisbursementJournalExport, 'generaljournal.xlsx');
+    }
+
+    public function searchAction()
+    {
+        // This method will be triggered when the Enter key is pressed.
+        // Since it's just a placeholder, you don't need to add any code here.
+    }
+
+    public function sortAction()
+    {
+        // This method will be triggered when the Enter key is pressed.
+        // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
+    }
+
+    public function sortDate()
+    {
+        // This method will be triggered when the Enter key is pressed.
+        // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
+    }
+
     // Render the component
     public function render()
     {
@@ -221,7 +252,7 @@ class CheckDisbursementJournalShow extends Component
             $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
             $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
     
-            $query->whereBetween('date', [$startOfMonth, $endOfMonth]);
+            $query->whereBetween('ckdj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
     
         // Add the search filter
@@ -232,9 +263,7 @@ class CheckDisbursementJournalShow extends Component
 
         // Get paginated results with eager loading of 'sundries' relationship
         $check_disbursement_journal = $query->paginate(10);
-
     
         return view('livewire.check-disbursement-journal-show', ['check_disbursement_journal' => $check_disbursement_journal]);
     }
-    
 }

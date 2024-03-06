@@ -12,7 +12,7 @@
             <div class="flex">
                 <!-- First Column -->
                 <div class="w-full">
-                    <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $user->employee_id }}</h5>
+                    <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $user->employee_id ?? 'N/A'}}</h5>
                 </div>
 
                 <!-- Second Column -->

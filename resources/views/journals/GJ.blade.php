@@ -183,28 +183,15 @@
 
 <!-- DITO NA KO -->
 
-                @extends('layouts.app1')
+@extends('layouts.app1')
  
-                @section('content')
+@section('content')
                                         
-                <div>
-                <livewire:general-journal-show />
-                </div>
+  <div>
+   <livewire:general-journal-show />
+  </div>
             
-            @endsection
-            
-            @section('script')
-            <script>
-                window.addEventListener('close-modal', event => {
-            
-                    $('#GeneralJournalModal').modal('hide');
-                    $('#updateGeneralJournalModal').modal('hide');
-                    $('#deleteGeneralJournalModal').modal('hide');
-                    $('#softDeleteGeneralJournalModal').modal('hide');
-                })
-            </script>
-            @endsection 
+@endsection
 
-    @livewireScripts
 </body>
 </html>

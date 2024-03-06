@@ -37,7 +37,6 @@ class CheckDisbursementJournalModel extends Model
 
         protected static $logAttributes = ['*'];
             
-            
         public function getActivitylogOptions(): LogOptions
         {
             return LogOptions::defaults()
@@ -50,7 +49,6 @@ class CheckDisbursementJournalModel extends Model
             $tableName = "Check Disbursement Journal";
             
             return "{$tableName}";
-            
         }
 
         protected function getCauser()

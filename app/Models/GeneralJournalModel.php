@@ -31,7 +31,6 @@ class GeneralJournalModel extends Model
 
         protected static $logAttributes = ['*'];
     
-    
         public function getActivitylogOptions(): LogOptions
         {
             return LogOptions::defaults()
@@ -40,12 +39,9 @@ class GeneralJournalModel extends Model
 
         public function getDescriptionForEvent(string $eventName): string
         {
-
-
             $tableName = "General Journal";
             
             return "{$tableName}";
-            
         }
 
         protected function getCauser()

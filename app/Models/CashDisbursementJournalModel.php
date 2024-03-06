@@ -40,7 +40,6 @@ class CashDisbursementJournalModel extends Model
 
         protected static $logAttributes = ['*'];
 
-
         public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
