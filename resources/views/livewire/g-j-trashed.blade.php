@@ -33,10 +33,10 @@
                                         <td>{{ $item->gj_credit }}</td>
                                         <td>{{ $item->general_journal_col }}</td>
                             <td>
-                                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModal" wire:click="deleteGeneralJournal({{ $general_journals->id }})" class="btn btn-danger">Delete</button>
+                            {{--<!-- <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModal" wire:click="deleteGeneralJournal({{ $general_journals->id }})" class="btn btn-danger">Delete</button> -->
 
 
-                                {{-- <button wire:click="restoreGeneralJournal({{ $item->id }})" class="btn btn-success">Restore</button>   
+                            {{--<button wire:click="restoreGeneralJournal({{ $item->id }})" class="btn btn-success">Restore</button>   
 
                                  {{--  --}}
                             </td>                         

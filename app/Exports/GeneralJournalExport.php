@@ -13,7 +13,7 @@ class GeneralJournalExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return GeneralJournalModel::query()->select("entrynumber", "date", "jevnumber", "particulars", "accountcode", "debit", "credit", "Journalcol")->get();
+        return GeneralJournalModel::all();
     }
 
         /**

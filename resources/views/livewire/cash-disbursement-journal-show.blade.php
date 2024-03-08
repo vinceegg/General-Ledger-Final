@@ -55,7 +55,7 @@
     
     <!-- VINCEKORIN CODE -->
             <div>
-        @include('livewire.cash-receipt-journal-modal')
+        @include('livewire.cash-disbursement-journal-modal')
             @if (session()->has('message'))
                  <h5 class="alert alert-success">{{ session('message') }}</h5>
             @endif

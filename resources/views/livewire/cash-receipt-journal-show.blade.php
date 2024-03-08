@@ -102,7 +102,7 @@
                                         Edit
                                     </button>
 
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteCashReceiptJournalModal" wire:click="softDeleteCashReceiptJournal({{ $cash_receipt_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteCashReceiptJournalModal" wire:click="sofCashReceiptJournal({{ $cash_receipt_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                         Archive
                                     </button>
 

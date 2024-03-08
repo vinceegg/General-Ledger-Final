@@ -127,6 +127,6 @@ Route::get('/check-disbursement-journal/trashedCheckDisbursementJournal', [Check
 
 Route::get('/cash-disbursement-journal/trashedCashDisbursementJournal', [CashDisbursementJournalShow::class, 'trashedCashDisbursementJournal'])->name('cash-disbursement-journal.trashedCashDisbursementJournal');
 
-Route::get('/general-journal/trashed', [GeneralJournalShow::class, 'trashed'])->name('general-journal.trashed');
+Route::get('/general-journal/trashedGeneralJournal', [GeneralJournalShow::class, 'trashedGeneralJournal'])->name('general-journal.trashedGeneralJournal');
 
 Route::get('/general-ledger/trashedGeneralLedger', [GeneralLedgerShow::class, 'trashedGeneralLedger'])->name('general-ledger.trashedGeneralLedger');

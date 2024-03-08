@@ -9,7 +9,7 @@
         <!-- Title -->
         <div class="flex flex-col items-left justify-between">
             <p class="font-bold text-blue-800 text-3xl">General Journal</p>
-            <p class="text-yellow-600 mt-2">Journals > <span class="text-black">General Journal</span></p>
+            <p class="text-yellow-600 mt-2">Journals <span class="text-black">General Journal</span></p>
         </div>
         
         <!-- Search -->
@@ -57,7 +57,7 @@
     
 <!-- VINCEKORIN CODE -->
 <div>
-    @include('livewire.cash-receipt-journal-modal')
+    @include('livewire.general-journal-modal')
         @if (session()->has('message'))
             <h5 class="alert alert-success">{{ session('message') }}</h5>
         @endif
@@ -85,7 +85,7 @@
                         <td>{{ $general_journals->gj_entrynum_date }}</td>
                         <td>{{ $general_journals->gj_jevnum }}</td>
                         <td>{{ $general_journals->gj_particulars }}</td>
-                        <td>{{ $general_journals->gj_particulars }}</td>
+                        <td>{{ $general_journals->gj_accountcode }}</td>
                         <td>{{ $general_journals->gj_debit }}</td>
                         <td>{{ $general_journals->gj_credit }}</td>
                         <td>{{ $general_journals->general_journal_col }}</td>
@@ -107,6 +107,10 @@
                                     <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteGeneralJournalModal" wire:click="softDeleteGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                         Archive
                                     </button>
+
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModal" wire:click="deleteGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                        Delete
+                                    </button> 
                                 </div>
                             </div>
                         </td>

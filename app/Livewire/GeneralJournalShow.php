@@ -111,7 +111,7 @@ class GeneralJournalShow extends Component
     }
 
     // Delete GeneralJournal
-    public function deleteGeneralJournal($general_journal_id)
+    public function deleteGeneralJournal(int $general_journal_id)
     {
         $this->general_journal_id = $general_journal_id;
     }

@@ -9,16 +9,16 @@
         <!-- Title -->
         <div class="flex flex-col items-left justify-between">
             <p class="font-bold text-blue-800 text-3xl">Ledger Sheet</p>
-            <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet</span></p>
+            <p class="text-yellow-600 mt-2">General Ledger <span class="text-black">Ledger Sheet</span></p>
         </div>
         
         <!-- Search -->
         <div class="flex items-center">
-        <input type="search" wire:model="search" wire:keydown.enter="#" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
+        <input type="search" wire:model="search" wire:keydown.enter="searchAction" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
         
         <!-- Select Date -->        
         <label for="date-range" class="mb-0"></label>
-        <input type="month" id="date-range" wire:model="selectedMonth" class="form-control" style="width: 150px;">
+        <input type="month" id="date-range" wire:model="selectedMonth" wire:keydown.enter="sortDate class="form-control" style="width: 150px;">
         
         
         <!-- Sort -->
@@ -27,9 +27,9 @@
         <option value="desc">Newest First</option>
         </select>
         
-        <button type="button" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-2 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
+        <!-- <button type="button" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-2 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
         wire:click="closeModal"
-        data-bs-dismiss="modal">Refresh</button> 
+        data-bs-dismiss="modal">Refresh</button>  -->
                 
         <!-- Import -->                    
         <input type="file" wire:model="file" class="custom-file-input" id="customFile" style="width: 115px;">
@@ -53,7 +53,7 @@
     
     <!-- VINCEKORIN CODE -->
     <div>
-        @include('livewire.cash-receipt-journal-modal')
+        @include('livewire.general-ledger-modal')
             @if (session()->has('message'))
                 <h5 class="alert alert-success">{{ session('message') }}</h5>
             @endif
