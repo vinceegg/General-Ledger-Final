@@ -86,7 +86,7 @@ class GeneralJournalShow extends Component
             $this->general_journal_col = $generaljournal->general_journal_col;
         }
         else {
-            return redirect() -> to('/cash_receipt_journal'); 
+            return redirect() -> to('/general_journal'); 
         }
     }
 

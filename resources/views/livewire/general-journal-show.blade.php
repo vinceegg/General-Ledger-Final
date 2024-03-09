@@ -108,7 +108,7 @@
                                         Archive
                                     </button>
 
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModal" wire:click="deleteGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModalLabel" wire:click="deleteGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                         Delete
                                     </button> 
                                 </div>
