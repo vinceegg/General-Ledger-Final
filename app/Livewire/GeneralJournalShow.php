@@ -205,7 +205,7 @@ class GeneralJournalShow extends Component
     }
 
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportGJ() 
+    public function exportGJ(Request $request) 
     {
         return Excel::download(new GeneralJournalExport, 'General Journal.xlsx');
     }
