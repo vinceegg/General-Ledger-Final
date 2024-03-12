@@ -187,10 +187,10 @@ class GeneralLedgerShow extends Component
     public function sortBy($field)
     {
         if ($this->sortField == $field) {
-            $this->sortBy = $this->sortDirection == 'asc' ? 'desc' : 'asc';
+            $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortField = $field;
-            $this->sortBy = 'asc';
+            $this->sortDirection = 'asc';
         }
     }
 

@@ -270,7 +270,7 @@ class CashDisbursementJournalShow extends Component
             $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
             $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
             
-            $query->whereBetween('date', [$startOfMonth, $endOfMonth]);
+            $query->whereBetween('cdj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
         // Add the search filter

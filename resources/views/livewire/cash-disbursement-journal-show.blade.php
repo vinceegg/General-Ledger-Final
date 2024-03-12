@@ -14,11 +14,11 @@
     
         <!-- Search -->
         <div class="flex items-center">
-        <input type="search" wire:model="search" wire:keydown.enter="#" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
+        <input type="search" wire:model="search" wire:change="searchAction" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
     
         <!-- Select Date -->        
         <label for="date-range" class="mb-0"></label>
-        <input type="month" id="date-range" wire:model="selectedMonth" class="form-control" style="width: 150px;">
+        <input type="month" id="date-range" wire:model="selectedMonth" wire:change="sortDate" class="form-control" style="width: 150px;">
     
     
         <!-- Sort -->
