@@ -40,7 +40,6 @@ class CashDisbursementJournalModel extends Model
 
         protected static $logAttributes = ['*'];
 
-
         public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -60,7 +59,5 @@ class CashDisbursementJournalModel extends Model
     {
         return User::find($this->employee_id);
     }
-
-    
 
 }

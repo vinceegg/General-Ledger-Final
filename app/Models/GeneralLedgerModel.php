@@ -36,7 +36,6 @@ class GeneralLedgerModel extends Model
 
         protected static $logAttributes = ['*'];
             
-            
         public function getActivitylogOptions(): LogOptions
         {
             return LogOptions::defaults()
@@ -49,7 +48,6 @@ class GeneralLedgerModel extends Model
             $tableName = "Ledger Sheet";
             
             return "{$tableName}";
-            
         }
 
         protected function getCauser()

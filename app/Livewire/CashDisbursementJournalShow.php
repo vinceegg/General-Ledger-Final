@@ -33,14 +33,13 @@ class CashDisbursementJournalShow extends Component
     $cdj_debit,
     $cdj_credit;
 
-    public $search='';
+    public $search;
     public $cash_disbursement_journal_id;
-
     public $selectedMonth;
     public $sortField = 'cdj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
-    public $sortDirection = 'desc'; // New property for sorting // KASAMA TOO
-    public $softDeletedData;
+    public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
+    public $softDeletedData;
 
     protected function rules()
     {
@@ -96,21 +95,59 @@ class CashDisbursementJournalShow extends Component
             $this->cdj_pr = $cash_disbursement_journal->cdj_pr;
             $this->cdj_debit = $cash_disbursement_journal->cdj_debit;
             $this->cdj_credit = $cash_disbursement_journal->cdj_credit;
-            $this->dispatch('open-modal');
+        }
+        else {
+            return redirect() -> to('/cash_disbursement_journal'); 
         }
     }
 
+    //OLD VERSION NG UPDATE
+
+    // PACHECK NITO KUNG TAMA DIN BA TO?? MAS MAIKLI COMPARE SA CRJ
+    // public function updateCashDisbursementJournal()
+    // {
+    //     $validatedData = $this->validate();
+
+    //     CashDisbursementJournalModel::where('id', $this->cash_disbursement_journal_id)->update($validatedData);
+    //     session()->flash('message', 'Updated Successfully');
+    //     $this->resetInput();
+    //     $this->dispatch('close-modal');
+    // }
+
+    //NEW VERSION NG 'UPDATE' MAS MAHABA, WHY THO?
     public function updateCashDisbursementJournal()
     {
         $validatedData = $this->validate();
 
-        CashDisbursementJournalModel::where('id', $this->cash_disbursement_journal_id)->update($validatedData);
+        CashDisbursementJournalModel::where('id', $this->cash_disbursement_journal_id)->update([
+            'cdj_entrynum'=> $validatedData['cdj_entrynum'],
+            'cdj_entrynum_date'=> $validatedData['cdj_entrynum_date'],
+            'cdj_referencenum'=> $validatedData['cdj_referencenum'],
+            'cdj_accountable_officer'=> $validatedData['cdj_accountable_officer'],
+            'cdj_jevnum'=> $validatedData['cdj_jevnum'],
+            'cdj_accountcode'=> $validatedData['cdj_accountcode'],
+            'cdj_amount'=> $validatedData['cdj_amount'],
+            'cdj_account1'=> $validatedData['cdj_account1'],
+            'cdj_account2'=> $validatedData['cdj_account2'],
+            'cdj_sundry_accountcode'=> $validatedData['cdj_sundry_accountcode'],
+            'cdj_pr'=> $validatedData['cdj_pr'],
+            'cdj_debit'=> $validatedData['cdj_debit'],            
+            'cdj_credit'=> $validatedData['cdj_credit'],
+        ]);
         session()->flash('message', 'Updated Successfully');
         $this->resetInput();
         $this->dispatch('close-modal');
     }
 
-    public function deleteCashDisbursementJournal($cash_disbursement_journal_id)
+
+    //OLD VERSION NG 'DELETE'
+    //ETO BAT WALANG INT 
+    // public function deleteCashDisbursementJournal($cash_disbursement_journal_id)
+    // {
+    //     $this->cash_disbursement_journal_id = $cash_disbursement_journal_id;
+    // }
+
+    public function deleteCashDisbursementJournal(int $cash_disbursement_journal_id)
     {
         $this->cash_disbursement_journal_id = $cash_disbursement_journal_id;
     }
@@ -122,38 +159,9 @@ class CashDisbursementJournalShow extends Component
         $this->dispatch('close-modal');
     }
 
-    //ITO NA YUNG DINAGSAG KO 
-    // Soft delete GeneralJournal
-    public function softDeleteCashDisbursementJournal($cash_disbursement_journal_id)
-    {
-        $cash_disbursement_journal= CashDisbursementJournalModel::find($cash_disbursement_journal_id);
-        if ( $cash_disbursement_journal) {
-            $cash_disbursement_journal->delete();
-            session()->flash('message', 'Soft Deleted Successfully');
-    }
-    
-        $this->resetInput();
-        $this->dispatch('close-modal');
-    }
-
-    //PATI TO
-    // View soft deleted GeneralJournals
-    public function trashedCashDisbursementJournal()
-    {
-        $this->softDeletedData = CashDisbursementJournalModel::onlyTrashed()->get();
-        return view('livewire.c-d-j-trashed', ['softDeletedData' => $this->softDeletedData]);
-    }
-
-    public function restoreCheckDisbursementJournal($cash_disbursement_journal_id)
-    {
-        CashDisbursementJournalModel::where($cash_disbursement_journal_id)->restore();
-        session()->flash('message', 'Restored Successfully');
-    }
-
     public function closeModal()
     {
         $this->resetInput();
-        $this->dispatch('close-modal');
     }
 
     public function resetInput()
@@ -174,25 +182,43 @@ class CashDisbursementJournalShow extends Component
             $this->cdj_credit = '';
     }
 
-    // Sorting logic SA SORT TO KORINNE HA
+    public function softDeleteCashDisbursementJournal($cash_disbursement_journal_id)
+    {
+        $cash_disbursement_journal= CashDisbursementJournalModel::find($cash_disbursement_journal_id);
+        if ( $cash_disbursement_journal) {
+            $cash_disbursement_journal->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
+    }
+        $this->resetInput();
+        $this->dispatch('close-modal');
+    }
+
+    // View soft deleted GeneralJournals
+    public function trashedCashDisbursementJournal()
+    {
+        $this->softDeletedData = CashDisbursementJournalModel::onlyTrashed()->get();
+        return view('livewire.c-d-j-trashed', ['softDeletedData' => $this->softDeletedData]);
+    }
+
+    public function GoToCashDisbursementJournalTrashed()
+    {
+        return redirect()->route('cash-disbursement-journal.trashedCashDisbursementJournal');
+    }
+
+    public function restoreCashDisbursementJournal($cash_disbursement_journal_id)
+    {
+        CashDisbursementJournalModel::where($cash_disbursement_journal_id)->restore();
+        session()->flash('message', 'Restored Successfully');
+    }
+
     public function sortBy($field)
     {
         if ($this->sortField == $field) {
-            $this->sortDirection = $this->sortDirection == 'desc' ? 'asc' : 'desc';
+            $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortField = $field;
-            $this->sortDirection = 'desc';
+            $this->sortDirection = 'asc';
         }
-    }
-
-    public function importViewCDJ(){
-        return view('journals.CDJ');
-    }
-
-    //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportCDJ() 
-    {
-        return Excel::download(new CashDisbursementJournalExport, 'Cash Disbursement Journal.xlsx');
     }
 
     public function importCDJ()
@@ -207,11 +233,34 @@ class CashDisbursementJournalShow extends Component
         }
     }
 
-    public function GoToCashDisbursementJournalTrashed()
-    {
-        return redirect()->route('cash-disbursement-journal.trashedCashDisbursementJournal');
+    public function importViewCDJ(){
+        return view('journals.CDJ');
     }
 
+    //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
+    public function exportCDJ(Request $request) 
+    {
+        return Excel::download(new CashDisbursementJournalExport, 'CDJ.xlsx');
+    }
+
+    public function searchAction()
+    {
+        // This method will be triggered when the Enter key is pressed.
+        // Since it's just a placeholder, you don't need to add any code here.
+    }
+
+    public function sortAction()
+    {
+        // This method will be triggered when the Enter key is pressed.
+        // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
+    }
+
+    public function sortDate()
+    {
+        // This method will be triggered when the Enter key is pressed.
+        // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
+    }
+    
     public function render()
     {
         $query = CashDisbursementJournalModel::query();
@@ -221,7 +270,7 @@ class CashDisbursementJournalShow extends Component
             $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
             $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
             
-            $query->whereBetween('date', [$startOfMonth, $endOfMonth]);
+            $query->whereBetween('cdj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
         // Add the search filter

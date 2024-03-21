@@ -196,20 +196,6 @@
             
             @endsection
             
-            @section('script')
-            <script>
-                window.addEventListener('close-modal', event => {
-            
-                    $('#CashDisbursementJournalModal').modal('hide');
-                    $('#updateCashDisbursementJournalModal').modal('hide');
-                    $('#deleteCashDisbursementJournalModal').modal('hide');
-                    $('#softDeleteCashDisbursementJournalModal').modal('hide');
-                })
-            </script>
-            @endsection 
-            @stack('scripts')
 
-
-    @livewireScripts
 </body>
 </html>

@@ -184,30 +184,13 @@
 
 <!-- DITO NA KO -->
 
-                @extends('layouts.app1')
- 
-                @section('content')
-                                        
-                <div>
-                <livewire:check-disbursement-journal-show/>
-                </div>
+@extends('layouts.app1')
+ @section('content')
+  <div>
+    <livewire:check-disbursement-journal-show/>
+  </div>
             
-            @endsection
-            
-            @section('script')
-            <script>
-                window.addEventListener('close-modal', event => {
-            
-                    $('#CheckDisbursementJournalModal').modal('hide');
-                    $('#updateCheckDisbursementJournalModal').modal('hide');
-                    $('#deleteCheckDisbursementJournalModal').modal('hide');
-                    $('#softDeleteCheckDisbursementJournalModal').modal('hide');
-                })
-            </script>
-            @endsection 
-
-    @livewireScripts
-    @stack('scripts')
+  @endsection
 
 </body>
 </html>

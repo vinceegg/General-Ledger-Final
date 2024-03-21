@@ -13,8 +13,36 @@ class CashReceiptJournalExport implements FromCollection
     * @return \Illuminate\Support\Collection
     */
     public function collection()
+{
+    return CashReceiptJournalModel::select(
+        "crj_entrynum_date",
+        "crj_jevnum",
+        "crj_payor",
+        "crj_collection_debit",
+        "crj_collection_credit",
+        "crj_deposit_debit",
+        "crj_deposit_credit",
+        "crj_accountcode",
+        "crj_debit",
+        "crj_credit"
+    )->get(); // Execute the query and retrieve the data
+}
+
+    public function headings(): array
     {
-        return CashReceiptJournalModel::all();
+    
+        return [
+            "Date",
+            "JEV No.",
+            "Payee",
+            "Collection Debit",
+            "Collection Credit",
+            "Deposit Debit",
+            "Deposit Credit",
+            "Account Code",
+            "Debit",
+            "Credit" ];
+
     }
 
 }

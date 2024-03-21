@@ -15,20 +15,19 @@ class CheckDisbursementJournalImport implements ToModel
     public function model(array $row)
     {
         return new CheckDisbursementJournalModel([
-            'ckdj_entrynum'=> $row['ckdj_entrynum'],
-            'ckdj_entrynum_date'=> $row['ckdj_entrynum_date'],
-            'ckdj_checknum'=> $row['ckdj_checknum'],
-            'ckdj_payee'=> $row['ckdj_payee'],
-            'ckdj_bur'=> $row['ckdj_bur'],
-            'ckdj_cib_lcca'=> $row['ckdj_cib_lcca'],
-            'ckdj_account1'=> $row['ckdj_account1'],
-            'ckdj_account2'=> $row['ckdj_account2'],
-            'ckdj_account3'=> $row['ckdj_account3'],
-            'ckdj_salary_wages'=> $row['ckdj_salary_wages'],
-            'ckdj_honoraria'=> $row['ckdj_honoraria'],
-            'ckdj_sundry_accountcode'=> $row['ckdj_sundry_accountcode'],
-            'ckdj_debit'=> $row['ckdj_debit'],
-            'ckdj_credit'=> $row['ckdj_credit']
+            'Date'=> $row['ckdj_entrynum_date'],
+            'Check No.'=> $row['ckdj_checknum'],
+            'Payee'=> $row['ckdj_payee'],
+            'BUR'=> $row['ckdj_bur'],
+            'CIB-LCCA'=> $row['ckdj_cib_lcca'],
+            '2-02-01-010-A'=> $row['ckdj_account1'],
+            '2-02-01-010-B'=> $row['ckdj_account2'],
+            '2-02-01-010-B'=> $row['ckdj_account3'],
+            'Sal&Wages'=> $row['ckdj_salary_wages'],
+            'Honoraria'=> $row['ckdj_honoraria'],
+            'Account Code'=> $row['ckdj_sundry_accountcode'],
+            'Debit'=> $row['ckdj_debit'],
+            'Credit'=> $row['ckdj_credit']
         ]);
     }
 }

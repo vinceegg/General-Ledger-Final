@@ -35,8 +35,8 @@ class CashReceiptJournalShow extends Component
 
     public $search;
     public $selectedMonth;
-    public $sortField = 'crj_entrynum_date'; 
-    public $sortBy = 'asc'; 
+    public $sortField = 'crj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
+    public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
 
@@ -195,14 +195,15 @@ class CashReceiptJournalShow extends Component
 
     // Sorting logic SA SORT TO KORINNE HA
     public function sortBy($field)
-    {
-        if ($this->sortField == $field) {
-            $this->sortBy = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortBy = 'asc';
-        }
+{
+    if ($this->sortField == $field) {
+        $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
+    } else {
+        $this->sortField = $field;
+        $this->sortDirection = 'asc';
     }
+}
+
     
     public function importCRJ()
     {
@@ -259,7 +260,7 @@ class CashReceiptJournalShow extends Component
         $query->where('id', 'like', '%' . $this->search . '%');
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
-        $query->orderBy($this->sortField , $this->sortBy);
+        $query->orderBy($this->sortField , $this->sortDirection);
 
         // Get paginated results
         $cash_receipt_journal = $query->paginate(10);

@@ -15,19 +15,17 @@ class CashDisbursementJournalImport implements ToModel
     public function model(array $row)
     {
         return new CashDisbursementJournalModel([
-            'cdj_entrynum'=> $row['cdj_entrynum'],
-            'cdj_entrynum_date'=> $row['cdj_entrynum_date'],
-            'cdj_referencenum'=> $row['cdj_referencenum'],
-            'cdj_accountable_officer'=> $row['cdj_accountable_officer'],
-            'cdj_jevnum'=> $row['cdj_jevnum'],
-            'cdj_accountcode'=> $row['cdj_accountcode'],
-            'cdj_amount'=> $row['cdj_amount'],
-            'cdj_account1'=> $row['cdj_account1'],
-            'cdj_account2'=> $row['cdj_account2'],
-            'cdj_sundry_accountcode'=> $row['cdj_sundry_accountcode'],
-            'cdj_pr'=> $row['cdj_pr'],
-            'cdj_debit'=> $row['cdj_debit'],
-            'cdj_credit'=> $row['cdj_credit']
+            'Reference/RD No.'=> $row['cdj_referencenum'],
+            'Accountable Officer'=> $row['cdj_accountable_officer'],
+            'JEV No.'=> $row['cdj_jevnum'],
+            'Account Code'=> $row['cdj_accountcode'],
+            'Amount'=> $row['cdj_amount'],
+            '5-02-99-990'=> $row['cdj_account1'],
+            '5-02-02-010'=> $row['cdj_account2'],
+            'Account Code'=> $row['cdj_sundry_accountcode'],
+            'PR'=> $row['cdj_pr'],
+            'Debit'=> $row['cdj_debit'],
+            'Credit'=> $row['cdj_credit']
         ]);
     }
 }

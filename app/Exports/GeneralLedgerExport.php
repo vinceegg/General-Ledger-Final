@@ -13,7 +13,7 @@ class GeneralLedgerExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return GeneralLedgerModel::select("gl_entrynum",
+        return GeneralLedgerModel::select(
         "gl_symbol",
         "gl_fundname",
         "gl_func_classification",
@@ -30,7 +30,6 @@ class GeneralLedgerExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-           "Entry Number",
             "Symbol",
             "Name of Fund or Account",
             "Functional Classification",

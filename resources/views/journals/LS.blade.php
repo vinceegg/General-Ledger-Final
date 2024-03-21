@@ -184,30 +184,15 @@
 
 <!-- DITO NA KO -->
 
-                @extends('layouts.app1')
+@extends('layouts.app1')
  
-                @section('content')
+@section('content')
                                         
-                <div>
-                <livewire:general-ledger-show/>
-                </div>
+  <div>
+    <livewire:general-ledger-show/>
+  </div>
+  
+@endsection
             
-            @endsection
-            
-            @section('script')
-            <script>
-                window.addEventListener('close-modal', event => {
-            
-                    $('#GeneralLedgerModal').modal('hide');
-                    $('#GeneralLedgerModal').modal('hide');
-                    $('#deleteGeneralLedgerModal').modal('hide');
-                    $('#softDeleteGeneralLedgerModal').modal('hide');
-                })
-            </script>
-            @endsection 
-
-    @livewireScripts
-    @stack('scripts')
-
 </body>
 </html>

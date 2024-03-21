@@ -177,8 +177,8 @@
     </div>
 </div>
 
-    <!-- Delete Modal -->
-    <div wire:ignore.self class="modal fade" id="deleteCashReceiptJournalModal" tabindex="-1" aria-labelledby="deleteCashReceiptJournalLabel"
+<!-- Delete Modal -->
+<div wire:ignore.self class="modal fade" id="deleteCashReceiptJournalModal" tabindex="-1" aria-labelledby="deleteCashReceiptJournalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
