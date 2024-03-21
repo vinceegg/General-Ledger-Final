@@ -195,19 +195,18 @@
 
 @endsection
             
-@section('script')
+{{-- @section('script')
 <script>
-    window.addEventListener('close-modal', event => {
-
+    Livewire.on('close-modal', () => {
         $('#CashReceiptJournalModal').modal('hide');
         $('#updateCashReceiptJournalModal').modal('hide');
         $('#deleteCashReceiptJournalModal').modal('hide');
         $('#softDeleteCashReceiptJournalModal').modal('hide');
-    })
+    });
 </script>
-@endsection 
+@endsection
 
-    @livewireScripts
-    @stack('scripts')
+@livewireScripts
+@stack('scripts') --}}
 </body>
 </html>

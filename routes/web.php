@@ -95,13 +95,6 @@ Route::get('/general_ledger', function () {
     return view('journals.CKDJ');
 });
 
-
-
-
-
-
-
-
 //Routes for each table of journals
 Route::get('/CRJ', [App\Http\Controllers\CashReceiptJournalController::class, 'index'])->name('CRJ');
 Route::get('/CKDJ', [App\Http\Controllers\CheckDisbursementJournalController::class, 'index'])->name('CKDJ');
@@ -109,18 +102,11 @@ Route::get('/CDJ', [App\Http\Controllers\CashDisbursementJournalController::clas
 Route::get('/GJ', [App\Http\Controllers\GeneralJournalController::class, 'index'])->name('GJ');
 Route::get('/LS', [App\Http\Controllers\GeneralLedgerController::class, 'index'])->name('LS');
 
-
-
-
-
-
 //import/export routes
 
 //Routes for CRJ:import/export
 // Route::get('/file-import',[CashReceiptJournalController::class,'importViewCRJ'])->name('import-view');
 // Route::get('/file-import',[CashReceiptJournalController::class,'importViewCKDJ'])->name('import-view');
-
-
 
 
 //Routes for soft delete

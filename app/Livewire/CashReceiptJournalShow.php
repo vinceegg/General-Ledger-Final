@@ -29,13 +29,14 @@ class CashReceiptJournalShow extends Component
     $crj_deposit_credit,
     $crj_accountcode,
     $crj_debit,
-    $crj_credit;
+    $crj_credit,
+    $cash_receipt_journal_id,
+    $deleteType; // Added deleteType property
 
     public $search;
-    public $cash_receipt_journal_id;
     public $selectedMonth;
-    public $sortField = 'crj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
-    public $sortBy = 'asc'; // New property for sorting // KASAMA TOO
+    public $sortField = 'crj_entrynum_date'; 
+    public $sortBy = 'asc'; 
     public $file;
     public $softDeletedData;
 
@@ -67,8 +68,8 @@ class CashReceiptJournalShow extends Component
 
         CashReceiptJournalModel::create($validatedData);
         session()->flash('message', 'Added Successfully');
-        $this->resetInput();
         $this->dispatch('close-modal');
+        $this->resetInput();
     }
 
     public function editCashReceiptJournal(int $cash_receipt_journal_id)
@@ -109,45 +110,45 @@ class CashReceiptJournalShow extends Component
             'crj_deposit_credit' => $validatedData['crj_deposit_credit'],
             'crj_accountcode' => $validatedData['crj_accountcode'],
             'crj_debit' => $validatedData['crj_debit'],
-            'crj_credit' => $validatedData['crj_credit'],
+            'crj_credit' => $validatedData['crj_credit']
         ]);
         session()->flash('message', 'Updated Successfully');
         $this->resetInput();
         $this->dispatch('close-modal');
     }
 
-    public function deleteCashReceiptJournal(int $cash_receipt_journal_id)
+    public function deleteCashReceiptJournal(int $cash_receipt_journal_id, $type = 'soft')
     {
         $this->cash_receipt_journal_id = $cash_receipt_journal_id;
+        $this->deleteType = $type; // Set the delete type
     }
 
     public function destroyCashReceiptJournal()
     {
-        CashReceiptJournalModel::find($this->cash_receipt_journal_id)->delete();
-        session()->flash('message', 'Deleted Successfully');
+        $cash_receipt_journal = CashReceiptJournalModel::withTrashed()->find($this->cash_receipt_journal_id);
+        if ($this->deleteType == 'force') {
+            $cash_receipt_journal->forceDelete();
+            session()->flash('message', 'Permanently Deleted Successfully');
+        } else {
+            $cash_receipt_journal->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
+        }
         $this->dispatch('close-modal');
-    }
-
-    public function closeModal()
-    {
         $this->resetInput();
     }
 
-    public function resetInput()
+    public function restoreCashReceiptJournal(int $cash_receipt_journal_id)
     {
-        $this->crj_entrynum = '';
-        $this->crj_entrynum_date = '';
-        $this->crj_jevnum = '';
-        $this->crj_payor = '';
-        $this->crj_collection_debit = '';
-        $this->crj_collection_credit = '';
-        $this->crj_deposit_debit = '';
-        $this->crj_deposit_credit = '';
-        $this->crj_accountcode = '';
-        $this->crj_debit = '';
-        $this->crj_credit = '';
+        CashReceiptJournalModel::withTrashed()->find($cash_receipt_journal_id)->restore();
+        session()->flash('message', 'Restored Successfully');
     }
-    
+
+    public function restoreAllCashReceiptJournals()
+    {
+        CashReceiptJournalModel::onlyTrashed()->restore();
+        session()->flash('message', 'All Cash Receipt Journals Restored Successfully');
+    }
+
     // Soft delete GeneralJournal
     public function softDeleteCashReceiptJournal($cash_receipt_journal_id)
     {
@@ -170,6 +171,26 @@ class CashReceiptJournalShow extends Component
     public function GoToCashReceiptJournalTrashed()
     {
         return redirect()->route('cash-receipt-journal.trashedCashReceiptJournal');
+    }
+
+    public function closeModal()
+    {
+        $this->resetInput();
+    }
+
+    public function resetInput()
+    {
+        $this->crj_entrynum = '';
+        $this->crj_entrynum_date = '';
+        $this->crj_jevnum = '';
+        $this->crj_payor = '';
+        $this->crj_collection_debit = '';
+        $this->crj_collection_credit = '';
+        $this->crj_deposit_debit = '';
+        $this->crj_deposit_credit = '';
+        $this->crj_accountcode = '';
+        $this->crj_debit = '';
+        $this->crj_credit = '';
     }
 
     // Sorting logic SA SORT TO KORINNE HA

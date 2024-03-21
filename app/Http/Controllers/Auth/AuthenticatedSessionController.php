@@ -39,10 +39,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $userId = Auth::id(); // Get the ID of the logged-in user
-        User::where('id', $userId)->update([
-            'email_verified_at' => null,
-        ]);
+        // $userId = Auth::id(); // Get the ID of the logged-in user
+        // User::where('id', $userId)->update([
+        //     'email_verified_at' => null,
+        // ]);
 
         Auth::guard('web')->logout();
 

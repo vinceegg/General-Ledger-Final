@@ -1,9 +1,10 @@
 <!-- resources/views/livewire/crj-trashed.blade.php -->
+{{-- @livewire('cash-receipt-journal-show') --}}
 @extends('layouts.app1') 
-
 @section('content')
     <div class="container">
         <a href="{{ route('CRJ') }}" class="btn btn-primary">Go to Cash Receipt Journal</a>
+        <button wire:click="restoreAllCashReceiptJournals" class="btn btn-warning">Restore All</button>
         @if($softDeletedData->count() > 0)
             <table class="table">
                 <thead>
@@ -20,9 +21,10 @@
                             <th>Account Code</th>
                             <th>Debit</th>
                             <th>Credit</th>
-                        {{-- <th>Actions</th> --}}
+                            <th>Action</th>
                     </tr>
                 </thead>
+                
                 <tbody>
                     @foreach($softDeletedData as $item)
                         <tr>
@@ -37,10 +39,10 @@
                             <td>{{ $item-> crj_deposit_credit}}</td>
                             <td>{{ $item-> crj_accountcode}}</td>
                             <td>{{ $item-> crj_debit}}</td>
-                            <td>{{ $item-> crj_credit}}</td>
+                            <td>{{ $item-> crj_credit}}</td>  
                             <td>
-                                {{-- <button wire:click="restoreCashReceiptJournal({{ $item->id }})" class="btn btn-success">Restore</button>                                               --}}
-                            </td>                        
+                                <button wire:click="restoreCashReceiptJournal({{ $item->id }})" class="btn btn-success">Restore</button>
+                            </td>                
                         </tr>
                     @endforeach
                 </tbody>
