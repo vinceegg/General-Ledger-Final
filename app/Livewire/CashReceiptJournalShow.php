@@ -137,18 +137,6 @@ class CashReceiptJournalShow extends Component
         $this->resetInput();
     }
 
-    public function restoreCashReceiptJournal(int $cash_receipt_journal_id)
-    {
-        CashReceiptJournalModel::withTrashed()->find($cash_receipt_journal_id)->restore();
-        session()->flash('message', 'Restored Successfully');
-    }
-
-    public function restoreAllCashReceiptJournals()
-    {
-        CashReceiptJournalModel::onlyTrashed()->restore();
-        session()->flash('message', 'All Cash Receipt Journals Restored Successfully');
-    }
-
     // Soft delete GeneralJournal
     public function softDeleteCashReceiptJournal($cash_receipt_journal_id)
     {
@@ -159,6 +147,18 @@ class CashReceiptJournalShow extends Component
     }
         $this->resetInput();
         $this->dispatch('close-modal');
+    }
+
+    public function restoreCashReceiptJournal(int $cash_receipt_journal_id)
+    {
+        CashReceiptJournalModel::withTrashed()->find($cash_receipt_journal_id)->restore();
+        session()->flash('message', 'Restored Successfully');
+    }
+
+    public function restoreAllCashReceiptJournals()
+    {
+        CashReceiptJournalModel::onlyTrashed()->restore();
+        session()->flash('message', 'All Cash Receipt Journals Restored Successfully');
     }
 
     // View soft deleted GeneralJournals
