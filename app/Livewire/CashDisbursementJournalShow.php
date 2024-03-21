@@ -37,7 +37,7 @@ class CashDisbursementJournalShow extends Component
     public $cash_disbursement_journal_id;
     public $selectedMonth;
     public $sortField = 'cdj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
-    public $sortDirection = 'desc'; // New property for sorting // KASAMA TOO
+    public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
 
@@ -97,7 +97,7 @@ class CashDisbursementJournalShow extends Component
             $this->cdj_credit = $cash_disbursement_journal->cdj_credit;
         }
         else {
-            return redirect() -> to('/cash_disburseme_journal'); 
+            return redirect() -> to('/cash_disbursement_journal'); 
         }
     }
 
@@ -240,7 +240,7 @@ class CashDisbursementJournalShow extends Component
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportCDJ(Request $request) 
     {
-        return Excel::download(new CashDisbursementJournalExport, 'Cash Disbursement Journal.xlsx');
+        return Excel::download(new CashDisbursementJournalExport, 'CDJ.xlsx');
     }
 
     public function searchAction()

@@ -15,18 +15,17 @@ class GeneralLedgerImport implements ToModel
     public function model(array $row)
     {
         return new GeneralLedgerModel([
-            'gl_entrynum'=> $row['gl_entrynum'],
-            'gl_symbol'=> $row['gl_symbol'],
-            'gl_fundname'=>$row['gl_fundname'],
-            'gl_func_classification'=>$row['gl_func_classification'],
-            'gl_project_title'=>$row['gl_project_title'],
-            'gl_date'=>$row['gl_date'],
-            'gl_vouchernum'=>$row['gl_vouchernum'],
-            'gl_particulars'=>$row['gl_particulars'],
-            'gl_balance_debit'=>$row['gl_balance_debit'],
-            'gl_debit'=>$row['gl_debit'],
-            'gl_credit'=>$row['gl_credit'],
-            'gl_credit_balance'=>$row['gl_credit_balance']
+            'Symbol'=> $row['gl_symbol'],
+            'Name of Fund or Account'=>$row['gl_fundname'],
+            'Functional Classification'=>$row['gl_func_classification'],
+            'Title of Project or Expense Classification'=>$row['gl_project_title'],
+            'Date'=>$row['gl_date'],
+            'Voucher No.'=>$row['gl_vouchernum'],
+            'Particulars'=>$row['gl_particulars'],
+            'Balance Debit'=>$row['gl_balance_debit'],
+            'Debits'=>$row['gl_debit'],
+            'Credits'=>$row['gl_credit'],
+            'Credits Balance'=>$row['gl_credit_balance']
         ]);
     }
 }

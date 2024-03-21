@@ -13,7 +13,14 @@ class GeneralJournalExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return GeneralJournalModel::all();
+        return GeneralJournalModel::select(
+            "gj_entrynum",
+            "gj_entrynum_date",
+            "gj_jevnum",
+            "gj_particulars",
+            "gj_accountcode",
+            "gj_debit",
+            "gj_credit")->get();
     }
 
         /**
@@ -23,6 +30,12 @@ class GeneralJournalExport implements FromCollection, WithHeadings
      */
     public function headings(): array
     {
-        return ["entrynumber", "date", "jevnumber", "particulars", "accountcode", "debit", "credit", "Journalcol"];
+        return [
+            "Date",
+            "JEV No.",
+            "Particulars",
+            "Accountcode",
+            "Debit",
+            "Credit"];
     }
 }

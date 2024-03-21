@@ -14,7 +14,7 @@ class CashDisbursementJournalExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return CashDisbursementJournalModel::select("cdj_entrynum",
+        return CashDisbursementJournalModel::select(
         "cdj_entrynum_date",
         "cdj_referencenum",
         "cdj_accountable_officer",
@@ -33,7 +33,6 @@ class CashDisbursementJournalExport implements FromCollection, WithHeadings
     {
     
         return [
-            "Entry Number",
             "Date",
             "Reference/RD No.",
             "Accountable Officer",
@@ -46,8 +45,5 @@ class CashDisbursementJournalExport implements FromCollection, WithHeadings
             "PR",
             "Debit",
             "Credit" ];
-
         }
-
-
 }

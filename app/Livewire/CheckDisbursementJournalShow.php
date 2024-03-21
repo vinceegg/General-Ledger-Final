@@ -194,12 +194,12 @@ class CheckDisbursementJournalShow extends Component
     // Sorting logic SA SORT TO KORINNE HA
     public function sortBy($field)
     {
-        if ($this->sortField == $field) {
-            $this->sortBy = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-        } else {
-            $this->sortField = $field;
-            $this->sortBy = 'asc';
-        }
+    if ($this->sortField == $field) {
+        $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
+    } else {
+        $this->sortField = $field;
+        $this->sortDirection = 'asc';
+    }
     }
 
     public function importCKDJ()
@@ -221,7 +221,7 @@ class CheckDisbursementJournalShow extends Component
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportCKDJ() 
     {
-        return Excel::download(new CheckDisbursementJournalExport, 'generaljournal.xlsx');
+        return Excel::download(new CheckDisbursementJournalExport, 'CKDJ.xlsx');
     }
 
     public function searchAction()

@@ -21,7 +21,7 @@
     <input type="month" id="date-range" wire:model="selectedMonth" wire:change="sortDate" class="form-control" style="width: 150px;">
  
     <!-- Sort -->
-    <select wire:model="sortDirection" wire:change="sortDirection" id="sortDirection" class="ml-2 mr-2">
+    <select wire:model="sortDirection" wire:change="sortAction" id="sortDirection" class="ml-2 mr-2">
         <option value="asc">Oldest First</option>
         <option value="desc">Newest First</option>
     </select>

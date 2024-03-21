@@ -33,7 +33,7 @@ class GeneralJournalShow extends Component
     public $general_journal_id; // Add this property
     public $selectedMonth;
     public $sortField = 'gj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
-    public $sortBy = 'asc'; // New property for sorting // KASAMA TOO
+    public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
 
@@ -181,10 +181,10 @@ class GeneralJournalShow extends Component
     public function sortBy($field)
     {
         if ($this->sortField == $field) {
-            $this->sortBy = $this->sortBy == 'asc' ? 'desc' : 'asc';
+            $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortField = $field;
-            $this->sortBy = 'asc';
+            $this->sortDirection = 'asc';
         }
     }
 
@@ -207,7 +207,7 @@ class GeneralJournalShow extends Component
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportGJ(Request $request) 
     {
-        return Excel::download(new GeneralJournalExport, 'General Journal.xlsx');
+        return Excel::download(new GeneralJournalExport, 'GJ.xlsx');
     }
 
     public function searchAction()
@@ -248,7 +248,7 @@ class GeneralJournalShow extends Component
         $query->where('id', 'like', '%' . $this->search . '%');
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
-        $query->orderBy($this->sortField , $this->sortBy);
+        $query->orderBy($this->sortField , $this->sortDirection);
 
         // Get paginated results
         $general_journal = $query->orderBy('id', 'ASC')->paginate(10);
