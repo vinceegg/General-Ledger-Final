@@ -27,7 +27,8 @@ class GeneralJournalShow extends Component
     $gj_accountcode,
     $gj_debit,
     $gj_credit,
-    $general_journal_col;
+    $general_journal_col,
+    $deleteType; // Added deleteType property
 
     public $search;
     public $general_journal_id; // Add this property
@@ -36,6 +37,8 @@ class GeneralJournalShow extends Component
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
+    public $totalDebit = 0;
+    public $totalCredit = 0;
 
     // Validation rules
     protected function rules()
@@ -111,17 +114,25 @@ class GeneralJournalShow extends Component
     }
 
     // Delete GeneralJournal
-    public function deleteGeneralJournal(int $general_journal_id)
+    public function deleteGeneralJournal(int $general_journal_id, $type = 'soft')
     {
         $this->general_journal_id = $general_journal_id;
+        $this->deleteType = $type; // Set the delete type
     }
 
-    // Destroy GeneralJournal
+    // Permanently delete 
     public function destroyGeneralJournal()
     {
-        GeneralJournalModel::find($this->general_journal_id)->delete();
-        session()->flash('message', 'Deleted Successfully');
+        $general_journal = GeneralJournalModel::withTrashed()->find($this->general_journal_id);
+        if ($this->deleteType == 'force') {
+            $general_journal->forceDelete();
+            session()->flash('message', 'Permanently Deleted Successfully');
+        } else {
+            $general_journal->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
+        }
         $this->dispatch('close-modal');
+        $this->resetInput();
     }
 
     // Close modal and reset input
@@ -150,31 +161,9 @@ class GeneralJournalShow extends Component
         if ( $general_journal) {
             $general_journal->delete();
             session()->flash('message', 'Soft Deleted Successfully');
-    }
-    
+    }    
         $this->resetInput();
         $this->dispatch('close-modal');
-    }
-
-    //PATI TO
-    // View soft deleted GeneralJournals
-    public function trashedGeneralJournal()
-    {
-        $this->softDeletedData = GeneralJournalModel::onlyTrashed()->get();
-        return view('livewire.g-j-trashed', ['softDeletedData' => $this->softDeletedData]);
-    }
-
-    public function GoToGeneralJournalTrashed()
-    {
-        return redirect()->route('general-journal.trashedGeneralJournal');
-    }
-
-    //DI PA TO NAAPPLY SA LAHAT NG JOURNAL
-    //AYAW PA GUMANA
-    public function restoreGeneralJournal($general_journal_id)
-    {
-        GeneralJournalModel::where($general_journal_id)->restore();
-        session()->flash('message', 'Restored Successfully');
     }
 
     // Sorting logic SA SORT TO KORINNE HA
@@ -253,8 +242,9 @@ class GeneralJournalShow extends Component
         // Get paginated results
         $general_journal = $query->orderBy('id', 'ASC')->paginate(10);
 
-        //IBA DITO SA CODE NG CRJ
-        //$cash_receipt_journal = $query->paginate(10);
+         // Compute the total debit and credit for the selected month
+        $this->totalDebit = $query->sum('gj_debit');
+        $this->totalCredit = $query->sum('gj_credit');
 
         return view('livewire.general-journal-show', ['general_journal' => $general_journal]);
     }

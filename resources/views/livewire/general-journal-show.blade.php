@@ -101,7 +101,8 @@
                                         Archive
                                     </button>
 
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModal" wire:click="deleteGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                    <!-- Force Delete Button -->
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModal" wire:click="deleteGeneralJournal({{ $general_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                         Delete
                                     </button>                                   
                                 </div>
@@ -114,10 +115,15 @@
                         </tr>
                     @endforelse                                
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6" class="text-right font-bold">Sub Total:</td>
+                        <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
+                        <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
-                    <button wire:click="GoToGeneralJournalTrashed" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center">
-                            View Archives
-                    </button>
                     <div>
                         {{ $general_journal->links() }}
                     </div>

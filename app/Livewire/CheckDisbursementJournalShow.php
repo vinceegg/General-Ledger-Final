@@ -32,15 +32,25 @@ class CheckDisbursementJournalShow extends Component
     $ckdj_honoraria,
     $ckdj_sundry_accountcode,
     $ckdj_debit,
-    $ckdj_credit;
+    $ckdj_credit,
+    $deleteType; // Added deleteType property
 
     public $search;
     public $check_disbursement_journal_id;
     public $selectedMonth;
     public $sortField = 'ckdj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
-    public $sortDirection = 'desc'; // New property for sorting // KASAMA TOO
+    public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $softDeletedData;
     public $file;
+    public $totalDebit = 0;
+    public $totalCredit = 0;
+    public $totalCib = 0;
+    public $totalAccount1 = 0;
+    public $totalAccount2 = 0;
+    public $totalAccount3 = 0;
+    public $totalSalaryWages = 0;
+    public $totalHonoraria = 0;
+    public $totalAccountCode = 0;
 
     protected function rules()
     {
@@ -129,16 +139,24 @@ class CheckDisbursementJournalShow extends Component
         $this->dispatch('close-modal');
     }
 
-    public function deleteCheckDisbursementJournal($check_disbursement_journal_id)
+    public function deleteCheckDisbursementJournal(int $check_disbursement_journal_id, $type = 'soft')
     {
         $this->check_disbursement_journal_id = $check_disbursement_journal_id;
+        $this->deleteType = $type; // Set the delete type
     }
 
     public function destroyCheckDisbursementJournal()
     {
-        CheckDisbursementJournalModel::find($this->check_disbursement_journal_id)->delete();
-        session()->flash('message', 'Deleted Successfully');
+        $check_disbursement_journal_id = CheckDisbursementJournalModel::withTrashed()->find($this->check_disbursement_journal_id);
+        if ($this->deleteType == 'force') {
+            $check_disbursement_journal_id->forceDelete();
+            session()->flash('message', 'Permanently Deleted Successfully');
+        } else {
+            $check_disbursement_journal_id->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
+        }
         $this->dispatch('close-modal');
+        $this->resetInput();
     }
 
     public function closeModal()
@@ -260,6 +278,16 @@ class CheckDisbursementJournalShow extends Component
     
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
+
+        $this->totalDebit = $query->sum('ckdj_debit');
+        $this->totalCredit = $query->sum('ckdj_credit');
+        $this->totalCib = $query->sum('ckdj_cib_lcca');
+        $this->totalAccount1 = $query->sum('ckdj_account1');
+        $this->totalAccount2 = $query->sum('ckdj_account2');
+        $this->totalAccount3 = $query->sum('ckdj_account3');
+        $this->totalSalaryWages = $query->sum('ckdj_salary_wages');
+        $this->totalHonoraria = $query->sum('ckdj_honoraria');
+        $this->totalAccountCode = $query->sum('ckdj_sundry_accountcode');
 
         // Get paginated results with eager loading of 'sundries' relationship
         $check_disbursement_journal = $query->paginate(10);

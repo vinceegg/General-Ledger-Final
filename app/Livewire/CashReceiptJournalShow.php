@@ -39,6 +39,13 @@ class CashReceiptJournalShow extends Component
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
+    public $totalDebit = 0;
+    public $totalCredit = 0;
+    public $totalCollectionDebit = 0;
+    public $totalCollectionCredit = 0;
+    public $totalDepositDebit = 0;
+    public $totalDepositCredit = 0;
+
 
     protected function rules()
     {
@@ -72,6 +79,7 @@ class CashReceiptJournalShow extends Component
         $this->resetInput();
     }
 
+    //EDIT FUNCTION
     public function editCashReceiptJournal(int $cash_receipt_journal_id)
     {
         $cash_receipt_journal = CashReceiptJournalModel::find($cash_receipt_journal_id);
@@ -95,6 +103,7 @@ class CashReceiptJournalShow extends Component
         }
     }
 
+    //UPDATE FUNCTION
     public function updateCashReceiptJournal()
     {
         $validatedData = $this->validate();
@@ -117,12 +126,14 @@ class CashReceiptJournalShow extends Component
         $this->dispatch('close-modal');
     }
 
+    //DELETE FUNCTION
     public function deleteCashReceiptJournal(int $cash_receipt_journal_id, $type = 'soft')
     {
         $this->cash_receipt_journal_id = $cash_receipt_journal_id;
         $this->deleteType = $type; // Set the delete type
     }
 
+    // Permanently delete 
     public function destroyCashReceiptJournal()
     {
         $cash_receipt_journal = CashReceiptJournalModel::withTrashed()->find($this->cash_receipt_journal_id);
@@ -149,12 +160,14 @@ class CashReceiptJournalShow extends Component
         $this->dispatch('close-modal');
     }
 
+    // Restore 
     public function restoreCashReceiptJournal(int $cash_receipt_journal_id)
     {
         CashReceiptJournalModel::withTrashed()->find($cash_receipt_journal_id)->restore();
         session()->flash('message', 'Restored Successfully');
     }
 
+    // Restore all soft deleted
     public function restoreAllCashReceiptJournals()
     {
         CashReceiptJournalModel::onlyTrashed()->restore();
@@ -195,15 +208,14 @@ class CashReceiptJournalShow extends Component
 
     // Sorting logic SA SORT TO KORINNE HA
     public function sortBy($field)
-{
-    if ($this->sortField == $field) {
-        $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-    } else {
-        $this->sortField = $field;
-        $this->sortDirection = 'asc';
+    {
+        if ($this->sortField == $field) {
+            $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
     }
-}
-
     
     public function importCRJ()
     {
@@ -261,6 +273,13 @@ class CashReceiptJournalShow extends Component
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
+
+        $this->totalCollectionDebit = $query->sum('crj_collection_debit');
+        $this->totalCollectionCredit = $query->sum('crj_collection_credit');
+        $this->totalDepositDebit = $query->sum('crj_deposit_debit');
+        $this->totalDepositCredit = $query->sum('crj_deposit_credit');
+        $this->totalDebit = $query->sum('crj_debit');
+        $this->totalCredit = $query->sum('crj_credit');
 
         // Get paginated results
         $cash_receipt_journal = $query->paginate(10);

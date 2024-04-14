@@ -119,10 +119,23 @@
                                 </tr>
                             @endforelse                                
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5" class="text-right font-bold">Sub Total:</td>
+                                <td class="font-bold">₱{{ number_format($totalCollectionDebit, 2) }}</td>
+                                <td class="font-bold">₱{{ number_format($totalCollectionCredit, 2) }}</td>
+                                <td class="font-bold">₱{{ number_format($totalDepositDebit, 2) }}</td>
+                                <td class="font-bold">₱{{ number_format($totalDepositCredit, 2) }}</td>
+                                <td></td>
+                                <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
+                                <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>                              
+                            </tr>
+                        </tfoot>
                     </table>
                             <button wire:click="GoToCashReceiptJournalTrashed" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center">
                                     View Archives
                             </button>
+                            
                             <div>
                                 {{ $cash_receipt_journal->links() }}
                             </div>

@@ -117,10 +117,11 @@
                                         <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteCheckDisbursementJournalModal" wire:click="softDeleteCheckDisbursementJournal({{ $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                             Archive
                                         </button>
-
-                                        <button type="button" data-bs-toggle="modal" data-bs-toggle="modal" data-bs-target="#deleteCheckDisbursementJournalModal" wire:click="deleteCheckDisbursementJournal({{ $check_disbursement_journals->id  }})" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+ 
+                                        <!-- Force Delete Button -->
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteCheckDisbursementJournalModal" wire:click="deleteCheckDisbursementJournal({{ $check_disbursement_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                             Delete
-                                        </button>   
+                                        </button>  
                                     </div>
                                 </div>
                             </td>  
@@ -131,10 +132,66 @@
                             </tr>
                         @endforelse                                
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6" class="text-right font-bold">Sub Total:</td>
+                            
+                            <td class="font-bold">₱{{ number_format($totalCib, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalAccount1, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalAccount2, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalAccount3, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalSalaryWages, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalHonoraria, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalAccountCode, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>
+
+                        </tr>
+                    </tfoot>
                 </table>
                     <button wire:click="GoToCheckDisbursementJournalTrashed" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center">
                             View Archives
                     </button>
+                    {{-- <div class="text-right p-4">
+                        <span class="font-bold">Total Debit for Selected Month:</span>
+                        ₱{{ number_format($totalDebit, 2) }}
+                    </div>
+                    <!-- Total Credit Display -->
+                    <div class="text-right p-4">
+                        <span class="font-bold">Total Credit for Selected Month:</span>
+                        ₱{{ number_format($totalCredit, 2) }}
+                    </div>
+                    <div class="text-right p-4">
+                        <span class="font-bold">Total Debit for Selected Month:</span>
+                        ₱{{ number_format($totalCib, 2) }}
+                    </div>
+                    <!-- Total Credit Display -->
+                    <div class="text-right p-4">
+                        <span class="font-bold">Total Credit for Selected Month:</span>
+                        ₱{{ number_format($totalAccount1, 2) }}
+                    </div>
+                    <div class="text-right p-4">
+                        <span class="font-bold">Total Debit for Selected Month:</span>
+                        ₱{{ number_format($totalAccount2, 2) }}
+                    </div>
+                    <!-- Total Credit Display -->
+                    <div class="text-right p-4">
+                        <span class="font-bold">Total Credit for Selected Month:</span>
+                        ₱{{ number_format($totalAccount3, 2) }}
+                    </div>
+                    <div class="text-right p-4">
+                        <span class="font-bold">Total Debit for Selected Month:</span>
+                        ₱{{ number_format($totalSalaryWages, 2) }}
+                    </div>
+                    <!-- Total Credit Display -->
+                    <div class="text-right p-4">
+                        <span class="font-bold">Total Credit for Selected Month:</span>
+                        ₱{{ number_format($totalHonoraria, 2) }}
+                    </div>
+                    <div class="text-right p-4">
+                        <span class="font-bold">Total Credit for Selected Month:</span>
+                        ₱{{ number_format($totalAccountCode, 2) }}
+                    </div>                                      --}}
                     <div>
                         {{ $check_disbursement_journal->links() }}
                     </div>

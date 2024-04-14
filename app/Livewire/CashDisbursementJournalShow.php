@@ -31,7 +31,8 @@ class CashDisbursementJournalShow extends Component
     $cdj_sundry_accountcode,
     $cdj_pr,
     $cdj_debit,
-    $cdj_credit;
+    $cdj_credit,
+    $deleteType; // Added deleteType property
 
     public $search;
     public $cash_disbursement_journal_id;
@@ -40,6 +41,11 @@ class CashDisbursementJournalShow extends Component
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
+    public $totalDebit = 0;
+    public $totalCredit = 0;
+    public $totalAmount = 0;
+    public $totalAccount1 = 0;
+    public $totalAccount2 = 0;
 
     protected function rules()
     {
@@ -147,16 +153,25 @@ class CashDisbursementJournalShow extends Component
     //     $this->cash_disbursement_journal_id = $cash_disbursement_journal_id;
     // }
 
-    public function deleteCashDisbursementJournal(int $cash_disbursement_journal_id)
+    public function deleteCashDisbursementJournal(int $cash_disbursement_journal_id, $type = 'soft')
     {
         $this->cash_disbursement_journal_id = $cash_disbursement_journal_id;
+        $this->deleteType = $type; // Set the delete type
     }
 
+    // Permanently delete 
     public function destroyCashDisbursementJournal()
     {
-        CashDisbursementJournalModel::find($this->cash_disbursement_journal_id)->delete();
-        session()->flash('message', 'Deleted Successfully');
+        $cash_disbursement_journal_id = CashDisbursementJournalModel::withTrashed()->find($this->cash_disbursement_journal_id);
+        if ($this->deleteType == 'force') {
+            $cash_disbursement_journal_id->forceDelete();
+            session()->flash('message', 'Permanently Deleted Successfully');
+        } else {
+            $cash_disbursement_journal_id->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
+        }
         $this->dispatch('close-modal');
+        $this->resetInput();
     }
 
     public function closeModal()
@@ -278,6 +293,12 @@ class CashDisbursementJournalShow extends Component
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
+
+        $this->totalAmount = $query->sum('cdj_amount');
+        $this->totalAccount1 = $query->sum('cdj_account1');
+        $this->totalAccount2 = $query->sum('cdj_account2');
+        $this->totalDebit = $query->sum('cdj_debit');
+        $this->totalCredit = $query->sum('cdj_credit');
 
         // Get paginated results
         $cash_disbursement_journal = $query->paginate(10);
