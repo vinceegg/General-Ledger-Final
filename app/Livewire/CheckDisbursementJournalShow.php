@@ -219,9 +219,13 @@ class CheckDisbursementJournalShow extends Component
     }
     
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportCKDJ() 
+    public function exportCKDJ_XLSX(Request $request) 
     {
         return Excel::download(new CheckDisbursementJournalExport, 'CKDJ.xlsx');
+    }
+    public function exportCKDJ_CSV(Request $request) 
+    {
+        return Excel::download(new CheckDisbursementJournalExport, 'CKDJ.csv');
     }
 
     public function searchAction()

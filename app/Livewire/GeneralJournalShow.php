@@ -209,6 +209,14 @@ class GeneralJournalShow extends Component
     {
         return Excel::download(new GeneralJournalExport, 'GJ.xlsx');
     }
+    public function exportGJ_XLSX(Request $request) 
+    {
+        return Excel::download(new GeneralJournalExport, 'GJ.xlsx');
+    }
+    public function exportGJ_CSV(Request $request) 
+    {
+        return Excel::download(new GeneralJournalExport, 'GJ.csv');
+    }
 
     public function searchAction()
     {

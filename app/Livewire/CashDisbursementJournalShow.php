@@ -238,11 +238,15 @@ class CashDisbursementJournalShow extends Component
     }
 
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportCDJ(Request $request) 
+    public function exportCDJ_XLSX(Request $request) 
     {
         return Excel::download(new CashDisbursementJournalExport, 'CDJ.xlsx');
     }
-
+    public function exportCDJ_CSV(Request $request) 
+    {
+        return Excel::download(new CashDisbursementJournalExport, 'CDJ.csv');
+    }
+    
     public function searchAction()
     {
         // This method will be triggered when the Enter key is pressed.
