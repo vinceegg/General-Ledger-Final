@@ -39,6 +39,11 @@
             Add Transaction
         </button>
 
+        {{-- View Soft Deleted Records --}}
+        <button wire:click="toggleDeletedView" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            {{ $viewDeleted ? 'Show Active Records' : 'Show Deleted Records' }}
+        </button>
+        
     </div>
 
 </div>
@@ -66,7 +71,7 @@
                         <th>Debit</th>
                         <th>Credit</th>
                         <th>General Journal Col</th>
-                        <!-- <th>Actions</th> -->
+                        
                     </tr>
                 </thead>
 
@@ -93,18 +98,23 @@
                                     </svg>
                                 </button>
                                 <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#updateGeneralJournalModal" wire:click="editGeneralJournal({{ $general_journals->id}})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left"> 
+                                    @if (!$viewDeleted)
+                                    <!-- Show Edit and Archive only for active records -->
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#updateGeneralJournalModal" wire:click="editGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                         Edit
                                     </button>
-
                                     <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteGeneralJournalModal" wire:click="softDeleteGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                         Archive
                                     </button>
-
-                                    <!-- Force Delete Button -->
+                                    @else
+                                    <!-- Show Delete and Restore only for deleted records -->
                                     <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralJournalModal" wire:click="deleteGeneralJournal({{ $general_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                         Delete
-                                    </button>                                   
+                                    </button>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#restoreGeneralJournalModal" wire:click="restoreGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                        Restore
+                                    </button>
+                                    @endif                               
                                 </div>
                             </div>
                         </td>
@@ -113,7 +123,7 @@
                         <tr>
                             <td colspan="5">No Record Found</td>
                         </tr>
-                    @endforelse                                
+                    @endforelse                                                  
                 </tbody>
                 <tfoot>
                     <tr>
@@ -122,8 +132,9 @@
                         <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>
                         <td></td>
                     </tr>
-                </tfoot>
+                </tfoot>               
             </table>
+            
                     <div>
                         {{ $general_journal->links() }}
                     </div>

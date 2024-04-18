@@ -43,6 +43,10 @@
         data-bs-toggle="modal" data-bs-target="#CashDisbursementJournalModal">
         Add Transaction
         </button>
+
+        <button wire:click="toggleDeletedView" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            {{ $viewDeleted ? 'Show Active Records' : 'Show Deleted Records' }}
+        </button>
     
     </div>
     
@@ -105,19 +109,26 @@
                                                     <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
                                                     </svg>
                                                 </button>
-                                                <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#updateCashDisbursementJournalModal" wire:click="editCashDisbursementJournal({{ $cash_disbursement_journals->id}})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left"> 
-                                                            Edit
+                                                <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">                                                   
+
+                                                    @if (!$viewDeleted)
+                                                    <!-- Show Edit and Archive only for active records -->
+                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#updateCashDisbursementJournalModal" wire:click="editCashDisbursementJournal({{ $cash_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                        Edit
                                                     </button>
-                                                        
                                                     <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteCashDisbursementJournalModal" wire:click="softDeleteCashDisbursementJournal({{ $cash_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                         Archive
                                                     </button>
-                                                
-                                                    <!-- Force Delete Button -->
+                                                    @else
+                                                    <!-- Show Delete and Restore only for deleted records -->
                                                     <button type="button" data-bs-toggle="modal" data-bs-target="#deleteCashDisbursementJournalModal" wire:click="deleteCashDisbursementJournal({{ $cash_disbursement_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                         Delete
-                                                    </button> 
+                                                    </button>
+                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#restoreCashDisbursementJournalModal" wire:click="restoreCashDisbursementJournal({{ $cash_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                        Restore
+                                                    </button>
+                                                    @endif  
+
                                                 </div>
                                             </div>
                                         </td>
@@ -143,18 +154,6 @@
                                 </tr>
                             </tfoot>
                     </table>
-                        <button wire:click="GoToCashDisbursementJournalTrashed" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center">
-                        View Archives
-                    </button>
-                    {{-- <div class="text-right p-4">
-                        <span class="font-bold">Total Debit for Selected Month:</span>
-                        ₱{{ number_format($totalDebit, 2) }}
-                    </div>
-                    <!-- Total Credit Display -->
-                    <div class="text-right p-4">
-                        <span class="font-bold">Total Credit for Selected Month:</span>
-                        ₱{{ number_format($totalCredit, 2) }}
-                    </div> --}}
                         <div>
                             {{ $cash_disbursement_journal->links() }}
                         </div>

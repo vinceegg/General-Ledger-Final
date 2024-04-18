@@ -39,6 +39,7 @@ class GeneralJournalShow extends Component
     public $softDeletedData;
     public $totalDebit = 0;
     public $totalCredit = 0;
+    public $viewDeleted = false; // Property to toggle deleted records view
 
     // Validation rules
     protected function rules()
@@ -65,7 +66,6 @@ class GeneralJournalShow extends Component
     public function saveGeneralJournal()
     {
         $validatedData = $this->validate();
-        // $validatedData['gj_debit'] = $validatedData['gj_debit'] ?? null;
 
         GeneralJournalModel::create($validatedData);
         session()->flash('message', 'Added Successfully');
@@ -216,14 +216,32 @@ class GeneralJournalShow extends Component
         // This method will be triggered when the Enter key is pressed.
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
-
-    //ITO NAMAN SA IMPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     
+    // Method to toggle viewDeleted
+    public function toggleDeletedView()
+    {
+        $this->viewDeleted = !$this->viewDeleted;
+    }
+
+    // Method to restore soft-deleted record
+    public function restoreGeneralJournal($id)
+    {
+        $general_journal = GeneralJournalModel::onlyTrashed()->find($id);
+        if ($general_journal) {
+            $general_journal->restore();
+            session()->flash('message', 'Record restored successfully.');
+        }
+    }
 
     // Render the component
     public function render()
     {
         $query = GeneralJournalModel::query();
+
+        // Fetch only soft-deleted records if viewDeleted is set to true
+        if ($this->viewDeleted) {
+            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
+        }
 
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {

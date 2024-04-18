@@ -45,6 +45,7 @@ class CashReceiptJournalShow extends Component
     public $totalCollectionCredit = 0;
     public $totalDepositDebit = 0;
     public $totalDepositCredit = 0;
+    public $viewDeleted = false; // Property to toggle deleted records view
 
 
     protected function rules()
@@ -160,32 +161,6 @@ class CashReceiptJournalShow extends Component
         $this->dispatch('close-modal');
     }
 
-    // Restore 
-    public function restoreCashReceiptJournal(int $cash_receipt_journal_id)
-    {
-        CashReceiptJournalModel::withTrashed()->find($cash_receipt_journal_id)->restore();
-        session()->flash('message', 'Restored Successfully');
-    }
-
-    // Restore all soft deleted
-    public function restoreAllCashReceiptJournals()
-    {
-        CashReceiptJournalModel::onlyTrashed()->restore();
-        session()->flash('message', 'All Cash Receipt Journals Restored Successfully');
-    }
-
-    // View soft deleted GeneralJournals
-    public function trashedCashReceiptJournal()
-    {
-        $this->softDeletedData = CashReceiptJournalModel::onlyTrashed()->get();
-        return view('livewire.crj-trashed', ['softDeletedData' => $this->softDeletedData]);
-    }
-
-    public function GoToCashReceiptJournalTrashed()
-    {
-        return redirect()->route('cash-receipt-journal.trashedCashReceiptJournal');
-    }
-
     public function closeModal()
     {
         $this->resetInput();
@@ -256,9 +231,31 @@ class CashReceiptJournalShow extends Component
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
 
+    // Method to toggle viewDeleted
+    public function toggleDeletedView()
+    {
+        $this->viewDeleted = !$this->viewDeleted;
+    }
+
+
+    // Method to restore soft-deleted record
+    public function restoreCashReceiptJournal($id)
+    {
+        $cash_receipt_journal = CashReceiptJournalModel::onlyTrashed()->find($id);
+        if ($cash_receipt_journal) {
+            $cash_receipt_journal->restore();
+            session()->flash('message', 'Record restored successfully.');
+        }
+    }
+
     public function render()
     {
         $query = CashReceiptJournalModel::query();
+
+        // Fetch only soft-deleted records if viewDeleted is set to true
+        if ($this->viewDeleted) {
+            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
+        }
 
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {

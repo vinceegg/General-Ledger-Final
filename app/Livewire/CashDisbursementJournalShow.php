@@ -46,6 +46,7 @@ class CashDisbursementJournalShow extends Component
     public $totalAmount = 0;
     public $totalAccount1 = 0;
     public $totalAccount2 = 0;
+    public $viewDeleted = false; // Property to toggle deleted records view
 
     protected function rules()
     {
@@ -107,19 +108,6 @@ class CashDisbursementJournalShow extends Component
         }
     }
 
-    //OLD VERSION NG UPDATE
-
-    // PACHECK NITO KUNG TAMA DIN BA TO?? MAS MAIKLI COMPARE SA CRJ
-    // public function updateCashDisbursementJournal()
-    // {
-    //     $validatedData = $this->validate();
-
-    //     CashDisbursementJournalModel::where('id', $this->cash_disbursement_journal_id)->update($validatedData);
-    //     session()->flash('message', 'Updated Successfully');
-    //     $this->resetInput();
-    //     $this->dispatch('close-modal');
-    // }
-
     //NEW VERSION NG 'UPDATE' MAS MAHABA, WHY THO?
     public function updateCashDisbursementJournal()
     {
@@ -144,14 +132,6 @@ class CashDisbursementJournalShow extends Component
         $this->resetInput();
         $this->dispatch('close-modal');
     }
-
-
-    //OLD VERSION NG 'DELETE'
-    //ETO BAT WALANG INT 
-    // public function deleteCashDisbursementJournal($cash_disbursement_journal_id)
-    // {
-    //     $this->cash_disbursement_journal_id = $cash_disbursement_journal_id;
-    // }
 
     public function deleteCashDisbursementJournal(int $cash_disbursement_journal_id, $type = 'soft')
     {
@@ -208,24 +188,6 @@ class CashDisbursementJournalShow extends Component
         $this->dispatch('close-modal');
     }
 
-    // View soft deleted GeneralJournals
-    public function trashedCashDisbursementJournal()
-    {
-        $this->softDeletedData = CashDisbursementJournalModel::onlyTrashed()->get();
-        return view('livewire.c-d-j-trashed', ['softDeletedData' => $this->softDeletedData]);
-    }
-
-    public function GoToCashDisbursementJournalTrashed()
-    {
-        return redirect()->route('cash-disbursement-journal.trashedCashDisbursementJournal');
-    }
-
-    public function restoreCashDisbursementJournal($cash_disbursement_journal_id)
-    {
-        CashDisbursementJournalModel::where($cash_disbursement_journal_id)->restore();
-        session()->flash('message', 'Restored Successfully');
-    }
-
     public function sortBy($field)
     {
         if ($this->sortField == $field) {
@@ -275,10 +237,31 @@ class CashDisbursementJournalShow extends Component
         // This method will be triggered when the Enter key is pressed.
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
+
+    // Method to toggle viewDeleted
+    public function toggleDeletedView()
+    {
+        $this->viewDeleted = !$this->viewDeleted;
+    }
+
+    // Method to restore soft-deleted record
+    public function restoreCashDisbursementJournal($id)
+    {
+        $cash_disbursement_journal = CashDisbursementJournalModel::onlyTrashed()->find($id);
+        if ($cash_disbursement_journal) {
+            $cash_disbursement_journal->restore();
+            session()->flash('message', 'Record restored successfully.');
+        }
+    }
     
     public function render()
     {
         $query = CashDisbursementJournalModel::query();
+
+        // Fetch only soft-deleted records if viewDeleted is set to true
+        if ($this->viewDeleted) {
+            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
+        }
 
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {

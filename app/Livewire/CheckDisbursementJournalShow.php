@@ -51,6 +51,7 @@ class CheckDisbursementJournalShow extends Component
     public $totalSalaryWages = 0;
     public $totalHonoraria = 0;
     public $totalAccountCode = 0;
+    public $viewDeleted = false; // Property to toggle deleted records view
 
     protected function rules()
     {
@@ -139,12 +140,14 @@ class CheckDisbursementJournalShow extends Component
         $this->dispatch('close-modal');
     }
 
+    // Delete CheckDisbursementJournal
     public function deleteCheckDisbursementJournal(int $check_disbursement_journal_id, $type = 'soft')
     {
         $this->check_disbursement_journal_id = $check_disbursement_journal_id;
         $this->deleteType = $type; // Set the delete type
     }
 
+    //permanently delete CheckDisbursementJournal
     public function destroyCheckDisbursementJournal()
     {
         $check_disbursement_journal_id = CheckDisbursementJournalModel::withTrashed()->find($this->check_disbursement_journal_id);
@@ -185,7 +188,7 @@ class CheckDisbursementJournalShow extends Component
 
     }
 
-    // Soft delete GeneralJournal
+    // Soft delete CheckDisbursementJournal
     public function softDeleteCheckDisbursementJournal($check_disbursement_journal_id)
     {
         $check_disbursement_journal= CheckDisbursementJournalModel::find($check_disbursement_journal_id);
@@ -198,17 +201,6 @@ class CheckDisbursementJournalShow extends Component
         $this->dispatch('close-modal');
     }
 
-    // View soft deleted GeneralJournals
-    public function trashedCheckDisbursementJournal()
-    {
-        $this->softDeletedData = CheckDisbursementJournalModel::onlyTrashed()->get();
-        return view('livewire.ckdj-trashed', ['softDeletedData' => $this->softDeletedData]);
-    }
-
-    public function GoToCheckDisbursementJournalTrashed()
-    {
-        return redirect()->route('check-disbursement-journal.trashedCheckDisbursementJournal');
-    }
     // Sorting logic SA SORT TO KORINNE HA
     public function sortBy($field)
     {
@@ -260,10 +252,31 @@ class CheckDisbursementJournalShow extends Component
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
 
+    // Method to toggle viewDeleted
+    public function toggleDeletedView()
+    {
+        $this->viewDeleted = !$this->viewDeleted;
+    }
+
+    // Method to restore soft-deleted record
+    public function restoreCheckDisbursementJournal($id)
+    {
+        $check_disbursement_journal = CheckDisbursementJournalModel::onlyTrashed()->find($id);
+        if ($check_disbursement_journal) {
+            $check_disbursement_journal->restore();
+            session()->flash('message', 'Record restored successfully.');
+        }
+    }
+
     // Render the component
     public function render()
     {
         $query = CheckDisbursementJournalModel::query();
+
+        // Fetch only soft-deleted records if viewDeleted is set to true
+        if ($this->viewDeleted) {
+            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
+        }
     
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {

@@ -14,6 +14,7 @@ use App\Livewire\CashDisbursementJournalShow;
 use App\Livewire\GeneralLedgerShow;
 use Livewire\Livewire;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,31 +71,27 @@ Route::get('/CKDJ', function () {
   Route::get('/settings', function () {
       return view('sidebarlinks.settings');
   });
-  
-
-Route::get('/GJ', [App\Http\Controllers\GeneralJournalController::class, 'index'])->name('GJ');
-Route::get('/general-journal/trashed', [GeneralJournalShow::class, 'trashed'])->name('general-journal.trashed');
 
 //Alternative routes for journals views (huwag idelete pls)
 
-Route::get('/check_disbursement_journal', function () {
-    return view('journals.CKDJ');
-});
+// Route::get('/check_disbursement_journal', function () {
+//     return view('journals.CKDJ');
+// });
 
-Route::get('/cash_receipt_journal', function () {
-    return view('journals.CRJ');
-});
+// Route::get('/cash_receipt_journal', function () {
+//     return view('journals.CRJ');
+// });
 
-Route::get('/cash_disbursement_journal', function () {
-    return view('journals.CDJ');
-});
+// Route::get('/cash_disbursement_journal', function () {
+//     return view('journals.CDJ');
+// });
 
-Route::get('/general_journal', function () {
-    return view('journals.CRJ');
-});
-Route::get('/general_ledger', function () {
-    return view('journals.CKDJ');
-});
+// Route::get('/general_journal', function () {
+//     return view('journals.CRJ');
+// });
+// Route::get('/general_ledger', function () {
+//     return view('journals.CKDJ');
+// });
 
 //Routes for each table of journals
 Route::get('/CRJ', [App\Http\Controllers\CashReceiptJournalController::class, 'index'])->name('CRJ');
@@ -109,14 +106,3 @@ Route::get('/LS', [App\Http\Controllers\GeneralLedgerController::class, 'index']
 // Route::get('/file-import',[CashReceiptJournalController::class,'importViewCRJ'])->name('import-view');
 // Route::get('/file-import',[CashReceiptJournalController::class,'importViewCKDJ'])->name('import-view');
 
-
-//Routes for soft delete
-Route::get('/cash-receipt-journal/trashedCashReceiptJournal', [CashReceiptJournalShow::class, 'trashedCashReceiptJournal'])->name('cash-receipt-journal.trashedCashReceiptJournal');
-
-Route::get('/check-disbursement-journal/trashedCheckDisbursementJournal', [CheckDisbursementJournalShow::class, 'trashedCheckDisbursementJournal'])->name('check-disbursement-journal.trashedCheckDisbursementJournal');
-
-Route::get('/cash-disbursement-journal/trashedCashDisbursementJournal', [CashDisbursementJournalShow::class, 'trashedCashDisbursementJournal'])->name('cash-disbursement-journal.trashedCashDisbursementJournal');
-
-Route::get('/general-journal/trashedGeneralJournal', [GeneralJournalShow::class, 'trashedGeneralJournal'])->name('general-journal.trashedGeneralJournal');
-
-Route::get('/general-ledger/trashedGeneralLedger', [GeneralLedgerShow::class, 'trashedGeneralLedger'])->name('general-ledger.trashedGeneralLedger');
