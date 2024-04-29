@@ -14,7 +14,7 @@
 
     <!-- Search -->
     <div class="flex items-center">
-    <input type="search" wire:model="search" wire:change="searchAction" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
+    <input type="search" wire:model="search" wire:change="searchAction" class="ml-2 mr-2" placeholder="Search..." style="width: 180px" />
  
     <!-- Select Date -->        
     <label for="date-range" class="mb-0"></label>

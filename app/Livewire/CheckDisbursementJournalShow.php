@@ -223,6 +223,7 @@ class CheckDisbursementJournalShow extends Component
     {
         return Excel::download(new CheckDisbursementJournalExport, 'CKDJ.xlsx');
     }
+    // @korin: edited this function
     public function exportCKDJ_CSV(Request $request) 
     {
         return Excel::download(new CheckDisbursementJournalExport, 'CKDJ.csv');
@@ -260,7 +261,26 @@ class CheckDisbursementJournalShow extends Component
         }
     
         // Add the search filter
-        $query->where('id', 'like', '%' . $this->search . '%');
+        // $query->where('id', 'like', '%' . $this->search . '%');
+
+        // @korin: edited this function
+
+        $query->where(function ($q) {
+            $q->where('id', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_entrynum', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_checknum', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_payee', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_bur', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_cib_lcca', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_account1', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_account2', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_account3', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_salary_wages', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_honoraria', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_sundry_accountcode', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_debit', 'like', '%' . $this->search . '%')
+              ->orWhere('ckdj_credit', 'like', '%' . $this->search . '%');
+        });
     
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
