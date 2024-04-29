@@ -15,19 +15,8 @@ use App\Livewire\GeneralLedgerShow;
 use Livewire\Livewire;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.register');
 });
 
 
@@ -72,27 +61,6 @@ Route::get('/CKDJ', function () {
       return view('sidebarlinks.settings');
   });
 
-//Alternative routes for journals views (huwag idelete pls)
-
-// Route::get('/check_disbursement_journal', function () {
-//     return view('journals.CKDJ');
-// });
-
-// Route::get('/cash_receipt_journal', function () {
-//     return view('journals.CRJ');
-// });
-
-// Route::get('/cash_disbursement_journal', function () {
-//     return view('journals.CDJ');
-// });
-
-// Route::get('/general_journal', function () {
-//     return view('journals.CRJ');
-// });
-// Route::get('/general_ledger', function () {
-//     return view('journals.CKDJ');
-// });
-
 //Routes for each table of journals
 Route::get('/CRJ', [App\Http\Controllers\CashReceiptJournalController::class, 'index'])->name('CRJ');
 Route::get('/CKDJ', [App\Http\Controllers\CheckDisbursementJournalController::class, 'index'])->name('CKDJ');
@@ -100,9 +68,4 @@ Route::get('/CDJ', [App\Http\Controllers\CashDisbursementJournalController::clas
 Route::get('/GJ', [App\Http\Controllers\GeneralJournalController::class, 'index'])->name('GJ');
 Route::get('/LS', [App\Http\Controllers\GeneralLedgerController::class, 'index'])->name('LS');
 
-//import/export routes
-
-//Routes for CRJ:import/export
-// Route::get('/file-import',[CashReceiptJournalController::class,'importViewCRJ'])->name('import-view');
-// Route::get('/file-import',[CashReceiptJournalController::class,'importViewCKDJ'])->name('import-view');
 
