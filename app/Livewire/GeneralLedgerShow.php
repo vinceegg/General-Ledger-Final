@@ -20,8 +20,7 @@ class GeneralLedgerShow extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $gl_entrynum,
-    $gl_symbol,
+    public $gl_symbol,
     $gl_fundname,
     $gl_func_classification,
     $gl_project_title,
@@ -50,7 +49,6 @@ class GeneralLedgerShow extends Component
     protected function rules()
     {
         return [
-            'gl_entrynum'=>'required|integer',
             'gl_symbol'=>'nullable|integer',
             'gl_fundname'=>'nullable|string',
             'gl_func_classification'=>'nullable|string',
@@ -88,7 +86,6 @@ class GeneralLedgerShow extends Component
         if ($general_ledger) {
             
             $this->general_ledger_id = $general_ledger->id;
-            $this->gl_entrynum = $general_ledger->gl_entrynum;
             $this->gl_symbol = $general_ledger->gl_symbol;
             $this->gl_fundname = $general_ledger->gl_fundname;
             $this->gl_func_classification = $general_ledger->gl_func_classification;
@@ -111,7 +108,6 @@ class GeneralLedgerShow extends Component
         $validatedData = $this->validate();
 
         GeneralLedgerModel::where('id', $this->general_ledger_id)->update([
-            'gl_entrynum' => $validatedData['gl_entrynum'],
             'gl_symbol' => $validatedData['gl_symbol'],
             'gl_fundname' => $validatedData['gl_fundname'],
             'gl_func_classification' => $validatedData['gl_func_classification'],
@@ -158,7 +154,6 @@ class GeneralLedgerShow extends Component
     public function resetInput()
     {
         $this->general_ledger_id = '';
-        $this->gl_entrynum = '';
         $this->gl_symbol = '';
         $this->gl_fundname = '';
         $this->gl_func_classification = '';
@@ -214,9 +209,13 @@ class GeneralLedgerShow extends Component
     }
     
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportGL(Request $request) 
+    public function exportGL_XLSX(Request $request) 
     {
         return Excel::download(new GeneralLedgerExport, 'Ledger Sheet.xlsx');
+    }
+    public function exportGl_CSV(Request $request) 
+    {
+        return Excel::download(new GeneralLedgerExport, 'Ledger Sheet.csv');
     }
 
     public function searchAction()
