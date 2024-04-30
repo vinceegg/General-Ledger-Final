@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 
-class CashReceiptJournalExport implements FromCollection
+class CashReceiptJournalExport implements FromCollection, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -24,9 +24,13 @@ class CashReceiptJournalExport implements FromCollection
         "crj_deposit_credit",
         "crj_accountcode",
         "crj_debit",
-        "crj_credit"
-    )->get(); // Execute the query and retrieve the data
-}
+        "crj_credit")->get(); // Execute the query and retrieve the data
+    }
+        /**
+     * Write code on Method
+     *
+     * @return response()
+     */
 
     public function headings(): array
     {

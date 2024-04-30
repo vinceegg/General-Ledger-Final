@@ -14,7 +14,7 @@
 
     <!-- Search -->
     <div class="flex items-center">
-    <input type="search" wire:model="search" wire:change="searchAction" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
+    <input type="search" wire:model="search" wire:change="searchAction" class="ml-2 mr-2" placeholder="Search..." style="width: 180px" />
  
     <!-- Select Date -->        
     <label for="date-range" class="mb-0"></label>
@@ -38,7 +38,13 @@
  
     <!-- Export -->
     <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" wire:click="exportCKDJ">Export</button>
- 
+    
+    <!-- @frontend heree need onting editing sa UI <3 -->
+    <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
+          data-bs-toggle="modal" data-bs-target="#exportCheckDisbursementJournalModal">
+         Export (new)
+    </button>
+
     <!-- Add -->
     <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
           data-bs-toggle="modal" data-bs-target="#CheckDisbursementJournalModal">

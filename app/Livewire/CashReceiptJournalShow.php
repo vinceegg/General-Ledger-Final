@@ -212,6 +212,15 @@ class CashReceiptJournalShow extends Component
     public function exportCRJ(Request $request){
         return Excel::download(new CashReceiptJournalExport, 'CRJ.xlsx');
     }
+    // @korin: edited this function
+    public function exportCRJ_XLSX(Request $request) 
+    {
+        return Excel::download(new CashReceiptJournalExport, 'CRJ.xlsx');
+    }
+    public function exportCRJ_CSV(Request $request) 
+    {
+        return Excel::download(new CashReceiptJournalExport, 'CRJ.csv');
+    }
 
     public function searchAction()
     {
