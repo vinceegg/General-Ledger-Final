@@ -316,8 +316,8 @@ class CheckDisbursementJournalShow extends Component
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
 
-        $this->totalDebit = $query->sum('ckdj_debit');
-        $this->totalCredit = $query->sum('ckdj_credit');
+        $this->totalDebit = $query->sum('ckdj_sundry_debit');
+        $this->totalCredit = $query->sum('ckdj_sundry_credit');
         $this->totalCib = $query->sum('ckdj_cib_lcca');
         $this->totalAccount1 = $query->sum('ckdj_account1');
         $this->totalAccount2 = $query->sum('ckdj_account2');

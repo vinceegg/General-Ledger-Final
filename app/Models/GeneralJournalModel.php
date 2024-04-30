@@ -22,12 +22,12 @@ class GeneralJournalModel extends Model
         'gj_entrynum_date',
         'gj_jevnum',
         'gj_particulars',
-        'gj_accountcode',
-        'gj_debit',
-        'gj_credit',
-        'general_journal_col',
+        'gj_accountcode_data',
     ];
 
+        protected $casts = [
+            'gj_accountcode_data' => 'array',  // Cast JSON to array
+        ];
 
         protected static $logAttributes = ['*'];
     
