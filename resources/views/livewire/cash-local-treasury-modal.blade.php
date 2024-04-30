@@ -185,7 +185,6 @@
 </div>
 
 <!-- Delete Modal -->
-<!-- Delete Modal -->
 <div wire:ignore.self class="modal fade" id="deleteGeneralLedgerModal" tabindex="-1" aria-labelledby="deleteGeneralLedgerLabel"
         aria-hidden="true">
         <div class="modal-dialog">

@@ -24,7 +24,7 @@
             </svg>
          </button>
         @foreach([''] as $route) {{ $route }}
-        <a href="{{ url('/' . $route) }}" class="flex ms-2 md:me-24">
+        <a href="{{ url('/dashboard' . $route) }}" class="flex ms-2 md:me-24">
         @endforeach
         <img src="/images/PLM-LOGO.png" class="h-8 me-3" alt="FlowBite Logo" />
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-blue-800">PLM LEDGER</span>
@@ -76,7 +76,7 @@
       <ul class="space-y-2 font-medium">
          <li>
          @foreach([''] as $route) {{ $route }}
-               <a href="{{ url('/' . $route) }}" class="flex items-center p-2 text-white rounded-lg dark:text-white  hover:bg-blue-900 dark:hover:bg-gray-700 group">
+               <a href="{{ url('/dashboard' . $route) }}" class="flex items-center p-2 text-white rounded-lg dark:text-white  hover:bg-blue-900 dark:hover:bg-gray-700 group">
                @endforeach
                <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8v10a1 1 0 0 0 1 1h4v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5h4a1 1 0 0 0 1-1V8M1 10l9-9 9 9"/>
@@ -133,9 +133,14 @@
             </button>
             <ul id="dropdown-example2" class="py-2 space-y-2">
                   <li>
-                  @foreach(['gl'] as $route)
+                  @foreach(['LS'] as $route)
                      <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheet</a>
                   @endforeach
+                    </li>
+                    <li>
+                      @foreach(['AC'] as $route)
+                         <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Account Codes</a>
+                      @endforeach
                     </li>
             </ul>
          </li>

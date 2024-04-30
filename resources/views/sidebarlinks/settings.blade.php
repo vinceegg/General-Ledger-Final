@@ -32,7 +32,7 @@
         @endforeach
         <img src="/images/PLM-LOGO.png" class="h-8 me-3" alt="FlowBite Logo" />
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-blue-800">PLM LEDGER</span>
-        </a>1 <div><livewire:search-bar /></div>
+        </a> <div><livewire:search-bar /></div>
       </div>
       <div class="flex items-center">
           <div class="flex items-center ms-3">
@@ -135,7 +135,7 @@
             </button>
             <ul id="dropdown-example2" class="py-2 space-y-2">
                   <li>
-                  @foreach(['gl'] as $route)
+                  @foreach(['LS'] as $route)
                      <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheet</a>
                   @endforeach
                     </li>

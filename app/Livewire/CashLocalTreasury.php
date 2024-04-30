@@ -5,7 +5,8 @@ namespace App\Livewire;
 use App\Exports\GeneralLedgerExport;
 use App\Imports\GeneralLedgerImport;
 use Livewire\WithPagination;
-use App\Models\GeneralLedgerModel;
+// use App\Models\GeneralLedgerModel;
+use App\Models\CashLocalTreasuryModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
 
 
-class GeneralLedgerShow extends Component
+class CashLocalTreasury extends Component
 {
     use WithPagination;
     use WithFileUploads;
@@ -75,7 +76,7 @@ class GeneralLedgerShow extends Component
     {
         $validatedData = $this->validate();
 
-        GeneralLedgerModel::create($validatedData);
+        CashLocalTreasuryModel::create($validatedData);
         session()->flash('message', 'Added Successfully');
         $this->resetInput();
         $this->dispatch('close-modal');
@@ -84,7 +85,7 @@ class GeneralLedgerShow extends Component
 
     public function editGeneralLedger($general_ledger_id)
     {
-        $general_ledger = GeneralLedgerModel::find($general_ledger_id);
+        $general_ledger = CashLocalTreasuryModel::find($general_ledger_id);
         if ($general_ledger) {
             
             $this->general_ledger_id = $general_ledger->id;
@@ -110,7 +111,7 @@ class GeneralLedgerShow extends Component
     {
         $validatedData = $this->validate();
 
-        GeneralLedgerModel::where('id', $this->general_ledger_id)->update([
+        CashLocalTreasuryModel::where('id', $this->general_ledger_id)->update([
             'gl_entrynum' => $validatedData['gl_entrynum'],
             'gl_symbol' => $validatedData['gl_symbol'],
             'gl_fundname' => $validatedData['gl_fundname'],
@@ -138,7 +139,7 @@ class GeneralLedgerShow extends Component
     // Permanently delete 
     public function destroyGeneralLedger()
     {
-        $general_ledger = GeneralLedgerModel::withTrashed()->find($this->general_ledger_id);
+        $general_ledger = CashLocalTreasuryModel::withTrashed()->find($this->general_ledger_id);
         if ($this->deleteType == 'force') {
             $general_ledger->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
@@ -176,7 +177,7 @@ class GeneralLedgerShow extends Component
     // Soft delete GeneralLedger
     public function softDeleteGeneralLedger($general_ledger_id)
     {
-        $general_ledger= GeneralLedgerModel::find($general_ledger_id);
+        $general_ledger= CashLocalTreasuryModel::find($general_ledger_id);
         if ( $general_ledger) {
             $general_ledger->delete();
             session()->flash('message', 'Soft Deleted Successfully');
@@ -212,7 +213,7 @@ class GeneralLedgerShow extends Component
     public function importViewCKDJ(){
         return view('journals.LS');
     }
-
+    
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportGL(Request $request) 
     {
@@ -246,7 +247,7 @@ class GeneralLedgerShow extends Component
     // Method to restore soft-deleted record
     public function restoreGeneralLedger($id)
     {
-        $general_ledger = GeneralLedgerModel::onlyTrashed()->find($id);
+        $general_ledger = CashLocalTreasuryModel::onlyTrashed()->find($id);
         if ($general_ledger) {
             $general_ledger->restore();
             session()->flash('message', 'Record restored successfully.');
@@ -256,7 +257,7 @@ class GeneralLedgerShow extends Component
     // Render the component
     public function render()
     {
-        $query = GeneralLedgerModel::query();
+        $query = CashLocalTreasuryModel::query();
         
         // Fetch only soft-deleted records if viewDeleted is set to true
         if ($this->viewDeleted) {
@@ -286,6 +287,6 @@ class GeneralLedgerShow extends Component
         $this->totalCredit = $query->sum('gl_credit');
         $this->totalCreditBalance = $query->sum('gl_credit_balance');
 
-        return view('livewire.general-ledger-show',['general_ledger' => $general_ledger]);
+        return view('livewire.cash-local-treasury',['general_ledger' => $general_ledger]);
     }
 }

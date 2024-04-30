@@ -33,39 +33,29 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/CKDJ', function () {
-    return view('journals.CKDJ');
-  });
-  
-  Route::get('/CRJ', function () {
-      return view('journals.CRJ');
-  });
-  
-  Route::get('/CDJ', function () {
-      return view('journals.CDJ');
-  });
-  
-  Route::get('/GJ', function () {
-      return view('journals.GJ');
-  });
-  
-  Route::get('/gl', function () {
-      return view('journals.LS');
-  });
-  
-  Route::get('/faqs', function () {
-      return view('sidebarlinks.faqs');
-  });
-  
-  Route::get('/settings', function () {
-      return view('sidebarlinks.settings');
-  });
-
 //Routes for each table of journals
 Route::get('/CRJ', [App\Http\Controllers\CashReceiptJournalController::class, 'index'])->name('CRJ');
 Route::get('/CKDJ', [App\Http\Controllers\CheckDisbursementJournalController::class, 'index'])->name('CKDJ');
 Route::get('/CDJ', [App\Http\Controllers\CashDisbursementJournalController::class, 'index'])->name('CDJ');
 Route::get('/GJ', [App\Http\Controllers\GeneralJournalController::class, 'index'])->name('GJ');
 Route::get('/LS', [App\Http\Controllers\GeneralLedgerController::class, 'index'])->name('LS');
+
+Route::get('/AC', function () {
+    return view('accounthomepage');
+});
+//Routes for Account Codes
+Route::get('/CashLocalTreasury', [App\Http\Controllers\CashLocalTreasury::class, 'index'])->name('CashLocalTreasury');
+
+
+Route::get('/faqs', function () {
+    return view('sidebarlinks.faqs');
+});
+
+Route::get('/settings', function () {
+    return view('sidebarlinks.settings');
+});
+
+  
+
 
 
