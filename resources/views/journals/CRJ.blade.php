@@ -195,5 +195,18 @@
 
 @endsection
             
+{{-- @section('script')
+<script>
+    Livewire.on('close-modal', () => {
+        $('#CashReceiptJournalModal').modal('hide');
+        $('#updateCashReceiptJournalModal').modal('hide');
+        $('#deleteCashReceiptJournalModal').modal('hide');
+        $('#softDeleteCashReceiptJournalModal').modal('hide');
+    });
+</script>
+@endsection
+
+@livewireScripts
+@stack('scripts') --}}
 </body>
 </html>

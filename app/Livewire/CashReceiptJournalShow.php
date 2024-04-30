@@ -29,15 +29,24 @@ class CashReceiptJournalShow extends Component
     $crj_deposit_credit,
     $crj_accountcode,
     $crj_debit,
-    $crj_credit;
+    $crj_credit,
+    $cash_receipt_journal_id,
+    $deleteType; // Added deleteType property
 
     public $search;
-    public $cash_receipt_journal_id;
     public $selectedMonth;
     public $sortField = 'crj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
+    public $totalDebit = 0;
+    public $totalCredit = 0;
+    public $totalCollectionDebit = 0;
+    public $totalCollectionCredit = 0;
+    public $totalDepositDebit = 0;
+    public $totalDepositCredit = 0;
+    public $viewDeleted = false; // Property to toggle deleted records view
+
 
     protected function rules()
     {
@@ -67,10 +76,11 @@ class CashReceiptJournalShow extends Component
 
         CashReceiptJournalModel::create($validatedData);
         session()->flash('message', 'Added Successfully');
-        $this->resetInput();
         $this->dispatch('close-modal');
+        $this->resetInput();
     }
 
+    //EDIT FUNCTION
     public function editCashReceiptJournal(int $cash_receipt_journal_id)
     {
         $cash_receipt_journal = CashReceiptJournalModel::find($cash_receipt_journal_id);
@@ -94,6 +104,7 @@ class CashReceiptJournalShow extends Component
         }
     }
 
+    //UPDATE FUNCTION
     public function updateCashReceiptJournal()
     {
         $validatedData = $this->validate();
@@ -109,22 +120,44 @@ class CashReceiptJournalShow extends Component
             'crj_deposit_credit' => $validatedData['crj_deposit_credit'],
             'crj_accountcode' => $validatedData['crj_accountcode'],
             'crj_debit' => $validatedData['crj_debit'],
-            'crj_credit' => $validatedData['crj_credit'],
+            'crj_credit' => $validatedData['crj_credit']
         ]);
         session()->flash('message', 'Updated Successfully');
         $this->resetInput();
         $this->dispatch('close-modal');
     }
 
-    public function deleteCashReceiptJournal(int $cash_receipt_journal_id)
+    //DELETE FUNCTION
+    public function deleteCashReceiptJournal(int $cash_receipt_journal_id, $type = 'soft')
     {
         $this->cash_receipt_journal_id = $cash_receipt_journal_id;
+        $this->deleteType = $type; // Set the delete type
     }
 
+    // Permanently delete 
     public function destroyCashReceiptJournal()
     {
-        CashReceiptJournalModel::find($this->cash_receipt_journal_id)->delete();
-        session()->flash('message', 'Deleted Successfully');
+        $cash_receipt_journal = CashReceiptJournalModel::withTrashed()->find($this->cash_receipt_journal_id);
+        if ($this->deleteType == 'force') {
+            $cash_receipt_journal->forceDelete();
+            session()->flash('message', 'Permanently Deleted Successfully');
+        } else {
+            $cash_receipt_journal->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
+        }
+        $this->dispatch('close-modal');
+        $this->resetInput();
+    }
+
+    // Soft delete GeneralJournal
+    public function softDeleteCashReceiptJournal($cash_receipt_journal_id)
+    {
+        $cash_receipt_journal= CashReceiptJournalModel::find($cash_receipt_journal_id);
+        if ( $cash_receipt_journal) {
+            $cash_receipt_journal->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
+    }
+        $this->resetInput();
         $this->dispatch('close-modal');
     }
 
@@ -147,42 +180,17 @@ class CashReceiptJournalShow extends Component
         $this->crj_debit = '';
         $this->crj_credit = '';
     }
-    
-    // Soft delete GeneralJournal
-    public function softDeleteCashReceiptJournal($cash_receipt_journal_id)
-    {
-        $cash_receipt_journal= CashReceiptJournalModel::find($cash_receipt_journal_id);
-        if ( $cash_receipt_journal) {
-            $cash_receipt_journal->delete();
-            session()->flash('message', 'Soft Deleted Successfully');
-    }
-        $this->resetInput();
-        $this->dispatch('close-modal');
-    }
-
-    // View soft deleted GeneralJournals
-    public function trashedCashReceiptJournal()
-    {
-        $this->softDeletedData = CashReceiptJournalModel::onlyTrashed()->get();
-        return view('livewire.crj-trashed', ['softDeletedData' => $this->softDeletedData]);
-    }
-
-    public function GoToCashReceiptJournalTrashed()
-    {
-        return redirect()->route('cash-receipt-journal.trashedCashReceiptJournal');
-    }
 
     // Sorting logic SA SORT TO KORINNE HA
     public function sortBy($field)
-{
-    if ($this->sortField == $field) {
-        $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-    } else {
-        $this->sortField = $field;
-        $this->sortDirection = 'asc';
+    {
+        if ($this->sortField == $field) {
+            $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
     }
-}
-
     
     public function importCRJ()
     {
@@ -232,9 +240,31 @@ class CashReceiptJournalShow extends Component
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
 
+    // Method to toggle viewDeleted
+    public function toggleDeletedView()
+    {
+        $this->viewDeleted = !$this->viewDeleted;
+    }
+
+
+    // Method to restore soft-deleted record
+    public function restoreCashReceiptJournal($id)
+    {
+        $cash_receipt_journal = CashReceiptJournalModel::onlyTrashed()->find($id);
+        if ($cash_receipt_journal) {
+            $cash_receipt_journal->restore();
+            session()->flash('message', 'Record restored successfully.');
+        }
+    }
+
     public function render()
     {
         $query = CashReceiptJournalModel::query();
+
+        // Fetch only soft-deleted records if viewDeleted is set to true
+        if ($this->viewDeleted) {
+            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
+        }
 
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {
@@ -249,6 +279,13 @@ class CashReceiptJournalShow extends Component
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
+
+        $this->totalCollectionDebit = $query->sum('crj_collection_debit');
+        $this->totalCollectionCredit = $query->sum('crj_collection_credit');
+        $this->totalDepositDebit = $query->sum('crj_deposit_debit');
+        $this->totalDepositCredit = $query->sum('crj_deposit_credit');
+        $this->totalDebit = $query->sum('crj_debit');
+        $this->totalCredit = $query->sum('crj_credit');
 
         // Get paginated results
         $cash_receipt_journal = $query->paginate(10);

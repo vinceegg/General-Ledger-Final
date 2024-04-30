@@ -32,15 +32,26 @@ class CheckDisbursementJournalShow extends Component
     $ckdj_honoraria,
     $ckdj_sundry_accountcode,
     $ckdj_debit,
-    $ckdj_credit;
+    $ckdj_credit,
+    $deleteType; // Added deleteType property
 
     public $search;
     public $check_disbursement_journal_id;
     public $selectedMonth;
     public $sortField = 'ckdj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
-    public $sortDirection = 'desc'; // New property for sorting // KASAMA TOO
+    public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $softDeletedData;
     public $file;
+    public $totalDebit = 0;
+    public $totalCredit = 0;
+    public $totalCib = 0;
+    public $totalAccount1 = 0;
+    public $totalAccount2 = 0;
+    public $totalAccount3 = 0;
+    public $totalSalaryWages = 0;
+    public $totalHonoraria = 0;
+    public $totalAccountCode = 0;
+    public $viewDeleted = false; // Property to toggle deleted records view
 
     protected function rules()
     {
@@ -129,16 +140,26 @@ class CheckDisbursementJournalShow extends Component
         $this->dispatch('close-modal');
     }
 
-    public function deleteCheckDisbursementJournal($check_disbursement_journal_id)
+    // Delete CheckDisbursementJournal
+    public function deleteCheckDisbursementJournal(int $check_disbursement_journal_id, $type = 'soft')
     {
         $this->check_disbursement_journal_id = $check_disbursement_journal_id;
+        $this->deleteType = $type; // Set the delete type
     }
 
+    //permanently delete CheckDisbursementJournal
     public function destroyCheckDisbursementJournal()
     {
-        CheckDisbursementJournalModel::find($this->check_disbursement_journal_id)->delete();
-        session()->flash('message', 'Deleted Successfully');
+        $check_disbursement_journal_id = CheckDisbursementJournalModel::withTrashed()->find($this->check_disbursement_journal_id);
+        if ($this->deleteType == 'force') {
+            $check_disbursement_journal_id->forceDelete();
+            session()->flash('message', 'Permanently Deleted Successfully');
+        } else {
+            $check_disbursement_journal_id->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
+        }
         $this->dispatch('close-modal');
+        $this->resetInput();
     }
 
     public function closeModal()
@@ -167,7 +188,7 @@ class CheckDisbursementJournalShow extends Component
 
     }
 
-    // Soft delete GeneralJournal
+    // Soft delete CheckDisbursementJournal
     public function softDeleteCheckDisbursementJournal($check_disbursement_journal_id)
     {
         $check_disbursement_journal= CheckDisbursementJournalModel::find($check_disbursement_journal_id);
@@ -180,17 +201,6 @@ class CheckDisbursementJournalShow extends Component
         $this->dispatch('close-modal');
     }
 
-    // View soft deleted GeneralJournals
-    public function trashedCheckDisbursementJournal()
-    {
-        $this->softDeletedData = CheckDisbursementJournalModel::onlyTrashed()->get();
-        return view('livewire.ckdj-trashed', ['softDeletedData' => $this->softDeletedData]);
-    }
-
-    public function GoToCheckDisbursementJournalTrashed()
-    {
-        return redirect()->route('check-disbursement-journal.trashedCheckDisbursementJournal');
-    }
     // Sorting logic SA SORT TO KORINNE HA
     public function sortBy($field)
     {
@@ -247,10 +257,31 @@ class CheckDisbursementJournalShow extends Component
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
 
+    // Method to toggle viewDeleted
+    public function toggleDeletedView()
+    {
+        $this->viewDeleted = !$this->viewDeleted;
+    }
+
+    // Method to restore soft-deleted record
+    public function restoreCheckDisbursementJournal($id)
+    {
+        $check_disbursement_journal = CheckDisbursementJournalModel::onlyTrashed()->find($id);
+        if ($check_disbursement_journal) {
+            $check_disbursement_journal->restore();
+            session()->flash('message', 'Record restored successfully.');
+        }
+    }
+
     // Render the component
     public function render()
     {
         $query = CheckDisbursementJournalModel::query();
+
+        // Fetch only soft-deleted records if viewDeleted is set to true
+        if ($this->viewDeleted) {
+            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
+        }
     
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {
@@ -284,6 +315,16 @@ class CheckDisbursementJournalShow extends Component
     
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
+
+        $this->totalDebit = $query->sum('ckdj_debit');
+        $this->totalCredit = $query->sum('ckdj_credit');
+        $this->totalCib = $query->sum('ckdj_cib_lcca');
+        $this->totalAccount1 = $query->sum('ckdj_account1');
+        $this->totalAccount2 = $query->sum('ckdj_account2');
+        $this->totalAccount3 = $query->sum('ckdj_account3');
+        $this->totalSalaryWages = $query->sum('ckdj_salary_wages');
+        $this->totalHonoraria = $query->sum('ckdj_honoraria');
+        $this->totalAccountCode = $query->sum('ckdj_sundry_accountcode');
 
         // Get paginated results with eager loading of 'sundries' relationship
         $check_disbursement_journal = $query->paginate(10);

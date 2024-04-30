@@ -14,8 +14,9 @@
 
         <!-- Search -->
         <div class="flex items-center">
-        <input type="search" wire:model="search" wire:change="searchAction" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
-    
+        <input type="search" wire:model="search" wire:keydown.enter="searchAction" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
+
+            
         <!-- Select Date -->        
         <label for="date-range" class="mb-0"></label>
         <input type="month" id="date-range" wire:model="selectedMonth" wire:change="sortDate"class="form-control" style="width: 150px;">  
@@ -37,6 +38,11 @@
         <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
             data-bs-toggle="modal" data-bs-target="#GeneralLedgerModal">
             Add Transaction
+        </button>
+
+        {{-- View Soft Deleted Records --}}
+        <button wire:click="toggleDeletedView" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            {{ $viewDeleted ? 'Show Active Records' : 'Show Deleted Records' }}
         </button>
 
     </div>
@@ -100,17 +106,23 @@
                                     </svg>
                                 </button>
                                 <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#updateGeneralLedgerModal" wire:click="editGeneralLedger({{ $general_ledgers->id}})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left"> 
+                                    @if (!$viewDeleted)
+                                    <!-- Show Edit and Archive only for active records -->
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#updateGeneralLedgerModal" wire:click="editGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                         Edit
                                     </button>
-
                                     <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteGeneralLedgerModal" wire:click="softDeleteGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                         Archive
                                     </button>
-
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralLedgerModal" wire:click="deleteGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                    @else
+                                    <!-- Show Delete and Restore only for deleted records -->
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteGeneralLedgerModal" wire:click="deleteGeneralLedger({{ $general_ledgers->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                         Delete
-                                    </button>                                   
+                                    </button>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#restoreGeneralLedgerModal" wire:click="restoreGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                        Restore
+                                    </button>
+                                    @endif    
                                 </div>
                             </div>
                         </td>
@@ -121,10 +133,18 @@
                         </tr>
                     @endforelse                                
                 </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="9" class="text-right font-bold">Sub Total:</td>
+                            <td class="font-bold">₱{{ number_format($totalBalanceDebit, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalCreditBalance, 2) }}</td>
+                            
+                        </tr>
+                    </tfoot> 
             </table>
-                    <button wire:click="GoToGeneralLedgerTrashed" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center">
-                            View Archives
-                    </button>
+                    
                     <div>
                         {{ $general_ledger->links() }}
                     </div>

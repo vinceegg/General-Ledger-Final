@@ -12,9 +12,11 @@ use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
 
+
 class GeneralLedgerShow extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -29,16 +31,22 @@ class GeneralLedgerShow extends Component
     $gl_balance_debit,
     $gl_debit,
     $gl_credit,
-    $gl_credit_balance;
+    $gl_credit_balance,
+    $deleteType; // Added deleteType property
 
     public $search;
     public $general_ledger_id;
     public $selectedMonth;
     public $sortField = 'gl_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
-    public $softDeletedData;
     public $file;
-
+    public $softDeletedData;
+    public $totalBalanceDebit = 0;
+    public $totalDebit = 0;
+    public $totalCredit = 0;
+    public $totalCreditBalance = 0;
+    public $viewDeleted = false; // Property to toggle deleted records view
+    
     protected function rules()
     {
         return [
@@ -121,43 +129,51 @@ class GeneralLedgerShow extends Component
         $this->dispatch('close-modal');
     }
 
-    public function deleteGeneralLedger($general_ledger_id)
+    public function deleteGeneralLedger(int $general_ledger_id, $type = 'soft')
     {
         $this->general_ledger_id = $general_ledger_id;
+        $this->deleteType = $type; // Set the delete type
     }
 
+    // Permanently delete 
     public function destroyGeneralLedger()
     {
-        GeneralLedgerModel::find($this->general_ledger_id)->delete();
-        session()->flash('message', 'Deleted Successfully');
+        $general_ledger = GeneralLedgerModel::withTrashed()->find($this->general_ledger_id);
+        if ($this->deleteType == 'force') {
+            $general_ledger->forceDelete();
+            session()->flash('message', 'Permanently Deleted Successfully');
+        } else {
+            $general_ledger->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
+        }
         $this->dispatch('close-modal');
+        $this->resetInput();
     }
 
     public function closeModal()
     {
         $this->resetInput();
-        $this->dispatch('close-modal');
     }
 
     public function resetInput()
     {
-            $this->general_ledger_id = '';
-            $this->gl_entrynum = '';
-            $this->gl_symbol = '';
-            $this->gl_fundname = '';
-            $this->gl_func_classification = '';
-            $this->gl_project_title = '';
-            $this->gl_date = '';
-            $this->gl_vouchernum = '';
-            $this->gl_particulars = '';
-            $this->gl_balance_debit = '';
-            $this->gl_debit = '';
-            $this->gl_credit = '';
-            $this->gl_credit_balance = '';
+        $this->general_ledger_id = '';
+        $this->gl_entrynum = '';
+        $this->gl_symbol = '';
+        $this->gl_fundname = '';
+        $this->gl_func_classification = '';
+        $this->gl_project_title = '';
+        $this->gl_date = '';
+        $this->gl_vouchernum = '';
+        $this->gl_particulars = '';
+        $this->gl_balance_debit = '';
+        $this->gl_debit = '';
+        $this->gl_credit = '';
+        $this->gl_credit_balance = '';
     }
 
     //ITO NA YUNG DINAGSAG KO 
-    // Soft delete GeneralJournal
+    // Soft delete GeneralLedger
     public function softDeleteGeneralLedger($general_ledger_id)
     {
         $general_ledger= GeneralLedgerModel::find($general_ledger_id);
@@ -168,19 +184,6 @@ class GeneralLedgerShow extends Component
     
         $this->resetInput();
         $this->dispatch('close-modal');
-    }
-
-    //PATI TO
-    // View soft deleted GeneralJournals
-    public function trashedGeneralLedger()
-    {
-        $this->softDeletedData = GeneralLedgerModel::onlyTrashed()->get();
-        return view('livewire.g-l-trashed', ['softDeletedData' => $this->softDeletedData]);
-    }
-
-    public function GoToGeneralLedgerTrashed()
-    {
-        return redirect()->route('general-ledger.trashedGeneralLedger');
     }
 
     // Sorting logic SA SORT TO KORINNE HA
@@ -211,16 +214,10 @@ class GeneralLedgerShow extends Component
     }
     
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportGL() 
+    public function exportGL(Request $request) 
     {
         return Excel::download(new GeneralLedgerExport, 'Ledger Sheet.xlsx');
     }
-
-    // public function restoreGeneralLedger($general_ledger_id)
-    // {
-    //     GeneralLedgerModel::where($general_ledger_id)->restore();
-    //     session()->flash('message', 'Restored Successfully');
-    // }
 
     public function searchAction()
     {
@@ -240,10 +237,31 @@ class GeneralLedgerShow extends Component
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
 
+    // Method to toggle viewDeleted
+    public function toggleDeletedView()
+    {
+        $this->viewDeleted = !$this->viewDeleted;
+    }
+
+    // Method to restore soft-deleted record
+    public function restoreGeneralLedger($id)
+    {
+        $general_ledger = GeneralLedgerModel::onlyTrashed()->find($id);
+        if ($general_ledger) {
+            $general_ledger->restore();
+            session()->flash('message', 'Record restored successfully.');
+        }
+    }
+
     // Render the component
     public function render()
     {
         $query = GeneralLedgerModel::query();
+        
+        // Fetch only soft-deleted records if viewDeleted is set to true
+        if ($this->viewDeleted) {
+            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
+        }
 
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {
@@ -261,6 +279,12 @@ class GeneralLedgerShow extends Component
 
         // Get paginated results
         $general_ledger = $query->orderBy('id', 'ASC')->paginate(10);
+
+        // Calculate the total balance, debit, and credit
+        $this->totalBalanceDebit = $query->sum('gl_balance_debit');
+        $this->totalDebit = $query->sum('gl_debit');
+        $this->totalCredit = $query->sum('gl_credit');
+        $this->totalCreditBalance = $query->sum('gl_credit_balance');
 
         return view('livewire.general-ledger-show',['general_ledger' => $general_ledger]);
     }
