@@ -32,7 +32,12 @@
         <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" wire:click="importGL">Import</button>
 
         <!-- Export -->
-        <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" wire:click="exportGL">Export</button>
+        
+        <!-- @frontend heree need onting editing sa UI <3 -->
+        <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
+            data-bs-toggle="modal" data-bs-target="#exportGeneralLedgerModal">
+            Export (new)
+        </button>
 
         <!-- Add -->
         <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
@@ -63,7 +68,6 @@
         <table class="table table-borderd table-striped">
                     <thead>
                         <tr>
-                        <th>ID</th>
                         <th>Entry Number</th>
                         <th>Symbol</th>
                         <th>Name of Fund or Account</th>
@@ -83,19 +87,17 @@
                     @forelse ($general_ledger as $general_ledgers)
                     <tr>
                         <td>{{ $general_ledgers-> id }}</td>
-                        <td>{{ $general_ledgers-> gl_entrynum}}</td>
                         <td>{{ $general_ledgers-> gl_symbol}}</td>
                         <td>{{ $general_ledgers-> gl_fundname}}</td>
                         <td>{{ $general_ledgers-> gl_func_classification}}</td>
                         <td>{{ $general_ledgers-> gl_project_title}}</td>
                         <td>{{ $general_ledgers-> gl_date}}</td>
                         <td>{{ $general_ledgers-> gl_vouchernum}}</td>
-                        <td>{{ $general_ledgers-> gl_particulars}}</td>
-                        <td>{{ $general_ledgers-> gl_balance_debit}}</td>
-                        <td>{{ $general_ledgers-> gl_debit}}</td>
-                        <td>{{ $general_ledgers-> gl_credit}}</td>
-                        <td>{{ $general_ledgers-> gl_credit_balance}}</td>
-                                        
+                        <td>{{ $general_ledgers-> gl_particulars}}</td>                               
+                        <td>₱{{ number_format($general_ledgers->gl_balance_debit, 2, '.', ',') }}</td>                                 
+                        <td>₱{{ number_format($general_ledgers->gl_debit, 2, '.', ',') }}</td>                                 
+                        <td>₱{{ number_format($general_ledgers->gl_credit, 2, '.', ',') }}</td>                      
+                        <td>₱{{ number_format($general_ledgers->gl_credit_balance, 2, '.', ',') }}</td>                                     
                                
                         <td class="flex justify-end">
                             <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-gray-500 dark:text-gray-400">
@@ -135,7 +137,7 @@
                 </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="9" class="text-right font-bold">Sub Total:</td>
+                            <td colspan="8" class="text-right font-bold">Sub Total:</td>
                             <td class="font-bold">₱{{ number_format($totalBalanceDebit, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>

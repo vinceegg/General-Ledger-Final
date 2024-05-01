@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('cdj_accountable_officer')->nullable();
             $table->integer('cdj_jevnum')->nullable();
             $table->integer('cdj_accountcode')->nullable();
-            $table->decimal('cdj_amount')->nullable();
-            $table->decimal('cdj_account1')->nullable();
-            $table->decimal('cdj_account2')->nullable();
+            $table->decimal('cdj_amount',15,2)->nullable();
+            $table->decimal('cdj_account1',15,2)->nullable();
+            $table->decimal('cdj_account2',15,2)->nullable();
             $table->string('cdj_sundry_accountcode')->nullable();
             $table->string('cdj_pr')->nullable();
             $table->decimal('cdj_debit', 15,2)->nullable();

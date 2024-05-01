@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('general_ledger', function (Blueprint $table) {
             $table->id();
-            $table->integer('gl_entrynum');
             $table->integer('gl_symbol')->nullable;
             $table->string('gl_fundname')->nullable;
             $table->string('gl_func_classification')->nullable;
@@ -21,10 +20,10 @@ return new class extends Migration
             $table->date('gl_date')->nullable;
             $table->integer('gl_vouchernum')->nullable;
             $table->string('gl_particulars')->nullable;
-            $table->decimal('gl_balance_debit')->nullable;
+            $table->decimal('gl_balance_debit',15,2)->nullable;
             $table->decimal('gl_debit', 15,2)->nullable;
             $table->decimal('gl_credit', 15,2)->nullable;
-            $table->decimal('gl_credit_balance')->nullable;
+            $table->decimal('gl_credit_balance',15,2)->nullable;
             $table->softDeletes();
             $table->timestamps();
         });

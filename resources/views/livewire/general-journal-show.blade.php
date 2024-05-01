@@ -84,11 +84,10 @@
                         <td>{{ $general_journals->gj_jevnum }}</td>
                         <td>{{ $general_journals->gj_particulars }}</td>
                         <td>{{ $general_journals->gj_accountcode }}</td>
-                        <td>{{ $general_journals->gj_debit }}</td>
-                        <td>{{ $general_journals->gj_credit }}</td>
+                        <td>{{ number_format ($general_journals-> gj_debit, 2, '.', ',') }}</td>
+                        <td>{{ number_format ($general_journals-> gj_credit, 2, '.', ',') }}</td>
                         <td>{{ $general_journals->general_journal_col }}</td>
-                                        
-                               
+                                         
                         <td class="flex justify-end">
                             <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-gray-500 dark:text-gray-400">
                                 <button @click="open = !open" id="dropdownButton" class="inline-block hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5">

@@ -85,13 +85,17 @@
                                 <td>{{ $cash_receipt_journals-> crj_entrynum_date}}</td>
                                 <td>{{ $cash_receipt_journals-> crj_jevnum}}</td>
                                 <td>{{ $cash_receipt_journals-> crj_payor}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_collection_debit}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_collection_credit}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_deposit_debit}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_deposit_credit}}</td>
+                                
+                                <td>{{ number_format ($cash_receipt_journals-> crj_collection_debit, 2, '.', ',')}}</td>
+                                
+                                <td>{{ number_format ($cash_receipt_journals-> crj_collection_credit, 2, '.', ',')}}</td>
+                               
+                                <td>{{ number_format ($cash_receipt_journals-> crj_deposit_debit, 2, '.', ',')}}</td>
+                                
+                                <td>{{ number_format ($cash_receipt_journals-> crj_deposit_credit, 2, '.', ',')}}</td>
                                 <td>{{ $cash_receipt_journals-> crj_accountcode}}</td>
-                                <td>{{ number_format ($cash_receipt_journals-> crj_debit, 2, '.', '.')}}</td>                        
-                                <td>{{ number_format ($cash_receipt_journals-> crj_credit, 2, '.', '.')}}</td>
+                                <td>{{ number_format ($cash_receipt_journals-> crj_debit, 2, '.', ',')}}</td>                        
+                                <td>{{ number_format ($cash_receipt_journals-> crj_credit, 2, '.', ',')}}</td>
                                        
                                 <td class="flex justify-end">
                                     <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-gray-500 dark:text-gray-400">

@@ -171,8 +171,8 @@
                             <td class="font-bold">₱{{ number_format($totalAccount2, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalAccount3, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalSalaryWages, 2) }}</td>
-                            <td class="font-bold">₱{{ number_format($totalHonoraria, 2) }}</td>
-                            <td class="font-bold">₱{{ number_format($totalAccountCode, 2) }}</td>
+                            <td class="font-bold">₱{{ number_format($totalHonoraria, 2) }}</td> 
+                            <td></td>                      
                             <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>
 

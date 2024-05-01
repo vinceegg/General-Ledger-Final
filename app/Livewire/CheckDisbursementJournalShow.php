@@ -50,7 +50,6 @@ class CheckDisbursementJournalShow extends Component
     public $totalAccount3 = 0;
     public $totalSalaryWages = 0;
     public $totalHonoraria = 0;
-    public $totalAccountCode = 0;
     public $viewDeleted = false; // Property to toggle deleted records view
 
     protected function rules()
@@ -62,12 +61,12 @@ class CheckDisbursementJournalShow extends Component
             'ckdj_checknum'=>'nullable|integer',
             'ckdj_payee'=>'nullable|string',
             'ckdj_bur'=>'nullable|integer',
-            'ckdj_cib_lcca'=> 'nullable|numeric',
-            'ckdj_account1'=> 'nullable|numeric',
-            'ckdj_account2'=> 'nullable|numeric',
-            'ckdj_account3'=> 'nullable|numeric',
-            'ckdj_salary_wages'=> 'nullable|numeric',
-            'ckdj_honoraria'=> 'nullable|numeric',
+            'ckdj_cib_lcca'=> 'nullable|numeric|min:0|max:100000000',
+            'ckdj_account1'=> 'nullable|numeric|min:0|max:100000000',
+            'ckdj_account2'=> 'nullable|numeric|min:0|max:100000000',
+            'ckdj_account3'=> 'nullable|numeric|min:0|max:100000000',
+            'ckdj_salary_wages'=> 'nullable|numeric|min:0|max:100000000',
+            'ckdj_honoraria'=> 'nullable|numeric|min:0|max:100000000',
             'ckdj_sundry_accountcode'=>'nullable|string',
             'ckdj_debit'=> 'nullable|numeric|min:0|max:100000000',
             'ckdj_credit'=> 'nullable|numeric|min:0|max:100000000',
@@ -300,7 +299,7 @@ class CheckDisbursementJournalShow extends Component
         $this->totalAccount3 = $query->sum('ckdj_account3');
         $this->totalSalaryWages = $query->sum('ckdj_salary_wages');
         $this->totalHonoraria = $query->sum('ckdj_honoraria');
-        $this->totalAccountCode = $query->sum('ckdj_sundry_accountcode');
+        
 
         // Get paginated results with eager loading of 'sundries' relationship
         $check_disbursement_journal = $query->paginate(10);

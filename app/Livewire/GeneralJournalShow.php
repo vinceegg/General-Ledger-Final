@@ -50,8 +50,8 @@ class GeneralJournalShow extends Component
             'gj_jevnum' => 'nullable|integer',
             'gj_particulars' => 'required|string',
             'gj_accountcode' => 'required|string',
-            'gj_debit' => 'nullable|numeric',
-            'gj_credit' => 'nullable|numeric',
+            'gj_debit' => 'nullable|numeric|min:0|max:100000000',
+            'gj_credit' => 'nullable|numeric|min:0|max:100000000',
             'general_journal_col' => 'nullable|string',
         ];
     }
