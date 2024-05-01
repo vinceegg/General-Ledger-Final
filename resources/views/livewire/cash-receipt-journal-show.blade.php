@@ -68,7 +68,6 @@
                     <table class="table table-borderd table-striped">
                         <thead>
                             <tr>
-                                <th scope="col" class="px-6 py-3">ID</th>
                                 <th scope="col" class="px-6 py-3">Entry Number</th>
                                 <th>Date</th>
                                 <th>JEV No.</th>
@@ -87,7 +86,6 @@
                             @forelse ($cash_receipt_journal as $cash_receipt_journals)
                             <tr>
                                 <td>{{ $cash_receipt_journals-> id }}</td>
-                                <td>{{ $cash_receipt_journals-> crj_entrynum}}</td>
                                 <td>{{ $cash_receipt_journals-> crj_entrynum_date}}</td>
                                 <td>{{ $cash_receipt_journals-> crj_jevnum}}</td>
                                 <td>{{ $cash_receipt_journals-> crj_payor}}</td>

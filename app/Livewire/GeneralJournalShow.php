@@ -33,8 +33,8 @@ class GeneralJournalShow extends Component
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
-    public $totalDebit = 0;
-    public $totalCredit = 0;
+    public $totalDebit;
+    public $totalCredit;
     public $viewDeleted = false; // Property to toggle deleted records view
 
     // Validation rules
@@ -73,7 +73,7 @@ class GeneralJournalShow extends Component
     //@korin
     public function addAccountCode()
     {
-        $this->gj_accountcode_data[] = ['gj_accountcode' => '', 'gj_debit' => 0, 'gj_credit' => 0];
+        $this->gj_accountcode_data[] = ['gj_accountcode' => '', 'gj_debit' => '', 'gj_credit' => ''];
     }
 
     public function removeAccountCode($index)

@@ -16,16 +16,16 @@ class CashReceiptJournalImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new CashReceiptJournalModel([
-            'Date' => $row['crj_entrynum_date'],
-            'JEV No.' => $row['crj_jevnum'],
-            'Payee' => $row['crj_payor'],
-            'Collection Debit' => $row['crj_collection_debit'],
-            'Collection Credit'=> $row['crj_collection_credit'],
-            'Deposit Debit'=> $row['crj_deposit_debit'],
-            'Deposit Credit'=> $row['crj_deposit_credit'],
-            'Account Code'=> $row['crj_accountcode'],
-            'Debit'=> $row['crj_debit'],
-            'Credit'=> $row['crj_credit']
+            'crj_entrynum_date' => $row['crj_entrynum_date'],
+            'crj_jevnum' => $row['crj_jevnum'],
+            'crj_payor' => $row['crj_payor'],
+            'crj_collection_debit' => $row['crj_collection_debit'],
+            'crj_collection_credit'=> $row['crj_collection_credit'],
+            'crj_deposit_debit'=> $row['crj_deposit_debit'],
+            'crj_deposit_credit'=> $row['crj_deposit_credit'],
+            'crj_accountcode'=> $row['crj_accountcode'],
+            'crj_debit'=> $row['crj_debit'],
+            'crj_credit'=> $row['crj_credit']
 
         ]);
     }

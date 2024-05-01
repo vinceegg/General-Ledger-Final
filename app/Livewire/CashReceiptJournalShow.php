@@ -19,8 +19,7 @@ class CashReceiptJournalShow extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $crj_entrynum,
-    $crj_entrynum_date,
+    public $crj_entrynum_date,
     $crj_jevnum,
     $crj_payor,
     $crj_collection_debit,
@@ -51,7 +50,6 @@ class CashReceiptJournalShow extends Component
     protected function rules()
     {
         return [
-            'crj_entrynum' => 'nullable|integer',
             'crj_entrynum_date' => 'nullable|date',
             'crj_jevnum' => 'nullable|integer',
             'crj_payor' => 'nullable|string',
@@ -87,7 +85,6 @@ class CashReceiptJournalShow extends Component
         if ($cash_receipt_journal) {
 
             $this->cash_receipt_journal_id = $cash_receipt_journal->id;
-            $this->crj_entrynum = $cash_receipt_journal->crj_entrynum;
             $this->crj_entrynum_date = $cash_receipt_journal->crj_entrynum_date;
             $this->crj_jevnum = $cash_receipt_journal->crj_jevnum;
             $this->crj_payor = $cash_receipt_journal->crj_payor;
@@ -110,7 +107,6 @@ class CashReceiptJournalShow extends Component
         $validatedData = $this->validate();
 
         CashReceiptJournalModel::where('id', $this->cash_receipt_journal_id)->update([
-            'crj_entrynum' => $validatedData['crj_entrynum'],
             'crj_entrynum_date' => $validatedData['crj_entrynum_date'],
             'crj_jevnum' => $validatedData['crj_jevnum'],
             'crj_payor' => $validatedData['crj_payor'],
@@ -168,7 +164,6 @@ class CashReceiptJournalShow extends Component
 
     public function resetInput()
     {
-        $this->crj_entrynum = '';
         $this->crj_entrynum_date = '';
         $this->crj_jevnum = '';
         $this->crj_payor = '';

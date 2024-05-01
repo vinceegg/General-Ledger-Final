@@ -19,8 +19,7 @@ class CashDisbursementJournalShow extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $cdj_entrynum,
-    $cdj_entrynum_date,
+    public $cdj_entrynum_date,
     $cdj_referencenum,
     $cdj_accountable_officer,
     $cdj_jevnum,
@@ -51,8 +50,6 @@ class CashDisbursementJournalShow extends Component
     protected function rules()
     {
         return [
-
-            'cdj_entrynum'=>'required|integer',
             'cdj_entrynum_date'=>'nullable|date',
             'cdj_referencenum'=>'nullable|string',
             'cdj_accountable_officer'=>'nullable|string',
@@ -89,7 +86,6 @@ class CashDisbursementJournalShow extends Component
         if ($cash_disbursement_journal) {
 
             $this->cash_disbursement_journal_id = $cash_disbursement_journal->id;
-            $this->cdj_entrynum = $cash_disbursement_journal->cdj_entrynum;
             $this->cdj_entrynum_date = $cash_disbursement_journal->cdj_entrynum_date;
             $this->cdj_referencenum = $cash_disbursement_journal->cdj_referencenum;
             $this->cdj_accountable_officer = $cash_disbursement_journal->cdj_accountable_officer;
@@ -114,7 +110,6 @@ class CashDisbursementJournalShow extends Component
         $validatedData = $this->validate();
 
         CashDisbursementJournalModel::where('id', $this->cash_disbursement_journal_id)->update([
-            'cdj_entrynum'=> $validatedData['cdj_entrynum'],
             'cdj_entrynum_date'=> $validatedData['cdj_entrynum_date'],
             'cdj_referencenum'=> $validatedData['cdj_referencenum'],
             'cdj_accountable_officer'=> $validatedData['cdj_accountable_officer'],
@@ -162,7 +157,6 @@ class CashDisbursementJournalShow extends Component
     public function resetInput()
     {
             $this->cash_disbursement_journal_id = '';
-            $this->cdj_entrynum = '';
             $this->cdj_entrynum_date = '';
             $this->cdj_referencenum = '';
             $this->cdj_accountable_officer = '';

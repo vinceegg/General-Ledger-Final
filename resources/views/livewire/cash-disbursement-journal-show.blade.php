@@ -92,7 +92,6 @@
                             @forelse ($cash_disbursement_journal as $cash_disbursement_journals)
                             <tr>
                                 <td>{{ $cash_disbursement_journals-> id }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_entrynum }}</td>
                                 <td>{{ $cash_disbursement_journals-> cdj_entrynum_date }}</td>
                                 <td>{{ $cash_disbursement_journals-> cdj_referencenum }}</td>
                                 <td>{{ $cash_disbursement_journals-> cdj_accountable_officer}}</td>

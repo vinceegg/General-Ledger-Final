@@ -74,7 +74,6 @@
                 <table class="table table-borderd table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Entry Number</th>
                             <th>Date</th>
                             <th>Check No.</th>
@@ -96,7 +95,6 @@
                         @forelse ($check_disbursement_journal as $check_disbursement_journals)
                         <tr>
                             <td>{{ $check_disbursement_journals-> id }}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_entrynum}}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_entrynum_date}}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_checknum}}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_payee}}</td>

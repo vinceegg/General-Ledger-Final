@@ -27,8 +27,7 @@ class GeneralLedgerExport implements FromCollection, WithHeadings
         "gl_credit_balance", )->get();
     }
 
-    public function headings(): array
-    {
+    public function headings(): array{
         return [
             "Symbol",
             "Name of Fund or Account",
@@ -40,6 +39,7 @@ class GeneralLedgerExport implements FromCollection, WithHeadings
             "Balance Debit",
             "Debits",
             "Credits",
-            "Credits Balance"];
+            "Credits Balance"
+        ];
     }
 }

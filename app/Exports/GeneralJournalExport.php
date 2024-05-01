@@ -17,10 +17,8 @@ class GeneralJournalExport implements FromCollection, WithHeadings
             "gj_entrynum_date",
             "gj_jevnum",
             "gj_particulars",
-            "gj_accountcode",
-            "gj_debit",
-            "gj_credit",
-            "general_journal_col")->get();
+            "gj_accountcode_data",
+            )->get();
     }
 
         /**

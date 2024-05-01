@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('cash_disbursement_journal', function (Blueprint $table) {
             $table->id();
-            $table->integer('cdj_entrynum');
             $table->date('cdj_entrynum_date')->nullable();
             $table->string('cdj_referencenum')->nullable();
             $table->string('cdj_accountable_officer')->nullable();

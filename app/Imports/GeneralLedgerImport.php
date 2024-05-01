@@ -16,17 +16,17 @@ class GeneralLedgerImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new GeneralLedgerModel([
-            'gl_symbol' => $row['gl_symbol'],
-            'gl_fundname' => $row['gl_fundname'],
-            'gl_func_classification' => $row['gl_func_classification'],
-            'gl_project_title' => $row['gl_project_title'],
-            'gl_date' => $row['gl_date'],
-            'gl_vouchernum' => $row['gl_vouchernum'],
-            'gl_particulars' => $row['gl_particulars'],
-            'gl_balance_debit' => $row['gl_balance_debit'],
-            'gl_debit' => $row['gl_debit'],
-            'gl_credit' => $row['gl_credit'],
-            'gl_credit_balance' => $row['gl_credit_balance']
+            'gl_symbol'             => $row['symbol'], // Make sure these match the heading names exactly as in the export
+            'gl_fundname'           => $row['name of fund or account'],
+            'gl_func_classification' => $row['functional classification'],
+            'gl_project_title'      => $row['title of project or expense classification'],
+            'gl_date'               => $row['date'],
+            'gl_vouchernum'         => $row['voucher no.'],
+            'gl_particulars'        => $row['particulars'],
+            'gl_balance_debit'      => $row['balance debit'],
+            'gl_debit'              => $row['debits'],
+            'gl_credit'             => $row['credits'],
+            'gl_credit_balance'     => $row['credits balance']
         ]);
     }
 

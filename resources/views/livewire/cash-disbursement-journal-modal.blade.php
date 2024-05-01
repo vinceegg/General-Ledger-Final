@@ -17,11 +17,6 @@
                 <form wire:submit.prevent="saveCashDisbursementJournal">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label>Entry Number</label>
-                            <input type="number" wire:model="cdj_entrynum" class="form-control">
-                            @error('cdj_entrynum') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
                             <label>Date</label>
                             <input type="date" wire:model="cdj_entrynum_date" class="form-control">
                             @error('cdj_entrynum_date') <span class="text-danger">{{ $message }}</span> @enderror
@@ -113,11 +108,6 @@
                 </div>
             <form wire:submit.prevent="updateCashDisbursementJournal">
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label>Entry Number</label>
-                            <input type="number" wire:model="cdj_entrynum" class="form-control">
-                            @error('cdj_entrynum') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
                         <div class="mb-3">
                             <label>Date</label>
                             <input type="date" wire:model="cdj_entrynum_date" class="form-control">

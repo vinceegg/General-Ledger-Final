@@ -19,8 +19,7 @@ class CheckDisbursementJournalShow extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $ckdj_entrynum,
-    $ckdj_entrynum_date,
+    public $ckdj_entrynum_date,
     $ckdj_checknum,
     $ckdj_payee,
     $ckdj_bur,
@@ -95,7 +94,6 @@ class CheckDisbursementJournalShow extends Component
         if ($check_disbursement_journal) {
 
             $this->check_disbursement_journal_id = $check_disbursement_journal->id;
-            $this->ckdj_entrynum = $check_disbursement_journal->ckdj_entrynum;
             $this->ckdj_entrynum_date = $check_disbursement_journal->ckdj_entrynum_date;
             $this->ckdj_checknum = $check_disbursement_journal->ckdj_checknum;
             $this->ckdj_payee = $check_disbursement_journal->ckdj_payee;
@@ -120,7 +118,6 @@ class CheckDisbursementJournalShow extends Component
         $validatedData = $this->validate();
 
         CheckDisbursementJournalModel::where('id', $this->check_disbursement_journal_id)->update([
-            'ckdj_entrynum' => $validatedData['ckdj_entrynum'],
             'ckdj_entrynum_date' => $validatedData['ckdj_entrynum_date'],
             'ckdj_checknum' => $validatedData['ckdj_checknum'],
             'ckdj_payee' => $validatedData['ckdj_payee'],
@@ -171,7 +168,6 @@ class CheckDisbursementJournalShow extends Component
     public function resetInput()
     {
         $this->check_disbursement_journal_id = '';
-        $this->ckdj_entrynum = '';
         $this->ckdj_entrynum_date = '';            
         $this->ckdj_checknum = '';        
         $this->ckdj_payee = '';
@@ -298,7 +294,6 @@ class CheckDisbursementJournalShow extends Component
 
         $query->where(function ($q) {
             $q->where('id', 'like', '%' . $this->search . '%')
-              ->orWhere('ckdj_entrynum', 'like', '%' . $this->search . '%')
               ->orWhere('ckdj_checknum', 'like', '%' . $this->search . '%')
               ->orWhere('ckdj_payee', 'like', '%' . $this->search . '%')
               ->orWhere('ckdj_bur', 'like', '%' . $this->search . '%')
@@ -316,8 +311,8 @@ class CheckDisbursementJournalShow extends Component
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
 
-        $this->totalDebit = $query->sum('ckdj_sundry_debit');
-        $this->totalCredit = $query->sum('ckdj_sundry_credit');
+        // $this->totalDebit = $query->sum('ckdj_sundry_debit');
+        // $this->totalCredit = $query->sum('ckdj_sundry_credit');
         $this->totalCib = $query->sum('ckdj_cib_lcca');
         $this->totalAccount1 = $query->sum('ckdj_account1');
         $this->totalAccount2 = $query->sum('ckdj_account2');

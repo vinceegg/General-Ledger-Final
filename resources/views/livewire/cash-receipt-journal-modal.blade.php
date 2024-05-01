@@ -16,11 +16,6 @@
                 <form wire:submit.prevent="saveCashReceiptJournal">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label>Entry Number</label>
-                            <input type="int" wire:model="crj_entrynum" class="form-control">
-                            @error('crj_entrynum') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
                             <label>Date</label>
                             <input type="date" wire:model="crj_entrynum_date" class="form-control">
                             @error('crj_entrynum_date') <span class="text-danger">{{ $message }}</span> @enderror
@@ -103,11 +98,6 @@
                 </div>
             <form wire:submit.prevent="updateCashReceiptJournal">
                 <div class="modal-body">
-                        <div class="mb-3">
-                            <label>Entry Number</label>
-                            <input type="number" wire:model="crj_entrynum" class="form-control">
-                            @error('crj_entrynum') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
                         <div class="mb-3">
                             <label>Date</label>
                             <input type="date" wire:model="crj_entrynum_date" class="form-control">

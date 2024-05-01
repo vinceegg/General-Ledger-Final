@@ -15,12 +15,12 @@ class GeneralJournalImport implements ToModel
     public function model(array $row)
     {
         return new GeneralJournalModel([
-            'Date'=> $row['gj_entrynum_date'],
-            'JEV No.'=> $row['gj_jevnum'],
-            'Particulars'=> $row['gj_particulars'],
-            'Accountcode'=> $row['gj_accountcode'],
-            'Debit'=> $row['gj_debit'],
-            'Credit'=> $row['gj_credit'],
+            'gj_entrynum_date'=> $row['gj_entrynum_date'],
+            'gj_jevnum'=> $row['gj_jevnum'],
+            'gj_particulars'=> $row['gj_particulars'],
+            'gj_accountcode'=> $row['gj_accountcode'],
+            'gj_debit'=> $row['gj_debit'],
+            'gj_credit'=> $row['gj_credit'],
             
         ]);
     }
