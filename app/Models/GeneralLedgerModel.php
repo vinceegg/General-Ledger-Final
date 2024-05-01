@@ -18,7 +18,6 @@ class GeneralLedgerModel extends Model
     protected $table = 'general_ledger';
 
     protected $fillable = [
-        'gl_entrynum',
         'gl_symbol',
         'gl_fundname',
         'gl_func_classification',

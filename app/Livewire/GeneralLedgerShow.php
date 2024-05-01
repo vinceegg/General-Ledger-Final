@@ -204,7 +204,7 @@ class GeneralLedgerShow extends Component
         }
     }
 
-    public function importViewCKDJ(){
+    public function importViewGL(){
         return view('journals.LS');
     }
     
