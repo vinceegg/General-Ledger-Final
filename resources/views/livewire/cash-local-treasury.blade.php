@@ -63,8 +63,7 @@
         <table class="table table-borderd table-striped">
                     <thead>
                         <tr>
-                        <th>ID</th>
-                        <th>Entry Number</th>
+                        <th>Entry Number</th>                       
                         <th>Symbol</th>
                         <th>Name of Fund or Account</th>
                         <th>Functional Classification</th>
@@ -83,7 +82,7 @@
                     @forelse ($general_ledger as $general_ledgers)
                     <tr>
                         <td>{{ $general_ledgers-> id }}</td>
-                        <td>{{ $general_ledgers-> gl_entrynum}}</td>
+                        
                         <td>{{ $general_ledgers-> gl_symbol}}</td>
                         <td>{{ $general_ledgers-> gl_fundname}}</td>
                         <td>{{ $general_ledgers-> gl_func_classification}}</td>
@@ -91,10 +90,10 @@
                         <td>{{ $general_ledgers-> gl_date}}</td>
                         <td>{{ $general_ledgers-> gl_vouchernum}}</td>
                         <td>{{ $general_ledgers-> gl_particulars}}</td>
-                        <td>{{ $general_ledgers-> gl_balance_debit}}</td>
-                        <td>{{ $general_ledgers-> gl_debit}}</td>
-                        <td>{{ $general_ledgers-> gl_credit}}</td>
-                        <td>{{ $general_ledgers-> gl_credit_balance}}</td>
+                        <td>₱{{ number_format($general_ledgers->gl_balance_debit, 2, '.', ',') }}</td>                                 
+                        <td>₱{{ number_format($general_ledgers->gl_debit, 2, '.', ',') }}</td>                                 
+                        <td>₱{{ number_format($general_ledgers->gl_credit, 2, '.', ',') }}</td>                      
+                        <td>₱{{ number_format($general_ledgers->gl_credit_balance, 2, '.', ',') }}</td>  
                                         
                                
                         <td class="flex justify-end">

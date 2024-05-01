@@ -92,13 +92,13 @@
                                 <td>{{ $cash_disbursement_journals-> cdj_accountable_officer}}</td>
                                 <td>{{ $cash_disbursement_journals-> cdj_jevnum }}</td>
                                 <td>{{ $cash_disbursement_journals-> cdj_accountcode }}</td>
-                                <td>{{ number_format ($cash_disbursement_journals-> cdj_amount, 2, '.', ',') }}</td>                              
-                                <td>{{ number_format ($cash_disbursement_journals-> cdj_account1, 2, '.', ',') }}</td>                   
-                                <td>{{ number_format ($cash_disbursement_journals-> cdj_account2, 2, '.', ',') }}</td>
+                                <td>₱{{ number_format ($cash_disbursement_journals-> cdj_amount, 2, '.', ',') }}</td>                              
+                                <td>₱{{ number_format ($cash_disbursement_journals-> cdj_account1, 2, '.', ',') }}</td>                   
+                                <td>₱{{ number_format ($cash_disbursement_journals-> cdj_account2, 2, '.', ',') }}</td>
                                 <td>{{ $cash_disbursement_journals-> cdj_sundry_accountcode }}</td>
                                 <td>{{ $cash_disbursement_journals-> cdj_pr }}</td>
-                                <td>{{ number_format ($cash_disbursement_journals-> cdj_debit, 2, '.', ',') }}</td>
-                                <td>{{ number_format ($cash_disbursement_journals-> cdj_credit, 2, '.', ',') }}</td>
+                                <td>₱{{ number_format ($cash_disbursement_journals-> cdj_debit, 2, '.', ',') }}</td>
+                                <td>₱{{ number_format ($cash_disbursement_journals-> cdj_credit, 2, '.', ',') }}</td>
     
     
                                 <td class="flex justify-end">

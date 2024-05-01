@@ -95,15 +95,15 @@
                             <td>{{ $check_disbursement_journals-> ckdj_checknum}}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_payee}}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_bur}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_cib_lcca}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_account1}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_account2}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_account3}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_salary_wages}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_honoraria}}</td>
+                            <td>₱{{ number_format($check_disbursement_journals-> ckdj_cib_lcca, 2, '.', ',') }}</td>                           
+                            <td>₱{{ number_format($check_disbursement_journals->ckdj_account1, 2, '.', ',') }}</td>
+                            <td>₱{{ number_format($check_disbursement_journals->ckdj_account2, 2, '.', ',') }}</td>
+                            <td>₱{{ number_format($check_disbursement_journals->ckdj_account3, 2, '.', ',') }}</td>
+                            <td>₱{{ number_format($check_disbursement_journals->ckdj_salary_wages, 2, '.', ',') }}</td>
+                            <td>₱{{ number_format($check_disbursement_journals->ckdj_honoraria, 2, '.', ',') }}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_sundry_accountcode}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_debit}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_credit}}</td>
+                            <td>₱{{ number_format($check_disbursement_journals->ckdj_debit, 2, '.', ',') }}</td>
+                            <td>₱{{ number_format($check_disbursement_journals->ckdj_credit, 2, '.', ',') }}</td>
                                     
                             <td class="flex justify-end">
                                 <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-gray-500 dark:text-gray-400">

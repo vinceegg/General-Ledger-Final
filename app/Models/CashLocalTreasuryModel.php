@@ -16,7 +16,7 @@ class CashLocalTreasuryModel extends Model
     protected $table = 'cash_local_treasury';
 
     protected $fillable = [
-        'gl_entrynum',
+        
         'gl_symbol',
         'gl_fundname',
         'gl_func_classification',

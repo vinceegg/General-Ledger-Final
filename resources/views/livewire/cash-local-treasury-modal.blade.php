@@ -16,11 +16,6 @@
                 <form wire:submit.prevent="saveGeneralLedger">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label>Entry Number</label>
-                            <input type="number" wire:model="gl_entrynum" class="form-control">
-                            @error('gl_entrynum') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
                             <label>Symbol</label>
                             <input type="number" wire:model="gl_symbol" class="form-control">
                             @error('gl_symbol') <span class="text-danger">{{ $message }}</span> @enderror

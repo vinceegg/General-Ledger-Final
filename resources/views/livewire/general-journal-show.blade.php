@@ -84,8 +84,8 @@
                         <td>{{ $general_journals->gj_jevnum }}</td>
                         <td>{{ $general_journals->gj_particulars }}</td>
                         <td>{{ $general_journals->gj_accountcode }}</td>
-                        <td>{{ number_format ($general_journals-> gj_debit, 2, '.', ',') }}</td>
-                        <td>{{ number_format ($general_journals-> gj_credit, 2, '.', ',') }}</td>
+                        <td>₱{{ number_format ($general_journals-> gj_debit, 2, '.', ',') }}</td>
+                        <td>₱{{ number_format ($general_journals-> gj_credit, 2, '.', ',') }}</td>
                         <td>{{ $general_journals->general_journal_col }}</td>
                                          
                         <td class="flex justify-end">

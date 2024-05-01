@@ -21,7 +21,7 @@ class CashLocalTreasury extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $gl_entrynum,
+    public
     $gl_symbol,
     $gl_fundname,
     $gl_func_classification,
@@ -51,7 +51,7 @@ class CashLocalTreasury extends Component
     protected function rules()
     {
         return [
-            'gl_entrynum'=>'required|integer',
+            
             'gl_symbol'=>'nullable|integer',
             'gl_fundname'=>'nullable|string',
             'gl_func_classification'=>'nullable|string',
@@ -59,10 +59,10 @@ class CashLocalTreasury extends Component
             'gl_date'=>'nullable|date',
             'gl_vouchernum'=>'nullable|integer',
             'gl_particulars'=>'nullable|string',
-            'gl_balance_debit'=> 'nullable|numeric',
-            'gl_debit'=> 'nullable|numeric',
-            'gl_credit'=> 'nullable|numeric',
-            'gl_credit_balance'=> 'nullable|numeric',
+            'gl_balance_debit'=> 'nullable|numeric|min:0|max:100000000',
+            'gl_debit'=> 'nullable|numeric|min:0|max:100000000',
+            'gl_credit'=> 'nullable|numeric|min:0|max:100000000',
+            'gl_credit_balance'=> 'nullable|numeric|min:0|max:100000000',
 
         ];
     }
@@ -89,7 +89,7 @@ class CashLocalTreasury extends Component
         if ($general_ledger) {
             
             $this->general_ledger_id = $general_ledger->id;
-            $this->gl_entrynum = $general_ledger->gl_entrynum;
+          
             $this->gl_symbol = $general_ledger->gl_symbol;
             $this->gl_fundname = $general_ledger->gl_fundname;
             $this->gl_func_classification = $general_ledger->gl_func_classification;
@@ -112,7 +112,7 @@ class CashLocalTreasury extends Component
         $validatedData = $this->validate();
 
         CashLocalTreasuryModel::where('id', $this->general_ledger_id)->update([
-            'gl_entrynum' => $validatedData['gl_entrynum'],
+            
             'gl_symbol' => $validatedData['gl_symbol'],
             'gl_fundname' => $validatedData['gl_fundname'],
             'gl_func_classification' => $validatedData['gl_func_classification'],
@@ -159,7 +159,7 @@ class CashLocalTreasury extends Component
     public function resetInput()
     {
         $this->general_ledger_id = '';
-        $this->gl_entrynum = '';
+      
         $this->gl_symbol = '';
         $this->gl_fundname = '';
         $this->gl_func_classification = '';
