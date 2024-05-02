@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Exports\CashLocalTreasuryExport;
 use App\Exports\GeneralLedgerExport;
 use App\Imports\GeneralLedgerImport;
 use Livewire\WithPagination;
@@ -214,10 +215,13 @@ class CashLocalTreasury extends Component
         return view('journals.LS');
     }
     
-    //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportGL(Request $request) 
+    public function exportGL_XLSX(Request $request) 
     {
-        return Excel::download(new GeneralLedgerExport, 'Ledger Sheet.xlsx');
+        return Excel::download(new CashLocalTreasuryExport, 'Account Code.xlsx');
+    }
+    public function exportGl_CSV(Request $request) 
+    {
+        return Excel::download(new CashLocalTreasuryExport, 'Account Code.csv');
     }
 
     public function searchAction()

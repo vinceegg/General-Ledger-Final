@@ -134,7 +134,7 @@
                 </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="9" class="text-right font-bold">Sub Total:</td>
+                            <td colspan="8" class="text-right font-bold">Sub Total:</td>
                             <td class="font-bold">₱{{ number_format($totalBalanceDebit, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>

@@ -31,44 +31,8 @@
         <a href="{{ url('/' . $route) }}" class="flex ms-2 md:me-24">
         @endforeach
         <img src="/images/PLM-LOGO.png" class="h-8 me-3" alt="FlowBite Logo" />
-          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-blue-800">PLM LEDGER</span>
-        </a> <div><livewire:search-bar /></div>
-      </div>
-      <div class="flex items-center">
-          <div class="flex items-center ms-3">
-            <div>
-              <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-              </button>
-            </div>
-            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-              <div class="px-4 py-3" role="none">
-                <p class="text-sm text-gray-900 dark:text-white" role="none">
-                  Mara Calinao
-                </p>
-                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                  maracalinao@plm.edu.ph
-                </p>
-              </div>
-              <ul class="py-1" role="none">
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Home</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-    </div>
+          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-blue-800">PLM LEDGER</span>     
+      </div>   
   </div>
 </nav>
 
@@ -86,10 +50,6 @@
                <span class="ms-3">Home</span>
                </a>
          </li>
-         
-        
-         
-
          <li>
             <button type="button" class="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                   <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -140,11 +100,7 @@
                   @endforeach
                     </li>
             </ul>
-         </li>
-
-
-
-         
+         </li>       
       <ul class="fixed bottom-0 pb-10 left-2 w-56 pt-4 mt-4 space-y-2 font-medium border-t border-gray-200 dark:border-gray-700">
          <li>
          @foreach([''] as $route) {{ $route }}
@@ -176,57 +132,8 @@
             </a>
          </li>
       </ul>
-
-
       </ul>
    </div>
-</aside>
-
-<div class="p-2 sm:ml-64 relative">
-<div class="p-1 mt-14">
-    <img src="/images/settingsimg.png" alt="Settings Image" class="w-full" />
-    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 relative flex"> 
-        <img src="/images/user.png" alt="User Image" class="pl-10 w-42 h-32"/>
-        <div class="ml-4 pl-10 pt-10 space-y-2">
-            <p class="text-3xl font-bold">Mara Calinao</p>
-            <p class="text-xl text-gray-500">Accounting Officer</p>
-            
-            <p class="pt-10"> </p>
-            <p class="text-xl font-bold ">Check Disbursement Journal</p>
-            <p class="text-lg text-gray-500">Access: Can View</p>
-
-            <p class="pt-4"> </p>
-            <p class="text-xl font-bold ">Cash Disbursement Journal</p>
-            <p class="text-lg text-gray-500">Access: Can View</p>
-
-            <p class="pt-4"> </p>
-            <p class="text-xl font-bold ">Cash Receipt Journal</p>
-            <p class="text-lg text-gray-500">Access: Can View</p>
-
-            <p class="pt-4"> </p>
-            <p class="text-xl font-bold ">General Journal</p>
-            <p class="text-lg text-gray-500">Access: Can View</p>
-
-            <p class="pt-4"> </p>
-            <p class="text-xl font-bold ">Ledger Sheet</p>
-            <p class="text-lg text-gray-500">Access: Can Edit</p>
-
-            <p class="pt-10"> </p>
-            <p class="text-sm text-gray-500">To change your access system, contact ICTO.</p>
-            
-
-        </div>
-
-
-        
-    </div>
-</div>
-</div>
-
-
-
-
-
 </body>
 <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>

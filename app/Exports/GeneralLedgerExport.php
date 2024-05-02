@@ -2,9 +2,9 @@
 
 namespace App\Exports;
 
-use App\Models\GeneralLedgerModel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use App\Models\GeneralLedgerModel;
 
 class GeneralLedgerExport implements FromCollection, WithHeadings
 {

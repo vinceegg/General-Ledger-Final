@@ -138,6 +138,7 @@ class GeneralJournalShow extends Component
     // Close modal and reset input
     public function closeModal()
     {
+        session()->forget('message');
         $this->resetInput();
     }
 

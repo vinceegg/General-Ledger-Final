@@ -12,7 +12,13 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
                     </button>
-                </div>               
+                </div> 
+                 <!-- Notification Area -->
+                 @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+                @endif       
                 <form wire:submit.prevent="saveGeneralJournal">
                 <div class="modal-body">
                     <div class="mb-3">
@@ -88,6 +94,12 @@
                 </div>
             <form wire:submit.prevent="updateGeneralJournal">
             <div class="modal-body">
+                <!-- Notification Area -->
+                @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+                @endif    
                     <div class="mb-3">
                         <label>Entry Number</label>
                         <input type="text" wire:model="gj_entrynum" class="form-control">
