@@ -21,6 +21,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'employee_id',
         'email',
         'password',
+        'code',
+        'expire_at',
     ];
 
     /**
@@ -33,13 +35,25 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function generateCode()
+    {
+        $this->timestamps = false;
+        $this->code = rand(1000, 9999);
+        $this->expire_at = now()->addMinute(5);
+        $this->save();
+    }
+
+    public function restCode()
+    {
+        $this->timestamps = false;
+        $this->code = null;
+        $this->expire_at = null;
+        $this->save();
+    }
+
 }

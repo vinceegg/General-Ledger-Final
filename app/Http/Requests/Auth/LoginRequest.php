@@ -2,12 +2,14 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Notifications\TwoFactorCode;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Models\User;
 
 class LoginRequest extends FormRequest
 {
@@ -48,6 +50,15 @@ class LoginRequest extends FormRequest
                 'employee_id' => trans('auth.failed'),
             ]);
         }
+
+        //insert code in data
+        $user = User::where('employee_id', $this->input('employee_id'))->first();
+        $user->generateCode();
+
+        //send mail
+        $user->notify(new TwoFactorCode());
+
+        RateLimiter::clear($this->throttleKey());
 
         RateLimiter::clear($this->throttleKey());
     }
