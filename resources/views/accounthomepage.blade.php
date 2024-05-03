@@ -33,6 +33,7 @@
                 </a>
                 @endforeach
             </div>
+            {{-- search bar --}}
             <div x-data="searchComponent()" @keydown.escape.window="search = ''; results = []" @click.away="search = ''; results = []">
                 <input type="text" x-model="search" 
                        @input.debounce.300="updateResults()" @blur="search ? null : results = []" class="form-control" placeholder="Search...">

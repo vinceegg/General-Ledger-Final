@@ -22,11 +22,6 @@
                 <form wire:submit.prevent="saveGeneralJournal">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label>Entry Number</label>
-                        <input type="text" wire:model="gj_entrynum" class="form-control">
-                        @error('gj_entrynum') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="mb-3">
                         <label>Date</label>
                         <input type="date" wire:model="gj_entrynum_date" class="form-control">
                         @error('gj_entrynum_date') <span class="text-danger">{{ $message }}</span> @enderror
@@ -100,11 +95,6 @@
                     {{ session('message') }}
                 </div>
                 @endif    
-                    <div class="mb-3">
-                        <label>Entry Number</label>
-                        <input type="text" wire:model="gj_entrynum" class="form-control">
-                        @error('gj_entrynum') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
                     <div class="mb-3">
                         <label>Date</label>
                         <input type="date" wire:model="gj_entrynum_date" class="form-control">

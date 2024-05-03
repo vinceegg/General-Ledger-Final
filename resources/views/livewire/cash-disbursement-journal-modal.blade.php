@@ -16,11 +16,12 @@
                 </div>
                 <form wire:submit.prevent="saveCashDisbursementJournal">
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label>Entry Number</label>
-                            <input type="number" wire:model="cdj_entrynum" class="form-control">
-                            @error('cdj_entrynum') <span class="text-danger">{{ $message }}</span> @enderror
+                        <!-- Notification Area -->
+                        @if (session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
                         </div>
+                        @endif   
                         <div class="mb-3">
                             <label>Date</label>
                             <input type="date" wire:model="cdj_entrynum_date" class="form-control">
@@ -113,11 +114,12 @@
                 </div>
             <form wire:submit.prevent="updateCashDisbursementJournal">
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label>Entry Number</label>
-                            <input type="number" wire:model="cdj_entrynum" class="form-control">
-                            @error('cdj_entrynum') <span class="text-danger">{{ $message }}</span> @enderror
+                        <!-- Notification Area -->
+                        @if (session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
                         </div>
+                        @endif   
                         <div class="mb-3">
                             <label>Date</label>
                             <input type="date" wire:model="cdj_entrynum_date" class="form-control">

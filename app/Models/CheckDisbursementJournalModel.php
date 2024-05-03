@@ -18,7 +18,6 @@ class CheckDisbursementJournalModel extends Model
     protected $table = 'check_disbursement_journal';
 
     protected $fillable = [
-        'ckdj_entrynum',
         'ckdj_entrynum_date',
         'ckdj_checknum',
         'ckdj_payee',

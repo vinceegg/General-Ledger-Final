@@ -20,14 +20,13 @@ class GeneralJournalShow extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $gj_entrynum,
+    public
     $gj_entrynum_date,
     $gj_jevnum,
     $gj_particulars,
     $gj_accountcode,
     $gj_debit,
     $gj_credit,
-    $general_journal_col,
     $deleteType; // Added deleteType property
 
     public $search;
@@ -45,14 +44,12 @@ class GeneralJournalShow extends Component
     protected function rules()
     {
         return [
-            'gj_entrynum' => 'required|integer',
             'gj_entrynum_date' => 'nullable|date',
             'gj_jevnum' => 'nullable|integer',
             'gj_particulars' => 'required|string',
             'gj_accountcode' => 'required|string',
             'gj_debit' => 'nullable|numeric|min:0|max:100000000',
             'gj_credit' => 'nullable|numeric|min:0|max:100000000',
-            'general_journal_col' => 'nullable|string',
         ];
     }
 
@@ -79,14 +76,12 @@ class GeneralJournalShow extends Component
         $generaljournal = GeneralJournalModel::find($general_journal_id);
         if ($generaljournal) {
             $this->general_journal_id = $generaljournal->id;
-            $this->gj_entrynum = $generaljournal->gj_entrynum;
             $this->gj_entrynum_date = $generaljournal->gj_entrynum_date;
             $this->gj_jevnum = $generaljournal->gj_jevnum;
             $this->gj_particulars = $generaljournal->gj_particulars;
             $this->gj_accountcode = $generaljournal->gj_accountcode;
             $this->gj_debit = $generaljournal->gj_debit;
             $this->gj_credit = $generaljournal->gj_credit;
-            $this->general_journal_col = $generaljournal->general_journal_col;
         }
         else {
             return redirect() -> to('/general_journal'); 
@@ -99,14 +94,12 @@ class GeneralJournalShow extends Component
         $validatedData = $this->validate();
 
         GeneralJournalModel::where('id', $this->general_journal_id)->update([
-            'gj_entrynum' => $validatedData['gj_entrynum'],
             'gj_entrynum_date' => $validatedData['gj_entrynum_date'],
             'gj_jevnum' => $validatedData['gj_jevnum'],
             'gj_particulars' => $validatedData['gj_particulars'],
             'gj_accountcode' => $validatedData['gj_accountcode'],
             'gj_debit' => $validatedData['gj_debit'],
             'gj_credit' => $validatedData['gj_credit'],
-            'general_journal_col' => $validatedData['general_journal_col'],
          ]);
         session()->flash('message', 'Updated Successfully');
         $this->resetInput();
@@ -145,14 +138,12 @@ class GeneralJournalShow extends Component
     // Reset input values
     public function resetInput()
     {
-        $this->gj_entrynum = '';
         $this->gj_entrynum_date = '';
         $this->gj_jevnum = '';
         $this->gj_particulars = '';
         $this->gj_accountcode = '';
         $this->gj_debit = '';
         $this->gj_credit = '';
-        $this->general_journal_col = '';
     }
 
     // Soft delete GeneralJournal

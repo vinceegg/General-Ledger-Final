@@ -15,6 +15,12 @@
                 </div>               
                 <form wire:submit.prevent="saveGeneralLedger">
                     <div class="modal-body">
+                        <!-- Notification Area -->
+                        @if (session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
+                        </div>
+                        @endif   
                         <div class="mb-3">
                             <label>Symbol</label>
                             <input type="number" wire:model="gl_symbol" class="form-control">
@@ -102,6 +108,12 @@
                 </div>
                 <form wire:submit.prevent="updateGeneralLedger">
                 <div class="modal-body">
+                    <!-- Notification Area -->
+                        @if (session()->has('message'))
+                        <div class="alert alert-success">
+                            {{ session('message') }}
+                        </div>
+                        @endif   
                         <div class="mb-3">
                             <label>Symbol</label>
                             <input type="number" wire:model="gl_symbol" class="form-control">

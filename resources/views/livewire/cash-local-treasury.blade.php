@@ -81,8 +81,7 @@
                 <tbody>
                     @forelse ($general_ledger as $general_ledgers)
                     <tr>
-                        <td>{{ $general_ledgers-> id }}</td>
-                        
+                        <td>{{ $general_ledgers-> id }}</td>                       
                         <td>{{ $general_ledgers-> gl_symbol}}</td>
                         <td>{{ $general_ledgers-> gl_fundname}}</td>
                         <td>{{ $general_ledgers-> gl_func_classification}}</td>

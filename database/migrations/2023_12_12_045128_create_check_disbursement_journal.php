@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('check_disbursement_journal', function (Blueprint $table) {
             $table->id();
-            $table->integer('ckdj_entrynum');
             $table->date('ckdj_entrynum_date')->nullable();
             $table->integer('ckdj_checknum')->nullable();
             $table->string('ckdj_payee')->nullable();

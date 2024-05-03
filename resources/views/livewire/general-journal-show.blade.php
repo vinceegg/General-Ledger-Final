@@ -62,16 +62,13 @@
         <table class="table table-borderd table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Entry Number</th>
                         <th>Date</th>
                         <th>Jev Number</th>
                         <th>Particulars</th>
                         <th>Account Code</th>
                         <th>Debit</th>
-                        <th>Credit</th>
-                        <th>General Journal Col</th>
-                        
+                        <th>Credit</th>                 
                     </tr>
                 </thead>
 
@@ -79,15 +76,12 @@
                     @forelse ($general_journal as $general_journals)
                     <tr>
                         <td>{{ $general_journals->id }}</td>
-                        <td>{{ $general_journals->gj_entrynum }}</td>
                         <td>{{ $general_journals->gj_entrynum_date }}</td>
                         <td>{{ $general_journals->gj_jevnum }}</td>
                         <td>{{ $general_journals->gj_particulars }}</td>
                         <td>{{ $general_journals->gj_accountcode }}</td>
                         <td>₱{{ number_format ($general_journals-> gj_debit, 2, '.', ',') }}</td>
                         <td>₱{{ number_format ($general_journals-> gj_credit, 2, '.', ',') }}</td>
-                        <td>{{ $general_journals->general_journal_col }}</td>
-                                         
                         <td class="flex justify-end">
                             <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-gray-500 dark:text-gray-400">
                                 <button @click="open = !open" id="dropdownButton" class="inline-block hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5">
@@ -126,7 +120,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="6" class="text-right font-bold">Sub Total:</td>
+                        <td colspan="5" class="text-right font-bold">Sub Total:</td>
                         <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
                         <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>
                         <td></td>

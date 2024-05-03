@@ -66,8 +66,7 @@
                 <table class="table table-borderd table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Entry Number</th>
+                            <th>Entry Num</th>
                             <th>Date</th>
                             <th>Reference/RD No.</th>
                             <th>Accountable Officer</th>
@@ -86,7 +85,6 @@
                             @forelse ($cash_disbursement_journal as $cash_disbursement_journals)
                             <tr>
                                 <td>{{ $cash_disbursement_journals-> id }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_entrynum }}</td>
                                 <td>{{ $cash_disbursement_journals-> cdj_entrynum_date }}</td>
                                 <td>{{ $cash_disbursement_journals-> cdj_referencenum }}</td>
                                 <td>{{ $cash_disbursement_journals-> cdj_accountable_officer}}</td>
@@ -142,7 +140,7 @@
                             <tfoot>
                                 <tr>
                                     <td></td>
-                                    <td colspan="6" class="text-right font-bold">Sub Total:</td>
+                                    <td colspan="5" class="text-right font-bold">Sub Total:</td>
                                     <td class="font-bold">₱{{ number_format($totalAmount, 2) }}</td>
                                     <td class="font-bold">₱{{ number_format($totalAccount1, 2) }}</td>
                                     <td class="font-bold">₱{{ number_format($totalAccount2, 2) }}</td>

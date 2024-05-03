@@ -18,14 +18,12 @@ class GeneralJournalModel extends Model
     protected $table = 'general_journal';
  
     protected $fillable = [
-        'gj_entrynum',
         'gj_entrynum_date',
         'gj_jevnum',
         'gj_particulars',
         'gj_accountcode',
         'gj_debit',
         'gj_credit',
-        'general_journal_col',
     ];
 
 

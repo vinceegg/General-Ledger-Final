@@ -19,7 +19,7 @@ class CheckDisbursementJournalShow extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $ckdj_entrynum,
+    public
     $ckdj_entrynum_date,
     $ckdj_checknum,
     $ckdj_payee,
@@ -55,8 +55,6 @@ class CheckDisbursementJournalShow extends Component
     protected function rules()
     {
         return [
-
-            'ckdj_entrynum'=>'required|integer',
             'ckdj_entrynum_date'=>'nullable|date',
             'ckdj_checknum'=>'nullable|integer',
             'ckdj_payee'=>'nullable|string',
@@ -94,7 +92,6 @@ class CheckDisbursementJournalShow extends Component
         if ($check_disbursement_journal) {
 
             $this->check_disbursement_journal_id = $check_disbursement_journal->id;
-            $this->ckdj_entrynum = $check_disbursement_journal->ckdj_entrynum;
             $this->ckdj_entrynum_date = $check_disbursement_journal->ckdj_entrynum_date;
             $this->ckdj_checknum = $check_disbursement_journal->ckdj_checknum;
             $this->ckdj_payee = $check_disbursement_journal->ckdj_payee;
@@ -119,7 +116,6 @@ class CheckDisbursementJournalShow extends Component
         $validatedData = $this->validate();
 
         CheckDisbursementJournalModel::where('id', $this->check_disbursement_journal_id)->update([
-            'ckdj_entrynum' => $validatedData['ckdj_entrynum'],
             'ckdj_entrynum_date' => $validatedData['ckdj_entrynum_date'],
             'ckdj_checknum' => $validatedData['ckdj_checknum'],
             'ckdj_payee' => $validatedData['ckdj_payee'],
@@ -170,7 +166,6 @@ class CheckDisbursementJournalShow extends Component
     public function resetInput()
     {
         $this->check_disbursement_journal_id = '';
-        $this->ckdj_entrynum = '';
         $this->ckdj_entrynum_date = '';            
         $this->ckdj_checknum = '';        
         $this->ckdj_payee = '';

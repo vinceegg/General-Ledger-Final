@@ -62,7 +62,6 @@
                     <table class="table table-borderd table-striped">
                         <thead>
                             <tr>
-                                <th scope="col" class="px-6 py-3">ID</th>
                                 <th scope="col" class="px-6 py-3">Entry Number</th>
                                 <th>Date</th>
                                 <th>JEV No.</th>
@@ -81,7 +80,6 @@
                             @forelse ($cash_receipt_journal as $cash_receipt_journals)
                             <tr>
                                 <td>{{ $cash_receipt_journals-> id }}</td>
-                                <td>{{ $cash_receipt_journals-> crj_entrynum}}</td>
                                 <td>{{ $cash_receipt_journals-> crj_entrynum_date}}</td>
                                 <td>{{ $cash_receipt_journals-> crj_jevnum}}</td>
                                 <td>{{ $cash_receipt_journals-> crj_payor}}</td>                               
@@ -133,7 +131,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="5" class="text-right font-bold">Sub Total:</td>
+                                <td colspan="4" class="text-right font-bold">Sub Total:</td>
                                 <td class="font-bold">₱{{ number_format($totalCollectionDebit, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalCollectionCredit, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalDepositDebit, 2) }}</td>

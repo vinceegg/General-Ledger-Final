@@ -18,7 +18,6 @@ class CashReceiptJournalModel extends Model
     protected $table = 'cash_receipt_journal';
 
     protected $fillable = [
-        'crj_entrynum',
         'crj_entrynum_date',
         'crj_jevnum',
         'crj_payor',

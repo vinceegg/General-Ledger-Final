@@ -21,7 +21,6 @@ class CashDisbursementJournalModel extends Model
     protected $table = 'cash_disbursement_journal';
 
     protected $fillable = [
-            'cdj_entrynum',
             'cdj_entrynum_date',
             'cdj_referencenum',
             'cdj_accountable_officer',

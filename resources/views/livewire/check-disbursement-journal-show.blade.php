@@ -68,7 +68,6 @@
                 <table class="table table-borderd table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Entry Number</th>
                             <th>Date</th>
                             <th>Check No.</th>
@@ -90,7 +89,6 @@
                         @forelse ($check_disbursement_journal as $check_disbursement_journals)
                         <tr>
                             <td>{{ $check_disbursement_journals-> id }}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_entrynum}}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_entrynum_date}}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_checknum}}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_payee}}</td>
@@ -114,19 +112,6 @@
                                         </svg>
                                         </button>
                                     <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
-                                        {{-- <button type="button" data-bs-toggle="modal" data-bs-target="#updateCheckDisbursementJournalModal" wire:click="editCheckDisbursementJournal({{ $check_disbursement_journals->id}})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left"> 
-                                            Edit
-                                        </button>
-
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteCheckDisbursementJournalModal" wire:click="softDeleteCheckDisbursementJournal({{ $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                            Archive
-                                        </button>
- 
-                                        <!-- Force Delete Button -->
-                                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteCheckDisbursementJournalModal" wire:click="deleteCheckDisbursementJournal({{ $check_disbursement_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                            Delete
-                                        </button>   --}}
-
                                         @if (!$viewDeleted)
                                                     <!-- Show Edit and Archive only for active records -->
                                                     <button type="button" data-bs-toggle="modal" data-bs-target="#updateCheckDisbursementJournalModal" wire:click="editCheckDisbursementJournal({{ $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
@@ -144,17 +129,9 @@
                                                         Restore
                                                     </button>
                                                     @endif  
-
                                     </div>
                                 </div>
                             </td>  
-                            {{-- @if ($viewDeleted)
-                            <td>
-                                <button wire:click="restoreCheckDisbursementJournal({{ $check_disbursement_journals->id }})" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                    Restore
-                                </button>
-                            </td>
-                            @endif --}}
                         </tr>
                         @empty
                             <tr>
@@ -164,8 +141,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="6" class="text-right font-bold">Sub Total:</td>
-                            
+                            <td colspan="5" class="text-right font-bold">Sub Total:</td>                           
                             <td class="font-bold">₱{{ number_format($totalCib, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalAccount1, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalAccount2, 2) }}</td>
