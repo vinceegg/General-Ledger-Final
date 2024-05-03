@@ -25,12 +25,6 @@
         <option value="asc">Oldest First</option>
         <option value="desc">Newest First</option>
     </select>
-
-        <!-- CODE FOR REFRESH INCASE NEEDED -->
-         <!-- <button type="button" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-2 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
-         wire:click="closeModal"
-         data-bs-dismiss="modal">Refresh</button>  -->
-
  
     <!-- Import -->                    
     <input type="file" wire:model="file" class="custom-file-input" id="customFile" style="width: 115px;">

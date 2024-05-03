@@ -12,24 +12,19 @@
             <p class="text-yellow-600 mt-2">Journals > <span class="text-black">Cash Disbursement Journal</span></p>
         </div>
     
-        <!-- Search -->
-        <div class="flex items-center">
+       <!-- Search -->
+       <div class="flex items-center">
         <input type="search" wire:model="search" wire:change="searchAction" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
     
         <!-- Select Date -->        
         <label for="date-range" class="mb-0"></label>
-        <input type="month" id="date-range" wire:model="selectedMonth" wire:change="sortDate" class="form-control" style="width: 150px;">
-    
-    
+        <input type="month" id="date-range" wire:model="selectedMonth" wire:change="sortDate"class="form-control" style="width: 150px;">  
+
         <!-- Sort -->
-        <select wire:model="sortDirection" wire:change="sortAction" id="sortDirection" class="ml-2 mr-2">
-        <option value="asc">Oldest First</option>
-        <option value="desc">Newest First</option>
+        <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2">
+            <option value="asc">Newest First</option>
+            <option value="desc">Oldest First</option>
         </select>
-    
-        <button type="button" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-2 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
-        wire:click="closeModal"
-        data-bs-dismiss="modal">Refresh</button> 
             
         <!-- Import -->                    
         <input type="file" wire:model="file" class="custom-file-input" id="customFile" style="width: 115px;">

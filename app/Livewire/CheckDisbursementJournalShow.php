@@ -198,12 +198,12 @@ class CheckDisbursementJournalShow extends Component
     // Sorting logic SA SORT TO KORINNE HA
     public function sortBy($field)
     {
-    if ($this->sortField == $field) {
-        $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-    } else {
-        $this->sortField = $field;
-        $this->sortDirection = 'asc';
-    }
+        if ($this->sortField == $field) {
+            $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
     }
 
     public function importCKDJ()

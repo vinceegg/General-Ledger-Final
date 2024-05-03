@@ -51,11 +51,6 @@
                         <input type="number" wire:model="gj_credit" class="form-control">
                         @error('gj_credit') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-                    <div class="mb-3">
-                        <label>General Journal Col</label>
-                        <input type="text" wire:model="general_journal_col" class="form-control">
-                        @error('general_journal_col') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <!-- CLOSE BUTTON -->
@@ -124,11 +119,6 @@
                         <label>Credit</label>
                         <input type="number" wire:model="gj_credit" class="form-control">
                         @error('gj_credit') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label>General Journal Col</label>
-                        <input type="text" wire:model="general_journal_col" class="form-control">
-                        @error('general_journal_col') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="modal-footer">
