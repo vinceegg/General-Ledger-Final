@@ -21,7 +21,8 @@ class TwoFactorController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
-        if ($request->input('code') == $user->code)
+        $otpCode = $request->code1 . $request->code2 . $request->code3 . $request->code4;
+        if ($otpCode == $user->code)
         {
             $user->restCode();
             return redirect()->route('dashboard');
