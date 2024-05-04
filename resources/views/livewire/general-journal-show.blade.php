@@ -37,7 +37,7 @@
 
         <!-- Add -->
         <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
-        data-modal-target="crud-modal" data-modal-toggle="crud-modal" >
+        data-modal-target="add-modal" data-modal-toggle="add-modal" >
             Add Transaction
         </button>
 
@@ -59,8 +59,8 @@
 
 <!-- TABLE -->
 
-    <div class="relative overflow-x-auto sm:rounded-lg ">
-        <table class="w-full text-base text-left rtl:text-right  border-b table-auto text-gray-700 dark:text-gray-400 ">
+    <div class="relative overflow-x-auto overflow-y-auto sm:rounded-lg ">
+        <table class="w-full text-base text-left rtl:text-right  border-b table-auto text-gray-700 dark:text-gray-400">
             <thead class="text-base text-left text-black bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <!-- VINCEKORIN CODE for added successfully -->
                 @include('livewire.general-journal-modal')
@@ -103,9 +103,10 @@
                                         <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
                                             @if (!$viewDeleted)
                                             <!-- Show Edit and Archive only for active records -->
-                                            <button type="button" data-bs-toggle="modal" data-bs-target="#updateGeneralJournalModal" wire:click="editGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                            <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                 Edit
                                             </button>
+                                            
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteGeneralJournalModal" wire:click="softDeleteGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                 Archive
                                             </button>
