@@ -29,7 +29,7 @@
 
             <!-- Select Date -->        
             <label for="date-range" class="rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-0"></label>
-            <input type="month" id="date-range" wire:model="selectedMonth" wire:change="sortDate"class="form-control rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" style="width: 150px;">  
+            <input type="month" id="date-range" placeholder="Select Date" wire:model="selectedMonth" wire:change="sortDate" class="form-control rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" style="width: 170px;">
 
             <!-- Sort -->
             <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
@@ -39,14 +39,20 @@
             
             <!-- Import -->                    
             <!-- Note: ililipat ko sa gagawin kong import modal yung choose file -mari -->
-            <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" wire:click="importGJ">Import</button>
+            <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
+            data-modal-target="import-modal" data-modal-toggle="import-modal" >Import</button>
 
             <!-- Export -->
-            <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" wire:click="exportGJ">Export</button>
+        
+            <!-- @frontend heree need onting editing sa UI <3 -->
+            <button type="button" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
+            data-modal-target="export-modal" data-modal-toggle="export-modal">
+                Export
+            </button>
 
             <!-- Add -->
             <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
-            data-modal-target="add-modal" data-modal-toggle="add-modal" >
+           data-modal-target="add-modal" data-modal-toggle="add-modal" >
                 Add Transaction
             </button>
 
@@ -90,12 +96,12 @@
                                             <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
                                             </svg>
                                         </button>
-                                        <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
+                                        <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 
+                                        w-56 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
                                             
                                             <!-- Show Edit and Archive only for active records -->
                                             <button type="button" wire:click="toggleDeletedView" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                Show Archived Records
-                                                {{ $viewDeleted ? 'Show Active Records' : 'Show Deleted Records' }}
+                                                                                                {{ $viewDeleted ? 'Show Active Records' : 'Show Archived Records' }}
                                             </button>
                                         
                                                               
@@ -129,7 +135,7 @@
                                         <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
                                             @if (!$viewDeleted)
                                             <!-- Show Edit and Archive only for active records -->
-                                            <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                            <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                 Edit
                                             </button>
                                             
