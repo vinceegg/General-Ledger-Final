@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> <!-- Tailwind styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link href="/css/main.css" rel="stylesheet">
+    <link href ="/css/main.css" rel ="stylesheet">
+    <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <title>General Journal</title>
-
     @livewireStyles
     @vite('resources/css/app.css')
 </head>
+<body>
 @csrf
 
 <!-- TOPNAV -->
@@ -33,7 +34,6 @@
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-blue-800">PLM LEDGER</span>
         </a>
       </div>
-      <div class="flex items-center">
           <!-- Settings Dropdown -->
           <div class="hidden sm:flex sm:items-center sm:ms-6">
               <x-dropdown align="right" width="48">
@@ -157,19 +157,7 @@
             </a>
           @endforeach
          </li>
-         <li>
-         @foreach([''] as $route) {{ $route }}
-            <a href="{{ url('/settings' . $route) }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group">
-            <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                <path d="M19 11V9a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L12 2.757V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L2.929 4.343a1 1 0 0 0 0 1.414l.536.536L2.757 8H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535L8 17.243V18a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H18a1 1 0 0 0 1-1Z"/>
-                <path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                </g>
-            </svg>
-               <span class="ms-3">Settings</span>
-            </a>
-            @endforeach
-         </li>
+         
          <li>
           <form method="POST" action="{{ route('logout') }}">
               @csrf
