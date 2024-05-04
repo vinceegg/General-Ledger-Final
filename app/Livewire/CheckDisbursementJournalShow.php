@@ -17,7 +17,6 @@ class CheckDisbursementJournalShow extends Component
     use WithPagination;
     use WithFileUploads;
 
-    protected $paginationTheme = 'bootstrap';
 
     public $ckdj_entrynum,
     $ckdj_entrynum_date,

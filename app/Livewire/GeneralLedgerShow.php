@@ -18,7 +18,6 @@ class GeneralLedgerShow extends Component
     use WithPagination;
     use WithFileUploads;
 
-    protected $paginationTheme = 'bootstrap';
 
     public $gl_symbol,
     $gl_fundname,

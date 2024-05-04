@@ -7,6 +7,8 @@
     <title>Check Disbursement Journal</title>
     @livewireStyles
     @vite('resources/css/app.css')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
 @csrf

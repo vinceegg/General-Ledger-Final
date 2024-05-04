@@ -20,7 +20,6 @@ class CashLocalTreasury extends Component
     use WithPagination;
     use WithFileUploads;
 
-    protected $paginationTheme = 'bootstrap';
 
     public
     $gl_symbol,

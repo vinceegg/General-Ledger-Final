@@ -13,43 +13,23 @@
         </div>
 
         <!-- Search -->
+
+        
         <div class="flex items-center">
-        <input type="search" wire:model="search" wire:keydown.enter="searchAction" class="ml-2 mr-2" placeholder="Search ID..." style="width: 180px" />
-
-            
-        <!-- Select Date -->        
-        <label for="date-range" class="mb-0"></label>
-        <input type="month" id="date-range" wire:model="selectedMonth" wire:change="sortDate"class="form-control" style="width: 150px;">  
-
-        <!-- Sort -->
-        <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2">
-            <option value="asc">Newest First</option>
-            <option value="desc">Oldest First</option>
-        </select>
-        
-        <!-- Import -->                    
-        <input type="file" wire:model="file" class="custom-file-input" id="customFile" style="width: 115px;">
-        <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" wire:click="importGL">Import</button>
-
-        <!-- Export -->
-        
-        <!-- @frontend heree need onting editing sa UI <3 -->
-        <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
-            data-bs-toggle="modal" data-bs-target="#exportGeneralLedgerModal">
-            Export (new)
-        </button>
-
-        <!-- Add -->
-        <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
-            data-bs-toggle="modal" data-bs-target="#GeneralLedgerModal">
-            Add Transaction
-        </button>
-
-        {{-- View Soft Deleted Records --}}
-        <button wire:click="toggleDeletedView" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            {{ $viewDeleted ? 'Show Active Records' : 'Show Deleted Records' }}
-        </button>
-
+        <div x-data="searchComponent()" @keydown.escape.window="search = ''; results = []" @click.away="search = ''; results = []">
+                <input type="text" x-model="search" 
+                       @input.debounce.300="updateResults()" @blur="search ? null : results = []" class="form-control" placeholder="Search...">
+                <div x-show="results.length > 0">
+                    <ul class="list-group">
+                        <template x-for="item in results" :key="item.name">
+                            <li class="list-group-item" @click="window.location.href = item.url">
+                                <span x-text="item.name"></span>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+       
     </div>
 
 </div>
@@ -68,7 +48,7 @@
         <table class="table table-borderd table-striped">
                     <thead>
                         <tr>
-                        <th>Entry Number</th>
+                        <th>Entry Number</th>                       
                         <th>Symbol</th>
                         <th>Name of Fund or Account</th>
                         <th>Functional Classification</th>
@@ -87,17 +67,19 @@
                     @forelse ($general_ledger as $general_ledgers)
                     <tr>
                         <td>{{ $general_ledgers-> id }}</td>
+                        
                         <td>{{ $general_ledgers-> gl_symbol}}</td>
                         <td>{{ $general_ledgers-> gl_fundname}}</td>
                         <td>{{ $general_ledgers-> gl_func_classification}}</td>
                         <td>{{ $general_ledgers-> gl_project_title}}</td>
                         <td>{{ $general_ledgers-> gl_date}}</td>
                         <td>{{ $general_ledgers-> gl_vouchernum}}</td>
-                        <td>{{ $general_ledgers-> gl_particulars}}</td>                               
+                        <td>{{ $general_ledgers-> gl_particulars}}</td>
                         <td>₱{{ number_format($general_ledgers->gl_balance_debit, 2, '.', ',') }}</td>                                 
                         <td>₱{{ number_format($general_ledgers->gl_debit, 2, '.', ',') }}</td>                                 
                         <td>₱{{ number_format($general_ledgers->gl_credit, 2, '.', ',') }}</td>                      
-                        <td>₱{{ number_format($general_ledgers->gl_credit_balance, 2, '.', ',') }}</td>                                     
+                        <td>₱{{ number_format($general_ledgers->gl_credit_balance, 2, '.', ',') }}</td>  
+                                        
                                
                         <td class="flex justify-end">
                             <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-gray-500 dark:text-gray-400">
@@ -150,4 +132,5 @@
                     <div>
                         {{ $general_ledger->links() }}
                     </div>
+</div>
 </div>

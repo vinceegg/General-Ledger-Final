@@ -17,7 +17,6 @@ class CashDisbursementJournalShow extends Component
     use WithPagination;
     use WithFileUploads;
 
-    protected $paginationTheme = 'bootstrap';
 
     public $cdj_entrynum,
     $cdj_entrynum_date,
