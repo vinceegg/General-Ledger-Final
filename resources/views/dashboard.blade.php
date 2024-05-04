@@ -108,7 +108,6 @@
   </div>
 </nav>
 
-
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-blue-800 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
    <div class="h-full px-3 pb-4 overflow-y-auto bg-blue-800 dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
@@ -333,13 +332,10 @@
         </div>
     </div>
 </div>
-<div class="p-6 grid sm:col-span-1 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
-  <div class="flex gap-2 pb-3">
-    <div class="">           
-      <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-      
-    </div>
-</div>      
+
+<div>
+    <livewire:todo-component />
+</div>
 
 @livewireScripts
 @stack('scripts')
