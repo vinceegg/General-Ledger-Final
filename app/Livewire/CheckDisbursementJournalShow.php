@@ -55,8 +55,6 @@ class CheckDisbursementJournalShow extends Component
     protected function rules()
     {
         return [
-
-            'ckdj_entrynum'=>'required|integer',
             'ckdj_entrynum_date'=>'nullable|date',
             'ckdj_checknum'=>'nullable|integer',
             'ckdj_payee'=>'nullable|string',

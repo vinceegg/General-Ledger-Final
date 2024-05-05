@@ -82,37 +82,34 @@
 
                 <tbody>
                 @forelse ($general_journal as $general_journals)
-                    @php
-                        // Check if the data is a string and decode it if it is
-                        $accountData = is_string($general_journals->gj_accountcode_data) ? json_decode($general_journals->gj_accountcode_data, true) : $general_journals->gj_accountcode_data;
-                        $rowSpan = count($accountData) ?: 1;
-                    @endphp
-                    @foreach ($accountData as $index => $gj_accountcodes)
-                        <tr>
-                            @if ($index == 0)  {{-- Only display these cells on the first iteration --}}
-                                <td rowspan="{{ $rowSpan }}">{{ $general_journals->id }}</td>
-                                <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_entrynum_date }}</td>
-                                <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_jevnum }}</td>
-                                <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_particulars }}</td>
-                            @endif
-                            <td>{{ $gj_accountcodes['gj_accountcode'] ?? 'N/A' }}</td>
-                            <td>{{ $gj_accountcodes['gj_debit'] ?? '' }}</td>
-                            <td>{{ $gj_accountcodes['gj_credit'] ?? '' }}</td>
-                            @if ($index == 0)  {{-- Only display this cell on the first iteration --}}
-                                <td rowspan="{{ $rowSpan }}">{{ $general_journals->general_journal_col }}</td>
-                            @endif
-                        </tr>
-                    @endforeach
-                    @if (empty($accountData))  {{-- If there is no account data, show a single row --}}
-                        <tr>
-                            <td>{{ $general_journals->id }}</td>
-                            <td>{{ $general_journals->gj_entrynum_date }}</td>
-                            <td>{{ $general_journals->gj_jevnum }}</td>
-                            <td>{{ $general_journals->gj_particulars }}</td>
-                            <td colspan="3">No Account Data</td>
-                            <td>{{ $general_journals->general_journal_col }}</td>
-                        </tr>
-                    @endif
+    @php
+        $gj_accountcodes_data = $general_journals->gj_accountcodes_data; // Access the relationship
+        $rowSpan = count($gj_accountcodes_data) ?: 1; // Get count or default to 1
+    @endphp
+
+    @foreach ($gj_accountcodes_data as $index => $gj_accountcode_data)
+        <tr>
+            @if ($index == 0) {{-- Only display these cells on the first iteration --}}
+                <td rowspan="{{ $rowSpan }}">{{ $general_journals->id }}</td>
+                <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_entrynum_date }}</td>
+                <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_jevnum }}</td>
+                <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_particulars }}</td>
+            @endif
+            <td>{{ $gj_accountcode_data->gj_accountcode}}</td>
+            <td>{{ $gj_accountcode_data->gj_debit ?? '' }}</td>
+            <td>{{ $gj_accountcode_data->gj_credit ?? '' }}</td>
+        </tr>
+    @endforeach
+    @if ($gj_accountcodes_data->isEmpty()) {{-- If there are no account codes, show a single row --}}
+        <tr>
+            <td>{{ $general_journals->id }}</td>
+            <td>{{ $general_journals->gj_entrynum_date }}</td>
+            <td>{{ $general_journals->gj_jevnum }}</td>
+            <td>{{ $general_journals->gj_particulars }}</td>
+            <td colspan="3">No Account Data</td>
+        </tr>
+    @endif
+
 
                         <td class="flex justify-end">
                             <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-gray-500 dark:text-gray-400">
@@ -159,6 +156,8 @@
                     </tr>
                 </tfoot>               
             </table>
+
+            
             
                     <div>
                         {{ $general_journal->links() }}

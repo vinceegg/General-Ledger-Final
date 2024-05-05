@@ -32,26 +32,27 @@
                     </div>
                     
                     <div>
-                    <button type="button" class="btn btn-secondary bg-gray-500 hover:bg-gray-600 focus:bg-gray-600"  wire:click="addAccountCode"> +Account Code</button>
-                    @foreach ($gj_accountcode_data as $index => $entry)
-                        <div class="mb-3">
-                            <label>Account Code</label>
-                            <input type="text" wire:model="gj_accountcode_data.{{ $index }}.gj_accountcode" class="form-control">
-                            @error('gj_accountcode_data.'.$index.'.gj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label>Debit</label>
-                            <input type="number" wire:model="gj_accountcode_data.{{ $index }}.gj_debit" class="form-control">
-                            @error('gj_accountcode_data.'.$index.'.gj_debit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label>Credit</label>
-                            <input type="number" wire:model="gj_accountcode_data.{{ $index }}.gj_credit" class="form-control">
-                            @error('gj_accountcode_data.'.$index.'.gj_credit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <button type="button" wire:click="removeAccountCode({{ $index }})" class="btn text-danger">Remove</button>
-                    @endforeach
+            <button type="button" class="btn btn-secondary" wire:click="addAccountCode">+  Add Account Code</button>
+            @foreach ($gj_accountcodes_data as $index => $entry)
+                <div class="mb-3">
+                    <label>Account Code</label>
+                    <input type="text" wire:model="gj_accountcodes_data.{{ $index }}.gj_accountcode" class="form-control">
+                    @error('gj_accountcodes_data.' . $index . '.gj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
+                <div class="mb-3">
+                    <label>Debit</label>
+                    <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_debit" class="form-control">
+                    @error('gj_accountcodes_data.' . $index . '.gj_debit') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+                <div class="mb-3">
+                    <label>Credit</label>
+                    <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_credit" class="form-control">
+                    @error('gj_accountcodes_data.' . $index . '.gj_credit') <span class="text-danger">{{ $message }}</span> @enderror
+                </div>
+                <button type="button" class="btn btn-danger" wire:click="removeAccountCode({{ $index }})">Remove</button>
+            @endforeach
+        </div>
+
 
                     
                 </div>
@@ -102,23 +103,26 @@
                         <input type="text" wire:model="gj_particulars" class="form-control">
                         @error('gj_particulars') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
-                    @foreach ($gj_accountcode_data as $index => $entry)
+                   
+                    <!-- @korin: edit this -->
+
+                    @foreach ($gj_accountcodes_data as $index => $entry)
                         <div class="mb-3">
                             <label>Account Code</label>
-                            <input type="text" wire:model="gj_accountcode_data.{{ $index }}.gj_accountcode" class="form-control">
-                            @error('gj_accountcode_data.'.$index.'.gj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                            <input type="text" wire:model="gj_accountcodes_data.{{ $index }}.gj_accountcode" class="form-control">
+                            @error('gj_accountcodes_data.' . $index . '.gj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-3">
                             <label>Debit</label>
-                            <input type="number" wire:model="gj_accountcode_data.{{ $index }}.gj_debit" class="form-control">
-                            @error('gj_accountcode_data.'.$index.'.gj_debit') <span class="text-danger">{{ $message }}</span> @enderror
+                            <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_debit" class="form-control">
+                            @error('gj_accountcodes_data.' . $index . '.gj_debit') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-3">
                             <label>Credit</label>
-                            <input type="number" wire:model="gj_accountcode_data.{{ $index }}.gj_credit" class="form-control">
-                            @error('gj_accountcode_data.'.$index.'.gj_credit') <span class="text-danger">{{ $message }}</span> @enderror
+                            <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_credit" class="form-control">
+                            @error('gj_accountcodes_data.' . $index . '.gj_credit') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <button type="button" wire:click="removeAccountCode({{ $index }})" class="btn text-danger">Remove</button>
+                        <button type="button" class="btn btn-danger" wire:click="removeAccountCode({{ $index }})">Remove</button>
                     @endforeach
                 </div>
                 <div class="modal-footer">
