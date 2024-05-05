@@ -136,7 +136,7 @@
 </div>
 
 
-<div class="container mx-auto px-4">
+<div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <div class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
         <table class="min-w-full leading-normal">
             <thead>
@@ -210,6 +210,7 @@
                 { name: 'General Journal', url: '/GJ' },
                 { name: 'General Ledger', url: '/LS' },
                 { name: 'Cash Local Treasury', url: '/CashLocalTreasury' },
+                
             ],
             updateResults() {
                 const search = this.search.trim().toLowerCase();
