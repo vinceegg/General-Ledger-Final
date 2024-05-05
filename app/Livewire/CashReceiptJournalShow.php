@@ -17,7 +17,6 @@ class CashReceiptJournalShow extends Component
     use WithPagination;
     use WithFileUploads;
 
-    protected $paginationTheme = 'bootstrap';
 
     public $crj_entrynum,
     $crj_entrynum_date,

@@ -8,8 +8,8 @@
 
         <!-- Title -->
         <div class="flex flex-col items-left justify-between">
-            <p class="font-bold text-blue-800 text-3xl">Cash Local Treasury</p>
-            <p class="text-yellow-600 mt-2"> General Ledger  <span class="text-black"General Ledger</span></p>
+            <p class="font-extrabold text-blue-800 text-3xl">Cash Local Treasury</p>
+            <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet > Cash Local Treasury</span></p>
         </div>
 
         <!-- Search -->
@@ -49,39 +49,38 @@
 
 </div>
         
-<!-- Table -->
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400">
-        <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+<!-- 2nd Rectangle -->
+<div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
-<!-- VINCEKORIN CODE -->
-<div>
-    @include('livewire.general-ledger-modal')
-        @if (session()->has('message'))
-            <h5 class="alert alert-success">{{ session('message') }}</h5>
-        @endif
-        <table class="table table-borderd table-striped">
-                    <thead>
-                        <tr>
-                        <th>Entry Number</th>                       
-                        <th>Symbol</th>
-                        <th>Name of Fund or Account</th>
-                        <th>Functional Classification</th>
-                        <th>Title of Project or Expense Classification</th>
-                        <th>Date</th>
-                        <th>Voucher No.</th>
-                        <th>Particulars</th>
-                        <th>Balance Debit</th>
-                        <th>Debits</th>
-                        <th>Credits</th>
-                        <th>Credits Balance</th>
+<!-- TABLE -->
+
+    <div class="relative overflow-x-auto sm:rounded-lg ">
+        <table class="w-full text-base text-left rtl:text-right  border-b table-auto text-gray-700 dark:text-gray-400 ">
+            <thead class="text-base text-left text-black bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <!-- VINCEKORIN CODE for added successfully -->
+                    @if (session()->has('message'))
+                        <h5 class="alert alert-success">{{ session('message') }}</h5>
+                    @endif
+                    <tr class ="text-left odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 shadow-md"> <!-- table heading design -->
+                    <th scope="col" class = "py-4 px-6">Entry Number</th>                       
+                        <th scope="col">Symbol</th>
+                        <th scope="col">Name of Fund or Account</th>
+                        <th scope="col">Functional Classification</th>
+                        <th scope="col">Title of Project or Expense Classification</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Voucher No.</th>
+                        <th scope="col">Particulars</th>
+                        <th scope="col">Balance Debit</th>
+                        <th scope="col">Debits</th>
+                        <th scope="col">Credits</th>
+                        <th scope="col">Credits Balance</th>
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody class="space-y-4">
                     @forelse ($general_ledger as $general_ledgers)
-                    <tr>
-                        <td>{{ $general_ledgers-> id }}</td>
+                    <tr class = "hover:bg-gray-100 odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 ">
+                                <td scope="row" class="px-6 py-3 font-large text-gray-900 whitespace-nowrap dark:text-white">{{ $general_ledgers-> id }}</td>
                         
                         <td>{{ $general_ledgers-> gl_symbol}}</td>
                         <td>{{ $general_ledgers-> gl_fundname}}</td>
@@ -133,8 +132,8 @@
                     @endforelse                                
                 </tbody>
                     <tfoot>
-                        <tr>
-                            <td colspan="8" class="text-right font-bold">Sub Total:</td>
+                        <tr class = "border-b shadow">
+                            <td colspan="8"  class="px-6 py-4 font-large text-gray-900 whitespace-nowrap dark:text-white text-right font-bold">Sub Total:</td>
                             <td class="font-bold">₱{{ number_format($totalBalanceDebit, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>

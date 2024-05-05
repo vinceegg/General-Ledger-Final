@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>Ledger Sheet</title>
     @livewireStyles
     @vite('resources/css/app.css')
+    <!-- <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link href="/css/main.css" rel="stylesheet">
+    <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <title>Ledger Sheet</title>
+    @livewireStyles
+    @vite('resources/css/app.css') -->
 </head>
 <body>
 @csrf
@@ -31,37 +41,39 @@
         </a>
       </div>
       <div class="flex items-center">
-          <div class="flex items-center ms-3">
-            <div>
-              <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-              </button>
-            </div>
-            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-              <div class="px-4 py-3" role="none">
-                <p class="text-sm text-gray-900 dark:text-white" role="none">
-                  Mara Calinao
-                </p>
-                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                  maracalinao@plm.edu.ph
-                </p>
-              </div>
-              <ul class="py-1" role="none">
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Home</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
-                </li>
-              </ul>
-            </div>
+        
+          <!-- Settings Dropdown -->
+          <div class="hidden sm:flex sm:items-center sm:ms-6">
+              <x-dropdown align="right" width="48">
+                  <x-slot name="trigger">
+                      <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                          <div>{{ Auth::user()->email }}</div> <!-- Updated to show email -->
+                          <div class="ms-1">
+                              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                              </svg>
+                          </div>
+                      </button>
+                  </x-slot>
+
+                  <x-slot name="content">
+                      <x-dropdown-link :href="route('profile.edit')">
+                          {{ __('Profile') }}
+                      </x-dropdown-link>
+                      <!-- Authentication -->
+                      <form method="POST" action="{{ route('logout') }}">
+                          @csrf
+                          <x-dropdown-link :href="route('logout')"
+                                  onclick="event.preventDefault();
+                                              this.closest('form').submit();">
+                              {{ __('Log Out') }}
+                          </x-dropdown-link>
+                      </form>
+                  </x-slot>
+              </x-dropdown>
+          </div>
+
+
           </div>
         </div>
     </div>
@@ -173,6 +185,51 @@
 </aside>
 
 <!-- DITO NA KO -->
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('search', {
+            items: [
+                { name: 'Cash Receipt Journal', url: '/CRJ' },
+                { name: 'Check Disbursement Journal', url: '/CKDJ' },
+                { name: 'Cash Disbursement Journal', url: '/CDJ' },
+                { name: 'General Journal', url: '/GJ' },
+                { name: 'General Ledger', url: '/LS' },
+                { name: 'Cash Local Treasury', url: '/CashLocalTreasury' },
+            ],
+            updateResults() {
+                const search = this.search.trim().toLowerCase();
+                if (search) {
+                    this.results = this.items.filter(item => 
+                        item.name.toLowerCase().includes(search)
+                    );
+                } else {
+                    this.results = [];
+                }
+            }
+        });
+
+        Alpine.data('searchComponent', function () {
+            return {
+                search: '',
+                results: [],
+                updateResults() {
+                    this.results = Alpine.store('search').items.filter(item =>
+                        item.name.toLowerCase().includes(this.search.trim().toLowerCase())
+                    );
+                },
+                init() {
+                    this.$watch('search', (value) => {
+                        if (value) {
+                            this.updateResults();
+                        } else {
+                            this.results = [];
+                        }
+                    });
+                }
+            };
+        });
+    });
+</script>
 
 @extends('layouts.app1')
  
@@ -184,5 +241,13 @@
   
 @endsection
             
+@livewireScripts
+@stack('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/datepicker.min.js"></script>
+{{-- type ahead script --}}
+<script src="https://unpkg.com/alpinejs@3.10.3" defer></script>
+
+
 </body>
 </html>

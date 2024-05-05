@@ -15,10 +15,8 @@ use Carbon\Carbon;
 
 class GeneralJournalShow extends Component
 {
-    use WithPagination;
     use WithFileUploads;
 
-    protected $paginationTheme = 'bootstrap';
 
     public $gj_entrynum,
     $gj_entrynum_date,
