@@ -12,8 +12,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Exception;
 
 
 
@@ -38,8 +36,8 @@ class GeneralJournalShow extends Component
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
-    public $totalDebit;
-    public $totalCredit;
+    public $totalDebit = 0;
+    public $totalCredit = 0;
     public $viewDeleted = false; // Property to toggle deleted records view
 
     // Validation rules
@@ -62,15 +60,16 @@ class GeneralJournalShow extends Component
         $this->validateOnly($fields);
     }
 
+    //@korinlv: added this function
     public function mount()
-{
-    // Example initialization, you might load this from a database or start with an empty array
-    $this->gj_accountcodes_data = [
-        ['gj_accountcode' => '', 'gj_debit' => '', 'gj_credit' => '']
-    ];
-}
+    {
+        // Example initialization, you might load this from a database or start with an empty array
+        $this->gj_accountcodes_data = [
+            ['gj_accountcode' => '', 'gj_debit' => '', 'gj_credit' => '']
+        ];
+    }
     // Save new GeneralJournal
-    //@korinlv: update this function
+    //@korinlv: updated this function
     public function saveGeneralJournal()
     {
         $validatedData = $this->validate();
@@ -108,59 +107,62 @@ class GeneralJournalShow extends Component
 
 
     // Edit GeneralJournal
-    //@korinlv: update this function
+    //@korinlv: updated this function
     public function editGeneralJournal($general_journal_id)
-{
-    $generalJournal = GeneralJournalModel::with('gj_accountcodes_data')->find($general_journal_id);
-    if ($generalJournal) {
-        $this->general_journal_id = $generalJournal->id;
-        $this->gj_entrynum_date = $generalJournal->gj_entrynum_date;
-        $this->gj_jevnum = $generalJournal->gj_jevnum;
-        $this->gj_particulars = $generalJournal->gj_particulars;
+    {
+        $generalJournal = GeneralJournalModel::with('gj_accountcodes_data')->find($general_journal_id);
+        if ($generalJournal) {
+            $this->general_journal_id = $generalJournal->id;
+            $this->gj_entrynum_date = $generalJournal->gj_entrynum_date;
+            $this->gj_jevnum = $generalJournal->gj_jevnum;
+            $this->gj_particulars = $generalJournal->gj_particulars;
 
-        // Handle related data as array of objects or similar structure
-        $this->gj_accountcodes_data = $generalJournal->gj_accountcodes_data->toArray();
-    } else {
-        return redirect()->to('/GJ');
+            // Handle related data as array of objects or similar structure
+            $this->gj_accountcodes_data = $generalJournal->gj_accountcodes_data->toArray();
+        } else {
+            return redirect()->to('/GJ');
+        }
     }
-}
 
 
     // Update GeneralJournal
+    //@korinlv: edited this function
     public function updateGeneralJournal()
     {
         $validatedData = $this->validate([
-            'gj_entrynum_date' => 'required',
-            'gj_jevnum' => 'required',
-            'gj_particulars' => 'required',
-            'gj_accountcodes_data.*.gj_accountcode' => 'required',
-            'gj_accountcodes_data.*.gj_debit' => 'numeric|required',
-            'gj_accountcodes_data.*.gj_credit' => 'numeric|required',
+            'gj_entrynum_date' => 'required|date',
+            'gj_jevnum' => 'required|numeric',
+            'gj_particulars' => 'required|string',
+            'gj_accountcodes_data.*.gj_accountcode' => 'required|string',
+            'gj_accountcodes_data.*.gj_debit' => 'required|numeric',
+            'gj_accountcodes_data.*.gj_credit' => 'required|numeric',
         ]);
-    
+
         try {
-            // Update the GeneralJournalModel directly
             $generalJournal = GeneralJournalModel::findOrFail($this->general_journal_id);
             $generalJournal->update($validatedData);
-    
-            // Update related account codes
+
             foreach ($this->gj_accountcodes_data as $data) {
-                GeneralJournal_AccountCodesModel::updateOrCreate(
-                    ['id' => $data['id'] ?? null],
-                    ['gj_accountcode' => $data['gj_accountcode'], 'gj_debit' => $data['gj_debit'], 'gj_credit' => $data['gj_credit']]
-                );
+                if (isset($data['id']) && $data['id']) {
+                    // Update existing account code
+                    $accountCode = GeneralJournal_AccountCodesModel::find($data['id']);
+                    if ($accountCode) {
+                        $accountCode->update($data);
+                    }
+                } else {
+                    // Create new account code
+                    $generalJournal->gj_accountcodes_data()->create($data);
+                }
             }
-    
+
             session()->flash('message', 'Updated Successfully');
         } catch (\Exception $e) {
-            // Handle exception without rolling back since no explicit transaction is started
             session()->flash('error', "Failed to update: " . $e->getMessage());
-
         }
-        session()->flash('message', 'Updated Successfully');
-        $this->resetInput();  // Reset all properties
-        $this->dispatch('close-modal');  // Assume you mean $this->emit to use Livewire's event system
-    }
+        
+            $this->resetInput();  // Reset all properties
+            $this->dispatch('close-modal');  // Assume you mean $this->emit to use Livewire's event system
+        }
 
 
     // Delete GeneralJournal
@@ -190,9 +192,11 @@ class GeneralJournalShow extends Component
     public function closeModal()
     {
         $this->resetInput();
+        $this->dispatch('close-modal');
     }
 
     // Reset input values
+    //@korinlv: edited this function
     public function resetInput()
     {
         $this->gj_entrynum_date = '';
@@ -205,6 +209,10 @@ class GeneralJournalShow extends Component
     {
         $general_journal= GeneralJournalModel::find($general_journal_id);
         if ( $general_journal) {
+            foreach ($general_journal->gj_accountcodes_data as $accountCode){
+                $accountCode->delete();
+            }
+            
             $general_journal->delete();
             session()->flash('message', 'Soft Deleted Successfully');
     }    
@@ -283,6 +291,10 @@ class GeneralJournalShow extends Component
     {
         $general_journal = GeneralJournalModel::onlyTrashed()->find($id);
         if ($general_journal) {
+            $trashedAccountCodes = $general_journal->gj_accountcodes_data()->onlyTrashed()->get();
+            foreach ($trashedAccountCodes as $accountCode){
+                $accountCode->restore();
+            }
             $general_journal->restore();
             session()->flash('message', 'Record restored successfully.');
         }
@@ -292,6 +304,7 @@ class GeneralJournalShow extends Component
     public function render()
     {
         $query = GeneralJournalModel::query();
+        
 
         // Fetch only soft-deleted records if viewDeleted is set to true
         if ($this->viewDeleted) {
@@ -306,6 +319,25 @@ class GeneralJournalShow extends Component
             $query->whereBetween('gj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
+        $general_journals = $query->with(['gj_accountcodes_data' => function($query){
+            if ($this->viewDeleted) {
+                $query->onlyTrashed();
+            }
+        }])->get();
+        
+        $totalDebit = 0;
+        $totalCredit = 0;
+
+        foreach ($general_journals as $journal) {
+            foreach ($journal->gj_accountcodes_data ?: [] as $accountCode) { // Ensure sundry data is treated as an array
+                $totalDebit += $accountCode->gj_debit ?? 0;
+                $totalCredit += $accountCode->gj_credit ?? 0;
+            }
+        }
+    
+        $this->totalDebit = $totalDebit;
+        $this->totalCredit = $totalCredit;
+
         // Add the search filter
         $query->where('id', 'like', '%' . $this->search . '%');
 
@@ -313,11 +345,9 @@ class GeneralJournalShow extends Component
         $query->orderBy($this->sortField , $this->sortDirection);
 
         // Get paginated results
-        $general_journal = $query->orderBy('id', 'ASC')->paginate(10);
+        $general_journal = $query->paginate(10);
 
          // Compute the total debit and credit for the selected month
-         $this->totalDebit = GeneralJournal_AccountCodesModel::sum('gj_debit');
-         $this->totalCredit = GeneralJournal_AccountCodesModel::sum('gj_credit');
 
         return view('livewire.general-journal-show', ['general_journal' => $general_journal]);
     }

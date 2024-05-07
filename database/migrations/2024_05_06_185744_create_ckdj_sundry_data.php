@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gj_accountcodes_data', function (Blueprint $table) {
+        Schema::create('ckdj_sundry_data', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('general_journal_id')->constrained('general_journal')->onDelete('cascade');
-            $table->string('gj_accountcode')->nullable();
-            $table->decimal('gj_debit')->nullable();
-            $table->decimal('gj_credit')->nullable();
+            $table->foreignId('check_disbursement_journal_id')->constrained('check_disbursement_journal')->onDelete('cascade');
+            $table->string('ckdj_accountcode')->nullable();
+            $table->decimal('ckdj_debit')->nullable();
+            $table->decimal('ckdj_credit')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gj_accountcodes_data');
+        Schema::dropIfExists('ckdj_sundry_data');
     }
 };

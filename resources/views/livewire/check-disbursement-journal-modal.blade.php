@@ -65,21 +65,30 @@
                             <input type="number" wire:model="ckdj_honoraria" class="form-control">
                             @error('ckdj_honoraria') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="mb-3">
-                            <label> Sundry Account Code</label>
-                            <input type="text" wire:model="ckdj_sundry_accountcode" class="form-control">
-                            @error('ckdj_sundry_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                        
+                        <!-- @korin:edited this part -->
+                        <div>
+                            <button type="button" class="btn btn-secondary" wire:click="addAccountCode">+  Add Sundry</button>
+                            @foreach ($ckdj_sundry_data as $index => $entry)
+                                <div class="mb-3">
+                                    <label>Account Code</label>
+                                    <input type="text" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_accountcode" class="form-control">
+                                    @error('ckdj_sundry_data.' . $index . 'ckdj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label>Debit</label>
+                                    <input type="number" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_debit" class="form-control">
+                                    @error('ckdj_sundry_data.' . $index . '.ckdj_debit') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label>Credit</label>
+                                    <input type="number" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_credit" class="form-control">
+                                    @error('ckdj_sundry_data.' . $index . '.ckdj_credit') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <button type="button" class="btn btn-danger" wire:click="removeAccountCode({{ $index }})">Remove</button>
+                            @endforeach
                         </div>
-                        <div class="mb-3">
-                            <label>Debit</label>
-                            <input type="number" wire:model="ckdj_debit" class="form-control">
-                            @error('ckdj_debit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label>Credit</label>
-                            <input type="number" wire:model="ckdj_credit" class="form-control">
-                            @error('ckdj_credit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
+
                     </div>
                     <div class="modal-footer">
                         <!-- CLOSE BUTTON -->
@@ -161,21 +170,30 @@
                             <input type="number" wire:model="ckdj_honoraria" class="form-control">
                             @error('ckdj_honoraria') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="mb-3">
-                            <label> Sundry Account Code</label>
-                            <input type="text" wire:model="ckdj_sundry_accountcode" class="form-control">
-                            @error('ckdj_sundry_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                        
+                        <!-- @korin:edited this part -->
+                        <div>
+                            <button type="button" class="btn btn-secondary" wire:click="addAccountCode">+  Add Sundry</button>
+                            @foreach ($ckdj_sundry_data as $index => $entry)
+                                <div class="mb-3">
+                                    <label>Account Code</label>
+                                    <input type="text" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_accountcode" class="form-control">
+                                    @error('ckdj_sundry_data.' . $index . 'ckdj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label>Debit</label>
+                                    <input type="number" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_debit" class="form-control">
+                                    @error('ckdj_sundry_data.' . $index . '.ckdj_debit') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label>Credit</label>
+                                    <input type="number" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_credit" class="form-control">
+                                    @error('ckdj_sundry_data.' . $index . '.ckdj_credit') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <button type="button" class="btn btn-danger" wire:click="removeAccountCode({{ $index }})">Remove</button>
+                            @endforeach
                         </div>
-                        <div class="mb-3">
-                            <label>Debit</label>
-                            <input type="number" wire:model="ckdj_debit" class="form-control">
-                            @error('ckdj_debit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label>Credit</label>
-                            <input type="number" wire:model="ckdj_credit" class="form-control">
-                            @error('ckdj_credit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
+
                     </div>
                     <div class="modal-footer">
                          <!-- CLOSE BUTTON -->

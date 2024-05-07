@@ -11,24 +11,55 @@ class CheckDisbursementJournalExport implements FromCollection, WithHeadings
     /**
     * @return \Illuminate\Support\Collection
     */
+    
     public function collection()
-    {
-        return CheckDisbursementJournalModel::select(
-            "ckdj_entrynum_date",
-            "ckdj_checknum",
-            "ckdj_payee",
-            "ckdj_bur",
-            "ckdj_cib_lcca",
-            "ckdj_account1",
-            "ckdj_account2",
-            "ckdj_account3",
-            "ckdj_salary_wages",
-            "ckdj_honoraria",
-            "ckdj_sundry_accountcode",
-            "ckdj_debit",
-            "ckdj_credit" 
-            )->get();
+{
+    $journals = CheckDisbursementJournalModel::with('ckdj_sundry_data')->get();
+    $flattened = collect();
+
+    foreach ($journals as $journal) {
+        if ($journal->ckdj_sundry_data->isEmpty()) {
+            // Add an empty record with journal data only if no sundry data
+            $flattened->push([
+                'Date' => $journal->ckdj_entrynum_date,
+                'Check No.' => $journal->ckdj_checknum,
+                'Payee' => $journal->ckdj_payee,
+                'BUR' => $journal->ckdj_bur,
+                'CIB-LCCA' => $journal->ckdj_cib_lcca,
+                'Account1' => $journal->ckdj_account1,
+                'Account2' => $journal->ckdj_account2,
+                'Account3' => $journal->ckdj_account3,
+                'Salaries and Wages' => $journal->ckdj_salary_wages,
+                'Honoraria' => $journal->ckdj_honoraria,
+                'Account Code' => '',
+                'Debit' => '',
+                'Credit' => '',
+            ]);
+        } else {
+            foreach ($journal->ckdj_sundry_data as $sundry) {
+                // Push each sundry data with journal data
+                $flattened->push([
+                    'Date' => $journal->ckdj_entrynum_date,
+                    'Check No.' => $journal->ckdj_checknum,
+                    'Payee' => $journal->ckdj_payee,
+                    'BUR' => $journal->ckdj_bur,
+                    'CIB-LCCA' => $journal->ckdj_cib_lcca,
+                    'Account1' => $journal->ckdj_account1,
+                    'Account2' => $journal->ckdj_account2,
+                    'Account3' => $journal->ckdj_account3,
+                    'Salaries and Wages' => $journal->ckdj_salary_wages,
+                    'Honoraria' => $journal->ckdj_honoraria,
+                    'Account Code' => $sundry->ckdj_accountcode,
+                    'Debit' => $sundry->ckdj_debit,
+                    'Credit' => $sundry->ckdj_credit,
+                ]);
+            }
+        }
     }
+
+    return $flattened;
+}
+
     
     public function headings(): array
     {

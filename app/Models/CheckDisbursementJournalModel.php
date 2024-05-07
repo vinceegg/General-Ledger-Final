@@ -28,11 +28,13 @@ class CheckDisbursementJournalModel extends Model
         'ckdj_account3',
         'ckdj_salary_wages',
         'ckdj_honoraria',
-        'ckdj_sundry_accountcode',
-        'ckdj_debit',
-        'ckdj_credit',
 
     ];
+        //@korinlv: added this function
+        public function ckdj_sundry_data()
+        {
+            return $this->hasMany(CKDJ_SundryModel::class, 'check_disbursement_journal_id');
+        }
 
         protected static $logAttributes = ['*'];
             

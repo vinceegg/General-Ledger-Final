@@ -50,7 +50,7 @@
             {{ $viewDeleted ? 'Show Active Records' : 'Show Deleted Records' }}
         </button>
         
-    </div>
+        </div>
 
 </div>
         
@@ -81,34 +81,35 @@
                 </thead>
 
                 <tbody>
+                <!-- @korin:edited this part -->
                 @forelse ($general_journal as $general_journals)
-    @php
-        $gj_accountcodes_data = $general_journals->gj_accountcodes_data; // Access the relationship
-        $rowSpan = count($gj_accountcodes_data) ?: 1; // Get count or default to 1
-    @endphp
+                @php
+                    $gj_accountcodes_data = $general_journals->gj_accountcodes_data; // Access the relationship
+                    $rowSpan = count($gj_accountcodes_data) ?: 1; // Get count or default to 1
+                @endphp
 
-    @foreach ($gj_accountcodes_data as $index => $gj_accountcode_data)
-        <tr>
-            @if ($index == 0) {{-- Only display these cells on the first iteration --}}
-                <td rowspan="{{ $rowSpan }}">{{ $general_journals->id }}</td>
-                <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_entrynum_date }}</td>
-                <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_jevnum }}</td>
-                <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_particulars }}</td>
-            @endif
-            <td>{{ $gj_accountcode_data->gj_accountcode}}</td>
-            <td>{{ $gj_accountcode_data->gj_debit ?? '' }}</td>
-            <td>{{ $gj_accountcode_data->gj_credit ?? '' }}</td>
-        </tr>
-    @endforeach
-    @if ($gj_accountcodes_data->isEmpty()) {{-- If there are no account codes, show a single row --}}
-        <tr>
-            <td>{{ $general_journals->id }}</td>
-            <td>{{ $general_journals->gj_entrynum_date }}</td>
-            <td>{{ $general_journals->gj_jevnum }}</td>
-            <td>{{ $general_journals->gj_particulars }}</td>
-            <td colspan="3">No Account Data</td>
-        </tr>
-    @endif
+                @foreach ($gj_accountcodes_data as $index => $gj_accountcode_data)
+                    <tr>
+                        @if ($index == 0) {{-- Only display these cells on the first iteration --}}
+                            <td rowspan="{{ $rowSpan }}">{{ $general_journals->id }}</td>
+                            <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_entrynum_date }}</td>
+                            <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_jevnum }}</td>
+                            <td rowspan="{{ $rowSpan }}">{{ $general_journals->gj_particulars }}</td>
+                        @endif
+                        <td>{{ $gj_accountcode_data->gj_accountcode}}</td>
+                        <td>{{ $gj_accountcode_data->gj_debit ?? '' }}</td>
+                        <td>{{ $gj_accountcode_data->gj_credit ?? '' }}</td>
+                    </tr>
+                @endforeach
+                @if ($gj_accountcodes_data->isEmpty()) {{-- If there are no account codes, show a single row --}}
+                    <tr>
+                        <td>{{ $general_journals->id }}</td>
+                        <td>{{ $general_journals->gj_entrynum_date }}</td>
+                        <td>{{ $general_journals->gj_jevnum }}</td>
+                        <td>{{ $general_journals->gj_particulars }}</td>
+                        <td colspan="3">No Account Data</td>
+                    </tr>
+                @endif
 
 
                         <td class="flex justify-end">
@@ -140,7 +141,6 @@
                                 </div>
                             </div>
                         </td>
-                    </tr>
                     @empty
                         <tr>
                             <td colspan="5">No Record Found</td>

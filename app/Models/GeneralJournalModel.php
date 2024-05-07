@@ -30,6 +30,7 @@ class GeneralJournalModel extends Model
         {
             return $this->hasMany(GeneralJournal_AccountCodesModel::class, 'general_journal_id');
         }
+        
         protected static $logAttributes = ['*'];
     
         public function getActivitylogOptions(): LogOptions

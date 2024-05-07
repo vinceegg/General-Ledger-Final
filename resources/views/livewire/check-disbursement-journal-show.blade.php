@@ -66,7 +66,7 @@
          <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
  
  <!-- VINCEKORIN CODE -->
-        <div>
+    <div>
         @include('livewire.check-disbursement-journal-modal')
             @if (session()->has('message'))
                 <h5 class="alert alert-success">{{ session('message') }}</h5>
@@ -92,7 +92,35 @@
                     </thead>
                 
                     <tbody>
-                        @forelse ($check_disbursement_journal as $check_disbursement_journals)
+
+                    <!-- @korin:edited this part -->
+                    @forelse ($check_disbursement_journal as $check_disbursement_journals)
+                    @php
+                        $ckdj_sundry_data = $check_disbursement_journals->ckdj_sundry_data; // Access the relationship
+                        $rowSpan = count($ckdj_sundry_data) ?: 1; // Get count or default to 1
+                    @endphp
+
+                    @foreach ($ckdj_sundry_data as $index => $ckdj_sundries_data)
+                        <tr>
+                            @if ($index == 0) {{-- Only display these cells on the first iteration --}}
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->id }}</td>
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_entrynum_date}}</td>
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_checknum}}</td>
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_payee}}</td>
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_bur}}</td>
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_cib_lcca}}</td>
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_account1}}</td>
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_account2}}</td>
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_account3}}</td>
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_salary_wages}}</td>
+                                <td rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_honoraria}}</td>
+                            @endif
+                            <td>{{ $ckdj_sundries_data->ckdj_accountcode}}</td>
+                            <td>{{ $ckdj_sundries_data->ckdj_debit ?? '' }}</td>
+                            <td>{{ $ckdj_sundries_data->ckdj_credit ?? '' }}</td>
+                        </tr>
+                    @endforeach
+                    @if ($ckdj_sundry_data->isEmpty()) {{-- If there are no account codes, show a single row --}}
                         <tr>
                             <td>{{ $check_disbursement_journals-> id }}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_entrynum_date}}</td>
@@ -105,9 +133,9 @@
                             <td>{{ $check_disbursement_journals-> ckdj_account3}}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_salary_wages}}</td>
                             <td>{{ $check_disbursement_journals-> ckdj_honoraria}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_sundry_accountcode}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_debit}}</td>
-                            <td>{{ $check_disbursement_journals-> ckdj_credit}}</td>
+                            <td colspan="3">No Account Data</td>
+                        </tr>
+                    @endif
                                     
                             <td class="flex justify-end">
                                 <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-gray-500 dark:text-gray-400">
@@ -152,13 +180,13 @@
                                     </div>
                                 </div>
                             </td>  
-                            {{-- @if ($viewDeleted)
+                            <!-- {{-- @if ($viewDeleted)
                             <td>
                                 <button wire:click="restoreCheckDisbursementJournal({{ $check_disbursement_journals->id }})" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                                     Restore
                                 </button>
                             </td>
-                            @endif --}}
+                            @endif --}} -->
                         </tr>
                         @empty
                             <tr>
@@ -176,7 +204,7 @@
                             <td class="font-bold">₱{{ number_format($totalAccount3, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalSalaryWages, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalHonoraria, 2) }}</td>
-                            <td class="font-bold">₱{{ number_format($totalAccountCode, 2) }}</td>
+                            <!-- <td class="font-bold">₱{{ number_format($totalAccountCode, 2) }}</td> -->
                             <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
                             <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>
 
