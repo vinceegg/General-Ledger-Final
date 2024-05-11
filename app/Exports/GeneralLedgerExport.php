@@ -1,5 +1,5 @@
 <?php
-
+//export code ni ate korinne sa account code <3
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
