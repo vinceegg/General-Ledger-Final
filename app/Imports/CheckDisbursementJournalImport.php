@@ -56,7 +56,7 @@ class CheckDisbursementJournalImport implements ToCollection, WithHeadingRow
     public function map($row): array
     {
         return [
-            'ckdj_entrynum_date' => $row['date'],
+                'ckdj_entrynum_date' => $row['date'],
                 'ckdj_checknum' => $row['check_no'],
                 'ckdj_payee' => $row['payee'],
                 'ckdj_bur' => $row['bur'],

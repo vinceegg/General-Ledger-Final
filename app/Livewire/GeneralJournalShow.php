@@ -26,7 +26,7 @@ class GeneralJournalShow extends Component
     public $gj_entrynum_date,
     $gj_jevnum,
     $gj_particulars,
-    $gj_accountcodes_data = [],
+    $gj_accountcodes_data = [], //@korinlv: added this
     $deleteType; // Added deleteType property
 
     public $search;
@@ -41,6 +41,7 @@ class GeneralJournalShow extends Component
     public $viewDeleted = false; // Property to toggle deleted records view
 
     // Validation rules
+    //@korin:edited this
     protected function rules()
     {
         return [
@@ -205,6 +206,7 @@ class GeneralJournalShow extends Component
         $this->gj_accountcodes_data = [];
     }
 
+    //@korinlv: edited this function
     public function softDeleteGeneralJournal($general_journal_id)
     {
         $general_journal= GeneralJournalModel::find($general_journal_id);
@@ -287,6 +289,7 @@ class GeneralJournalShow extends Component
     }
 
     // Method to restore soft-deleted record
+    //@korinlv: edited this function
     public function restoreGeneralJournal($id)
     {
         $general_journal = GeneralJournalModel::onlyTrashed()->find($id);
@@ -319,6 +322,7 @@ class GeneralJournalShow extends Component
             $query->whereBetween('gj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
+        //@korinlv:added this function
         $general_journals = $query->with(['gj_accountcodes_data' => function($query){
             if ($this->viewDeleted) {
                 $query->onlyTrashed();

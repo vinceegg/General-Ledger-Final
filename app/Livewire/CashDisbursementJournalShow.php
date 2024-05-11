@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Exports\CashDisbursementJournalExport;
 use App\Imports\CashDisbursementJournalImport;
+use App\Models\CRJ_SundryModel;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -27,10 +28,7 @@ class CashDisbursementJournalShow extends Component
     $cdj_amount,
     $cdj_account1,
     $cdj_account2,
-    $cdj_sundry_accountcode,
-    $cdj_pr,
-    $cdj_debit,
-    $cdj_credit,
+    $cdj_sundry_data = [], //@korinlv: added this
     $deleteType; // Added deleteType property
 
     public $search;
@@ -47,6 +45,7 @@ class CashDisbursementJournalShow extends Component
     public $totalAccount2 = 0;
     public $viewDeleted = false; // Property to toggle deleted records view
 
+    //@korin:edited this
     protected function rules()
     {
         return [
@@ -58,10 +57,10 @@ class CashDisbursementJournalShow extends Component
             'cdj_amount'=> 'nullable|numeric',
             'cdj_account1'=> 'nullable|numeric',
             'cdj_account2'=> 'nullable|numeric',
-            'cdj_sundry_accountcode'=>'nullable|string',
-            'cdj_pr'=>'nullable|string',
-            'cdj_debit'=> 'nullable|numeric|min:0|max:100000000',            
-            'cdj_credit'=> 'nullable|numeric|min:0|max:100000000',
+            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'nullable|string',
+            'cdj_sundry_data.*.cdj_pr'=>'nullable|string',
+            'cdj_sundry_data.*.cdj_debit'=> 'nullable|numeric|min:0|max:100000000',
+            'cdj_sundry_data.*.cdj_credit'=> 'nullable|numeric|min:0|max:100000000',
         ];
     }
 
@@ -70,16 +69,42 @@ class CashDisbursementJournalShow extends Component
         $this->validateOnly($fields);
     }
 
+    //@korinlv: updated this function
     public function saveCashDisbursementJournal()
     {
         $validatedData = $this->validate();
 
-        CashDisbursementJournalModel::create($validatedData);
+        $journal = CashDisbursementJournalModel::create($validatedData);
+
+        foreach ($validatedData['cdj_sundry_data'] as $code) {
+            $journal->cdj_sundry_data()->create([
+                'cdj_sundry_accountcode' => $code['cdj_sundry_accountcode'],
+                'cdj_pr' => $code['cdj_pr'],
+                'cdj_debit' => $code['cdj_debit'],
+                'cdj_credit' => $code['cdj_credit'],
+            ]);
+        }
+
         session()->flash('message', 'Added Successfully');
         $this->resetInput();
         $this->dispatch('close-modal');
     }
 
+    //@korinlv: added this function
+    public function addAccountCode()
+    {
+        $this->cdj_sundry_data[] = ['cdj_sundry_accountcode' => '', 'cdj_pr' => '', 'cdj_debit' => '', 'cdj_credit' => ''];
+        logger('Sundry added', $this->cdj_sundry_data);
+    }
+
+    public function removeAccountCode($index)
+    {
+        unset($this->cdj_sundry_data[$index]);
+        $this->cdj_sundry_data = array_values($this->cdj_sundry_data);
+        logger('Sundry removed', $this->cdj_sundry_data);
+    }
+
+    //@korinlv: updated this function
     public function editCashDisbursementJournal($cash_disbursement_journal_id)
     {
         $cash_disbursement_journal = CashDisbursementJournalModel::find($cash_disbursement_journal_id);
@@ -94,36 +119,55 @@ class CashDisbursementJournalShow extends Component
             $this->cdj_amount = $cash_disbursement_journal->cdj_amount;
             $this->cdj_account1 = $cash_disbursement_journal->cdj_account1;
             $this->cdj_account2 = $cash_disbursement_journal->cdj_account2;
-            $this->cdj_sundry_accountcode = $cash_disbursement_journal->cdj_sundry_accountcode;
-            $this->cdj_pr = $cash_disbursement_journal->cdj_pr;
-            $this->cdj_debit = $cash_disbursement_journal->cdj_debit;
-            $this->cdj_credit = $cash_disbursement_journal->cdj_credit;
-        }
-        else {
+
+            $this->cdj_sundry_data = $cash_disbursement_journal->cdj_sundry_data->toArray();
+
+        } else {
             return redirect() -> to('/cash_disbursement_journal'); 
         }
     }
 
     //NEW VERSION NG 'UPDATE' MAS MAHABA, WHY THO?
+    //@korinlv: edited this function
     public function updateCashDisbursementJournal()
     {
-        $validatedData = $this->validate();
-
-        CashDisbursementJournalModel::where('id', $this->cash_disbursement_journal_id)->update([
-            'cdj_entrynum_date'=> $validatedData['cdj_entrynum_date'],
-            'cdj_referencenum'=> $validatedData['cdj_referencenum'],
-            'cdj_accountable_officer'=> $validatedData['cdj_accountable_officer'],
-            'cdj_jevnum'=> $validatedData['cdj_jevnum'],
-            'cdj_accountcode'=> $validatedData['cdj_accountcode'],
-            'cdj_amount'=> $validatedData['cdj_amount'],
-            'cdj_account1'=> $validatedData['cdj_account1'],
-            'cdj_account2'=> $validatedData['cdj_account2'],
-            'cdj_sundry_accountcode'=> $validatedData['cdj_sundry_accountcode'],
-            'cdj_pr'=> $validatedData['cdj_pr'],
-            'cdj_debit'=> $validatedData['cdj_debit'],            
-            'cdj_credit'=> $validatedData['cdj_credit'],
+        $validatedData = $this->validate([
+            'cdj_entrynum_date'=>'nullable|date',
+            'cdj_referencenum'=>'nullable|string',
+            'cdj_accountable_officer'=>'nullable|string',
+            'cdj_jevnum'=>'nullable|integer',
+            'cdj_accountcode'=>'nullable|integer',
+            'cdj_amount'=> 'nullable|numeric',
+            'cdj_account1'=> 'nullable|numeric',
+            'cdj_account2'=> 'nullable|numeric',
+            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'nullable|string',
+            'cdj_sundry_data.*cdj_pr'=>'nullable|string',
+            'cdj_sundry_data.*cdj_debit'=> 'nullable|numeric|min:0|max:100000000',
+            'cdj_sundry_data.*cdj_credit'=> 'nullable|numeric|min:0|max:100000000',
         ]);
-        session()->flash('message', 'Updated Successfully');
+
+        try {
+            $cash_disbursement_journal = CashDisbursementJournalModel::findOrFail($this->cash_disbursement_journal_id);
+            $cash_disbursement_journal->update($validatedData);
+
+            foreach ($this->cdj_sundry_data as $data) {
+                if (isset($data['id']) && $data['id']) {
+                    // Update existing account code
+                    $accountCode = CRJ_SundryModel::find($data['id']);
+                    if ($accountCode) {
+                        $accountCode->update($data);
+                    }
+                } else {
+                    // Create new account code
+                    $cash_disbursement_journal->cdj_sundry_data()->create($data);
+                }
+            }
+
+            session()->flash('message', 'Updated Successfully');
+        } catch (\Exception $e) {
+            session()->flash('error', "Failed to update: " . $e->getMessage());
+        }
+
         $this->resetInput();
         $this->dispatch('close-modal');
     }
@@ -154,6 +198,7 @@ class CashDisbursementJournalShow extends Component
         $this->resetInput();
     }
 
+    //@korinlv: edited this function
     public function resetInput()
     {
             $this->cash_disbursement_journal_id = '';
@@ -165,16 +210,19 @@ class CashDisbursementJournalShow extends Component
             $this->cdj_amount = '';
             $this->cdj_account1 = '';
             $this->cdj_account2 = '';
-            $this->cdj_sundry_accountcode = '';
-            $this->cdj_pr = '';
-            $this->cdj_debit = '';
-            $this->cdj_credit = '';
+            $this->cdj_sundry_data = [];
+
     }
 
+    //@korinlv: edited this function
     public function softDeleteCashDisbursementJournal($cash_disbursement_journal_id)
     {
         $cash_disbursement_journal= CashDisbursementJournalModel::find($cash_disbursement_journal_id);
         if ( $cash_disbursement_journal) {
+            foreach ($cash_disbursement_journal->cdj_sundry_data as $accountCode){
+                $accountCode->delete();
+            }
+            
             $cash_disbursement_journal->delete();
             session()->flash('message', 'Soft Deleted Successfully');
     }
@@ -244,10 +292,15 @@ class CashDisbursementJournalShow extends Component
     }
 
     // Method to restore soft-deleted record
+    //@korinlv: edited this function
     public function restoreCashDisbursementJournal($id)
     {
         $cash_disbursement_journal = CashDisbursementJournalModel::onlyTrashed()->find($id);
         if ($cash_disbursement_journal) {
+            $trashedSundries = $cash_disbursement_journal->cdj_sundry_data()->onlyTrashed()->get();
+            foreach ($trashedSundries as $sundry){
+                $sundry->restore();
+            }
             $cash_disbursement_journal->restore();
             session()->flash('message', 'Record restored successfully.');
         }
@@ -270,6 +323,26 @@ class CashDisbursementJournalShow extends Component
             $query->whereBetween('cdj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
+        //@korinlv:added this function
+        $cash_disbursement_journals = $query->with(['cdj_sundry_data' => function($query){
+            if ($this->viewDeleted) {
+                $query->onlyTrashed();
+            }
+        }])->get();
+        
+        $totalDebit = 0;
+        $totalCredit = 0;
+
+        foreach ($cash_disbursement_journals as $journal) {
+            foreach ($journal->cdj_sundry_data ?: [] as $accountCode) { // Ensure sundry data is treated as an array
+                $totalDebit += $accountCode->cdj_debit ?? 0;
+                $totalCredit += $accountCode->cdj_credit ?? 0;
+            }
+        }
+    
+        $this->totalDebit = $totalDebit;
+        $this->totalCredit = $totalCredit;
+
         // Add the search filter
         $query->where('id', 'like', '%' . $this->search . '%');
 
@@ -279,8 +352,6 @@ class CashDisbursementJournalShow extends Component
         $this->totalAmount = $query->sum('cdj_amount');
         $this->totalAccount1 = $query->sum('cdj_account1');
         $this->totalAccount2 = $query->sum('cdj_account2');
-        $this->totalDebit = $query->sum('cdj_debit');
-        $this->totalCredit = $query->sum('cdj_credit');
 
         // Get paginated results
         $cash_disbursement_journal = $query->paginate(10);

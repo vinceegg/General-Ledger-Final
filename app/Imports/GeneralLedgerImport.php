@@ -17,17 +17,37 @@ class GeneralLedgerImport implements ToModel, WithHeadingRow
     {
         return new GeneralLedgerModel([
             'gl_symbol'             => $row['symbol'], // Make sure these match the heading names exactly as in the export
-            'gl_fundname'           => $row['name of fund or account'],
-            'gl_func_classification' => $row['functional classification'],
-            'gl_project_title'      => $row['title of project or expense classification'],
+            'gl_fundname'           => $row['name_of_fund_or_account'],
+            'gl_func_classification' => $row['functional_classification'],
+            'gl_project_title'      => $row['title_of_project_or_expense_classification'],
             'gl_date'               => $row['date'],
-            'gl_vouchernum'         => $row['voucher no.'],
+            'gl_vouchernum'         => $row['voucher_no'],
             'gl_particulars'        => $row['particulars'],
-            'gl_balance_debit'      => $row['balance debit'],
+            'gl_balance_debit'      => $row['balance_debit'],
             'gl_debit'              => $row['debits'],
             'gl_credit'             => $row['credits'],
-            'gl_credit_balance'     => $row['credits balance']
+            'gl_credit_balance'     => $row['credits_balance']
         ]);
+
+    }
+
+    public function prepareForValidation($data, $index)
+    {
+        $keys = array_keys($data);
+        $values = array_values($data);
+
+        $keys = array_map(function ($key) {
+            $key = str_replace(' ', '_', $key); // Replace spaces with underscores
+            $key = str_replace('&', '_', $key); // Replace ampersand with underscore
+            return strtolower($key);           // Convert to lowercase
+        }, $keys);
+
+        return array_combine($keys, $values);
+    }
+
+    public function headingRow(): int
+    {
+        return 1; // Assuming the first row contains the headers
     }
 
 }

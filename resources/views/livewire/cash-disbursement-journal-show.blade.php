@@ -27,10 +27,7 @@
         <option value="desc">Newest First</option>
         </select>
     
-        <button type="button" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-2 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
-        wire:click="closeModal"
-        data-bs-dismiss="modal">Refresh</button> 
-            
+                    
         <!-- Import -->                    
         <input type="file" wire:model="file" class="custom-file-input" id="customFile" style="width: 115px;">
         <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" wire:click="importCDJ">Import</button>
@@ -73,7 +70,6 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Entry Number</th>
                             <th>Date</th>
                             <th>Reference/RD No.</th>
                             <th>Accountable Officer</th>
@@ -89,21 +85,47 @@
                         </tr>
                     </thead>
                         <tbody>
+                            <!-- @korin:edited this part -->
                             @forelse ($cash_disbursement_journal as $cash_disbursement_journals)
-                            <tr>
-                                <td>{{ $cash_disbursement_journals-> id }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_entrynum_date }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_referencenum }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_accountable_officer}}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_jevnum }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_accountcode }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_amount }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_account1 }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_account2 }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_sundry_accountcode }}</td>
-                                <td>{{ $cash_disbursement_journals-> cdj_pr }}</td>
-                                <td>{{ number_format ($cash_disbursement_journals-> cdj_debit, 2, '.', '.') }}</td>
-                                <td>{{ number_format ($cash_disbursement_journals-> cdj_credit, 2, '.', '.') }}</td>
+                            @php
+                                $cdj_sundry_data = $cash_disbursement_journals->cdj_sundry_data; // Access the relationship
+                                $rowSpan = count($cdj_sundry_data) ?: 1; // Get count or default to 1
+                            @endphp
+
+                            @foreach ($cdj_sundry_data as $index => $cdj_sundries_data)
+                                <tr>
+                                    @if ($index == 0) {{-- Only display these cells on the first iteration --}}
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> id }}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_entrynum_date }}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_referencenum }}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_accountable_officer}}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_jevnum }}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_accountcode }}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_amount }}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_account1 }}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_account2 }}</td>
+                                    @endif
+                                    <td>{{ $cdj_sundries_data->cdj_sundry_accountcode}}</td>
+                                    <td>{{ $cdj_sundries_data->cdj_pr}}</td>
+                                    <td>{{ $cdj_sundries_data->cdj_debit ?? '' }}</td>
+                                    <td>{{ $cdj_sundries_data->cdj_credit ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                            @if ($cdj_sundry_data->isEmpty()) {{-- If there are no account codes, show a single row --}}
+                                <tr>
+                                    <td>{{ $cash_disbursement_journals->id }}</td>
+                                    <td>{{ $cash_disbursement_journals->cdj_entrynum_date }}</td>
+                                    <td>{{ $cash_disbursement_journals->cdj_referencenum }}</td>
+                                    <td>{{ $cash_disbursement_journals->cdj_accountable_officer }}</td>
+                                    <td>{{ $cash_disbursement_journals->cdj_jevnum }}</td>
+                                    <td>{{ $cash_disbursement_journals->cdj_accountcode }}</td>
+                                    <td>{{ $cash_disbursement_journals->cdj_amount }}</td>
+                                    <td>{{ $cash_disbursement_journals->cdj_account1 }}</td>
+                                    <td>{{ $cash_disbursement_journals->cdj_account2 }}</td>
+                                    <td colspan="3">No Account Data</td>
+                                </tr>
+                            @endif
+
     
     
                                 <td class="flex justify-end">

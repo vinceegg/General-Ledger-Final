@@ -29,12 +29,13 @@ class CashDisbursementJournalModel extends Model
             'cdj_amount',
             'cdj_account1',
             'cdj_account2',
-            'cdj_sundry_accountcode',
-            'cdj_pr',
-            'cdj_debit',
-            'cdj_credit',
-
         ];
+
+        //@korinlv: added  this
+        public function cdj_sundry_data()
+        {
+            return $this->hasMany(CDJ_SundryModel::class, 'cash_disbursement_journal_id');
+        }
 
 
         protected static $logAttributes = ['*'];

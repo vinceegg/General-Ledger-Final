@@ -50,21 +50,30 @@
                             <input type="number" wire:model="crj_deposit_credit" class="form-control">
                             @error('crj_deposit_credit') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="mb-3">
-                            <label>Account Code</label>
-                            <input type="text" wire:model="crj_accountcode" class="form-control">
-                            @error('crj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+
+                        <!-- @korin:edited this part -->
+                        <div>
+                            <button type="button" class="btn btn-secondary" wire:click="addAccountCode">+  Add Sundry</button>
+                            @foreach ($crj_sundry_data as $index => $entry)
+                                <div class="mb-3">
+                                    <label>Account Code</label>
+                                    <input type="text" wire:model="crj_sundry_data.{{ $index }}.crj_accountcode" class="form-control">
+                                    @error('crj_sundry_data.' . $index . 'crj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label>Debit</label>
+                                    <input type="number" wire:model="crj_sundry_data.{{ $index }}.crj_debit" class="form-control">
+                                    @error('crj_sundry_data.' . $index . '.crj_debit') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label>Credit</label>
+                                    <input type="number" wire:model="crj_sundry_data.{{ $index }}.crj_credit" class="form-control">
+                                    @error('crj_sundry_data.' . $index . '.crj_credit') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <button type="button" class="btn btn-danger" wire:click="removeAccountCode({{ $index }})">Remove</button>
+                            @endforeach
                         </div>
-                        <div class="mb-3">
-                            <label>Debit</label>
-                            <input type="number" wire:model="crj_debit" class="form-control">
-                            @error('crj_debit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label>Credit</label>
-                            <input type="number" wire:model="crj_credit" class="form-control">
-                            @error('crj_credit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
+
                     </div>
 
                     <div class="modal-footer">
@@ -102,7 +111,7 @@
                             <label>Date</label>
                             <input type="date" wire:model="crj_entrynum_date" class="form-control">
                             @error('crj_entrynum_date') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>-
+                        </div>
                         <div class="mb-3">
                             <label>Jev No.</label>
                             <input type="number" wire:model="crj_jevnum" class="form-control">
@@ -133,21 +142,29 @@
                             <input type="number" wire:model="crj_deposit_credit" class="form-control">
                             @error('crj_deposit_credit') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="mb-3">
-                            <label>Account Code</label>
-                            <input type="text" wire:model="crj_accountcode" class="form-control">
-                            @error('crj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                        <!-- @korin:edited this part -->
+                        <div>
+                            <button type="button" class="btn btn-secondary" wire:click="addAccountCode">+  Add Sundry</button>
+                            @foreach ($crj_sundry_data as $index => $entry)
+                                <div class="mb-3">
+                                    <label>Account Code</label>
+                                    <input type="text" wire:model="crj_sundry_data.{{ $index }}.crj_accountcode" class="form-control">
+                                    @error('crj_sundry_data.' . $index . 'crj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label>Debit</label>
+                                    <input type="number" wire:model="crj_sundry_data.{{ $index }}.crj_debit" class="form-control">
+                                    @error('crj_sundry_data.' . $index . '.crj_debit') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label>Credit</label>
+                                    <input type="number" wire:model="crj_sundry_data.{{ $index }}.crj_credit" class="form-control">
+                                    @error('crj_sundry_data.' . $index . '.crj_credit') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                                <button type="button" class="btn btn-danger" wire:click="removeAccountCode({{ $index }})">Remove</button>
+                            @endforeach
                         </div>
-                        <div class="mb-3">
-                            <label>Debit</label>
-                            <input type="number" wire:model="crj_debit" class="form-control">
-                            @error('crj_debit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label>Credit</label>
-                            <input type="number" wire:model="crj_credit" class="form-control">
-                            @error('crj_credit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
+
                     </div>
 
                     <div class="modal-footer">

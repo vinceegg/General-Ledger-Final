@@ -124,7 +124,7 @@ class CheckDisbursementJournalShow extends Component
     //@korinlv: updated this function
     public function editCheckDisbursementJournal($check_disbursement_journal_id)
     {
-        $check_disbursement_journal = CheckDisbursementJournalModel::find($check_disbursement_journal_id);
+        $check_disbursement_journal = CheckDisbursementJournalModel::with('ckdj_sundry_data')->find($check_disbursement_journal_id);
         if ($check_disbursement_journal) {
 
             $this->check_disbursement_journal_id = $check_disbursement_journal->id;
@@ -239,6 +239,7 @@ class CheckDisbursementJournalShow extends Component
     }
 
     // Soft delete CheckDisbursementJournal
+    //@korinlv: edited this function
     public function softDeleteCheckDisbursementJournal($check_disbursement_journal_id)
     {
         $check_disbursement_journal = CheckDisbursementJournalModel::with('ckdj_sundry_data')->find($check_disbursement_journal_id);
@@ -320,9 +321,10 @@ class CheckDisbursementJournalShow extends Component
     }
 
     // Method to restore soft-deleted record
+    //@korinlv: edited this function
     public function restoreCheckDisbursementJournal($id)
     {
-        $check_disbursement_journal = CheckDisbursementJournalModel::onlyTrashed()->where('id', $id)->first();
+        $check_disbursement_journal = CheckDisbursementJournalModel::onlyTrashed()->find($id);
         if ($check_disbursement_journal) {
             // Load trashed sundries
             $trashedSundries = $check_disbursement_journal->ckdj_sundry_data()->onlyTrashed()->get();
@@ -345,6 +347,7 @@ class CheckDisbursementJournalShow extends Component
             $query = $query->onlyTrashed(); // Fetch only soft-deleted records
         }
 
+        //@korinlv:added this function
         $check_disbursement_journals = $query->with(['ckdj_sundry_data' => function ($query) {
             if ($this->viewDeleted) {
                 $query->onlyTrashed();

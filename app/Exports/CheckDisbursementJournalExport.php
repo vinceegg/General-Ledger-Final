@@ -13,31 +13,13 @@ class CheckDisbursementJournalExport implements FromCollection, WithHeadings
     */
     
     public function collection()
-{
-    $journals = CheckDisbursementJournalModel::with('ckdj_sundry_data')->get();
-    $flattened = collect();
+    {
+        $journals = CheckDisbursementJournalModel::with('ckdj_sundry_data')->get();
+        $flattened = collect();
 
-    foreach ($journals as $journal) {
-        if ($journal->ckdj_sundry_data->isEmpty()) {
-            // Add an empty record with journal data only if no sundry data
-            $flattened->push([
-                'Date' => $journal->ckdj_entrynum_date,
-                'Check No.' => $journal->ckdj_checknum,
-                'Payee' => $journal->ckdj_payee,
-                'BUR' => $journal->ckdj_bur,
-                'CIB-LCCA' => $journal->ckdj_cib_lcca,
-                'Account1' => $journal->ckdj_account1,
-                'Account2' => $journal->ckdj_account2,
-                'Account3' => $journal->ckdj_account3,
-                'Salaries and Wages' => $journal->ckdj_salary_wages,
-                'Honoraria' => $journal->ckdj_honoraria,
-                'Account Code' => '',
-                'Debit' => '',
-                'Credit' => '',
-            ]);
-        } else {
-            foreach ($journal->ckdj_sundry_data as $sundry) {
-                // Push each sundry data with journal data
+        foreach ($journals as $journal) {
+            if ($journal->ckdj_sundry_data->isEmpty()) {
+                // Add an empty record with journal data only if no sundry data
                 $flattened->push([
                     'Date' => $journal->ckdj_entrynum_date,
                     'Check No.' => $journal->ckdj_checknum,
@@ -49,16 +31,34 @@ class CheckDisbursementJournalExport implements FromCollection, WithHeadings
                     'Account3' => $journal->ckdj_account3,
                     'Salaries and Wages' => $journal->ckdj_salary_wages,
                     'Honoraria' => $journal->ckdj_honoraria,
-                    'Account Code' => $sundry->ckdj_accountcode,
-                    'Debit' => $sundry->ckdj_debit,
-                    'Credit' => $sundry->ckdj_credit,
+                    'Account Code' => '',
+                    'Debit' => '',
+                    'Credit' => '',
                 ]);
+            } else {
+                foreach ($journal->ckdj_sundry_data as $sundry) {
+                    // Push each sundry data with journal data
+                    $flattened->push([
+                        'Date' => $journal->ckdj_entrynum_date,
+                        'Check No.' => $journal->ckdj_checknum,
+                        'Payee' => $journal->ckdj_payee,
+                        'BUR' => $journal->ckdj_bur,
+                        'CIB-LCCA' => $journal->ckdj_cib_lcca,
+                        'Account1' => $journal->ckdj_account1,
+                        'Account2' => $journal->ckdj_account2,
+                        'Account3' => $journal->ckdj_account3,
+                        'Salaries and Wages' => $journal->ckdj_salary_wages,
+                        'Honoraria' => $journal->ckdj_honoraria,
+                        'Account Code' => $sundry->ckdj_accountcode,
+                        'Debit' => $sundry->ckdj_debit,
+                        'Credit' => $sundry->ckdj_credit,
+                    ]);
+                }
             }
         }
-    }
 
-    return $flattened;
-}
+        return $flattened;
+    }
 
     
     public function headings(): array

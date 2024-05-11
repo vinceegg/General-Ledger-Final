@@ -6,6 +6,7 @@ use App\Exports\CashReceiptJournalExport;
 use App\Imports\CashReceiptJournalImport;
 use Livewire\WithPagination;
 use App\Models\CashReceiptJournalModel;
+use App\Models\CRJ_SundryModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -26,13 +27,11 @@ class CashReceiptJournalShow extends Component
     $crj_collection_credit,
     $crj_deposit_debit,
     $crj_deposit_credit,
-    $crj_accountcode,
-    $crj_debit,
-    $crj_credit,
-    $cash_receipt_journal_id,
+    $crj_sundry_data = [], //@korinlv: added this
     $deleteType; // Added deleteType property
 
     public $search;
+    public $cash_receipt_journal_id; // Add this property
     public $selectedMonth;
     public $sortField = 'crj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
@@ -57,9 +56,9 @@ class CashReceiptJournalShow extends Component
             'crj_collection_credit' => 'nullable|numeric',
             'crj_deposit_debit' => 'nullable|numeric',
             'crj_deposit_credit' => 'nullable|numeric',
-            'crj_accountcode' => 'nullable|string',
-            'crj_debit' => 'nullable|numeric|min:0|max:100000000',
-            'crj_credit' => 'nullable|numeric|min:0|max:100000000',
+            'crj_sundry_data.*.crj_accountcode' => 'nullable|string',
+            'crj_sundry_data.*.crj_debit' => 'nullable|numeric|min:0|max:100000000',
+            'crj_sundry_data.*.crj_credit' => 'nullable|numeric|min:0|max:100000000',
         ];
     }
 
@@ -68,20 +67,54 @@ class CashReceiptJournalShow extends Component
         $this->validateOnly($fields);
     }
 
+    //@korinlv: added this function
+    public function mount()
+    {
+        // Example initialization, you might load this from a database or start with an empty array
+        $this->crj_sundry_data = [
+            ['crj_accountcode' => '', 'crj_debit' => '', 'crj_credit' => '']
+        ];
+    }
+
+    //@korinlv: updated this function
     public function saveCashReceiptJournal()
     {
         $validatedData = $this->validate();
 
-        CashReceiptJournalModel::create($validatedData);
+        $journal = CashReceiptJournalModel::create($validatedData);
+
+        foreach ($validatedData['crj_sundry_data'] as $code) {
+            $journal->crj_sundry_data()->create([
+                'crj_accountcode' => $code['crj_accountcode'],
+                'crj_debit' => $code['crj_debit'],
+                'crj_credit' => $code['crj_credit'],
+            ]);
+        }
+        
         session()->flash('message', 'Added Successfully');
         $this->dispatch('close-modal');
         $this->resetInput();
     }
 
+    //@korinlv: added this function
+    public function addAccountCode()
+    {
+        $this->crj_sundry_data[] = ['crj_accountcode' => '', 'crj_debit' => '', 'crj_credit' => ''];
+        logger('Sundry added', $this->crj_sundry_data);
+    }
+
+    public function removeAccountCode($index)
+    {
+        unset($this->crj_sundry_data[$index]);
+        $this->crj_sundry_data = array_values($this->crj_sundry_data);
+        logger('Sundry removed', $this->crj_sundry_data);
+    }
+
     //EDIT FUNCTION
+    //@korinlv: updated this function
     public function editCashReceiptJournal(int $cash_receipt_journal_id)
     {
-        $cash_receipt_journal = CashReceiptJournalModel::find($cash_receipt_journal_id);
+        $cash_receipt_journal = CashReceiptJournalModel::with('crj_sundry_data')->find($cash_receipt_journal_id);
         if ($cash_receipt_journal) {
 
             $this->cash_receipt_journal_id = $cash_receipt_journal->id;
@@ -92,33 +125,53 @@ class CashReceiptJournalShow extends Component
             $this->crj_collection_credit = $cash_receipt_journal->crj_collection_credit;
             $this->crj_deposit_debit = $cash_receipt_journal->crj_deposit_debit;
             $this->crj_deposit_credit = $cash_receipt_journal->crj_deposit_credit;
-            $this->crj_accountcode = $cash_receipt_journal->crj_accountcode;
-            $this->crj_debit = $cash_receipt_journal->crj_debit;
-            $this->crj_credit = $cash_receipt_journal->crj_credit;
-        } 
-        else {
+            
+            // Handle related data as array of objects or similar structure
+            $this->crj_sundry_data = $cash_receipt_journal->crj_sundry_data->toArray();
+        } else {
             return redirect() -> to('/cash_receipt_journal'); 
         }
     }
 
     //UPDATE FUNCTION
+    //@korinlv: edited this function
     public function updateCashReceiptJournal()
     {
-        $validatedData = $this->validate();
-
-        CashReceiptJournalModel::where('id', $this->cash_receipt_journal_id)->update([
-            'crj_entrynum_date' => $validatedData['crj_entrynum_date'],
-            'crj_jevnum' => $validatedData['crj_jevnum'],
-            'crj_payor' => $validatedData['crj_payor'],
-            'crj_collection_debit' => $validatedData['crj_collection_debit'],
-            'crj_collection_credit' => $validatedData['crj_collection_credit'],
-            'crj_deposit_debit' => $validatedData['crj_deposit_debit'],
-            'crj_deposit_credit' => $validatedData['crj_deposit_credit'],
-            'crj_accountcode' => $validatedData['crj_accountcode'],
-            'crj_debit' => $validatedData['crj_debit'],
-            'crj_credit' => $validatedData['crj_credit']
+        $validatedData = $this->validate([
+            'crj_entrynum_date' => 'nullable|date',
+            'crj_jevnum' => 'nullable|integer',
+            'crj_payor' => 'nullable|string',
+            'crj_collection_debit' => 'nullable|numeric',
+            'crj_collection_credit' => 'nullable|numeric',
+            'crj_deposit_debit' => 'nullable|numeric',
+            'crj_deposit_credit' => 'nullable|numeric',
+            'crj_sundry_data.*.crj_accountcode' => 'nullable|string',
+            'crj_sundry_data.*.crj_debit' => 'nullable|numeric|min:0|max:100000000',
+            'crj_sundry_data.*.crj_credit' => 'nullable|numeric|min:0|max:100000000',
         ]);
-        session()->flash('message', 'Updated Successfully');
+
+        try {
+            $cash_receipt_journal = CashReceiptJournalModel::findOrFail($this->cash_receipt_journal_id);
+            $cash_receipt_journal->update($validatedData);
+
+            foreach ($this->crj_sundry_data as $data) {
+                if (isset($data['id']) && $data['id']) {
+                    // Update existing account code
+                    $accountCode = CRJ_SundryModel::find($data['id']);
+                    if ($accountCode) {
+                        $accountCode->update($data);
+                    }
+                } else {
+                    // Create new account code
+                    $cash_receipt_journal->crj_sundry_data()->create($data);
+                }
+            }
+
+            session()->flash('message', 'Updated Successfully');
+        } catch (\Exception $e) {
+            session()->flash('error', "Failed to update: " . $e->getMessage());
+        }
+
         $this->resetInput();
         $this->dispatch('close-modal');
     }
@@ -145,23 +198,13 @@ class CashReceiptJournalShow extends Component
         $this->resetInput();
     }
 
-    // Soft delete GeneralJournal
-    public function softDeleteCashReceiptJournal($cash_receipt_journal_id)
-    {
-        $cash_receipt_journal= CashReceiptJournalModel::find($cash_receipt_journal_id);
-        if ( $cash_receipt_journal) {
-            $cash_receipt_journal->delete();
-            session()->flash('message', 'Soft Deleted Successfully');
-    }
-        $this->resetInput();
-        $this->dispatch('close-modal');
-    }
 
     public function closeModal()
     {
         $this->resetInput();
     }
 
+    //@korinlv: edited this function
     public function resetInput()
     {
         $this->crj_entrynum_date = '';
@@ -171,9 +214,27 @@ class CashReceiptJournalShow extends Component
         $this->crj_collection_credit = '';
         $this->crj_deposit_debit = '';
         $this->crj_deposit_credit = '';
-        $this->crj_accountcode = '';
-        $this->crj_debit = '';
-        $this->crj_credit = '';
+        $this->crj_sundry_data = [];
+    }
+
+    // Soft delete CashReceiptJournal
+    //@korinlv: edited this function
+    public function softDeleteCashReceiptJournal($cash_receipt_journal_id)
+    {
+        $cash_receipt_journal = CashReceiptJournalModel::with('crj_sundry_data')->find($cash_receipt_journal_id);
+        if ($cash_receipt_journal) {
+            // Delete the related sundries first
+            foreach ($cash_receipt_journal->crj_sundry_data as $sundry) {
+                $sundry->delete();
+            }
+
+        // Now soft delete the journal
+        $cash_receipt_journal->delete();
+        session()->flash('message', 'Soft Deleted Successfully');
+    }
+
+        $this->resetInput();
+        $this->dispatch('close-modal');
     }
 
     // Sorting logic SA SORT TO KORINNE HA
@@ -243,10 +304,15 @@ class CashReceiptJournalShow extends Component
 
 
     // Method to restore soft-deleted record
+    //@korinlv: edited this function
     public function restoreCashReceiptJournal($id)
     {
         $cash_receipt_journal = CashReceiptJournalModel::onlyTrashed()->find($id);
         if ($cash_receipt_journal) {
+            $trashedAccountCodes = $cash_receipt_journal->crj_sundry_data()->onlyTrashed()->get();
+            foreach ($trashedAccountCodes as $accountCode){
+                $accountCode->restore();
+            }
             $cash_receipt_journal->restore();
             session()->flash('message', 'Record restored successfully.');
         }
@@ -269,18 +335,35 @@ class CashReceiptJournalShow extends Component
             $query->whereBetween('crj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
+        //@korinlv:added this function
+        $cash_receipt_journals = $query->with(['crj_sundry_data' => function($query){
+            if ($this->viewDeleted) {
+                $query->onlyTrashed();
+            }
+        }])->get();
+                
+        $totalDebit = 0;
+        $totalCredit = 0;
+        
+        foreach ($cash_receipt_journals as $journal) {
+            foreach ($journal->crj_sundry_data ?: [] as $sundry) { // Ensure sundry data is treated as an array
+                $totalDebit += $sundry->crj_debit ?? 0;
+                $totalCredit += $sundry->crj_credit ?? 0;
+            }
+        }
+            
+        $this->totalDebit = $totalDebit;
+        $this->totalCredit = $totalCredit;
+
         // Add the search filter
         $query->where('id', 'like', '%' . $this->search . '%');
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
-
         $this->totalCollectionDebit = $query->sum('crj_collection_debit');
         $this->totalCollectionCredit = $query->sum('crj_collection_credit');
         $this->totalDepositDebit = $query->sum('crj_deposit_debit');
         $this->totalDepositCredit = $query->sum('crj_deposit_credit');
-        $this->totalDebit = $query->sum('crj_debit');
-        $this->totalCredit = $query->sum('crj_credit');
 
         // Get paginated results
         $cash_receipt_journal = $query->paginate(10);

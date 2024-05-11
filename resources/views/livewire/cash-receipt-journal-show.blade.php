@@ -83,19 +83,45 @@
                         </thead>
 
                         <tbody>
+                            <!-- @korin:edited this part -->
                             @forelse ($cash_receipt_journal as $cash_receipt_journals)
-                            <tr>
-                                <td>{{ $cash_receipt_journals-> id }}</td>
-                                <td>{{ $cash_receipt_journals-> crj_entrynum_date}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_jevnum}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_payor}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_collection_debit}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_collection_credit}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_deposit_debit}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_deposit_credit}}</td>
-                                <td>{{ $cash_receipt_journals-> crj_accountcode}}</td>
-                                <td>{{ number_format ($cash_receipt_journals-> crj_debit, 2, '.', '.')}}</td>                        
-                                <td>{{ number_format ($cash_receipt_journals-> crj_credit, 2, '.', '.')}}</td>
+                            @php
+                                $crj_sundry_data = $cash_receipt_journals->crj_sundry_data; // Access the relationship
+                                $rowSpan = count($crj_sundry_data) ?: 1; // Get count or default to 1
+                            @endphp
+
+                            @foreach ($crj_sundry_data as $index => $crj_sundries_data)
+                                <tr>
+                                    @if ($index == 0) {{-- Only display these cells on the first iteration --}}
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> id }}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_entrynum_date}}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_jevnum}}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_payor}}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_collection_debit}}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_collection_credit}}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_deposit_debit}}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_deposit_credit}}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_accountcode}}</td>
+                                    @endif
+                                    <td>{{ $crj_sundries_data->crj_accountcode}}</td>
+                                    <td>{{ $crj_sundries_data->crj_debit ?? '' }}</td>
+                                    <td>{{ $crj_sundries_data->crj_credit ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                            @if ($crj_sundry_data->isEmpty()) {{-- If there are no account codes, show a single row --}}
+                                <tr>
+                                    <td>{{ $cash_receipt_journals-> id }}</td>
+                                    <td>{{ $cash_receipt_journals-> crj_entrynum_date}}</td>
+                                    <td>{{ $cash_receipt_journals-> crj_jevnum}}</td>
+                                    <td>{{ $cash_receipt_journals-> crj_payor}}</td>
+                                    <td>{{ $cash_receipt_journals-> crj_collection_debit}}</td>
+                                    <td>{{ $cash_receipt_journals-> crj_collection_credit}}</td>
+                                    <td>{{ $cash_receipt_journals-> crj_deposit_debit}}</td>
+                                    <td>{{ $cash_receipt_journals-> crj_deposit_credit}}</td>
+                                    <td>{{ $cash_receipt_journals-> crj_accountcode}}</td>
+                                    <td colspan="3">No Account Data</td>
+                                </tr>
+                            @endif
                                        
                                 <td class="flex justify-end">
                                     <div x-data="{ open: false }" @click.away="open = false" class="relative inline-block text-gray-500 dark:text-gray-400">

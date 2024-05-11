@@ -25,10 +25,15 @@ class CashReceiptJournalModel extends Model
         'crj_collection_credit',
         'crj_deposit_debit',
         'crj_deposit_credit',
-        'crj_accountcode',
-        'crj_debit',
-        'crj_credit',
     ];
+
+    //@korinlv: added  this
+    public function crj_sundry_data()
+    {
+        return $this->hasMany(CRJ_SundryModel::class, 'cash_receipt_journal_id');
+    }
+
+
 
     protected static $logAttributes = ['*'];
             
