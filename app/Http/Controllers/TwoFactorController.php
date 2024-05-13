@@ -18,10 +18,22 @@ class TwoFactorController extends Controller
         //
     }
 
+    // public function store(Request $request)
+    // {
+    //     $user = auth()->user();
+    //     if ($request->input('code') == $user->code)
+    //     {
+    //         $user->restCode();
+    //         return redirect()->route('dashboard');
+    //     }
+    //     return redirect()->back()->withErrors(['code'=>'Invalid code']);
+    // }
+
     public function store(Request $request)
     {
         $user = auth()->user();
-        if ($request->input('code') == $user->code)
+        $otpCode = $request->code1 . $request->code2 . $request->code3 . $request->code4;
+        if ($otpCode == $user->code)
         {
             $user->restCode();
             return redirect()->route('dashboard');
@@ -29,7 +41,6 @@ class TwoFactorController extends Controller
         return redirect()->back()->withErrors(['code'=>'Invalid code']);
     }
 
-    
     public function show(string $id)
     {
         //

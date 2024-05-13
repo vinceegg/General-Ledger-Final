@@ -4,8 +4,9 @@ namespace App\Imports;
 
 use App\Models\GeneralLedgerModel;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class GeneralLedgerImport implements ToModel
+class GeneralLedgerImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row
@@ -15,17 +16,34 @@ class GeneralLedgerImport implements ToModel
     public function model(array $row)
     {
         return new GeneralLedgerModel([
-            'Symbol'=> $row['gl_symbol'],
-            'Name of Fund or Account'=>$row['gl_fundname'],
-            'Functional Classification'=>$row['gl_func_classification'],
-            'Title of Project or Expense Classification'=>$row['gl_project_title'],
-            'Date'=>$row['gl_date'],
-            'Voucher No.'=>$row['gl_vouchernum'],
-            'Particulars'=>$row['gl_particulars'],
-            'Balance Debit'=>$row['gl_balance_debit'],
-            'Debits'=>$row['gl_debit'],
-            'Credits'=>$row['gl_credit'],
-            'Credits Balance'=>$row['gl_credit_balance']
+            'gl_date'               => $row['date'],
+            'gl_vouchernum'         => $row['voucher_no'],
+            'gl_particulars'        => $row['particulars'],
+            'gl_balance_debit'      => $row['balance_debit'],
+            'gl_debit'              => $row['debits'],
+            'gl_credit'             => $row['credits'],
+            'gl_credit_balance'     => $row['credits_balance']
         ]);
+
     }
+
+    public function prepareForValidation($data, $index)
+    {
+        $keys = array_keys($data);
+        $values = array_values($data);
+
+        $keys = array_map(function ($key) {
+            $key = str_replace(' ', '_', $key); // Replace spaces with underscores
+            $key = str_replace('&', '_', $key); // Replace ampersand with underscore
+            return strtolower($key);           // Convert to lowercase
+        }, $keys);
+
+        return array_combine($keys, $values);
+    }
+
+    public function headingRow(): int
+    {
+        return 1; // Assuming the first row contains the headers
+    }
+
 }

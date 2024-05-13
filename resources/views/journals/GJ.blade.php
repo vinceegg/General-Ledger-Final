@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>General Journal</title>
-    @livewireStyles
-    @vite('resources/css/app.css')
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link href ="/css/main.css" rel ="stylesheet">
+  <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+  <title>General Journal</title>
+  @livewireStyles
+  @vite('resources/css/app.css')
 </head>
 @csrf
 
 <!-- TOPNAV -->
-
 <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
@@ -29,41 +32,79 @@
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-blue-800">PLM LEDGER</span>
         </a>
       </div>
-      <div class="flex items-center">
-          <div class="flex items-center ms-3">
-            <div>
-              <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-              </button>
-            </div>
-            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-              <div class="px-4 py-3" role="none">
-                <p class="text-sm text-gray-900 dark:text-white" role="none">
-                  Mara Calinao
-                </p>
-                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                  maracalinao@plm.edu.ph
-                </p>
-              </div>
-              <ul class="py-1" role="none">
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Home</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
-                </li>
-              </ul>
-            </div>
+      <!-- Settings Dropdown -->
+          <div class="hidden sm:flex sm:items-center sm:ms-6">
+              <x-dropdown align="right" width="48">
+                  <x-slot name="trigger">
+                      <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                          <div>{{ Auth::user()->email }}</div> <!-- Updated to show email -->
+                          <div class="ms-1">
+                              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                              </svg>
+                          </div>
+                      </button>
+                  </x-slot>
+
+                  <x-slot name="content">
+                      <x-dropdown-link :href="route('profile.edit')">
+                          {{ __('Profile') }}
+                      </x-dropdown-link>
+                      <!-- Authentication -->
+                      <form method="POST" action="{{ route('logout') }}">
+                          @csrf
+                          <x-dropdown-link :href="route('logout')"
+                                  onclick="event.preventDefault();
+                                              this.closest('form').submit();">
+                              {{ __('Log Out') }}
+                          </x-dropdown-link>
+                      </form>
+                  </x-slot>
+              </x-dropdown>
           </div>
-        </div>
-    </div>
+
+          <!-- Hamburger -->
+          <div class="-me-2 flex items-center sm:hidden">
+              <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                  <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                      <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                      <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <!-- Responsive Navigation Menu -->
+  <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+      <div class="pt-2 pb-3 space-y-1">
+          <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+              {{ __('Dashboard') }}
+          </x-responsive-nav-link>
+      </div>
+
+      <!-- Responsive Settings Options -->
+      <div class="pt-4 pb-1 border-t border-gray-200">
+          <div class="px-4">
+              <div class="font-medium text-base text-gray-800">{{ Auth::user()->email }}</div> <!-- Also updated here for mobile view -->
+              <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+          </div>
+
+          <div class="mt-3 space-y-1">
+              <x-responsive-nav-link :href="route('profile.edit')">
+                  {{ __('Profile') }}
+              </x-responsive-nav-link>
+              <!-- Authentication -->
+              <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+                  <x-responsive-nav-link :href="route('logout')"
+                          onclick="event.preventDefault();
+                                      this.closest('form').submit();">
+                      {{ __('Log Out') }}
+                  </x-responsive-nav-link>
+              </form>
+          </div>
+      </div>
   </div>
 </nav>
 
@@ -139,50 +180,31 @@
                   </li>
             </ul>
          </li>
-
-
-
-         
-      <ul class="fixed bottom-0 pb-10 left-2 w-56 pt-4 mt-4 space-y-2 font-small border-t border-gray-200 dark:border-gray-700">
-         <li>
-         @foreach([''] as $route) {{ $route }}
-            <a href="{{ url('/faqs' . $route) }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group">
-            <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.529 7.988a2.502 2.502 0 0 1 5 .191A2.441 2.441 0 0 1 10 10.582V12m-.01 3.008H10M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-            </svg>
-               <span class="ms-3">Help / FAQ</span>
-            </a>
-          @endforeach
-         </li>
-         <li>
-         @foreach([''] as $route) {{ $route }}
-            <a href="{{ url('/settings' . $route) }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group">
-            <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                <path d="M19 11V9a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L12 2.757V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L2.929 4.343a1 1 0 0 0 0 1.414l.536.536L2.757 8H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535L8 17.243V18a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H18a1 1 0 0 0 1-1Z"/>
-                <path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                </g>
-            </svg>
-               <span class="ms-3">Settings</span>
-            </a>
-            @endforeach
-         </li>
-         <li>
-          <form method="POST" action="{{ route('logout') }}">
-              @csrf
-              <a href="{{ route('logout') }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group"
-                  onclick="event.preventDefault();
-                           this.closest('form').submit();">
-                  <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
-                  </svg>
-                  <span class="ms-3">{{ __('Log Out') }}</span>
-              </a>
-          </form>
-        </li>      
-      </ul>
-
-
+         <ul class="fixed bottom-0 pb-10 left-2 w-56 pt-4 mt-4 space-y-2 font-small border-t border-gray-200 dark:border-gray-700">
+          <li>
+          @foreach([''] as $route) {{ $route }}
+             <a href="{{ url('/faqs' . $route) }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group">
+             <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.529 7.988a2.502 2.502 0 0 1 5 .191A2.441 2.441 0 0 1 10 10.582V12m-.01 3.008H10M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+             </svg>
+                <span class="ms-3">Help / FAQ</span>
+             </a>
+           @endforeach
+          </li>      
+          <li>
+           <form method="POST" action="{{ route('logout') }}">
+               @csrf
+               <a href="{{ route('logout') }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group"
+                   onclick="event.preventDefault();
+                            this.closest('form').submit();">
+                   <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
+                   </svg>
+                   <span class="ms-3">{{ __('Log Out') }}</span>
+               </a>
+           </form>
+         </li>      
+       </ul>
       </ul>
    </div>
 </aside>

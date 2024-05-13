@@ -14,19 +14,21 @@ class GeneralJournalModel extends Model
     use HasFactory;
     use SoftDeletes;
     use LogsActivity;
-
+    
     protected $table = 'general_journal';
  
     protected $fillable = [
+        'gj_entrynum',
         'gj_entrynum_date',
         'gj_jevnum',
         'gj_particulars',
-        'gj_accountcode',
-        'gj_debit',
-        'gj_credit',
     ];
 
-
+        //@korinlv: added  this
+        public function gj_accountcodes_data()
+        {
+            return $this->hasMany(GeneralJournal_AccountCodesModel::class, 'general_journal_id');
+        }
         protected static $logAttributes = ['*'];
     
         public function getActivitylogOptions(): LogOptions
