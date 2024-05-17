@@ -35,6 +35,7 @@
                 <option value="desc">Oldest First</option>
             </select>
             
+            
             <!-- Import -->                    
             <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
             data-modal-target="import-modal" data-modal-toggle="import-modal" >Import</button>
@@ -50,6 +51,7 @@
            wire:click="resetInput" data-modal-target="add-modal" data-modal-toggle="add-modal" >
                 Add Transaction
             </button>
+            
         </div>
     </div>
 </div>
@@ -104,7 +106,8 @@
                             <td>{{ $general_ledgers-> gl_date}}</td>
                             <td>{{ $general_ledgers-> gl_vouchernum}}</td>
                             <td>{{ $general_ledgers-> gl_particulars}}</td>                               
-                            <td>₱{{ number_format($general_ledgers->gl_balance_debit, 2, '.', ',') }}</td>                                 
+                            <td> {{ $general_ledgers->formattedGlBalanceDebit }} </td>
+                                 
                             <td>₱{{ number_format($general_ledgers->gl_debit, 2, '.', ',') }}</td>                                 
                             <td>₱{{ number_format($general_ledgers->gl_credit, 2, '.', ',') }}</td>                      
                             <td>₱{{ number_format($general_ledgers->gl_credit_balance, 2, '.', ',') }}</td>                                                             
@@ -118,24 +121,19 @@
                                     </button>
                                     <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">                                           
                                         <!-- Show Edit and Archive only for active records -->
-                                         @if (!$viewDeleted)
-                                            <button type="button" wire:click="softDeleteGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                Archive
-                                            </button>  
-                                            <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="editGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left" style="visibility: hidden;">                                              
-                                            </button>
                                             <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                 Edit
-                                            </button>                                               
-                                        @else                                  
-                                        <!-- Show Delete and Restore only for deleted records -->
-                                            <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="deleteGeneralLedger({{ $general_ledgers->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                Delete
-                                            </button>
+                                            </button> 
+                                            <button type="button" wire:click="softDeleteGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                Archive
+                                            </button>                                                                    
+                                        <!-- Show Delete and Restore only for deleted records -->                            
                                             <button type="button" wire:click="restoreGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                 Restore
-                                            </button>      
-                                        @endif     
+                                            </button>  
+                                            <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteGeneralLedger({{ $general_ledgers->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                Delete
+                                            </button>                                                                                    
                                     </div>
                                 </div>
                             </td>

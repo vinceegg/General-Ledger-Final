@@ -26,7 +26,7 @@
             <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                 <!-- Modal body -->
-                <form wire:submit.prevent="saveGeneralLedger">
+                <form wire:submit.prevent="saveGeneralLedger" x-data>
                 <div class="grid gap-4 p-4 mb-4 grid-cols-2">
 
                     <div class="col-span-2 sm:col-span-1">
@@ -56,6 +56,7 @@
                         placeholder="₱">
                         @error('gl_balance_debit') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+                    
                     <div class="col-span-2 sm:col-span-1">
                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Debits</label>
                         <input type="number" wire:model="gl_debit" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -83,7 +84,7 @@
                                 Cancel
                                 <span class="sr-only">Close modal</span>
                             </button>    
-                        <button type="submit" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
+                        <button type="submit"  @keydown.enter.prevent="$wire.saveGeneralLedger()" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
                                 Add Transaction
                             </button>
                     </div>
@@ -121,7 +122,7 @@
             <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
 
                     <!-- Modal body -->
-                <form wire:submit.prevent="updateGeneralLedger">
+                <form wire:submit.prevent="updateGeneralLedger" x-data>
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">
                         
                         <div class="col-span-2 sm:col-span-1">
@@ -129,6 +130,7 @@
                             <input type="date" wire:model="gl_date" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             @error('gl_date') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
+
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Voucher No.</label>
                             <input type="number" wire:model="gl_vouchernum" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -175,7 +177,7 @@
                         <button type="button" data-modal-toggle="edit-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
                                 Cancel
                             </button>    
-                        <button type="submit" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
+                        <button type="submit" @keydown.enter.prevent="$wire.updateGeneralLedger()"class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
                                 Save Changes
                             </button>
                     </div>

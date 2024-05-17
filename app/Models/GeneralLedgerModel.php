@@ -48,4 +48,5 @@ class GeneralLedgerModel extends Model
         {
             return User::find($this->employee_id);
         }
+        
 }
