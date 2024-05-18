@@ -69,12 +69,50 @@
                         <!-- @korin:edited this part -->
                         <div>
                             <button type="button" class="btn btn-secondary" wire:click="addAccountCode">+  Add Sundry</button>
+                            
                             @foreach ($ckdj_sundry_data as $index => $entry)
-                                <div class="mb-3">
-                                    <label>Account Code</label>
-                                    <input type="text" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_accountcode" class="form-control">
-                                    @error('ckdj_sundry_data.' . $index . 'ckdj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
+                                <div class="mb-3"x-data="{ 
+                                code: @entangle('ckdj_sundry_data.' . $index . '.ckdj_accountcode'),
+                                items: ['Cash Local Treasury', 'Petty Cash', 'Cash in Bank Local Currency Current Account'],
+                                filteredItems: [],
+                                filterItems() {
+                                    this.filteredItems = this.items.filter(item =>
+                                        item.toLowerCase().includes(this.code.toLowerCase())
+                                    );
+                                },
+                                setInputValue(value) {
+                                    this.code = value;
+                                    this.$nextTick(() => {
+                                        this.$refs.accountInput.dispatchEvent(new Event('input'));
+                                    });
+                                    this.filteredItems = [];
+                                },
+                                selectTopSuggestion() {
+                                    if (this.filteredItems.length > 0) {
+                                        this.setInputValue(this.filteredItems[0]);
+                                    }
+                                },
+                                clearSuggestions() {
+                                    this.filteredItems = [];
+                                }
+                            }" x-init="$watch('code', value => filterItems())">
+                                <label>Account Code</label>
+                                <input type="text" 
+                                    class="form-control" 
+                                    x-model="code" 
+                                    @input="filterItems" 
+                                    @keydown.enter.prevent="selectTopSuggestion"
+                                    @blur="clearSuggestions"
+                                    x-ref="accountInput">
+                                @error('ckdj_sundry_data.' . $index . '.ckdj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                                <ul class="w-52 shadow rounded mt-2 bg-white" x-show="filteredItems.length > 0" @mousedown.away="clearSuggestions">
+                                    <template x-for="(item, index) in filteredItems" :key="item">
+                                        <li class="p-2 border-t border-gray-200" @mousedown.prevent="setInputValue(item)">
+                                            <button type="button" x-text="item"></button>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
                                 <div class="mb-3">
                                     <label>Debit</label>
                                     <input type="number" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_debit" class="form-control">
@@ -175,11 +213,48 @@
                         <div>
                             <button type="button" class="btn btn-secondary" wire:click="addAccountCode">+  Add Sundry</button>
                             @foreach ($ckdj_sundry_data as $index => $entry)
-                                <div class="mb-3">
-                                    <label>Account Code</label>
-                                    <input type="text" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_accountcode" class="form-control">
-                                    @error('ckdj_sundry_data.' . $index . 'ckdj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
-                                </div>
+                            <div class="mb-3" x-data="{ 
+                            code: @entangle('ckdj_sundry_data.' . $index . '.ckdj_accountcode'),
+                            items: ['Cash Local Treasury', 'Petty Cash', 'Cash in Bank Local Currency Current Account'],
+                            filteredItems: [],
+                            filterItems() {
+                                this.filteredItems = this.items.filter(item =>
+                                    item.toLowerCase().includes(this.code.toLowerCase())
+                                );
+                            },
+                            setInputValue(value) {
+                                this.code = value;
+                                this.$nextTick(() => {
+                                    this.$refs.accountInput.dispatchEvent(new Event('input'));
+                                });
+                                this.filteredItems = [];
+                            },
+                            selectTopSuggestion() {
+                                if (this.filteredItems.length > 0) {
+                                    this.setInputValue(this.filteredItems[0]);
+                                }
+                            },
+                            clearSuggestions() {
+                                this.filteredItems = [];
+                            }
+                        }" x-init="$watch('code', value => filterItems())">
+                            <label>Account Code</label>
+                            <input type="text" 
+                                class="form-control" 
+                                x-model="code" 
+                                @input="filterItems" 
+                                @keydown.enter.prevent="selectTopSuggestion"
+                                @blur="clearSuggestions"
+                                x-ref="accountInput">
+                            @error('ckdj_sundry_data.' . $index . '.ckdj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                            <ul class="w-52 shadow rounded mt-2 bg-white" x-show="filteredItems.length > 0" @mousedown.away="clearSuggestions">
+                                <template x-for="(item, index) in filteredItems" :key="item">
+                                    <li class="p-2 border-t border-gray-200" @mousedown.prevent="setInputValue(item)">
+                                        <button type="button" x-text="item"></button>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
                                 <div class="mb-3">
                                     <label>Debit</label>
                                     <input type="number" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_debit" class="form-control">

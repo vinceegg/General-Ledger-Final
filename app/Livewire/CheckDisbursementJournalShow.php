@@ -425,7 +425,7 @@ class CheckDisbursementJournalShow extends Component
         // $query->where('id', 'like', '%' . $this->search . '%');
 
         // @korin: edited this function
-
+        // @vince eto inedit ko
         $query->where(function ($q) {
             $q->where('id', 'like', '%' . $this->search . '%')
               ->orWhere('ckdj_checknum', 'like', '%' . $this->search . '%')

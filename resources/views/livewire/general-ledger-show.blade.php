@@ -9,7 +9,7 @@
         <!-- Title -->
         <div class="flex flex-col items-left justify-between">
             <p class="font-bold text-blue-800 text-3xl">Ledger Sheet</p>
-            <p class="text-yellow-600 mt-2"> General Ledger  <span class="text-black"General Ledger</span></p>
+            <p class="text-yellow-600 mt-2"> General Ledger  <span class="text-black"> General Ledger</span></p>
         </div>
 
         <!-- Search -->

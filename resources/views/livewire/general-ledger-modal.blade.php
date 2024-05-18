@@ -42,7 +42,7 @@
                         </div>
                         <div class="mb-3">
                             <label>Voucher No.</label>
-                            <input type="number" wire:model="gl_vouchernum" class="form-control">
+                             <input type="text" wire:model="gl_vouchernum" class="form-control"> <!-- @vince yung type inedit ko -->
                             @error('gl_vouchernum') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-3">
@@ -129,7 +129,7 @@
                         </div>
                         <div class="mb-3">
                             <label>Voucher No.</label>
-                            <input type="number" wire:model="gl_vouchernum" class="form-control">
+                            <input type="text" wire:model="gl_vouchernum" class="form-control"> <!-- @vince yung type inedit ko -->
                             @error('gl_vouchernum') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-3">

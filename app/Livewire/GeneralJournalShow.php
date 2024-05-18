@@ -49,7 +49,7 @@ class GeneralJournalShow extends Component
             'gj_jevnum' => 'nullable|integer',
             'gj_particulars' => 'nullable|string',
             'gj_accountcodes_data' => 'required|array|min:1',
-            'gj_accountcodes_data.*.gj_accountcode' => 'required|string',
+            'gj_accountcodes_data.*.gj_accountcode' => 'nullable|string',
             'gj_accountcodes_data.*.gj_debit' => 'nullable|numeric',
             'gj_accountcodes_data.*.gj_credit' => 'nullable|numeric',
         ];
@@ -152,7 +152,8 @@ class GeneralJournalShow extends Component
             'gj_entrynum_date' => 'nullable|date',
             'gj_jevnum' => 'nullable|numeric',
             'gj_particulars' => 'nullable|string',
-            'gj_accountcodes_data.*.gj_accountcode' => 'required|string',
+            'gj_accountcodes_data' => 'required|array|min:1',
+            'gj_accountcodes_data.*.gj_accountcode' => 'nullable|string',
             'gj_accountcodes_data.*.gj_debit' => 'nullable|numeric',
             'gj_accountcodes_data.*.gj_credit' => 'nullable|numeric',
         ]);

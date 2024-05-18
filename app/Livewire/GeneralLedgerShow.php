@@ -54,8 +54,8 @@ class GeneralLedgerShow extends Component
             'gl_func_classification'=>'nullable|string',
             'gl_project_title'=>'nullable|string',
             'gl_date'=>'nullable|date',
-            'gl_vouchernum'=>'nullable|integer',
-            'gl_particulars'=>'nullable|string',
+            'gl_vouchernum'=>'nullable|string', //@vince yung data type inedit ko 
+            'gl_particulars'=>'nullable|string', 
             'gl_balance_debit'=> 'nullable|numeric',
             'gl_debit'=> 'nullable|numeric',
             'gl_credit'=> 'nullable|numeric',
@@ -271,7 +271,22 @@ class GeneralLedgerShow extends Component
         }
 
         // Add the search filter
-        $query->where('id', 'like', '%' . $this->search . '%');
+        //@vince eto edited function sa search
+        $query->where(function ($q) {
+            $q ->where('id', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_symbol', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_fundname', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_func_classification', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_project_title', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_date', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_vouchernum', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_particulars', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_balance_debit', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_debit', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_credit', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_credit_balance', 'like', '%' . $this->search . '%');
+
+        });
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);

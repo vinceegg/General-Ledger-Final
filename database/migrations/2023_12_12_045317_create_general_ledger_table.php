@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('gl_func_classification')->nullable;
             $table->string('gl_project_title')->nullable;
             $table->date('gl_date')->nullable;
-            $table->integer('gl_vouchernum')->nullable;
-            $table->string('gl_particulars')->nullable;
+            $table->string('gl_vouchernum')->nullable; //@vince eto inedit ko
+            $table->longText('gl_particulars')->nullable; //@vince eto inedit ko
             $table->decimal('gl_balance_debit')->nullable;
             $table->decimal('gl_debit', 15,2)->nullable;
             $table->decimal('gl_credit', 15,2)->nullable;

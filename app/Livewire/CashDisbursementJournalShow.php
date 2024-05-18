@@ -58,7 +58,7 @@ class CashDisbursementJournalShow extends Component
             'cdj_account1'=> 'nullable|numeric',
             'cdj_account2'=> 'nullable|numeric',
             'cdj_sundry_data'=>'required|array|min:1',
-            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'required|string',
+            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'nullable|string',
             'cdj_sundry_data.*.cdj_pr'=>'nullable|string',
             'cdj_sundry_data.*.cdj_debit'=> 'nullable|numeric|min:0|max:100000000',
             'cdj_sundry_data.*.cdj_credit'=> 'nullable|numeric|min:0|max:100000000',
@@ -82,7 +82,7 @@ class CashDisbursementJournalShow extends Component
         } else {
             // If the database is empty, initialize with an empty structure
             $this->cdj_sundry_data = [
-                ['cdj_accountcode' => '', 'cdj_pr' => '', 'cdj_debit' => '', 'cdj_credit' => '']
+                ['cdj_sundry_accountcode' => '', 'cdj_pr' => '', 'cdj_debit' => '', 'cdj_credit' => '']
             ];
         }
     }
@@ -170,7 +170,8 @@ class CashDisbursementJournalShow extends Component
             'cdj_amount'=> 'nullable|numeric',
             'cdj_account1'=> 'nullable|numeric',
             'cdj_account2'=> 'nullable|numeric',
-            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'required|string',
+            'cdj_sundry_data' => 'required|array|min:1',
+            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'nullable|string',
             'cdj_sundry_data.*cdj_pr'=>'nullable|string',
             'cdj_sundry_data.*cdj_debit'=> 'nullable|numeric|min:0|max:100000000',
             'cdj_sundry_data.*cdj_credit'=> 'nullable|numeric|min:0|max:100000000',

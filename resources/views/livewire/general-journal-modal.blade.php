@@ -32,13 +32,51 @@
                     </div>
                     
                     <!-- @korin:edited this part -->
+                    <!-- @vince andito yung typeahead -->
                     <div>
                         <button type="button" class="btn btn-secondary" wire:click="addAccountCode">+  Add Account Code</button>
                         @foreach ($gj_accountcodes_data as $index => $entry)
-                            <div class="mb-3">
+                            <div class="mb-3" x-data="{ 
+                                code: @entangle('gj_accountcodes_data.' . $index . '.gj_accountcode'),
+                                items: ['Cash Local Treasury', 'Petty Cash', 'Cash in Bank Local Currency Current Account'],
+                                filteredItems: [],
+                                filterItems() {
+                                    this.filteredItems = this.items.filter(item =>
+                                        item.toLowerCase().includes(this.code.toLowerCase())
+                                    );
+                                },
+                                setInputValue(value) {
+                                    this.code = value;
+                                    this.$nextTick(() => {
+                                        this.$refs.accountInput.dispatchEvent(new Event('input'));
+                                    });
+                                    this.filteredItems = [];
+                                },
+                                selectTopSuggestion() {
+                                    if (this.filteredItems.length > 0) {
+                                        this.setInputValue(this.filteredItems[0]);
+                                    }
+                                },
+                                clearSuggestions() {
+                                    this.filteredItems = [];
+                                }
+                            }" x-init="$watch('code', value => filterItems())">
                                 <label>Account Code</label>
-                                <input type="text" wire:model="gj_accountcodes_data.{{ $index }}.gj_accountcode" class="form-control">
+                                <input type="text" 
+                                    class="form-control" 
+                                    x-model="code" 
+                                    @input="filterItems" 
+                                    @keydown.enter.prevent="selectTopSuggestion"
+                                    @blur="clearSuggestions"
+                                    x-ref="accountInput">
                                 @error('gj_accountcodes_data.' . $index . '.gj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                                <ul class="w-52 shadow rounded mt-2 bg-white" x-show="filteredItems.length > 0" @mousedown.away="clearSuggestions">
+                                    <template x-for="(item, index) in filteredItems" :key="item">
+                                        <li class="p-2 border-t border-gray-200" @mousedown.prevent="setInputValue(item)">
+                                            <button type="button" x-text="item"></button>
+                                        </li>
+                                    </template>
+                                </ul>
                             </div>
                             <div class="mb-3">
                                 <label>Debit</label>
@@ -52,11 +90,10 @@
                             </div>
                             <button type="button" class="btn btn-danger" wire:click="removeAccountCode({{ $index }})">Remove</button>
                         @endforeach
+                        </div>
                     </div>
+                    <!-- @vince andito yung end ng typeahead -->
 
-
-                    
-                </div>
                 <div class="modal-footer">
                     <!-- CLOSE BUTTON -->
                     <button type="button" class="btn btn-secondary bg-gray-500 hover:bg-gray-600 focus:bg-gray-600" wire:click="closeModal"
@@ -109,23 +146,61 @@
                     <div>
                         <button type="button" class="btn btn-secondary" wire:click="addAccountCode">+  Add Account Code</button>
                         @foreach ($gj_accountcodes_data as $index => $entry)
-                            <div class="mb-3">
-                                <label>Account Code</label>
-                                <input type="text" wire:model="gj_accountcodes_data.{{ $index }}.gj_accountcode" class="form-control">
-                                @error('gj_accountcodes_data.' . $index . '.gj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label>Debit</label>
-                                <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_debit" class="form-control">
-                                @error('gj_accountcodes_data.' . $index . '.gj_debit') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label>Credit</label>
-                                <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_credit" class="form-control">
-                                @error('gj_accountcodes_data.' . $index . '.gj_credit') <span class="text-danger">{{ $message }}</span> @enderror
-                            </div>
-                            <button type="button" class="btn btn-danger" wire:click="removeAccountCode({{ $index }})">Remove</button>
-                        @endforeach
+                        <div class="mb-3" x-data="{ 
+                            code: @entangle('gj_accountcodes_data.' . $index . '.gj_accountcode'),
+                            items: ['Cash Local Treasury', 'Petty Cash', 'Cash in Bank Local Currency Current Account'],
+                            filteredItems: [],
+                            filterItems() {
+                                this.filteredItems = this.items.filter(item =>
+                                    item.toLowerCase().includes(this.code.toLowerCase())
+                                );
+                            },
+                            setInputValue(value) {
+                                this.code = value;
+                                this.$nextTick(() => {
+                                    this.$refs.accountInput.dispatchEvent(new Event('input'));
+                                });
+                                this.filteredItems = [];
+                            },
+                            selectTopSuggestion() {
+                                if (this.filteredItems.length > 0) {
+                                    this.setInputValue(this.filteredItems[0]);
+                                }
+                            },
+                            clearSuggestions() {
+                                this.filteredItems = [];
+                            }
+                        }" x-init="$watch('code', value => filterItems())">
+                            <label>Account Code</label>
+                            <input type="text" 
+                                class="form-control" 
+                                x-model="code" 
+                                @input="filterItems" 
+                                @keydown.enter.prevent="selectTopSuggestion"
+                                @blur="clearSuggestions"
+                                x-ref="accountInput">
+                            @error('gj_accountcodes_data.' . $index . '.gj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                            <ul class="w-52 shadow rounded mt-2 bg-white" x-show="filteredItems.length > 0" @mousedown.away="clearSuggestions">
+                                <template x-for="(item, index) in filteredItems" :key="item">
+                                    <li class="p-2 border-t border-gray-200" @mousedown.prevent="setInputValue(item)">
+                                        <button type="button" x-text="item"></button>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <label>Debit</label>
+                            <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_debit" class="form-control">
+                            @error('gj_accountcodes_data.' . $index . '.gj_debit') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label>Credit</label>
+                            <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_credit" class="form-control">
+                            @error('gj_accountcodes_data.' . $index . '.gj_credit') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                        <button type="button" class="btn btn-danger" wire:click="removeAccountCode({{ $index }})">Remove</button>
+                    @endforeach
+
                     </div>
                 </div>
                 <div class="modal-footer">
