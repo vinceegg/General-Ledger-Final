@@ -64,20 +64,37 @@ class GeneralJournalShow extends Component
     //@korinlv: added this function
     public function mount()
     {
-        // Example initialization, you might load this from a database or start with an empty array
-        $this->gj_accountcodes_data = [
-            ['gj_accountcode' => '', 'gj_debit' => '', 'gj_credit' => '']
-        ];
+        // Fetch existing sundry data for the given journal ID
+        $journal = GeneralJournalModel::find($this->general_journal_id);
+
+        if ($journal && $journal->gj_accountcodes_data()->exists()) {
+            // If there is existing sundry data in the database, load it
+            $this->gj_accountcodes_data = $journal->gj_accountcodes_data->toArray();
+        } else {
+            // Example initialization, you might load this from a database or start with an empty array
+            $this->gj_accountcodes_data = [
+                ['gj_accountcode' => '', 'gj_debit' => '', 'gj_credit' => '']
+            ];
+        }
     }
     // Save new GeneralJournal
     //@korinlv: updated this function
     public function saveGeneralJournal()
     {
         $validatedData = $this->validate();
+        // Convert empty strings to null for the main journal data
+        $validatedData = array_map(function($value) {
+            return $value === '' ? null : $value;
+        }, $validatedData);
 
         $journal = GeneralJournalModel::create($validatedData);
 
         foreach ($validatedData['gj_accountcodes_data'] as $code) {
+            // Convert empty strings to null for each sundry data entry
+            $code = array_map(function($value) {
+                return $value === '' ? null : $value;
+            }, $code);
+
             $journal->gj_accountcodes_data()->create([
                 'gj_accountcode' => $code['gj_accountcode'],
                 'gj_debit' => $code['gj_debit'],
@@ -128,33 +145,61 @@ class GeneralJournalShow extends Component
 
     // Update GeneralJournal
     //@korinlv: edited this function
+    //@marii eto yung function na inupdate ko 
     public function updateGeneralJournal()
     {
         $validatedData = $this->validate([
-            'gj_entrynum_date' => 'required|date',
-            'gj_jevnum' => 'required|numeric',
-            'gj_particulars' => 'required|string',
+            'gj_entrynum_date' => 'nullable|date',
+            'gj_jevnum' => 'nullable|numeric',
+            'gj_particulars' => 'nullable|string',
             'gj_accountcodes_data.*.gj_accountcode' => 'required|string',
-            'gj_accountcodes_data.*.gj_debit' => 'required|numeric',
-            'gj_accountcodes_data.*.gj_credit' => 'required|numeric',
+            'gj_accountcodes_data.*.gj_debit' => 'nullable|numeric',
+            'gj_accountcodes_data.*.gj_credit' => 'nullable|numeric',
         ]);
 
         try {
+            // Convert empty strings to null in the main journal data
+            $validatedData = array_map(function($value) {
+                return $value === '' ? null : $value;
+            }, $validatedData);
+
             $generalJournal = GeneralJournalModel::findOrFail($this->general_journal_id);
             $generalJournal->update($validatedData);
 
+            // Get existing sundry data IDs
+            $existingSundryIds = $generalJournal->gj_accountcodes_data->pluck('id')->toArray();
+
+            // Prepare an array to hold the IDs of incoming sundry data
+            $incomingSundryIds = [];
+
             foreach ($this->gj_accountcodes_data as $data) {
+                // Convert empty strings to null for each sundry data entry
+                $data = array_map(function($value) {
+                    return $value === '' ? null : $value;
+                }, $data);
+
                 if (isset($data['id']) && $data['id']) {
                     // Update existing account code
                     $accountCode = GeneralJournal_AccountCodesModel::find($data['id']);
                     if ($accountCode) {
                         $accountCode->update($data);
+                        $incomingSundryIds[] = $data['id'];
                     }
                 } else {
                     // Create new account code
-                    $generalJournal->gj_accountcodes_data()->create($data);
+                    $newAccountCode = $generalJournal->gj_accountcodes_data()->create($data);
+                    $incomingSundryIds[] = $newAccountCode->id;
+
+                    // Reset other fields except the newly added sundry entry
+                    $this->gj_accountcodes_data[] = ['gj_accountcode' => '', 'gj_debit' => '', 'gj_credit' => ''];
                 }
             }
+
+                // Calculate sundry data IDs to delete (those that are not in the incoming data)
+                $sundryIdsToDelete = array_diff($existingSundryIds, $incomingSundryIds);
+
+                // Delete sundry data not in the incoming data
+                GeneralJournal_AccountCodesModel ::destroy($sundryIdsToDelete);
 
             session()->flash('message', 'Updated Successfully');
         } catch (\Exception $e) {

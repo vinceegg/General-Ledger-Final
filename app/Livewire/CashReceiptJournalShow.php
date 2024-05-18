@@ -56,7 +56,8 @@ class CashReceiptJournalShow extends Component
             'crj_collection_credit' => 'nullable|numeric',
             'crj_deposit_debit' => 'nullable|numeric',
             'crj_deposit_credit' => 'nullable|numeric',
-            'crj_sundry_data.*.crj_accountcode' => 'nullable|string',
+            'crj_sundry_data' => 'required|array|min:1',
+            'crj_sundry_data.*.crj_accountcode' => 'required|string',
             'crj_sundry_data.*.crj_debit' => 'nullable|numeric|min:0|max:100000000',
             'crj_sundry_data.*.crj_credit' => 'nullable|numeric|min:0|max:100000000',
         ];
@@ -70,26 +71,45 @@ class CashReceiptJournalShow extends Component
     //@korinlv: added this function
     public function mount()
     {
-        // Example initialization, you might load this from a database or start with an empty array
-        $this->crj_sundry_data = [
-            ['crj_accountcode' => '', 'crj_debit' => '', 'crj_credit' => '']
-        ];
+        // Fetch existing sundry data for the given journal ID
+        $journal = CashReceiptJournalModel::find($this->cash_receipt_journal_id);
+
+        if ($journal && $journal->crj_sundry_data()->exists()) {
+            // If there is existing sundry data in the database, load it
+            $this->crj_sundry_data = $journal->crj_sundry_data->toArray();
+        } else {
+            // If the database is empty, initialize with an empty structure
+            $this->crj_sundry_data = [
+                ['crj_accountcode' => '', 'crj_debit' => '', 'crj_credit' => '']
+            ];
+        }
     }
 
     //@korinlv: updated this function
     public function saveCashReceiptJournal()
     {
         $validatedData = $this->validate();
+        // Convert empty strings to null for the main journal data
+        $validatedData = array_map(function($value) {
+            return $value === '' ? null : $value;
+        }, $validatedData);
 
         $journal = CashReceiptJournalModel::create($validatedData);
 
         foreach ($validatedData['crj_sundry_data'] as $code) {
+            // Convert empty strings to null for each sundry data entry
+            $code = array_map(function($value) {
+                return $value === '' ? null : $value;
+            }, $code);
+
+
             $journal->crj_sundry_data()->create([
                 'crj_accountcode' => $code['crj_accountcode'],
                 'crj_debit' => $code['crj_debit'],
                 'crj_credit' => $code['crj_credit'],
             ]);
         }
+        
         
         session()->flash('message', 'Added Successfully');
         $this->dispatch('close-modal');
@@ -135,6 +155,7 @@ class CashReceiptJournalShow extends Component
 
     //UPDATE FUNCTION
     //@korinlv: edited this function
+    //@marii eto yung function na inupdate ko 
     public function updateCashReceiptJournal()
     {
         $validatedData = $this->validate([
@@ -145,27 +166,55 @@ class CashReceiptJournalShow extends Component
             'crj_collection_credit' => 'nullable|numeric',
             'crj_deposit_debit' => 'nullable|numeric',
             'crj_deposit_credit' => 'nullable|numeric',
-            'crj_sundry_data.*.crj_accountcode' => 'nullable|string',
+            'crj_sundry_data' => 'required|array|min:1',
+            'crj_sundry_data.*.crj_accountcode' => 'required|string',
             'crj_sundry_data.*.crj_debit' => 'nullable|numeric|min:0|max:100000000',
             'crj_sundry_data.*.crj_credit' => 'nullable|numeric|min:0|max:100000000',
         ]);
 
         try {
+            // Convert empty strings to null in the main journal data
+            $validatedData = array_map(function($value) {
+                return $value === '' ? null : $value;
+            }, $validatedData);
+
             $cash_receipt_journal = CashReceiptJournalModel::findOrFail($this->cash_receipt_journal_id);
             $cash_receipt_journal->update($validatedData);
 
-            foreach ($this->crj_sundry_data as $data) {
+            // Get existing sundry data IDs
+            $existingSundryIds = $cash_receipt_journal->crj_sundry_data->pluck('id')->toArray();
+
+            // Prepare an array to hold the IDs of incoming sundry data
+            $incomingSundryIds = [];
+
+            foreach ($this->crj_sundry_data as $key => $data) {
+                // Convert empty strings to null for each sundry data entry
+                $data = array_map(function($value) {
+                    return $value === '' ? null : $value;
+                }, $data);
+
                 if (isset($data['id']) && $data['id']) {
                     // Update existing account code
                     $accountCode = CRJ_SundryModel::find($data['id']);
                     if ($accountCode) {
                         $accountCode->update($data);
+                        $incomingSundryIds[] = $data['id'];
                     }
                 } else {
                     // Create new account code
-                    $cash_receipt_journal->crj_sundry_data()->create($data);
+                    $newAccountCode = $cash_receipt_journal->crj_sundry_data()->create($data);
+                    $incomingSundryIds[] = $newAccountCode->id;
+                    
+                    // Reset other fields except the newly added sundry entry
+                    $this->crj_sundry_data[$key] = ['crj_accountcode' => '', 'crj_debit' => '', 'crj_credit' => ''];
                 }
             }
+
+            // Calculate sundry data IDs to delete (those that are not in the incoming data)
+            $sundryIdsToDelete = array_diff($existingSundryIds, $incomingSundryIds);
+
+            // Delete sundry data not in the incoming data
+            CRJ_SundryModel::destroy($sundryIdsToDelete);
 
             session()->flash('message', 'Updated Successfully');
         } catch (\Exception $e) {
@@ -175,6 +224,7 @@ class CashReceiptJournalShow extends Component
         $this->resetInput();
         $this->dispatch('close-modal');
     }
+
 
     //DELETE FUNCTION
     public function deleteCashReceiptJournal(int $cash_receipt_journal_id, $type = 'soft')

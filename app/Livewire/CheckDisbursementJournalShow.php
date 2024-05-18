@@ -79,20 +79,38 @@ class CheckDisbursementJournalShow extends Component
     //@korinlv: added this function
     public function mount()
     {
-        // Example initialization, you might load this from a database or start with an empty array
-        $this->ckdj_sundry_data = [
-            ['ckdj_accountcode' => '', 'ckdj_debit' => '', 'ckdj_credit' => '']
-        ];
+        // Fetch existing sundry data for the given journal ID
+        $journal = CheckDisbursementJournalModel::find($this->check_disbursement_journal_id);
+
+        if ($journal && $journal->ckdj_sundry_data()->exists()) {
+            // If there is existing sundry data in the database, load it
+            $this->ckdj_sundry_data = $journal->ckdj_sundry_data->toArray();
+        } else {
+            // If the database is empty, initialize with an empty structure
+            $this->ckdj_sundry_data = [
+                ['ckdj_accountcode' => '', 'ckdj_debit' => '', 'ckdj_credit' => '']
+            ];
+        }
     }
+
 
     //@korinlv: updated this function
     public function saveCheckDisbursementJournal()
     {
         $validatedData = $this->validate();
+        // Convert empty strings to null for the main journal data
+        $validatedData = array_map(function($value) {
+            return $value === '' ? null : $value;
+        }, $validatedData);
 
         $journal = CheckDisbursementJournalModel::create($validatedData);
 
         foreach ($validatedData['ckdj_sundry_data'] as $code) {
+            // Convert empty strings to null for each sundry data entry
+            $code = array_map(function($value) {
+                return $value === '' ? null : $value;
+            }, $code);
+
             $journal->ckdj_sundry_data()->create([
                 'ckdj_accountcode' => $code['ckdj_accountcode'],
                 'ckdj_debit' => $code['ckdj_debit'],
@@ -147,50 +165,78 @@ class CheckDisbursementJournalShow extends Component
     }
 
     //@korinlv: edited this function
+    //@marii eto yung function na inupdate ko 
     public function updateCheckDisbursementJournal()
     {
         $validatedData = $this->validate([
-            'ckdj_entrynum_date' => 'required|date',
-            'ckdj_checknum' => 'required|string|max:255',
-            'ckdj_payee' => 'required|string|max:255',
-            'ckdj_bur' => 'required|numeric',
+            'ckdj_entrynum_date' => 'nullable|date',
+            'ckdj_checknum' => 'nullable|integer',
+            'ckdj_payee' => 'nullable|string',
+            'ckdj_bur' => 'nullable|integer',
             'ckdj_cib_lcca' => 'nullable|numeric',
             'ckdj_account1' => 'nullable|numeric',
             'ckdj_account2' => 'nullable|numeric',
             'ckdj_account3' => 'nullable|numeric',
             'ckdj_salary_wages' => 'nullable|numeric',
             'ckdj_honoraria' => 'nullable|numeric',
-            'ckdj_sundry_data.*.id' => 'sometimes|exists:ckdj_sundry_data,id',
-            'ckdj_sundry_data.*.ckdj_accountcode' => 'required|string|max:255',
-            'ckdj_sundry_data.*.ckdj_debit' => 'nullable|numeric',
-            'ckdj_sundry_data.*.ckdj_credit' => 'nullable|numeric',
+            'ckdj_sundry_data' => 'required|array|min:1',
+            'ckdj_sundry_data.*.ckdj_accountcode' => 'nullable|string',
+            'ckdj_sundry_data.*.ckdj_debit' => 'nullable|numeric|min:0|max:100000000',
+            'ckdj_sundry_data.*.ckdj_credit' => 'nullable|numeric|min:0|max:100000000',
         ]);
-    
+
         try {
+            // Convert empty strings to null in the main journal data
+            $validatedData = array_map(function($value) {
+                return $value === '' ? null : $value;
+            }, $validatedData);
+
             $journal = CheckDisbursementJournalModel::findOrFail($this->check_disbursement_journal_id);
             $journal->update($validatedData);
-    
+
+            // Get existing sundry data IDs
+            $existingSundryIds = $journal->ckdj_sundry_data->pluck('id')->toArray();
+
+            // Prepare an array to hold the IDs of incoming sundry data
+            $incomingSundryIds = [];
+
             foreach ($this->ckdj_sundry_data as $data) {
+                // Convert empty strings to null for each sundry data entry
+                $data = array_map(function($value) {
+                    return $value === '' ? null : $value;
+                }, $data);
+
                 if (isset($data['id']) && $data['id']) {
                     // Update existing account code
                     $accountCode = CKDJ_SundryModel::find($data['id']);
                     if ($accountCode) {
                         $accountCode->update($data);
+                        $incomingSundryIds[] = $data['id'];
                     }
                 } else {
                     // Create new account code
-                    $journal->ckdj_sundry_data()->create($data); // Corrected variable name
+                    $newAccountCode = $journal->ckdj_sundry_data()->create($data);
+                    $incomingSundryIds[] = $newAccountCode->id;
+
+                    // Reset other fields except the newly added sundry entry
+                    $this->ckdj_sundry_data[] = ['ckdj_accountcode' => '', 'ckdj_debit' => '', 'ckdj_credit' => ''];
                 }
             }
-       
+
+            // Calculate sundry data IDs to delete (those that are not in the incoming data)
+            $sundryIdsToDelete = array_diff($existingSundryIds, $incomingSundryIds);
+
+            // Delete sundry data not in the incoming data
+            CKDJ_SundryModel::destroy($sundryIdsToDelete);
+
             session()->flash('message', 'Updated Successfully');
         } catch (\Exception $e) {
             session()->flash('error', "Failed to update: " . $e->getMessage());
         }
 
-        $this->resetInput();
-        $this->dispatch('close-modal');
-    }
+            $this->resetInput();
+            $this->dispatch('close-modal');
+        }
 
     // Delete CheckDisbursementJournal
     public function deleteCheckDisbursementJournal(int $check_disbursement_journal_id, $type = 'soft')

@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Exports\CashDisbursementJournalExport;
 use App\Imports\CashDisbursementJournalImport;
-use App\Models\CRJ_SundryModel;
+use App\Models\CDJ_SundryModel;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -57,7 +57,8 @@ class CashDisbursementJournalShow extends Component
             'cdj_amount'=> 'nullable|numeric',
             'cdj_account1'=> 'nullable|numeric',
             'cdj_account2'=> 'nullable|numeric',
-            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'nullable|string',
+            'cdj_sundry_data'=>'required|array|min:1',
+            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'required|string',
             'cdj_sundry_data.*.cdj_pr'=>'nullable|string',
             'cdj_sundry_data.*.cdj_debit'=> 'nullable|numeric|min:0|max:100000000',
             'cdj_sundry_data.*.cdj_credit'=> 'nullable|numeric|min:0|max:100000000',
@@ -69,15 +70,43 @@ class CashDisbursementJournalShow extends Component
         $this->validateOnly($fields);
     }
 
+    //@korinlv: added this function
+    public function mount()
+    {
+        // Fetch existing sundry data for the given journal ID
+        $cash_disbursement_journal = CashDisbursementJournalModel::find($this->cash_disbursement_journal_id);
+
+        if ($cash_disbursement_journal && $cash_disbursement_journal->cdj_sundry_data()->exists()) {
+            // If there is existing sundry data in the database, load it
+            $this->cdj_sundry_data = $cash_disbursement_journal->cdj_sundry_data->toArray();
+        } else {
+            // If the database is empty, initialize with an empty structure
+            $this->cdj_sundry_data = [
+                ['cdj_accountcode' => '', 'cdj_pr' => '', 'cdj_debit' => '', 'cdj_credit' => '']
+            ];
+        }
+    }
+
     //@korinlv: updated this function
     public function saveCashDisbursementJournal()
     {
         $validatedData = $this->validate();
+        
+        // Convert empty strings to null for the main journal data
+        $validatedData = array_map(function($value) {
+            return $value === '' ? null : $value;
+        }, $validatedData);
+        
 
-        $journal = CashDisbursementJournalModel::create($validatedData);
+        $cash_disbursement_journal = CashDisbursementJournalModel::create($validatedData);
 
         foreach ($validatedData['cdj_sundry_data'] as $code) {
-            $journal->cdj_sundry_data()->create([
+            // Convert empty strings to null for each sundry data entry
+            $code = array_map(function($value) {
+                return $value === '' ? null : $value;
+            }, $code);
+
+            $cash_disbursement_journal->cdj_sundry_data()->create([
                 'cdj_sundry_accountcode' => $code['cdj_sundry_accountcode'],
                 'cdj_pr' => $code['cdj_pr'],
                 'cdj_debit' => $code['cdj_debit'],
@@ -129,6 +158,7 @@ class CashDisbursementJournalShow extends Component
 
     //NEW VERSION NG 'UPDATE' MAS MAHABA, WHY THO?
     //@korinlv: edited this function
+    //@marii eto yung function na inupdate ko 
     public function updateCashDisbursementJournal()
     {
         $validatedData = $this->validate([
@@ -140,28 +170,55 @@ class CashDisbursementJournalShow extends Component
             'cdj_amount'=> 'nullable|numeric',
             'cdj_account1'=> 'nullable|numeric',
             'cdj_account2'=> 'nullable|numeric',
-            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'nullable|string',
+            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'required|string',
             'cdj_sundry_data.*cdj_pr'=>'nullable|string',
             'cdj_sundry_data.*cdj_debit'=> 'nullable|numeric|min:0|max:100000000',
             'cdj_sundry_data.*cdj_credit'=> 'nullable|numeric|min:0|max:100000000',
         ]);
 
         try {
+            // Convert empty strings to null in the main journal data
+            $validatedData = array_map(function($value) {
+                return $value === '' ? null : $value;
+            }, $validatedData);
+
             $cash_disbursement_journal = CashDisbursementJournalModel::findOrFail($this->cash_disbursement_journal_id);
             $cash_disbursement_journal->update($validatedData);
 
+            // Get existing sundry data IDs
+            $existingSundryIds = $cash_disbursement_journal->cdj_sundry_data->pluck('id')->toArray();
+
+            // Prepare an array to hold the IDs of incoming sundry data
+            $incomingSundryIds = [];
+
             foreach ($this->cdj_sundry_data as $data) {
+                // Convert empty strings to null for each sundry data entry
+                $data = array_map(function($value) {
+                    return $value === '' ? null : $value;
+                }, $data);
+
                 if (isset($data['id']) && $data['id']) {
                     // Update existing account code
-                    $accountCode = CRJ_SundryModel::find($data['id']);
+                    $accountCode = CDJ_SundryModel::find($data['id']);
                     if ($accountCode) {
                         $accountCode->update($data);
+                        $incomingSundryIds[] = $data['id'];
                     }
                 } else {
                     // Create new account code
-                    $cash_disbursement_journal->cdj_sundry_data()->create($data);
+                    $newAccountCode = $cash_disbursement_journal->cdj_sundry_data()->create($data);
+                    $incomingSundryIds[] = $newAccountCode->id;
+
+                    // Reset other fields except the newly added sundry entry
+                    $this->cdj_sundry_data[] = ['cdj_sundry_accountcode' => '', 'cdj_pr' => '', 'cdj_debit' => '', 'cdj_credit' => ''];
                 }
             }
+
+            // Calculate sundry data IDs to delete (those that are not in the incoming data)
+            $sundryIdsToDelete = array_diff($existingSundryIds, $incomingSundryIds);
+
+            // Delete sundry data not in the incoming data
+            CDJ_SundryModel::destroy($sundryIdsToDelete);
 
             session()->flash('message', 'Updated Successfully');
         } catch (\Exception $e) {
