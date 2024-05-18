@@ -20,10 +20,7 @@ class GeneralLedgerShow extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $gl_symbol,
-    $gl_fundname,
-    $gl_func_classification,
-    $gl_project_title,
+    public 
     $gl_date,
     $gl_vouchernum,
     $gl_particulars,
@@ -49,10 +46,6 @@ class GeneralLedgerShow extends Component
     protected function rules()
     {
         return [
-            'gl_symbol'=>'nullable|integer',
-            'gl_fundname'=>'nullable|string',
-            'gl_func_classification'=>'nullable|string',
-            'gl_project_title'=>'nullable|string',
             'gl_date'=>'nullable|date',
             'gl_vouchernum'=>'nullable|string', //@vince yung data type inedit ko 
             'gl_particulars'=>'nullable|string', 
@@ -86,10 +79,6 @@ class GeneralLedgerShow extends Component
         if ($general_ledger) {
             
             $this->general_ledger_id = $general_ledger->id;
-            $this->gl_symbol = $general_ledger->gl_symbol;
-            $this->gl_fundname = $general_ledger->gl_fundname;
-            $this->gl_func_classification = $general_ledger->gl_func_classification;
-            $this->gl_project_title = $general_ledger->gl_project_title;
             $this->gl_date = $general_ledger->gl_date;
             $this->gl_vouchernum = $general_ledger->gl_vouchernum;
             $this->gl_particulars = $general_ledger->gl_particulars;
@@ -108,10 +97,6 @@ class GeneralLedgerShow extends Component
         $validatedData = $this->validate();
 
         GeneralLedgerModel::where('id', $this->general_ledger_id)->update([
-            'gl_symbol' => $validatedData['gl_symbol'],
-            'gl_fundname' => $validatedData['gl_fundname'],
-            'gl_func_classification' => $validatedData['gl_func_classification'],
-            'gl_project_title' => $validatedData['gl_project_title'],
             'gl_date' => $validatedData['gl_date'],
             'gl_vouchernum' => $validatedData['gl_vouchernum'],
             'gl_particulars' => $validatedData['gl_particulars'],
@@ -154,10 +139,6 @@ class GeneralLedgerShow extends Component
     public function resetInput()
     {
         $this->general_ledger_id = '';
-        $this->gl_symbol = '';
-        $this->gl_fundname = '';
-        $this->gl_func_classification = '';
-        $this->gl_project_title = '';
         $this->gl_date = '';
         $this->gl_vouchernum = '';
         $this->gl_particulars = '';
@@ -274,10 +255,6 @@ class GeneralLedgerShow extends Component
         //@vince eto edited function sa search
         $query->where(function ($q) {
             $q ->where('id', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_symbol', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_fundname', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_func_classification', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_project_title', 'like', '%' . $this->search . '%')
             ->orWhere('gl_date', 'like', '%' . $this->search . '%')
             ->orWhere('gl_vouchernum', 'like', '%' . $this->search . '%')
             ->orWhere('gl_particulars', 'like', '%' . $this->search . '%')
