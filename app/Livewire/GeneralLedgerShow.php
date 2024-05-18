@@ -26,6 +26,7 @@ class GeneralLedgerShow extends Component
     $gl_credit_balance,
     $deleteType; // Added deleteType property
 
+    
     public $search;
     public $general_ledger_id;
     public $selectedMonth;
