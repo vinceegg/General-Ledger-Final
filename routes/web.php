@@ -34,12 +34,15 @@ Route::get('/LS', [App\Http\Controllers\GeneralLedgerController::class, 'index']
 Route::get('/AC', function () {
     return view('accounthomepage');
 });
+
 //Routes for Account Codes
 Route::get('/CashLocalTreasury', [App\Http\Controllers\CashLocalTreasury::class, 'index'])->name('CashLocalTreasury');
+Route::get('/PettyCash', [App\Http\Controllers\LS2PettyCashController::class, 'index'])->name('PettyCash');
 
 
 //ROUTES FOR ARCHIVED RECORDS
 Route::get('/CashLocalTreasuryArchived', [App\Http\Controllers\GeneralLedgerTrash::class, 'index'])->name('CashLocalTreasuryArchived');
+Route::get('/PettyCashArchived', [App\Http\Controllers\LS2PettyCashTrash::class, 'index'])->name('PettyCashArchived');
 
 Route::get('/faqs', function () {
     return view('sidebarlinks.faqs');

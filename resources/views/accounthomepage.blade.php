@@ -174,7 +174,7 @@
 
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('PettyCash') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
