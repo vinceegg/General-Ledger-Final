@@ -49,6 +49,8 @@ class GeneralLedgerTrash extends Component
         }
         $this->dispatch('close-modal');
         $this->resetInput();
+
+        return redirect()->route('CashLocalTreasuryArchived')->with('message', 'Deleted Successfully');
     }
 
     public function resetInput()

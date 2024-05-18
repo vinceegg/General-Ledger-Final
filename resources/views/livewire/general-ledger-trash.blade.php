@@ -85,9 +85,18 @@
                             @endforelse            
             </tbody>   
             
-            <tfoot class="p-6 bg-white">
+            <tfoot class="p-4 bg-white">
                 <tr class="border-t shadow-inner sticky bottom-0 bg-white">
-                    <td class="p-6" colspan="100%">
+
+                    <td class="p-4 mr-4 ml-4 flex-grow text-left text-green-800" colspan="100%">
+                    @if (session()->has('message'))
+                    <div class="font-semibold w-full bg-green-50 rounded-lg px-5 py-2.5 flex items-center">
+                                        <svg class="w-5 h-5 mr-2" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"></path>
+                                        </svg>
+                                        {{ session('message') }}
+                                    </div>
+                        @endif
                     </td>
                 </tr>
             </tfoot>
