@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('general_ledger', function (Blueprint $table) {
             $table->id();
-            $table->date('gl_date')->nullable;
-            $table->string('gl_vouchernum')->nullable; //@vince eto inedit ko
-            $table->longText('gl_particulars')->nullable; //@vince eto inedit ko
-            $table->decimal('gl_balance_debit',15,2)->nullable;
-            $table->decimal('gl_debit', 15,2)->nullable;
-            $table->decimal('gl_credit', 15,2)->nullable;
-            $table->decimal('gl_credit_balance',15,2)->nullable;
+            $table->date('gl_date')->nullable();
+            $table->string('gl_vouchernum')->nullable(); //@vince eto inedit ko
+            $table->longText('gl_particulars')->nullable(); //@vince eto inedit ko
+            $table->decimal('gl_balance_debit',15,2)->nullable();
+            $table->decimal('gl_debit', 15,2)->nullable();
+            $table->decimal('gl_credit', 15,2)->nullable();
+            $table->decimal('gl_credit_balance',15,2)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

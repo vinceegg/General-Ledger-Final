@@ -37,6 +37,7 @@ Route::get('/AC', function () {
 //Routes for Account Codes
 Route::get('/CashLocalTreasury', [App\Http\Controllers\CashLocalTreasury::class, 'index'])->name('CashLocalTreasury');
 
+
 //ROUTES FOR ARCHIVED RECORDS
 Route::get('/CashLocalTreasuryArchived', [App\Http\Controllers\GeneralLedgerTrash::class, 'index'])->name('CashLocalTreasuryArchived');
 

@@ -44,7 +44,7 @@ class GeneralLedgerShow extends Component
     protected function rules()
     {
         return [
-            'gl_date'=>'nullable|date',
+            'gl_date'=>'required|date',
             'gl_vouchernum'=>'nullable|string', //@vince yung data type inedit ko 
             'gl_particulars'=>'nullable|string', 
             'gl_balance_debit'=> 'nullable|numeric|min:0|max:100000000',
@@ -60,9 +60,15 @@ class GeneralLedgerShow extends Component
     }
 
     public function saveGeneralLedger()
-    {
-        
+    {       
         $validatedData = $this->validate();
+
+        // Convert empty strings to null
+        foreach ($validatedData as $key => $value) {
+            if ($value === '') {
+                $validatedData[$key] = null;
+            }
+        }
 
         GeneralLedgerModel::create($validatedData);
 
@@ -143,7 +149,6 @@ class GeneralLedgerShow extends Component
         $general_ledger= GeneralLedgerModel::find($general_ledger_id);
         if ( $general_ledger) {
             $general_ledger->delete();
-            session()->flash('message', 'Archived Successfully');
     }
         $this->resetInput();
         $this->dispatch('close-modal');

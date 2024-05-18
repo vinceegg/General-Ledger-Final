@@ -46,16 +46,22 @@
                     </button>
 
                     <!-- Add -->
-                    <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
+                    <button type="button" wire:click="resetInput" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
                     data-modal-target="add-modal" data-modal-toggle="add-modal">
                         Add Transaction
                     </button>
-
-                    
-<a href="{{ route('CashLocalTreasuryArchived') }}" class="btn btn-primary">Archived Records</a>
-
+                 
+                    <!-- Archive button -->
+                    <a href="{{ route('CashLocalTreasuryArchived') }}" class="relative group border border-gray-300 bg-white hover:bg-gray-200 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
+                        <svg class="w-5 h-5" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"></path>
+                        </svg>
+                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-32  bg-white border border-gray-300 text-black shadow:md text-center text-sm rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            View Archives
+                        </div>
+                    </a>
                 </div>
-        </div> <!-- 1st rectangle div tag -->
+</div> <!-- 1st rectangle div tag -->
         
         <!-- 2ND RECTANGLE CONTAINING THE JOURNAL TABLE -->
         <div class="p-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
