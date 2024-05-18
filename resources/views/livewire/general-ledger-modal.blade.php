@@ -16,11 +16,19 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
+            <!-- Notification Message -->
+            {{-- <div x-data="{ show: @entangle('showNotification') }" 
+            x-show="show" 
+            x-init="@this.on('notification-shown', () => { setTimeout(() => { $wire.call('resetNotification') }, 3000); })"
+            class="fixed top-0 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-4 py-2 rounded-md">
+            {{ $notificationMessage }}
+            </div> --}}
+
 
             <!-- Modal body design -->
             <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
                 <!-- Function for adding -->    
-                <form wire:submit.prevent="saveGeneralLedger">
+                <form wire:submit.prevent="saveGeneralLedger" x-data>
                     <!-- Modal content -->
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">
                         <div class="col-span-2 sm:col-span-1">
@@ -74,7 +82,7 @@
                                 Cancel
                                 <span class="sr-only">Close modal</span>
                             </button>
-                            <button type="submit" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
+                            <button type="submit"   @keydown.enter.prevent="$wire.saveGeneralLedger()" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
                                 Add Transaction
                             </button>
                         </div>
@@ -86,9 +94,6 @@
         </div>
     </div> 
 </div>
-
-
-
 <!-- EDIT TRANSACTION MODAL -->
 <div wire:ignore.self id="edit-modal" tabindex="-1" aria-hidden="true" class="mt-10 hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-2xl max-h-full">
@@ -111,7 +116,7 @@
             <!-- Modal body design -->
             <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
                 <!-- Function for adding -->    
-                <form wire:submit.prevent="saveGeneralLedger">
+                <form wire:submit.prevent="saveGeneralLedger" x-data>
                     <!-- Modal content -->
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">
                         <div class="col-span-2 sm:col-span-1">
@@ -177,9 +182,6 @@
         </div>
     </div> 
 </div>
-
-
-
 <!-- DELETE MODAL -->
 <div wire:ignore.self id="delete-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-lg max-h-full">
@@ -220,9 +222,6 @@
         </div>
     </div> 
 </div>
-
-
-
 <!-- IMPORT MODAL -->
 <div wire:ignore.self id="import-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-lg max-h-full">
@@ -272,9 +271,6 @@
         </div>
     </div>
 </div> 
-
-
-
 <!-- EXPORT MODAL -->
 <div wire:ignore.self id="export-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-lg max-h-full">
@@ -322,5 +318,3 @@
         </div>
     </div>
 </div> 
-
-

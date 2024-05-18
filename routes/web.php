@@ -57,6 +57,8 @@ Route::get('/settings', function () {
     return view('sidebarlinks.settings');
 });
 
+//ROUTES FOR ARCHIVED RECORDS
+Route::get('/CashLocalTreasuryArchived', [App\Http\Controllers\GeneralLedgerTrash::class, 'index'])->name('CashLocalTreasuryArchived');
   
 
 
