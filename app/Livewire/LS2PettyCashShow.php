@@ -171,7 +171,7 @@ class LS2PettyCashShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new LS2PettyCashImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('PettyCash')->with('message', 'File Imported Successfully');
         }
     }
 

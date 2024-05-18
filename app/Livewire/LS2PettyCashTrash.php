@@ -59,7 +59,7 @@ class LS2PettyCashTrash extends Component
 
     public function render()
     {
-        return view('livewire.general-ledger-trash', [
+        return view('livewire.l-s2-petty-cash-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }
