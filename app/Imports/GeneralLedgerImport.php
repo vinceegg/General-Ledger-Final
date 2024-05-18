@@ -16,10 +16,6 @@ class GeneralLedgerImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         return new GeneralLedgerModel([
-            'gl_symbol'             => $row['symbol'], // Make sure these match the heading names exactly as in the export
-            'gl_fundname'           => $row['name_of_fund_or_account'],
-            'gl_func_classification' => $row['functional_classification'],
-            'gl_project_title'      => $row['title_of_project_or_expense_classification'],
             'gl_date'               => $row['date'],
             'gl_vouchernum'         => $row['voucher_no'],
             'gl_particulars'        => $row['particulars'],

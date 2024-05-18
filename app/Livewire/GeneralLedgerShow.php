@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Exports\GeneralLedgerExport;
 use App\Imports\GeneralLedgerImport;
-use Livewire\WithPagination;
 use App\Models\GeneralLedgerModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
@@ -12,17 +11,12 @@ use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
 
-
 class GeneralLedgerShow extends Component
 {
-    use WithPagination;
+
     use WithFileUploads;
 
-
-    public $gl_symbol,
-    $gl_fundname,
-    $gl_func_classification,
-    $gl_project_title,
+    public 
     $gl_date,
     $gl_vouchernum,
     $gl_particulars,
@@ -44,14 +38,12 @@ class GeneralLedgerShow extends Component
     public $totalCredit = 0;
     public $totalCreditBalance = 0;
     public $viewDeleted = false; // Property to toggle deleted records view
+    public $showNotification = false; // Control notification visibility
+    public $notificationMessage = ''; // Store the notification message
     
     protected function rules()
     {
         return [
-            'gl_symbol'=>'nullable|integer',
-            'gl_fundname'=>'nullable|string',
-            'gl_func_classification'=>'nullable|string',
-            'gl_project_title'=>'nullable|string',
             'gl_date'=>'nullable|date',
             'gl_vouchernum'=>'nullable|integer',
             'gl_particulars'=>'nullable|string',
@@ -72,11 +64,15 @@ class GeneralLedgerShow extends Component
         $validatedData = $this->validate();
 
         GeneralLedgerModel::create($validatedData);
-        session()->flash('message', 'Added Successfully');
-        $this->resetInput();
-        $this->dispatch('close-modal');
-    }
 
+        // Update notification state
+        $this->notificationMessage = 'Added Successfully';
+        $this->showNotification = true;
+
+        $this->resetInput();
+
+        $this->dispatch('notification-shown');
+    }
 
     public function editGeneralLedger($general_ledger_id)
     {
@@ -84,10 +80,6 @@ class GeneralLedgerShow extends Component
         if ($general_ledger) {
             
             $this->general_ledger_id = $general_ledger->id;
-            $this->gl_symbol = $general_ledger->gl_symbol;
-            $this->gl_fundname = $general_ledger->gl_fundname;
-            $this->gl_func_classification = $general_ledger->gl_func_classification;
-            $this->gl_project_title = $general_ledger->gl_project_title;
             $this->gl_date = $general_ledger->gl_date;
             $this->gl_vouchernum = $general_ledger->gl_vouchernum;
             $this->gl_particulars = $general_ledger->gl_particulars;
@@ -106,10 +98,6 @@ class GeneralLedgerShow extends Component
         $validatedData = $this->validate();
 
         GeneralLedgerModel::where('id', $this->general_ledger_id)->update([
-            'gl_symbol' => $validatedData['gl_symbol'],
-            'gl_fundname' => $validatedData['gl_fundname'],
-            'gl_func_classification' => $validatedData['gl_func_classification'],
-            'gl_project_title' => $validatedData['gl_project_title'],
             'gl_date' => $validatedData['gl_date'],
             'gl_vouchernum' => $validatedData['gl_vouchernum'],
             'gl_particulars' => $validatedData['gl_particulars'],
@@ -118,8 +106,14 @@ class GeneralLedgerShow extends Component
             'gl_credit' => $validatedData['gl_credit'],
             'gl_credit_balance' => $validatedData['gl_credit_balance'],
         ]);
-        session()->flash('message', 'Updated Successfully');
+        // Update notification state
+        $this->notificationMessage = 'Updated Successfully';
+        $this->showNotification = true;
         $this->resetInput();
+
+        // Dispatch browser event to handle notification visibility
+        $this->dispatch('notification-shown');
+
         $this->dispatch('close-modal');
     }
 
@@ -152,10 +146,6 @@ class GeneralLedgerShow extends Component
     public function resetInput()
     {
         $this->general_ledger_id = '';
-        $this->gl_symbol = '';
-        $this->gl_fundname = '';
-        $this->gl_func_classification = '';
-        $this->gl_project_title = '';
         $this->gl_date = '';
         $this->gl_vouchernum = '';
         $this->gl_particulars = '';
@@ -234,6 +224,12 @@ class GeneralLedgerShow extends Component
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
 
+    // Method to reset notification
+    public function resetNotification()
+    {
+        $this->showNotification = false;
+    }
+
     // Method to toggle viewDeleted
     public function toggleDeletedView()
     {
@@ -274,8 +270,7 @@ class GeneralLedgerShow extends Component
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
 
-        // Get paginated results
-        $general_ledger = $query->orderBy('id', 'ASC')->paginate(10);
+        $general_ledger = $query->orderBy('id', 'ASC')->get(); // Changed from paginate() to get()
 
         // Calculate the total balance, debit, and credit
         $this->totalBalanceDebit = $query->sum('gl_balance_debit');

@@ -1,158 +1,218 @@
-
-<!-- DELETE MODAL SANA PERO DI NATATAWAG GRRR -->
-<div wire:ignore.self id="delete-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative w-full max-w-lg max-h-full">
-        <!-- Modal content -->
+<!-- ADD TRANSACTION MODAL -->
+<div wire:ignore.self id="add-modal" tabindex="-1" aria-hidden="true" class="mt-10 hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-2xl max-h-full">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">
-                        Are you sure you want to delete this item?
-                    </h3>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
-                    data-modal-toggle="delete-modal">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </div>
-            <div class="p-3 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <!-- Modal body -->
-                <form wire:submit.prevent="destroyGeneralLedger">
-                <div class="grid gap-4 p-2 mb-4">
-                    <p class="text-lg leading-relaxed text-gray-500 dark:text-gray-400">
-                    This action cannot be undone. This will permanently delete the row from the database. 
-                </p>
 
-                </div>
-                <div class="col-span-2 flex justify-end mr-2">
-                        <button type="button" data-modal-toggle="delete-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 fixed w-full max-w-2xl bg-white dark:bg-gray-700 z-10">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                    Add New Journal Entry
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
+                    data-modal-toggle="add-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+
+            <!-- Modal body design -->
+            <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
+                <!-- Function for adding -->    
+                <form wire:submit.prevent="saveGeneralLedger">
+                    <!-- Modal content -->
+                    <div class="grid gap-4 p-4 mb-4 grid-cols-2">
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
+                            <input type="date" wire:model="gl_date" class="w-full bg-gray-50 border {{ $errors->has('gl_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('gl_date') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Voucher No.</label>
+                            <input type="number" wire:model="gl_vouchernum" class="bg-gray-50 border {{ $errors->has('gl_vouchernum') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="YYYY-MM-JEV Number"> 
+                            @error('gl_vouchernum') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
+                            <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('gl_particulars') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                            textarea id="description" rows="2" wire:model="gl_particulars">
+                            @error('gl_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </textarea>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Balance Debit</label>
+                            <input type="number" wire:model="gl_balance_debit" class="bg-gray-50 border {{ $errors->has('gl_balance_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="₱">
+                            @error('gl_balance_debit') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Debits</label>
+                            <input type="number" wire:model="gl_debit" class="bg-gray-50 border {{ $errors->has('gl_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="₱">
+                            @error('gl_debit') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits</label>
+                            <input type="text" wire:model="gl_credit" class="bg-gray-50 border {{ $errors->has('gl_credit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="₱">
+                            @error('gl_credit') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits Balance</label>
+                            <input type="text" wire:model="gl_credit_balance" class="bg-gray-50 border {{ $errors->has('gl_credit_balance') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="₱">
+                            @error('gl_credit_balance') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>      
+                    </div> <!-- Modal content div tag -->
+
+                    <!-- Modal footer -->
+                    <div class="absolute bottom-0 left-0 w-full bg-white dark:bg-gray-700 rounded-b">
+                        <div class="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 max-w-2xl mx-auto">
+                            <button type="button" data-modal-toggle="add-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
                                 Cancel
                                 <span class="sr-only">Close modal</span>
-                            </button>    
-                        <button type="submit" class="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
-                                Delete
                             </button>
+                            <button type="submit" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
+                                Add Transaction
+                            </button>
+                        </div>
                     </div>
-                </form>
-            </div>
+
+                </form> <!-- Function div tag -->
+
+            </div> <!-- Modal body design div tag -->
         </div>
     </div> 
 </div>
 
-<!-- ADD TRANSACTION MODAL -->
-<div wire:ignore.self id="add-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+
+
+<!-- EDIT TRANSACTION MODAL -->
+<div wire:ignore.self id="edit-modal" tabindex="-1" aria-hidden="true" class="mt-10 hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-2xl max-h-full">
-        <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">
-                        Add New Journal Entry
-                    </h3>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
-                    data-modal-toggle="add-modal">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </div>
-            
-                <!-- Notification Area -->
 
-            
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 fixed w-full max-w-2xl bg-white dark:bg-gray-700 z-10">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                    Update Journal Entry
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
+                    data-modal-toggle="edit-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
 
-                <!-- Modal body -->
+            <!-- Modal body design -->
+            <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
+                <!-- Function for adding -->    
                 <form wire:submit.prevent="saveGeneralLedger">
-                <div class="grid gap-4 p-4 mb-4 grid-cols-2">
+                    <!-- Modal content -->
+                    <div class="grid gap-4 p-4 mb-4 grid-cols-2">
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
+                            <input type="date" wire:model="gl_date" class="w-full bg-gray-50 border {{ $errors->has('gl_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('gl_date') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Voucher No.</label>
+                            <input type="number" wire:model="gl_vouchernum" class="bg-gray-50 border {{ $errors->has('gl_vouchernum') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="YYYY-MM-JEV Number"> 
+                            @error('gl_vouchernum') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
+                            <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('gl_particulars') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                            textarea id="description" rows="2" wire:model="gl_particulars">
+                            @error('gl_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </textarea>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Balance Debit</label>
+                            <input type="number" wire:model="gl_balance_debit" class="bg-gray-50 border {{ $errors->has('gl_balance_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="₱">
+                            @error('gl_balance_debit') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Debits</label>
+                            <input type="number" wire:model="gl_debit" class="bg-gray-50 border {{ $errors->has('gl_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="₱">
+                            @error('gl_debit') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits</label>
+                            <input type="text" wire:model="gl_credit" class="bg-gray-50 border {{ $errors->has('gl_credit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="₱">
+                            @error('gl_credit') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits Balance</label>
+                            <input type="text" wire:model="gl_credit_balance" class="bg-gray-50 border {{ $errors->has('gl_credit_balance') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="₱">
+                            @error('gl_credit_balance') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div>      
+                    </div> <!-- Modal content div tag -->
 
-                    <div class="col-span-2 sm:col-span-1">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Symbol</label>
-                        <input type="number" wire:model="gl_symbol" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder=""> 
-                        @error('gl_symbol') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div class="col-span-2 sm:col-span-1">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Name of Fund or Account</label>
-                        <input type="text" wire:model="gl_fundname" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder=""> 
-                        @error('gl_fundname') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div class="col-span-2">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Functional Classification</label>
-                        <input type="text" wire:model="gl_func_classification" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder=""> 
-                        @error('gl_func_classification') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-
-                    <div class="col-span-2">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Title of Project or Expense Classification</label>
-                        <input type="text" wire:model="gl_project_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder=""> 
-                        @error('gl_project_title') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    
-                    <div class="col-span-2 sm:col-span-1">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
-                        <input type="date" wire:model="gl_date" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        @error('gl_date') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Voucher No.</label>
-                        <input type="number" wire:model="gl_vouchernum" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="YYYY-MM-JEV Number"> 
-                        @error('gl_vouchernum') <span class="text-danger">{{ $message }}</span> @enderror
-                        
-                    </div>
-                    
-                    <div class="col-span-2">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
-                        <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                        textarea id="description" rows="2" wire:model="gl_particulars">
-                        @error('gl_particulars') <span class="text-danger">{{ $message }}</span> @enderror
-                        </textarea>
-                    </div>
-                    
-                    <div class="col-span-2 sm:col-span-1">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Balance Debit</label>
-                        <input type="number" wire:model="gl_balance_debit" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="₱">
-                        @error('gl_balance_debit') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Debits</label>
-                        <input type="number" wire:model="gl_debit" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="₱">
-                        @error('gl_debit') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits</label>
-                        <input type="text" wire:model="gl_credit" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="₱">
-                        @error('gl_credit') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits Balance</label>
-                        <input type="text" wire:model="gl_credit_balance" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="₱">
-                        @error('gl_credit_balance') <span class="text-danger">{{ $message }}</span> @enderror
-                    </div>
-                    
-                </div>
-
-                    <div class="col-span-2 flex justify-end mr-2">
-
-                        <button type="button" data-modal-toggle="add-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+                    <!-- Modal footer -->
+                    <div class="absolute bottom-0 left-0 w-full bg-white dark:bg-gray-700 rounded-b">
+                        <div class="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 max-w-2xl mx-auto">
+                            <button type="button" data-modal-toggle="edit-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
                                 Cancel
                                 <span class="sr-only">Close modal</span>
+                            </button>
+                            <button type="submit" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
+                                Save Changes
+                            </button>
+                        </div>
+                    </div>
+
+                </form> <!-- Function div tag -->
+
+            </div> <!-- Modal body design div tag -->
+        </div>
+    </div> 
+</div>
+
+
+
+<!-- DELETE MODAL -->
+<div wire:ignore.self id="delete-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-lg max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                    Are you sure you want to delete this item?
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
+                    data-modal-toggle="delete-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <div class="p-3 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <!-- Modal body -->
+                <form wire:submit.prevent="destroyGeneralLedger">
+                    <div class="grid gap-4 p-2 mb-4">
+                        <p class="text-lg leading-relaxed text-gray-500 dark:text-gray-400">
+                            This action cannot be undone. This will permanently delete the row from the database. 
+                        </p>
+                    </div>
+                    <div class="col-span-2 flex justify-end mr-2">
+                            <button type="button" data-modal-toggle="delete-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+                                    Cancel
+                                    <span class="sr-only">Close modal</span>
                             </button>    
-                        <button type="submit" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
-                                Add Transaction
+                            <button type="submit" class="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+                                    Delete
                             </button>
                     </div>
                 </form>
@@ -174,14 +234,13 @@
                     Import data to journal
                 </h3>
                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
-                data-modal-toggle="import-modal">
+                    data-modal-toggle="import-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            
                 <!-- Import body -->
                 <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex items-center justify-center w-full">
@@ -203,8 +262,8 @@
                         </label>
                     </div>
                     <div class="col-span-2 flex justify-end mr-2 mt-4">            
-                        <button type="submit" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
-                            wire:click="importGL" >
+                        <button class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+                            wire:click="importGL">
                             Import 
                         </button>
                     </div>
@@ -213,7 +272,6 @@
         </div>
     </div>
 </div> 
-
 
 
 
@@ -237,6 +295,7 @@
             </div>
                 <!-- Export body -->
                 <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" x-data="{ exportFormat: 'xlsx' }">
+                    <!-- Radio buttons -->
                     <div class="flex flex-col mb-4">
                         <div class="flex items-center">
                             <input id="default-radio-1" type="radio" value="csv" name="default-radio" class="cursor-pointer ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" @click="exportFormat = 'csv'">
@@ -251,137 +310,17 @@
                         </div>
                         <div class="text-base text-gray-500 ml-6">Export table to Microsoft Excel Spreadsheet File</div>
                     </div>
-
-
+                    <!-- Export button -->
                     <div class="col-span-2 flex justify-end mr-2 mt-4">            
                         <button id="export-csv" button class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
                         wire:click="exportGl_CSV" x-show="exportFormat === 'csv'">Export</button>
                         <button id="export-xlsx" button class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
                         wire:click="exportGL_XLSX" x-show="exportFormat === 'xlsx'">Export</button>
                     </div>
-
                 </div>
             </form>
         </div>
     </div>
 </div> 
-
-
-<!-- EDIT TRANSACTION MODAL -->
-<div  wire:ignore.self id="edit-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative w-full max-w-2xl max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white" >
-                    Edit Journal Entry
-                </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
-                data-modal-toggle="edit-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-            </div>
-            
-            <!-- Notification Area -->
-
-            
-            <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-
-                    <!-- Modal body -->
-                <form wire:submit.prevent="updateGeneralLedger">
-                    <div class="grid gap-4 p-4 mb-4 grid-cols-2">
-
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Symbol</label>
-                            <input type="number" wire:model="gl_symbol" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder=""> 
-                            @error('gl_symbol') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Name of Fund or Account</label>
-                            <input type="text" wire:model="gl_fundname" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder=""> 
-                            @error('gl_fundname') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div class="col-span-2">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Functional Classification</label>
-                            <input type="text" wire:model="gl_func_classification" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder=""> 
-                            @error('gl_func_classification') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div class="col-span-2">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Title of Project or Expense Classification</label>
-                            <input type="text" wire:model="gl_project_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder=""> 
-                            @error('gl_project_title') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
-                            <input type="date" wire:model="gl_date" class="w-full bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            @error('gl_date') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Voucher No.</label>
-                            <input type="number" wire:model="gl_vouchernum" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="YYYY-MM-JEV Number"> 
-                            @error('gl_vouchernum') <span class="text-danger">{{ $message }}</span> @enderror
-                            
-                        </div>
-                        
-                        <div class="col-span-2">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
-                            <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                            textarea id="description" rows="2" wire:model="gl_particulars">
-                            @error('gl_particulars') <span class="text-danger">{{ $message }}</span> @enderror
-                            </textarea>
-                        </div>
-                        
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Balance Debit</label>
-                            <input type="number" wire:model="gl_balance_debit" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="₱">
-                            @error('gl_balance_debit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Debits</label>
-                            <input type="number" wire:model="gl_debit" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="₱">
-                            @error('gl_debit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits</label>
-                            <input type="text" wire:model="gl_credit" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="₱">
-                            @error('gl_credit') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits Balance</label>
-                            <input type="text" wire:model="gl_credit_balance" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="₱">
-                            @error('gl_credit_balance') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                        
-                    </div>
-                    <div class="col-span-2 flex justify-end mr-2">
-                        <button type="submit" data-modal-toggle="edit-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
-                                Cancel
-                            </button>    
-                        <button type="submit" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
-                                Save Changes
-                            </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> 
-</div>
 
 

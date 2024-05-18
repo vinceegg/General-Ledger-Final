@@ -135,11 +135,7 @@
                      <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheet</a>
                   @endforeach
                   </li>
-                  <li>
-                    @foreach(['AC'] as $route)
-                       <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Account Codes</a>
-                    @endforeach
-                  </li>
+
             </ul>
          </li>
 
