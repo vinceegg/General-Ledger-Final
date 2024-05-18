@@ -9,7 +9,7 @@
     <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     
-    <title>Cash Local Treasury</title>
+    <title>Cash Local Treasury Trash</title>
     @livewireStyles
     @vite('resources/css/app.css')
 </head>
@@ -171,9 +171,10 @@
 @section('content')
                                         
   <div>
-    <livewire:general-ledger-show/>
+    <livewire:general-ledger-trash/>
   </div>
   
 @endsection
+            
 </body>
 </html>

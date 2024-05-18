@@ -29,7 +29,7 @@ class GeneralLedgerShow extends Component
     public $search;
     public $general_ledger_id;
     public $selectedMonth;
-    public $sortField = 'gl_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
+    public $sortField = 'id'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
@@ -37,7 +37,6 @@ class GeneralLedgerShow extends Component
     public $totalDebit = 0;
     public $totalCredit = 0;
     public $totalCreditBalance = 0;
-    public $viewDeleted = false; // Property to toggle deleted records view
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
     
@@ -45,8 +44,8 @@ class GeneralLedgerShow extends Component
     {
         return [
             'gl_date'=>'nullable|date',
-            'gl_vouchernum'=>'nullable|integer',
-            'gl_particulars'=>'nullable|string',
+            'gl_vouchernum'=>'nullable|string', //@vince yung data type inedit ko 
+            'gl_particulars'=>'nullable|string', 
             'gl_balance_debit'=> 'nullable|numeric|min:0|max:100000000',
             'gl_debit'=> 'nullable|numeric|min:0|max:100000000',
             'gl_credit'=> 'nullable|numeric|min:0|max:100000000',
@@ -73,6 +72,7 @@ class GeneralLedgerShow extends Component
         $this->resetInput();
 
         $this->dispatch('notification-shown');
+
     }
 
     public function editGeneralLedger($general_ledger_id)
@@ -116,27 +116,6 @@ class GeneralLedgerShow extends Component
         $this->dispatch('notification-shown');
 
         $this->dispatch('close-modal');
-    }
-
-    public function deleteGeneralLedger(int $general_ledger_id, $type = 'soft')
-    {
-        $this->general_ledger_id = $general_ledger_id;
-        $this->deleteType = $type; // Set the delete type
-    }
-
-    // Permanently delete 
-    public function destroyGeneralLedger()
-    {
-        $general_ledger = GeneralLedgerModel::withTrashed()->find($this->general_ledger_id);
-        if ($this->deleteType == 'force') {
-            $general_ledger->forceDelete();
-            session()->flash('message', 'Permanently Deleted Successfully');
-        } else {
-            $general_ledger->delete();
-            session()->flash('message', 'Archived Successfully');
-        }
-        $this->dispatch('close-modal');
-        $this->resetInput();
     }
 
     public function closeModal()
@@ -224,13 +203,6 @@ class GeneralLedgerShow extends Component
     {
         $this->showNotification = false;
     }
-
-    // Method to toggle viewDeleted
-    public function toggleDeletedView()
-    {
-        $this->viewDeleted = !$this->viewDeleted;
-    }
-
     // Method to restore soft-deleted record
     public function restoreGeneralLedger($id)
     {
@@ -245,11 +217,6 @@ class GeneralLedgerShow extends Component
     public function render()
     {
         $query = GeneralLedgerModel::query();
-        
-        // Fetch only soft-deleted records if viewDeleted is set to true
-        if ($this->viewDeleted) {
-            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
-        }
 
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {
@@ -260,7 +227,18 @@ class GeneralLedgerShow extends Component
         }
 
         // Add the search filter
-        $query->where('id', 'like', '%' . $this->search . '%');
+        // Add the search filter
+        //@vince eto edited function sa search
+        $query->where(function ($q) {
+            $q ->where('id', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_date', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_vouchernum', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_particulars', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_balance_debit', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_debit', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_credit', 'like', '%' . $this->search . '%')
+            ->orWhere('gl_credit_balance', 'like', '%' . $this->search . '%');
+        });
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);

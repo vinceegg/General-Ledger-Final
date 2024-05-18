@@ -3,18 +3,6 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TwoFactorController;
-use App\Http\Controllers\TodoController;
-use App\Livewire\GeneralJournalShow;
-use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Verified;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CashReceiptJournalController;
-use App\Livewire\CashReceiptJournalShow;
-use App\Livewire\CheckDisbursementJournalShow;
-use App\Livewire\CashDisbursementJournalShow;
-use App\Livewire\GeneralLedgerShow;
-use Livewire\Livewire;
 
 
 Route::get('/', function () {
@@ -49,6 +37,8 @@ Route::get('/AC', function () {
 //Routes for Account Codes
 Route::get('/CashLocalTreasury', [App\Http\Controllers\CashLocalTreasury::class, 'index'])->name('CashLocalTreasury');
 
+//ROUTES FOR ARCHIVED RECORDS
+Route::get('/CashLocalTreasuryArchived', [App\Http\Controllers\GeneralLedgerTrash::class, 'index'])->name('CashLocalTreasuryArchived');
 
 Route::get('/faqs', function () {
     return view('sidebarlinks.faqs');
@@ -57,6 +47,7 @@ Route::get('/faqs', function () {
 Route::get('/settings', function () {
     return view('sidebarlinks.settings');
 });
+
 
 
   
