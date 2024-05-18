@@ -20,36 +20,38 @@
             <!-- Modal body design -->
             <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
                 <!-- Function for adding -->    
-                <form wire:submit.prevent="saveGeneralJournal"> 
+                <form wire:submit.prevent="saveGeneralJournal">
                     <!-- Modal content -->
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">
 
-                        <!-- Journal Info Form Fields  -->
-                        <div class="col-span-2"> 
-                            <div class="bg-white border border-gray-300 rounded-lg p-4"> <!-- Outer Rectangle -->
-                                    <text class="font-base font-bold ">General Journal Information</text>
-                                    <hr class="my-4 w-full border-t border-gray-300"> 
-                                    <div class="col-span-2 sm:col-span-1">
-                                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
+                    <!-- Journal Info Form Fields  -->
+                    <div class="col-span-2">
+                        <div class="bg-white border border-gray-300 rounded-lg p-4"> <!-- Outer Rectangle -->
+                            <text class="font-base font-bold">General Journal Information</text>
+                            <hr class="my-4 w-full border-t border-gray-300">
+                            <div class="grid gap-4 grid-cols-2">
+                                <div class="col-span-1">
+                                    <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
                                         <input type="date" wire:model="gj_entrynum_date" class="mb-2 w-full bg-gray-50 border {{ $errors->has('gj_entrynum_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
                                         @error('gj_entrynum_date') <span class="text-red-500">{{ $message }}</span> @enderror
-                                    </div>
+                                </div>
 
-                                    <div class="col-span-2 sm:col-span-1">
-                                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Jev Number</label>
-                                        <input type="number" wire:model="gj_jevnum" class="mb-2 bg-gray-50 border {{ $errors->has('gj_jevnum') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
-                                        placeholder="YYYY-MM-JEV Number"> 
-                                        @error('gj_jevnum') <span class="text-red-500">{{ $message }}</span> @enderror
-                                    </div>
-
-                                    <div class="col-span-2">
-                                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
-                                        <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('gj_particulars') ? 'border-red-500 ' : 'border-gray-300' }} focus:ring-blue-500 focus:border-blue-500 " id="description" 
-                                        rows="2" wire:model="gj_particulars"></textarea>
-                                        @error('gj_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
-                                    </div>
+                                <div class="col-span-1">
+                                    <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Jev Number</label>
+                                    <input type="number" wire:model="gj_jevnum" class="mb-2 bg-gray-50 border {{ $errors->has('gj_jevnum') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                    placeholder="YYYY-MM-JEV Number"> 
+                                    @error('gj_jevnum') <span class="text-red-500">{{ $message }}</span> @enderror
+                                </div>
                             </div>
-                        </div>                       
+
+                            <div class="col-span-2">
+                                <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
+                                <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('gj_particulars') ? 'border-red-500 ' : 'border-gray-300' }} focus:ring-blue-500 focus:border-blue-500 " id="description" 
+                                rows="2" wire:model="gj_particulars"></textarea>
+                                @error('gj_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>                       
                             
                         <!-- Sundry Form Fields  -->
                         @foreach ($gj_accountcodes_data as $index => $entry)
@@ -162,29 +164,31 @@
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">
 
                         <!-- Journal Info Form Fields  -->
-                        <div class="col-span-2"> 
+                        <div class="col-span-2">
                             <div class="bg-white border border-gray-300 rounded-lg p-4"> <!-- Outer Rectangle -->
-                                    <text class="font-base font-bold ">General Journal Information</text>
-                                    <hr class="my-4 w-full border-t border-gray-300"> 
-                                    <div class="col-span-2 sm:col-span-1">
+                                <text class="font-base font-bold">General Journal Information</text>
+                                <hr class="my-4 w-full border-t border-gray-300">
+                                <div class="grid gap-4 grid-cols-2">
+                                    <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
-                                        <input type="date" wire:model="gj_entrynum_date" class="mb-2 w-full bg-gray-50 border {{ $errors->has('gj_entrynum_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
-                                        @error('gj_entrynum_date') <span class="text-red-500">{{ $message }}</span> @enderror
+                                            <input type="date" wire:model="gj_entrynum_date" class="mb-2 w-full bg-gray-50 border {{ $errors->has('gj_entrynum_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                                            @error('gj_entrynum_date') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
 
-                                    <div class="col-span-2 sm:col-span-1">
+                                    <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Jev Number</label>
                                         <input type="number" wire:model="gj_jevnum" class="mb-2 bg-gray-50 border {{ $errors->has('gj_jevnum') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                         placeholder="YYYY-MM-JEV Number"> 
                                         @error('gj_jevnum') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
+                                </div>
 
-                                    <div class="col-span-2">
-                                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
-                                        <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('gj_particulars') ? 'border-red-500 ' : 'border-gray-300' }} focus:ring-blue-500 focus:border-blue-500 " id="description" 
-                                        rows="2" wire:model="gj_particulars"></textarea>
-                                        @error('gj_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
-                                    </div>
+                                <div class="col-span-2">
+                                    <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
+                                    <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('gj_particulars') ? 'border-red-500 ' : 'border-gray-300' }} focus:ring-blue-500 focus:border-blue-500 " id="description" 
+                                    rows="2" wire:model="gj_particulars"></textarea>
+                                    @error('gj_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
+                                </div>
                             </div>
                         </div>                       
                             
