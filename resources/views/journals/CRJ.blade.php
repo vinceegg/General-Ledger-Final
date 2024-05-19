@@ -133,14 +133,10 @@
                   </svg>
             </button>
             <ul id="dropdown-example2" class="py-2 space-y-2">
-                  <li>
-                  @foreach(['LS'] as $route)
-                     <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheet</a>
-                  @endforeach
-                    </li>
+ 
                     <li>
                       @foreach(['AC'] as $route)
-                         <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Account Codes</a>
+                         <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheets</a>
                       @endforeach
                     </li>
             </ul>
