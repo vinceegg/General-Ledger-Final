@@ -2,42 +2,41 @@ import os
 
 # List of filenames
 filenames = [
-'TrustLiabilitiesExport.php',
-'GuarantySecurityDepositsPayableExport.php',
-'CustomersDepositExport.php',
-'OtherDeferredCreditsExport.php',
-'OtherPayablesExport.php',
-'GovernmentEquityExport.php',
-'PriorPeriodAdjustmentExport.php',
-'FinesandPenaltiesServiceIncomeExport.php',
-'SchoolFeesExport.php',
-'AffiliationFeesExport.php',
-'RentIncomeExport.php',
-'InterestIncomeExport.php',
-'OtherBusinessIncomeExport.php',
-'SubsidyfromLGUsExport.php',
-'OtherProfessionalServicesExport.php',
-'RepairsandMaintBuildingOtherStructuresExport.php',
-'RepairsandMaintMachineryandEquipmentExport.php',
-'RepairsandMaintTransportationEquipmentExport.php',
-'FidelityBondPremiumsExport.php',
-'InsuranceExpensesExport.php',
-'PrintingandPublicationExpensesExport.php',
-'RepresentationExpensesExport.php',
-'RentExpensesExport.php',
-'MembershipDuesandContributiontoOrgExport.php',
-'SubscriptionExpensesExport.php',
-'OtherMaintenanceandOperatingExpensesExport.php',
-'BankChargesExport.php',
-'DepreciationBuildingandStructuresExport.php',
-'DepreciationMachineryandEquipmentExport.php',
-'DepreciationTransportationEquipmentExport.php',
-'DepreciationFurnituresandBooksExport.php'
-
+'RetirementandLifeInsurancePremiumsImport.php',
+'PagibigContributionsImport.php',
+'PhilHealthContributionsImport.php',
+'EmployeesCompensationInsurancePremiumsImport.php',
+'TerminalLeaveBenefitsImport.php',
+'OtherPersonnelBenefitsImport.php',
+'TravelingExpensesLocalImport.php',
+'TrainingExpensesImport.php',
+'OfficeSuppliesExpensesImport.php',
+'AccountableFormsExpensesImport.php',
+'DrugsandMedicinesExpensesImport.php',
+'MedicalDentalandLaboratorySuppliesExpensesImport.php',
+'FuelOilandLubricantsExpensesImport.php',
+'OtherSuppliesandMaterialsExpensesImport.php',
+'WaterExpensesImport.php',
+'ElectricityExpensesImport.php',
+'PostageandCourierServicesImport.php',
+'TelephoneExpensesImport.php',
+'InternetSubscriptionExpensesImport.php',
+'ExtraordinaryandMiscellaneousExpensesImport.php',
+'MotorVehiclesImport.php',
+'AccumulatedDepreciationMotorVehiclesImport.php',
+'FurnitureandFixturesImport.php',
+'AccumulatedDepreciationFurnitureandFixturesImport.php',
+'BuildingsandOtherStructuresImport.php',
+'AccountsPayableImport.php',
+'DuetoOfficersandEmployeesImport.php',
+'DuetoBIRImport.php',
+'DuetoGSISImport.php',
+'DuetoPAGIBIGImport.php',
+'DuetoPHILHEALTHExport.php'
 ]
 
 # Specify the directory
-directory = 'app/Exports'  # Change this to your desired directory
+directory = 'app/Imports'  # Change this to your desired directory
 
 # Ensure the directory exists
 os.makedirs(directory, exist_ok=True)
@@ -45,41 +44,51 @@ os.makedirs(directory, exist_ok=True)
 # Content to write to each file
 file_content = '''<?php
 
-namespace App\Exports;
+namespace App\Imports;
 
 use App\Models\AccountsReceivableModel;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class AccountsReceivableExport implements  FromCollection, WithHeadings
+class AccountsReceivableImport implements ToModel, WithHeadingRow
 {
     /**
-    * @return \Illuminate\Support\Collection
+    * @param Collection $collection
     */
-    public function collection()
+    public function model(array $row)
     {
-        return AccountsReceivableModel::select(
-        "gl_date",
-        "gl_vouchernum",
-        "gl_particulars",
-        "gl_balance_debit",
-        "gl_debit",
-        'gl_credit',
-        "gl_credit_balance", )->get();
+        return new AccountsReceivableModel([
+            'gl_date'               => $row['date'],
+            'gl_vouchernum'         => $row['voucher_no'],
+            'gl_particulars'        => $row['particulars'],
+            'gl_balance_debit'      => $row['balance_debit'],
+            'gl_debit'              => $row['debits'],
+            'gl_credit'             => $row['credits'],
+            'gl_credit_balance'     => $row['credits_balance']
+        ]);
+
     }
 
-    public function headings(): array
+    public function prepareForValidation($data, $index)
     {
-        return [
-            "Date",
-            "Voucher No.",
-            "Particulars",
-            "Balance Debit",
-            "Debits",
-            "Credits",
-            "Credits Balance"];
+        $keys = array_keys($data);
+        $values = array_values($data);
+
+        $keys = array_map(function ($key) {
+            $key = str_replace(' ', '_', $key); // Replace spaces with underscores
+            $key = str_replace('&', '_', $key); // Replace ampersand with underscore
+            return strtolower($key);           // Convert to lowercase
+        }, $keys);
+
+        return array_combine($keys, $values);
+    }
+
+    public function headingRow(): int
+    {
+        return 1; // Assuming the first row contains the headers
     }
 }
+
 
 '''
 
