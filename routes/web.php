@@ -39,7 +39,6 @@ Route::get('/AC', function () {
 Route::get('/CashLocalTreasury', [App\Http\Controllers\CashLocalTreasury::class, 'index'])->name('CashLocalTreasury');
 Route::get('/PettyCash', [App\Http\Controllers\LS2PettyCashController::class, 'index'])->name('PettyCash');
 Route::get('/CashinBankLocalCurrencyTimeDeposits', [App\Http\Controllers\CashinBankLocalCurrencyTimeDepositsController::class, 'index'])->name('CashinBankLocalCurrencyTimeDeposits');
-
 Route::get('/AccountsReceivable', [App\Http\Controllers\AccountsReceivableController::class, 'index'])->name('AccountsReceivable');
 
 //ROUTES FOR ARCHIVED RECORDS
