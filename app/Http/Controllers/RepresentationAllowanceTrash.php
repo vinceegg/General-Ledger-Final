@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class SalariesandWagesCasualContractualTrash extends Controller
+class RepresentationAllowanceTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.SalariesandWagesCasualContractualArchived');
+        return view('trashrecords.RepresentationAllowanceArchived');
     }
 }
+
