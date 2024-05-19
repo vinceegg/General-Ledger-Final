@@ -2,10 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\LS2PettyCashModel;
 use Livewire\Component;
-use App\Models\GeneralLedgerModel;
 
-class GeneralLedgerTrash extends Component
+class LS2PettyCashTrash extends Component
 {
     public $general_ledger_id;
     public $deleteType;
@@ -16,17 +16,17 @@ class GeneralLedgerTrash extends Component
 
     public function mount()
     {
-        $this->softDeletedData = GeneralLedgerModel::onlyTrashed()->get();
+        $this->softDeletedData = LS2PettyCashModel::onlyTrashed()->get();
     }
 
     // Method to restore soft-deleted record
     public function restoreGeneralLedger($id)
     {
-        $general_ledger = GeneralLedgerModel::onlyTrashed()->find($id);
+        $general_ledger = LS2PettyCashModel::onlyTrashed()->find($id);
         if ($general_ledger) {
             $general_ledger->restore();
             session()->flash('message', 'Record restored successfully.');
-            $this->softDeletedData = GeneralLedgerModel::onlyTrashed()->get();
+            $this->softDeletedData = LS2PettyCashModel::onlyTrashed()->get();
         }
     }
 
@@ -39,7 +39,7 @@ class GeneralLedgerTrash extends Component
     // Permanently delete 
     public function destroyGeneralLedger()
     {
-        $general_ledger = GeneralLedgerModel::withTrashed()->find($this->general_ledger_id);
+        $general_ledger = LS2PettyCashModel::withTrashed()->find($this->general_ledger_id);
         if ($this->deleteType == 'force') {
             $general_ledger->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
@@ -49,7 +49,7 @@ class GeneralLedgerTrash extends Component
         }
         $this->dispatch('close-modal');
         $this->resetInput();
-        return redirect()->route('CashLocalTreasuryArchived')->with('message', 'Deleted Successfully');
+        return redirect()->route('PettyCashArchived')->with('message', 'Deleted Successfully');
     }
 
     public function resetInput()
@@ -57,4 +57,10 @@ class GeneralLedgerTrash extends Component
         $this->general_ledger_id = '';
     }
 
+    public function render()
+    {
+        return view('livewire.l-s2-petty-cash-trash', [
+            'softDeletedData' => $this->softDeletedData
+        ]);
+    }
 }
