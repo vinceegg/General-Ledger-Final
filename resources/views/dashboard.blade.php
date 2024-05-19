@@ -164,13 +164,8 @@
             </button>
             <ul id="dropdown-example2" class="py-2 space-y-2">
                 <li>
-                    @foreach(['LS'] as $route)
-                        <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheet</a>
-                    @endforeach
-                </li>
-                <li>
                     @foreach(['AC'] as $route)
-                        <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Account Code</a>
+                        <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheets</a>
                     @endforeach
                 </li>
             </ul>
@@ -303,12 +298,12 @@
    </div>
       <div>
       @foreach([''] as $route)
-        <a href="{{ url('/LS' . $route) }}" target="_blank" class="text-decoration-none">
+        <a href="{{ url('/AC' . $route) }}" target="_blank" class="text-decoration-none">
       <div class="journal-item">
 
             <div class="journal-title">
                 <div class="journal-title">LS</div>
-                <div class="journal-subtitle"><br>Ledger Sheet</div>
+                <div class="journal-subtitle"><br>Ledger Sheets</div>
             </div>
         </a>
       @endforeach
