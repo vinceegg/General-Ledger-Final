@@ -50,6 +50,7 @@ class CashinBankLocalCurrencyCurrentAccountTrash extends Component
         }
         $this->dispatch('close-modal');
         $this->resetInput();
+        return redirect()->route('CashinBankLocalCurrencyCurrentAccountArchived')->with('message', 'Deleted Successfully');
     }
 
     public function resetInput()
