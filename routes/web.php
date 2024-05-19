@@ -39,12 +39,17 @@ Route::get('/AC', function () {
 Route::get('/CashLocalTreasury', [App\Http\Controllers\CashLocalTreasury::class, 'index'])->name('CashLocalTreasury');
 Route::get('/CashinBankLocalCurrencyCurrentAccount', [App\Http\Controllers\CashinBankLocalCurrencyCurrentAccountController::class, 'index'])->name('CashinBankLocalCurrencyCurrentAccount');
 Route::get('/PettyCash', [App\Http\Controllers\LS2PettyCashController::class, 'index'])->name('PettyCash');
+Route::get('/CashinBankLocalCurrencyTimeDeposits', [App\Http\Controllers\CashinBankLocalCurrencyTimeDepositsController::class, 'index'])->name('CashinBankLocalCurrencyTimeDeposits');
 
+Route::get('/AccountsReceivable', [App\Http\Controllers\AccountsReceivableController::class, 'index'])->name('AccountsReceivable');
 
 //ROUTES FOR ARCHIVED RECORDS
 Route::get('/CashLocalTreasuryArchived', [App\Http\Controllers\GeneralLedgerTrash::class, 'index'])->name('CashLocalTreasuryArchived');
 Route::get('/CashinBankLocalCurrencyCurrentAccountArchived', [App\Http\Controllers\CashinBankLocalCurrencyCurrentAccountTrash::class, 'index'])->name('CashinBankLocalCurrencyCurrentAccountArchived');
 Route::get('/PettyCashArchived', [App\Http\Controllers\LS2PettyCashTrash::class, 'index'])->name('PettyCashArchived');
+Route::get('/CashinBankLocalCurrencyTimeDepositsArchived', [App\Http\Controllers\CashinBankLocalCurrencyTimeDepositsTrash::class, 'index'])->name('CashinBankLocalCurrencyTimeDepositsArchived');
+Route::get('/AccountsReceivableArchived', [App\Http\Controllers\AccountsReceivableTrash::class, 'index'])->name('AccountsReceivableArchived');
+
 
 Route::get('/faqs', function () {
     return view('sidebarlinks.faqs');
