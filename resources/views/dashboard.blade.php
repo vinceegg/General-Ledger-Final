@@ -303,7 +303,7 @@
 
             <div class="journal-title">
                 <div class="journal-title">LS</div>
-                <div class="journal-subtitle"><br>Ledger Sheet</div>
+                <div class="journal-subtitle"><br>Ledger Sheets</div>
             </div>
         </a>
       @endforeach

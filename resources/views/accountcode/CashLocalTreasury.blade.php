@@ -91,7 +91,7 @@
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                   </svg>
               </button>
-              <ul id="dropdown-example2" class="py-2 space-y-2">
+              <ul id="dropdown-example2" class="py-2 space-y-2">           
                   <li>
                       @foreach(['AC'] as $route)
                       <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheets</a>
