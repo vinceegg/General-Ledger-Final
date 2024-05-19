@@ -85,10 +85,6 @@
                <span class="ms-3">Home</span>
                </a>
          </li>
-         
-        
-         
-
          <li>
             <button type="button" class="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                   <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -133,21 +129,13 @@
                   </svg>
             </button>
             <ul id="dropdown-example2" class="py-2 space-y-2">
-<<<<<<< HEAD
- 
-=======
->>>>>>> 52484b38196a42aca7b756e8725b1f5cfc252d09
                     <li>
                       @foreach(['AC'] as $route)
                          <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheets</a>
                       @endforeach
                     </li>
             </ul>
-         </li>
-
-
-
-         
+         </li>         
       <ul class="fixed bottom-0 pb-10 left-2 w-56 pt-4 mt-4 space-y-2 font-small border-t border-gray-200 dark:border-gray-700">
          <li>
          @foreach([''] as $route) {{ $route }}
@@ -204,19 +192,5 @@
   </div>
 
 @endsection
-            
-{{-- @section('script')
-<script>
-    Livewire.on('close-modal', () => {
-        $('#CashReceiptJournalModal').modal('hide');
-        $('#updateCashReceiptJournalModal').modal('hide');
-        $('#deleteCashReceiptJournalModal').modal('hide');
-        $('#softDeleteCashReceiptJournalModal').modal('hide');
-    });
-</script>
-@endsection
-
-@livewireScripts
-@stack('scripts') --}}
 </body>
 </html>

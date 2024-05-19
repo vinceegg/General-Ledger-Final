@@ -132,21 +132,13 @@
                   </svg>
             </button>
             <ul id="dropdown-example2" class="py-2 space-y-2">
-<<<<<<< HEAD
-
-=======
->>>>>>> 52484b38196a42aca7b756e8725b1f5cfc252d09
                     <li>
                       @foreach(['AC'] as $route)
                          <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheets</a>
                       @endforeach
                     </li>
             </ul>
-         </li>
-
-
-
-         
+         </li>       
       <ul class="fixed bottom-0 pb-10 left-2 w-56 pt-4 mt-4 space-y-2 font-small border-t border-gray-200 dark:border-gray-700">
          <li>
          @foreach([''] as $route) {{ $route }}
@@ -193,19 +185,12 @@
 </aside>
 
 <!-- DITO NA KO -->
+@extends('layouts.app1')
 
-                @extends('layouts.app1')
- 
-                @section('content')
-                                        
-                <div>
-                <livewire:cash-disbursement-journal-show/>
-                </div>
-
-                
-            
-            @endsection
-            
-
+@section('content')                      
+<div>
+<livewire:cash-disbursement-journal-show/>
+</div>
+@endsection          
 </body>
 </html>
