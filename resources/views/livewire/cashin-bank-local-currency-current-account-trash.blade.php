@@ -11,7 +11,7 @@
                 <!-- SVG Icon and Link -->
                 <div class="flex items-center mt-4 md:mt-0">
 
-                    <a href="{{ route('LS') }}" class="btn flex btn-primary text-blue-800 font-semibold">
+                    <a href="{{ route('CashinBankLocalCurrencyCurrentAccount') }}" class="btn flex btn-primary text-blue-800 font-semibold">
                     <svg class="w-5 h-5 mr-2" data-slot="icon" fill="none" stroke-width="1.8" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0L9 3M3 9h12a6 6 0 0 1 0 12h-3"></path>
                     </svg>

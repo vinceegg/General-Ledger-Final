@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('general_ledger', function (Blueprint $table) {
+        Schema::create('cash_in_bank_local_currency_current_account', function (Blueprint $table) {
             $table->id();
             $table->date('gl_date')->nullable();
             $table->string('gl_vouchernum')->nullable(); //@vince eto inedit ko
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('general_ledger');
+        Schema::dropIfExists('cash_in_bank_local_currency_current_account');
     }
 };
