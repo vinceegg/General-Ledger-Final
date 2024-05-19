@@ -228,7 +228,7 @@
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('InterestsReceivable') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -241,7 +241,7 @@
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('OfficeEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -254,7 +254,7 @@
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccumulatedDepreciationOfficeEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -268,7 +268,7 @@
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('InfoandCommunicationTechnologyEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -294,7 +294,20 @@
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccumulatedDepreciationICTEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                            View
+                        </a> 
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    1 07 05 031
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                   Accumulated Depreciation ICT Equipment
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <a href="{{ route('DisasterResponseandRescueEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -302,12 +315,12 @@
                     1 07 05 090
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Disaster Response and Rescue Equipment
+                   Disaster Response and Rescue Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccDepreciationDisasterResponseandRescueEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -315,12 +328,12 @@
                     1 07 05 091
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Acc Depreciation Disaster Response and Rescue Equipment
+                   Acc Depreciation Disaster Response and Rescue Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('MilitaryPoliceSecurityEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -328,12 +341,12 @@
                     1 07 05 100
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Military Police Security Equipment
+                   Military Police Security Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccDepreciationMilitaryPoliceSecurityEqpmnt') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -341,12 +354,12 @@
                     1 07 05 101
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Acc Depreciation Military Police Security Eqpmnt
+                   Acc Depreciation Military Police Security Eqpmnt
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('MedicalEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -354,12 +367,12 @@
                     1 07 05 110
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Medical Equipment
+                   Medical Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccumulatedDepreciationMedicalEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -367,12 +380,12 @@
                     1 07 05 111
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Accumulated Depreciation Medical Equipment
+                   Accumulated Depreciation Medical Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('SportsEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -380,12 +393,12 @@
                     1 07 05 130
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Sports Equipment
+                   Sports Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccumulatedDepreciationSportsEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -393,12 +406,12 @@
                     1 07 05 131
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Accumulated Depreciation Sports Equipment
+                   Accumulated Depreciation Sports Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('TechnicalandScientificEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -406,12 +419,12 @@
                     1 07 05 140
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Technical and Scientific Equipment
+                   Technical and Scientific Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccDepreciationTechnicalScientificEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -419,12 +432,12 @@
                     1 07 05 141
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Acc Depreciation Technical Scientific Equipment
+                   Acc Depreciation Technical Scientific Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('OtherMachineryEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -432,12 +445,12 @@
                     1 07 05 990
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Other Machinery Equipment
+                   Other Machinery Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccDepreciationOtherMachineryEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -445,12 +458,12 @@
                     1 07 05 991
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Acc Depreciation Other Machinery Equipment
+                   Acc Depreciation Other Machinery Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('GrantsDonationsinKind') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -458,12 +471,12 @@
                     4 04 02 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Grants Donations in Kind
+                   Grants Donations in Kind
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('MiscellaneousIncome') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -471,12 +484,12 @@
                     4 06 01 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Miscellaneous Income
+                   Miscellaneous Income
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('SalariesandWagesRegular') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -484,12 +497,12 @@
                     5 01 01 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Salaries and Wages Regular
+                   Salaries and Wages Regular
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('SalariesandWagesCasualContractual') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -497,12 +510,12 @@
                     5 01 01 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Salaries and Wages Casual Contractual
+                   Salaries and Wages Casual Contractual
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('PersonnelEconomicReliefAllowance') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -510,12 +523,12 @@
                     5 01 02 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Personnel Economic Relief Allowance
+                   Personnel Economic Relief Allowance
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('RepresentationAllowance') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -523,12 +536,12 @@
                     5 01 02 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Representation Allowance
+                   Representation Allowance
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('TransportationAllowance') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -536,12 +549,12 @@
                     5 01 02 030
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Transportation Allowance
+                   Transportation Allowance
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('ClothingUniformAllowance') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -549,12 +562,12 @@
                     5 01 02 040
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Clothing Uniform Allowance
+                   Clothing Uniform Allowance
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('Honoraria') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -562,12 +575,12 @@
                     5 01 02 100
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Honoraria
+                   Honoraria
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('HazardPay') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -575,12 +588,25 @@
                     5 01 02 110
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Hazard Pay
+                   Hazard Pay
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('LongetivityPay') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                            View
+                        </a> 
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    5 01 02 120
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                   Longetivity Pay
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <a href="{{ route('OvertimeandNightPay') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -588,12 +614,12 @@
                     5 01 02 130
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Overtime and Night Pay
+                   Overtime and Night Pay
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('YearEndBonus') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -601,12 +627,12 @@
                     5 01 02 140
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Year End Bonus
+                   Year End Bonus
                     </td>
-                </tr>                
+                </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('CashGift') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -614,12 +640,12 @@
                     5 01 02 150
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Cash Gift
+                   Cash Gift
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('RetirementandLifeInsurancePremiums') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -627,12 +653,12 @@
                     5 01 03 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Retirement and Life Insurance Premiums
+                   Retirement and Life Insurance Premiums
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('PagibigContributions') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -640,12 +666,12 @@
                     5 01 03 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Pag ibig Contributions
+                   Pag ibig Contributions
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('PhilHealthContributions') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -653,12 +679,12 @@
                     5 01 03 030
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    PhilHealth Contributions
+                   PhilHealth Contributions
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('EmployeesCompensationInsurancePremiums') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -666,12 +692,12 @@
                     5 01 03 040
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Employees Compensation Insurance Premiums
+                   Employees Compensation Insurance Premiums
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('TerminalLeaveBenefits') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -679,12 +705,12 @@
                     5 01 04 030
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Terminal Leave Benefits
+                   Terminal Leave Benefits
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('OtherPersonnelBenefits') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -692,12 +718,12 @@
                     5 01 04 990
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Other Personnel Benefits
+                   Other Personnel Benefits
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('TravelingExpensesLocal') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -705,12 +731,12 @@
                     5 02 01 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Traveling Expenses Local
+                   Traveling Expenses Local
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('TrainingExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -718,12 +744,12 @@
                     5 02 02 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Training Expenses
+                   Training Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('OfficeSuppliesExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -731,12 +757,12 @@
                     5 02 03 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Office Supplies Expenses
+                   Office Supplies Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccountableFormsExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -744,12 +770,12 @@
                     5 02 03 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Accountable Forms Expenses
+                   Accountable Forms Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('DrugsandMedicinesExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -757,12 +783,12 @@
                     5 02 03 070
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Drugs and Medicines Expenses
+                   Drugs and Medicines Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('MedicalDentalandLaboratorySuppliesExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -770,12 +796,12 @@
                     5 02 03 080
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Medical Dental and Laboratory Supplies Expenses
+                   Medical Dental and Laboratory Supplies Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('FuelOilandLubricantsExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -783,12 +809,12 @@
                     5 02 03 090
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Fuel Oil and Lubricants Expenses
+                   Fuel Oil and Lubricants Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('OtherSuppliesandMaterialsExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -796,12 +822,12 @@
                     5 02 03 990
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Other Supplies and Materials Expenses
+                   Other Supplies and Materials Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('WaterExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -809,12 +835,12 @@
                     5 02 04 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Water Expenses
+                   Water Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('ElectricityExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -822,12 +848,12 @@
                     5 02 04 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Electricity Expenses
+                   Electricity Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('PostageandCourierServices') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -835,12 +861,12 @@
                     5 02 05 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Postage and Courier Services
+                   Postage and Courier Services
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('TelephoneExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -848,12 +874,12 @@
                     5 02 05 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Telephone Expenses
+                   Telephone Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('InternetSubscriptionExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -861,12 +887,12 @@
                     5 02 05 030
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Internet Subscription Expenses
+                   Internet Subscription Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('ExtraordinaryandMiscellaneousExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -874,12 +900,12 @@
                     5 02 10 030
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Extraordinary and Miscellaneous Expenses
+                   Extraordinary and Miscellaneous Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('MotorVehicles') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -887,12 +913,12 @@
                     1 07 06 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Motor Vehicles
+                   Motor Vehicles
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccumulatedDepreciationMotorVehicles') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -900,12 +926,12 @@
                     1 07 06 011
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Accumulated Depreciation Motor Vehicles
+                   Accumulated Depreciation Motor Vehicles
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('FurnitureandFixtures') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -913,12 +939,12 @@
                     1 07 07 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Furniture and Fixtures
+                   Furniture and Fixtures
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccumulatedDepreciationFurnitureandFixtures') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -926,12 +952,12 @@
                     1 07 07 011
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Accumulated Depreciation Furniture and Fixtures
+                   Accumulated Depreciation Furniture and Fixtures
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('BuildingsandOtherStructures') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -939,12 +965,12 @@
                     1 07 10 030
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Buildings and Other Structures
+                   Buildings and Other Structures
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AccountsPayable') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -952,12 +978,12 @@
                     2 01 01 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Accounts Payable
+                   Accounts Payable
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('DuetoOfficersandEmployees') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -965,12 +991,25 @@
                     2 01 01 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Due to Officers and Employees
+                   Due to Officers and Employees
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('DuetoBIR') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                            View
+                        </a> 
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    2 02 01 010
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                   Due to BIR
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <a href="{{ route('DuetoGSIS') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -978,12 +1017,12 @@
                     2 02 01 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Due to GSIS
+                   Due to GSIS
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('DuetoPAGIBIG') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -991,12 +1030,12 @@
                     2 02 01 030
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Due to PAG IBIG
+                   Due to PAG IBIG
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('DuetoPHILHEALTH') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1004,12 +1043,12 @@
                     2 02 01 040
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Due to PHILHEALTH
+                   Due to PHILHEALTH
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('TrustLiabilities') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1017,12 +1056,12 @@
                     2 04 01 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Trust Liabilities
+                   Trust Liabilities
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('GuarantySecurityDepositsPayable') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1030,12 +1069,12 @@
                     2 04 01 050
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Guaranty Security Deposits Payable
+                   Guaranty Security Deposits Payable
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('CustomersDeposit') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1043,12 +1082,12 @@
                     2 04 01 050
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Customers Deposit
+                   Customers Deposit
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('OtherDeferredCredits') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1056,12 +1095,12 @@
                     2 05 01 990
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Other Deferred Credits
+                   Other Deferred Credits
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('OtherPayables') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1069,12 +1108,12 @@
                     2 99 99 990
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Other Payables
+                   Other Payables
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('GovernmentEquity') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1082,12 +1121,12 @@
                     3 01 01 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Government Equity
+                   Government Equity
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('PriorPeriodAdjustment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1095,12 +1134,12 @@
                     3 01 01 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Prior Period Adjustment
+                   Prior Period Adjustment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('FinesandPenaltiesServiceIncome') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1108,12 +1147,12 @@
                     4 02 01 980
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Fines and Penalties Service Income
+                   Fines and Penalties Service Income
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('SchoolFees') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1121,12 +1160,12 @@
                     4 02 02 010
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    School Fees
+                   School Fees
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('AffiliationFees') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1134,12 +1173,12 @@
                     4 02 02 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Affiliation Fees
+                   Affiliation Fees
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('RentIncome') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1147,12 +1186,12 @@
                     4 02 02 050
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Rent Income
+                   Rent Income
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('InterestIncome') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1160,12 +1199,12 @@
                     4 02 02 220
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Interest Income
+                   Interest Income
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('OtherBusinessIncome') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1173,12 +1212,12 @@
                     4 02 02 990
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Other Business Income
+                   Other Business Income
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('SubsidyfromLGUs') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1186,12 +1225,12 @@
                     4 03 01 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Subsidy from LGUs
+                   Subsidy from LGUs
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('OtherProfessionalServices') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1199,12 +1238,12 @@
                     5 02 11 990
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Other Professional Services
+                   Other Professional Services
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('RepairsandMaintBuildingOtherStructures') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1212,12 +1251,12 @@
                     5 02 13 040
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Repairs and Maint Building Other Structures
+                   Repairs and Maint Building Other Structures
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('RepairsandMaintMachineryandEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1225,12 +1264,12 @@
                     5 02 13 050
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Repairs and Maint Machinery and Equipment
+                   Repairs and Maint Machinery and Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('RepairsandMaintTransportationEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1238,12 +1277,12 @@
                     5 02 13 060
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Repairs and Maint Transportation Equipment
+                   Repairs and Maint Transportation Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('FidelityBondPremiums') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1251,12 +1290,12 @@
                     5 02 16 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Fidelity Bond Premiums
+                   Fidelity Bond Premiums
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('InsuranceExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1264,64 +1303,64 @@
                     5 02 16 030                
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Insurance Expenses
+                   Insurance Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('PrintingandPublicationExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    5 02 99 020             
+                    5 02 99 020
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Printing and Publication Expenses
+                   Printing and Publication Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('RepresentationExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    5 02 99 030         
+                    5 02 99 030
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Representation Expenses
+                   Representation Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('RentExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    5 02 99 050      
+                    5 02 99 050
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Rent Expenses
+                   Rent Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('MembershipDuesandContributiontoOrg') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    5 02 99 060     
+                    5 02 99 060
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Membership Dues and Contribution to Org
+                   Membership Dues and Contribution to Org
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('SubscriptionExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1329,12 +1368,25 @@
                     5 02 99 070
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Subscription Expenses
+                   Subscription Expenses
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('OtherMaintenanceandOperatingExpenses') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                            View
+                        </a> 
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    5 02 99 990
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                   Other Maintenance and Operating Expenses
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <a href="{{ route('BankCharges') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1342,12 +1394,12 @@
                     5 03 01 040
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Bank Charges
+                   Bank Charges
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('DepreciationBuildingandStructures') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1355,12 +1407,12 @@
                     5 05 01 040
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Depreciation  Building and Structures
+                   Depreciation  Building and Structures
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('DepreciationMachineryandEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1368,12 +1420,12 @@
                     5 05 01 050
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Depreciation  Machinery and Equipment
+                   Depreciation  Machinery and Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('DepreciationTransportationEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1381,12 +1433,12 @@
                     5 05 01 060
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Depreciation  Transportation Equipment
+                   Depreciation  Transportation Equipment
                     </td>
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                        <a href="{{ route('DepreciationFurnituresandBooks') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
                     </td>
@@ -1394,7 +1446,7 @@
                     5 05 01 070
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Depreciation  Furnitures and Books
+                   Depreciation  Furnitures and Books
                     </td>
                 </tr>
             </tbody>
@@ -1402,16 +1454,110 @@
     </div>
 </div>
 
+<!-- SEARCH -->
 <script>
     document.addEventListener('alpine:init', () => {
         Alpine.store('search', {
             items: [
-                { name: '1 01 01 010 | Cash Local Treasury', url: '/CashLocalTreasury' },
-                { name: 'Cash Receipt Journal', url: '/CRJ' },
-                { name: 'Check Disbursement Journal', url: '/CKDJ' },
-                { name: 'Cash Disbursement Journal', url: '/CDJ' },
-                { name: 'General Journal', url: '/GJ' },
-                { name: 'General Ledger', url: '/LS' },       
+                // format: { name: '1 01 01 010 | Cash Local Treasury', url: '/LS' },
+                {name:'1 01 01 010 - Cash Local Treasury',url:'/LS'},
+                {name:'1 01 01 020 - Petty Cash',url:'/PettyCash'},
+                {name:'1 01 02 010 - Cash in Bank Local Currency Current Account',url:'/CashinBankLocalCurrencyCurrentAccount'},
+                {name:'1 02 01 010 - Cash in Bank Local Currency Time Deposits',url:'/CashinBankLocalCurrencyTimeDeposits'},
+                {name:'1 03 01 010 - Accounts Receivable',url:'/AccountsReceivable'},
+                {name:'1 03 01 070 - Interests Receivable',url:'/InterestsReceivable'},
+                {name:'1 07 05 020 - Office Equipment',url:'/OfficeEquipment'},
+                {name:'1 07 05 021 - Accumulated Depreciation Office Equipment',url:'/AccumulatedDepreciationOfficeEquipment'},
+                {name:'1 07 05 030 - Info and Communication Technology Equipment',url:'/InfoandCommunicationTechnologyEquipment'},
+                {name:'1 07 05 031 - Accumulated Depreciation ICT Equipment',url:'/AccumulatedDepreciationICTEquipment'},
+                {name:'1 07 05 090 - Disaster Response and Rescue Equipment',url:'/DisasterResponseandRescueEquipment'},
+                {name:'1 07 05 091 - Acc Depreciation Disaster Response and Rescue Equipment',url:'/AccDepreciationDisasterResponseandRescueEquipment'},
+                {name:'1 07 05 100 - Military Police Security Equipment',url:'/MilitaryPoliceSecurityEquipment'},
+                {name:'1 07 05 101 - Acc Depreciation Military Police Security Eqpmnt',url:'/AccDepreciationMilitaryPoliceSecurityEqpmnt'},
+                {name:'1 07 05 110 - Medical Equipment',url:'/MedicalEquipment'},
+                {name:'1 07 05 111 - Accumulated Depreciation Medical Equipment',url:'/AccumulatedDepreciationMedicalEquipment'},
+                {name:'1 07 05 130 - Sports Equipment',url:'/SportsEquipment'},
+                {name:'1 07 05 131 - Accumulated Depreciation Sports Equipment',url:'/AccumulatedDepreciationSportsEquipment'},
+                {name:'1 07 05 140 - Technical and Scientific Equipment',url:'/TechnicalandScientificEquipment'},
+                {name:'1 07 05 141 - Acc Depreciation Technical Scientific Equipment',url:'/AccDepreciationTechnicalScientificEquipment'},
+                {name:'1 07 05 990 - Other Machinery Equipment',url:'/OtherMachineryEquipment'},
+                {name:'1 07 05 991 - Acc Depreciation Other Machinery Equipment',url:'/AccDepreciationOtherMachineryEquipment'},
+                {name:'4 04 02 020 - Grants Donations in Kind',url:'/GrantsDonationsinKind'},
+                {name:'4 06 01 010 - Miscellaneous Income',url:'/MiscellaneousIncome'},
+                {name:'5 01 01 010 - Salaries and Wages Regular',url:'/SalariesandWagesRegular'},
+                {name:'5 01 01 020 - Salaries and Wages Casual Contractual',url:'/SalariesandWagesCasualContractual'},
+                {name:'5 01 02 010 - Personnel Economic Relief Allowance',url:'/PersonnelEconomicReliefAllowance'},
+                {name:'5 01 02 020 - Representation Allowance',url:'/RepresentationAllowance'},
+                {name:'5 01 02 030 - Transportation Allowance',url:'/TransportationAllowance'},
+                {name:'5 01 02 040 - Clothing Uniform Allowance',url:'/ClothingUniformAllowance'},
+                {name:'5 01 02 100 - Honoraria',url:'/Honoraria'},
+                {name:'5 01 02 110 - Hazard Pay',url:'/HazardPay'},
+                {name:'5 01 02 120 - Longetivity Pay',url:'/LongetivityPay'},
+                {name:'5 01 02 130 - Overtime and Night Pay',url:'/OvertimeandNightPay'},
+                {name:'5 01 02 140 - Year End Bonus',url:'/YearEndBonus'},
+                {name:'5 01 02 150 - Cash Gift',url:'/CashGift'},
+                {name:'5 01 03 010 - Retirement and Life Insurance Premiums',url:'/RetirementandLifeInsurancePremiums'},
+                {name:'5 01 03 020 - Pag ibig Contributions',url:'/PagibigContributions'},
+                {name:'5 01 03 030 - PhilHealth Contributions',url:'/PhilHealthContributions'},
+                {name:'5 01 03 040 - Employees Compensation Insurance Premiums',url:'/EmployeesCompensationInsurancePremiums'},
+                {name:'5 01 04 030 - Terminal Leave Benefits',url:'/TerminalLeaveBenefits'},
+                {name:'5 01 04 990 - Other Personnel Benefits',url:'/OtherPersonnelBenefits'},
+                {name:'5 02 01 010 - Traveling Expenses Local',url:'/TravelingExpensesLocal'},
+                {name:'5 02 02 010 - Training Expenses',url:'/TrainingExpenses'},
+                {name:'5 02 03 010 - Office Supplies Expenses',url:'/OfficeSuppliesExpenses'},
+                {name:'5 02 03 020 - Accountable Forms Expenses',url:'/AccountableFormsExpenses'},
+                {name:'5 02 03 070 - Drugs and Medicines Expenses',url:'/DrugsandMedicinesExpenses'},
+                {name:'5 02 03 080 - Medical Dental and Laboratory Supplies Expenses',url:'/MedicalDentalandLaboratorySuppliesExpenses'},
+                {name:'5 02 03 090 - Fuel Oil and Lubricants Expenses',url:'/FuelOilandLubricantsExpenses'},
+                {name:'5 02 03 990 - Other Supplies and Materials Expenses',url:'/OtherSuppliesandMaterialsExpenses'},
+                {name:'5 02 04 010 - Water Expenses',url:'/WaterExpenses'},
+                {name:'5 02 04 020 - Electricity Expenses',url:'/ElectricityExpenses'},
+                {name:'5 02 05 010 - Postage and Courier Services',url:'/PostageandCourierServices'},
+                {name:'5 02 05 020 - Telephone Expenses',url:'/TelephoneExpenses'},
+                {name:'5 02 05 030 - Internet Subscription Expenses',url:'/InternetSubscriptionExpenses'},
+                {name:'5 02 10 030 - Extraordinary and Miscellaneous Expenses',url:'/ExtraordinaryandMiscellaneousExpenses'},
+                {name:'1 07 06 010 - Motor Vehicles',url:'/MotorVehicles'},
+                {name:'1 07 06 011 - Accumulated Depreciation Motor Vehicles',url:'/AccumulatedDepreciationMotorVehicles'},
+                {name:'1 07 07 010 - Furniture and Fixtures',url:'/FurnitureandFixtures'},
+                {name:'1 07 07 011 - Accumulated Depreciation Furniture and Fixtures',url:'/AccumulatedDepreciationFurnitureandFixtures'},
+                {name:'1 07 10 030 - Buildings and Other Structures',url:'/BuildingsandOtherStructures'},
+                {name:'2 01 01 010 - Accounts Payable',url:'/AccountsPayable'},
+                {name:'2 01 01 020 - Due to Officers and Employees',url:'/DuetoOfficersandEmployees'},
+                {name:'2 02 01 010 - Due to BIR',url:'/DuetoBIR'},
+                {name:'2 02 01 020 - Due to GSIS',url:'/DuetoGSIS'},
+                {name:'2 02 01 030 - Due to PAG IBIG',url:'/DuetoPAGIBIG'},
+                {name:'2 02 01 040 - Due to PHILHEALTH',url:'/DuetoPHILHEALTH'},
+                {name:'2 04 01 010 - Trust Liabilities',url:'/AffiliationFees'},
+                {name:'2 04 01 050 - Guaranty Security Deposits Payable',url:'/BankCharges'},
+                {name:'2 04 01 050 - Customers Deposit',url:'/CustomersDeposit'},
+                {name:'2 05 01 990 - Other Deferred Credits',url:'/DepreciationBuildingandStructures'},
+                {name:'2 99 99 990 - Other Payables',url:'/DepreciationFurnituresandBooks'},
+                {name:'3 01 01 010 - Government Equity',url:'/DepreciationMachineryandEquipment'},
+                {name:'3 01 01 020 - Prior Period Adjustment',url:'/DepreciationTransportationEquipment'},
+                {name:'4 02 01 980 - Fines and Penalties Service Income',url:'/FidelityBondPremiums'},
+                {name:'4 02 02 010 - School Fees',url:'/FinesandPenaltiesServiceIncome'},
+                {name:'4 02 02 020 - Affiliation Fees',url:'/GovernmentEquity'},
+                {name:'4 02 02 050 - Rent Income',url:'/GuarantySecurityDepositsPayable'},
+                {name:'4 02 02 220 - Interest Income',url:'/InsuranceExpenses'},
+                {name:'4 02 02 990 - Other Business Income',url:'/InterestIncome'},
+                {name:'4 03 01 020 - Subsidy from LGUs',url:'/MembershipDuesandContributiontoOrg'},
+                {name:'5 02 11 990 - Other Professional Services',url:'/OtherBusinessIncome'},
+                {name:'5 02 13 040 - Repairs and Maint Building Other Structures',url:'/OtherDeferredCredits'},
+                {name:'5 02 13 050 - Repairs and Maint Machinery and Equipment',url:'/OtherMaintenanceandOperatingExpenses'},
+                {name:'5 02 13 060 - Repairs and Maint Transportation Equipment',url:'/OtherPayables'},
+                {name:'5 02 16 020 - Fidelity Bond Premiums',url:'/OtherProfessionalServices'},
+                {name:'5 02 16 030 - Insurance Expenses',url:'/PrintingandPublicationExpenses'},
+                {name:'5 02 99 020 - Printing and Publication Expenses',url:'/PriorPeriodAdjustment'},
+                {name:'5 02 99 030 - Representation Expenses',url:'/RentExpenses'},
+                {name:'5 02 99 050 - Rent Expenses',url:'/RentIncome'},
+                {name:'5 02 99 060 - Membership Dues and Contribution to Org',url:'/RepairsandMaintBuildingOtherStructures'},
+                {name:'5 02 99 070 - Subscription Expenses',url:'/RepairsandMaintMachineryandEquipment'},
+                {name:'5 02 99 990 - Other Maintenance and Operating Expenses',url:'/RepairsandMaintTransportationEquipment'},
+                {name:'5 03 01 040 - Bank Charges',url:'/RepresentationExpenses'},
+                {name:'5 05 01 040 - Depreciation  Building and Structures',url:'/SchoolFees'},
+                {name:'5 05 01 050 - Depreciation  Machinery and Equipment',url:'/SubscriptionExpenses'},
+                {name:'5 05 01 060 - Depreciation  Transportation Equipment',url:'/SubsidyfromLGUs'},
+                {name:'5 05 01 070 - Depreciation  Furnitures and Books',url:'/TrustLiabilities'},   
             ],
             updateResults() {
                 const search = this.search.trim().toLowerCase();
