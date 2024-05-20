@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:acc-depreciation-military-police-security-eqpmnt-trash/>
   </div>
   
 @endsection

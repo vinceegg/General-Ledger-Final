@@ -6,7 +6,7 @@
         <div class="p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between">
             <!-- Title -->
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between w-full">
-                <p class="font-bold text-gray-800 text-xl">Archived Records of Cash Local Treasury</p>
+                <p class="font-bold text-gray-800 text-xl">Archived Records of Cash Cash in BankLocal Currency Current Account</p>
                 
                 <!-- SVG Icon and Link -->
                 <div class="flex items-center mt-4 md:mt-0">
@@ -32,7 +32,7 @@
                             <h5 class="alert alert-success">{{ session('message') }}</h5>
                         @endif
                             <!-- Include message modal and session message -->
-                            @include('livewire.general-ledger-modal')
+                            @include('livewire.cashin-bank-local-currency-current-account-trash-message-modal')
                             <tr class="text-center shadow-md"> <!-- Table heading design -->
                                 <th scope="col" class="border-r p-2" style="width: 10px">No.</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>

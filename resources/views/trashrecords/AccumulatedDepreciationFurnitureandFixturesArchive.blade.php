@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:accumulated-depreciation-furniture-and-fixtures-trash/>
   </div>
   
 @endsection
