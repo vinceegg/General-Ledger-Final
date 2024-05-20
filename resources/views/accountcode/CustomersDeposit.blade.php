@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:customers-deposit-show/>
   </div>
   
 @endsection

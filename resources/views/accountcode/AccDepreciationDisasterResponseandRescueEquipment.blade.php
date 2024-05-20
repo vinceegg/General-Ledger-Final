@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:acc-depreciation-disaster-response-and-rescue-equipment-show/>
   </div>
   
 @endsection

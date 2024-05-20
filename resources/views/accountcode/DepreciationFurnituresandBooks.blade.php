@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:depreciation--furnitures-and-books-show/>
   </div>
   
 @endsection
