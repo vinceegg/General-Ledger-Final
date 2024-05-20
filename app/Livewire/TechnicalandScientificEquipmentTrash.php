@@ -59,7 +59,7 @@ class TechnicalandScientificEquipmentTrash extends Component
 
     public function render()
     {
-        return view('livewire.technical-and-scientific-equipment-trash', [
+        return view('livewire.technicaland-scientific-equipment-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

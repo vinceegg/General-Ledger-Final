@@ -59,7 +59,7 @@ class SalariesandWagesRegularTrash extends Component
 
     public function render()
     {
-        return view('livewire.salaries-and-wages-regular-trash', [
+        return view('livewire.salariesand-wages-regular-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

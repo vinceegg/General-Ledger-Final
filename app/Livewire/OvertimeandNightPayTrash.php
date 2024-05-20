@@ -59,7 +59,7 @@ class OvertimeandNightPayTrash extends Component
 
     public function render()
     {
-        return view('livewire.overtime-and-night-pay-trash', [
+        return view('livewire.overtimeand-night-pay-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

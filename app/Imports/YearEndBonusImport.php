@@ -6,7 +6,7 @@ use App\Models\YearEndBonusModel;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class YearEndBonusModelImport implements ToModel, WithHeadingRow
+class YearEndBonusImport implements ToModel, WithHeadingRow
 {
     /**
     * @param Collection $collection
