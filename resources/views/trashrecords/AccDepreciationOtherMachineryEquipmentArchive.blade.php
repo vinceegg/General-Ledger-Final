@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:acc-depreciation-other-machinery-equipment-trash/>
   </div>
   
 @endsection
