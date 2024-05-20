@@ -8,7 +8,7 @@ class RepresentationAllowanceTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.RepresentationAllowanceArchived');
+        return view('trashrecords.RepresentationAllowanceArchive');
     }
 }
 

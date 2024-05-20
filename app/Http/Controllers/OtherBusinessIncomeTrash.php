@@ -8,6 +8,6 @@ class OtherBusinessIncomeTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.OtherBusinessIncomeArchived');
+        return view('trashrecords.OtherBusinessIncomeArchive');
     }
 }

@@ -8,6 +8,6 @@ class OvertimeandNightPayTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.OvertimeandNightPayArchived');
+        return view('trashrecords.OvertimeandNightPayArchive');
     }
 }

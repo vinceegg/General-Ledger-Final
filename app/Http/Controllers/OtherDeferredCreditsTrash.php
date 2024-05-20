@@ -8,6 +8,6 @@ class OtherDeferredCreditsTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.OtherDeferredCreditsArchived');
+        return view('trashrecords.OtherDeferredCreditsArchive');
     }
 }

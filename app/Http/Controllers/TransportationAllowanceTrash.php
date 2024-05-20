@@ -8,6 +8,6 @@ class TransportationAllowanceTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.TransportationAllowanceArchived');
+        return view('trashrecords.TransportationAllowanceArchive');
     }
 }

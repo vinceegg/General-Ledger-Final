@@ -8,6 +8,6 @@ class PagibigContributionsTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.PagibigContributionsArchived');
+        return view('trashrecords.PagibigContributionsArchive');
     }
 }

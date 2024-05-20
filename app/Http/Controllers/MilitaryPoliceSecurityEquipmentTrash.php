@@ -8,6 +8,6 @@ class MilitaryPoliceSecurityEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.MilitaryPoliceSecurityEquipmentArchived');
+        return view('trashrecords.MilitaryPoliceSecurityEquipmentArchive');
     }
 }

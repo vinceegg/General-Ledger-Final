@@ -8,6 +8,6 @@ class OtherPersonnelBenefitsTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.OtherPersonnelBenefitsArchived');
+        return view('trashrecords.OtherPersonnelBenefitsArchive');
     }
 }

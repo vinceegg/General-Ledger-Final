@@ -8,6 +8,6 @@ class SportsEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.SportsEquipmentArchived');
+        return view('trashrecords.SportsEquipmentArchive');
     }
 }

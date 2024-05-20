@@ -8,6 +8,6 @@ class SubscriptionExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.SubscriptionExpensesArchived');
+        return view('trashrecords.SubscriptionExpensesArchive');
     }
 }

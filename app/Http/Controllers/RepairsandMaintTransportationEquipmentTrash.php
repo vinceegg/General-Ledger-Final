@@ -8,6 +8,6 @@ class RepairsandMaintTransportationEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.RepairsandMaintTransportationEquipmentArchived');
+        return view('trashrecords.RepairsandMaintTransportationEquipmentArchive');
     }
 }

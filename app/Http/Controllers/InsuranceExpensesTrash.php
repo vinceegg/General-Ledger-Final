@@ -8,6 +8,6 @@ class InsuranceExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.InsuranceExpensesArchived');
+        return view('trashrecords.InsuranceExpensesArchive');
     }
 }

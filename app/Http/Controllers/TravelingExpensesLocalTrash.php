@@ -8,6 +8,6 @@ class TravelingExpensesLocalTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.TravelingExpensesLocalArchived');
+        return view('trashrecords.TravelingExpensesLocalArchive');
     }
 }

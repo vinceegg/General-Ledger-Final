@@ -8,6 +8,6 @@ class YearEndBonusTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.YearEndBonusArchived');
+        return view('trashrecords.YearEndBonusArchive');
     }
 }

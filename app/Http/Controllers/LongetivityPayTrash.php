@@ -8,6 +8,6 @@ class LongetivityPayTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.LongetivityPayArchived');
+        return view('trashrecords.LongetivityPayArchive');
     }
 }

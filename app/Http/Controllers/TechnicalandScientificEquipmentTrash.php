@@ -8,6 +8,6 @@ class TechnicalandScientificEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.TechnicalandScientificEquipmentArchived');
+        return view('trashrecords.TechnicalandScientificEquipmentArchive');
     }
 }

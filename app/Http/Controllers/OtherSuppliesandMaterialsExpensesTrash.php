@@ -8,6 +8,6 @@ class OtherSuppliesandMaterialsExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.OtherSuppliesandMaterialsExpensesArchived');
+        return view('trashrecords.OtherSuppliesandMaterialsExpensesArchive');
     }
 }

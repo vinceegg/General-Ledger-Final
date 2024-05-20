@@ -8,6 +8,6 @@ class InterestIncomeTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.InterestIncomeArchived');
+        return view('trashrecords.InterestIncomeArchive');
     }
 }

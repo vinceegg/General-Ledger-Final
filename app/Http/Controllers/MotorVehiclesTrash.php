@@ -8,6 +8,6 @@ class MotorVehiclesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.MotorVehiclesArchived');
+        return view('trashrecords.MotorVehiclesArchive');
     }
 }

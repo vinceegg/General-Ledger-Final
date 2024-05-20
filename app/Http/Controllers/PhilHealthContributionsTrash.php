@@ -8,6 +8,6 @@ class PhilHealthContributionsTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.PhilHealthContributionsArchived');
+        return view('trashrecords.PhilHealthContributionsArchive');
     }
 }

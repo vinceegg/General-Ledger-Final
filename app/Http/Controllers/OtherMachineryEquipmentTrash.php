@@ -8,6 +8,6 @@ class OtherMachineryEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.OtherMachineryEquipmentArchived');
+        return view('trashrecords.OtherMachineryEquipmentArchive');
     }
 }

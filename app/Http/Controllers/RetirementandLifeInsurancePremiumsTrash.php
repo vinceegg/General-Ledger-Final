@@ -8,6 +8,6 @@ class RetirementandLifeInsurancePremiumsTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.RetirementandLifeInsurancePremiumsArchived');
+        return view('trashrecords.RetirementandLifeInsurancePremiumsArchive');
     }
 }

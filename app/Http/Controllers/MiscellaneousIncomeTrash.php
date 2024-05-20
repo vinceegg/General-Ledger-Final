@@ -8,7 +8,7 @@ class MiscellaneousIncomeTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.MiscellaneousIncomeArchived');
+        return view('trashrecords.MiscellaneousIncomeArchive');
     }
 }
 

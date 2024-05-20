@@ -8,6 +8,6 @@ class OtherProfessionalServicesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.OtherProfessionalServicesArchived');
+        return view('trashrecords.OtherProfessionalServicesArchive');
     }
 }

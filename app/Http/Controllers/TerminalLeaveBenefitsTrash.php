@@ -8,6 +8,6 @@ class TerminalLeaveBenefitsTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.TerminalLeaveBenefitsArchived');
+        return view('trashrecords.TerminalLeaveBenefitsArchive');
     }
 }

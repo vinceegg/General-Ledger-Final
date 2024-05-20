@@ -8,6 +8,6 @@ class SalariesandWagesCasualContractualTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.SalariesandWagesCasualContractualArchived');
+        return view('trashrecords.SalariesandWagesCasualContractualArchive');
     }
 }

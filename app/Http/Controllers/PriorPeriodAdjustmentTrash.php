@@ -8,6 +8,6 @@ class PriorPeriodAdjustmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.PriorPeriodAdjustmentArchived');
+        return view('trashrecords.PriorPeriodAdjustmentArchive');
     }
 }

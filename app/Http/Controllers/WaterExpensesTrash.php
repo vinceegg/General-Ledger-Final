@@ -8,6 +8,6 @@ class WaterExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.WaterExpensesArchived');
+        return view('trashrecords.WaterExpensesArchive');
     }
 }

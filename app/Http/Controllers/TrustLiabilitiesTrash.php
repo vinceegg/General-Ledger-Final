@@ -8,6 +8,6 @@ class TrustLiabilitiesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.TrustLiabilitiesArchived');
+        return view('trashrecords.TrustLiabilitiesArchive');
     }
 }

@@ -8,6 +8,6 @@ class PersonnelEconomicReliefAllowanceTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.PersonnelEconomicReliefAllowanceArchived');
+        return view('trashrecords.PersonnelEconomicReliefAllowanceArchive');
     }
 }

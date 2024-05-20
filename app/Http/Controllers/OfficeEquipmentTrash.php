@@ -8,6 +8,6 @@ class OfficeEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.OfficeEquipmentArchived');
+        return view('trashrecords.OfficeEquipmentArchive');
     }
 }

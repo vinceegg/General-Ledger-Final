@@ -8,6 +8,6 @@ class SubsidyfromLGUsTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.SubsidyfromLGUsArchived');
+        return view('trashrecords.SubsidyfromLGUsArchive');
     }
 }

@@ -8,6 +8,6 @@ class MembershipDuesandContributiontoOrgTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.MembershipDuesandContributiontoOrgArchived');
+        return view('trashrecords.MembershipDuesandContributiontoOrgArchive');
     }
 }

@@ -8,6 +8,6 @@ class PostageandCourierServicesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.PostageandCourierServicesArchived');
+        return view('trashrecords.PostageandCourierServicesArchive');
     }
 }

@@ -8,6 +8,6 @@ class RepresentationExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.RepresentationExpensesArchived');
+        return view('trashrecords.RepresentationExpensesArchive');
     }
 }

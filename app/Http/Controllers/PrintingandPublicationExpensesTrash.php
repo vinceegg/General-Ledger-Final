@@ -8,6 +8,6 @@ class PrintingandPublicationExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.PrintingandPublicationExpensesArchived');
+        return view('trashrecords.PrintingandPublicationExpensesArchive');
     }
 }
