@@ -8,6 +8,8 @@
     <link href="/css/main.css" rel="stylesheet">
     <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <title>PLM | Account Codes</title>
     @livewireStyles
     @vite('resources/css/app.css')
@@ -173,6 +175,10 @@
         });
     });
 </script>
+
+<div>
+    <livewire:general-ledger-show/>
+  </div>
 
 @livewireScripts
 @stack('scripts')

@@ -1,5 +1,5 @@
 <?php
-
+//export code ni ate korinne sa account code <3
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromCollection;
@@ -14,10 +14,6 @@ class GeneralLedgerExport implements FromCollection, WithHeadings
     public function collection()
     {
         return GeneralLedgerModel::select(
-        "gl_symbol",
-        "gl_fundname",
-        "gl_func_classification",
-        "gl_project_title",
         "gl_date",
         "gl_vouchernum",
         "gl_particulars",
@@ -30,10 +26,6 @@ class GeneralLedgerExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            "Symbol",
-            "Name of Fund or Account",
-            "Functional Classification",
-            "Title of Project or Expense Classification",
             "Date",
             "Voucher No.",
             "Particulars",

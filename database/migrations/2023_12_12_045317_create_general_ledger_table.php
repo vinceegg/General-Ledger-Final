@@ -13,10 +13,6 @@ return new class extends Migration
     {
         Schema::create('general_ledger', function (Blueprint $table) {
             $table->id();
-            $table->integer('gl_symbol')->nullable;
-            $table->string('gl_fundname')->nullable;
-            $table->string('gl_func_classification')->nullable;
-            $table->string('gl_project_title')->nullable;
             $table->date('gl_date')->nullable;
             $table->integer('gl_vouchernum')->nullable;
             $table->string('gl_particulars')->nullable;

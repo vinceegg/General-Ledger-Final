@@ -13,17 +13,16 @@ return new class extends Migration
     {
         Schema::create('cash_receipt_journal', function (Blueprint $table) {
             $table->id();
-            $table->integer('crj_entrynum')->nullable();
             $table->date('crj_entrynum_date')->nullable();
             $table->integer('crj_jevnum')->nullable();
             $table->string('crj_payor')->nullable();
-            $table->decimal('crj_collection_debit',15,2)->nullable();
-            $table->decimal('crj_collection_credit',15,2)->nullable();
-            $table->decimal('crj_deposit_debit',15,2)->nullable();
-            $table->decimal('crj_deposit_credit',15,2)->nullable();
-            $table->string('crj_accountcode')->nullable();
+            $table->decimal('crj_collection_debit')->nullable();
+            $table->decimal('crj_collection_credit')->nullable();
+            $table->decimal('crj_deposit_debit')->nullable();
+            $table->decimal('crj_deposit_credit')->nullable();
+            $table->string('crj_accountcode',15,2)->nullable();
             $table->decimal('crj_debit', 15,2)->nullable();
-            $table->decimal('crj_credit',15,2)->nullable();
+            $table->decimal('crj_credit')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -8,15 +8,14 @@
     <link href ="/css/main.css" rel ="stylesheet">
     <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-    <title>Cash Receipt Journal</title>
+    
+    <title>Cash Local Treasury Trash</title>
     @livewireStyles
     @vite('resources/css/app.css')
 </head>
 <body>
 @csrf
-
 <!-- TOPNAV -->
-
 <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
@@ -26,7 +25,7 @@
             <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
             </svg>
-         </button>
+        </button>
         @foreach([''] as $route) {{ $route }}
         <a href="{{ url('/dashboard' . $route) }}" class="flex ms-2 md:me-24">
         @endforeach
@@ -64,15 +63,13 @@
                   </x-slot>
               </x-dropdown>
           </div>
-          
-          </div>
         </div>
+      </div>
     </div>
   </div>
 </nav>
 
 <!-- SIDEBAR -->
-
 
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-blue-800 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
    <div class="h-full px-3 pb-4 overflow-y-auto bg-blue-800 dark:bg-gray-800">
@@ -87,7 +84,6 @@
                <span class="ms-3">Home</span>
                </a>
          </li>
-      
          <li>
             <button type="button" class="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                   <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -111,7 +107,7 @@
                     </li>
                   <li>
                   @foreach(['CRJ'] as $route)
-                     <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group bg-blue-700  dark:text-white dark:hover:bg-gray-700">Cash Receipt</a>
+                     <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group  hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Cash Receipt</a>
                   @endforeach
                     </li>
                   <li>
@@ -136,18 +132,10 @@
                   @foreach(['LS'] as $route)
                      <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheet</a>
                   @endforeach
-                    </li>
-                    <li>
-                      @foreach(['AC'] as $route)
-                         <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Account Codes</a>
-                      @endforeach
-                    </li>
+                  </li>
+                  
             </ul>
-         </li>
-
-
-
-         
+         </li>      
       <ul class="fixed bottom-0 pb-10 left-2 w-56 pt-4 mt-4 space-y-2 font-small border-t border-gray-200 dark:border-gray-700">
          <li>
          @foreach([''] as $route) {{ $route }}
@@ -158,10 +146,7 @@
                <span class="ms-3">Help / FAQ</span>
             </a>
           @endforeach
-         </li>
-         <li>
-        
-         </li>
+         </li>        
          <li>
           <form method="POST" action="{{ route('logout') }}">
               @csrf
@@ -174,27 +159,22 @@
                   <span class="ms-3">{{ __('Log Out') }}</span>
               </a>
           </form>
-      </li>
-      
+        </li>      
       </ul>
-
-
-      </ul>
+    </ul>
    </div>
 </aside>
-
 <!-- DITO NA KO -->
 
 @extends('layouts.app1')
-
+ 
 @section('content')
-
+                                        
   <div>
-    <livewire:cash-receipt-journal-show/>
+    <livewire:general-ledger-trash/>
   </div>
-
+  
 @endsection
             
-
 </body>
 </html>

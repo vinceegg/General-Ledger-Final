@@ -13,19 +13,15 @@ return new class extends Migration
     {
         Schema::create('cash_disbursement_journal', function (Blueprint $table) {
             $table->id();
-            $table->integer('cdj_entrynum');
             $table->date('cdj_entrynum_date')->nullable();
             $table->string('cdj_referencenum')->nullable();
+            $table->string('cdj_bur')->nullable();
             $table->string('cdj_accountable_officer')->nullable();
             $table->integer('cdj_jevnum')->nullable();
-            $table->integer('cdj_accountcode')->nullable();
-            $table->decimal('cdj_amount',15,2)->nullable();
-            $table->decimal('cdj_account1',15,2)->nullable();
-            $table->decimal('cdj_account2',15,2)->nullable();
-            $table->string('cdj_sundry_accountcode')->nullable();
-            $table->string('cdj_pr')->nullable();
-            $table->decimal('cdj_debit', 15,2)->nullable();
-            $table->decimal('cdj_credit', 15,2)->nullable();
+            $table->string('cdj_credit_accountcode')->nullable();
+            $table->decimal('cdj_amount')->nullable();
+            $table->decimal('cdj_account1')->nullable();
+            $table->decimal('cdj_account2')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
