@@ -59,7 +59,7 @@ class DrugsandMedicinesExpensesTrash extends Component
 
     public function render()
     {
-        return view('livewire.drugs-and-medicines-expenses-trash', [
+        return view('livewire.drugsand-medicines-expenses-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

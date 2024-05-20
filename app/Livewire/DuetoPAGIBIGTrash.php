@@ -59,7 +59,7 @@ class DuetoPAGIBIGTrash extends Component
 
     public function render()
     {
-        return view('livewire.due-to-pag-ibig-trash', [
+        return view('livewire.dueto-p-a-g-i-b-i-g-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

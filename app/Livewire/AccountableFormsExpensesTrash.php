@@ -59,7 +59,7 @@ class AccountableFormsExpensesTrash extends Component
 
     public function render()
     {
-        return view('livewire.accountable-forms-expenses-modal', [
+        return view('livewire.accountable-forms-expenses-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

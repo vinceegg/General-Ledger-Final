@@ -59,7 +59,7 @@ class DepreciationMachineryandEquipmentTrash extends Component
 
     public function render()
     {
-        return view('livewire.depreciation-machinery-and-equipment-trash', [
+        return view('livewire.depreciation-machineryand-equipment-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

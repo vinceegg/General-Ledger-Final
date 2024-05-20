@@ -59,7 +59,7 @@ class DisasterResponseandRescueEquipmentTrash extends Component
 
     public function render()
     {
-        return view('livewire.disaster-response-and-rescue-equipment-trash', [
+        return view('livewire.disaster-responseand-rescue-equipment-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

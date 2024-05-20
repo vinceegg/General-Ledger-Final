@@ -59,7 +59,7 @@ class AccDepreciationDisasterResponseandRescueEquipmentTrash extends Component
 
     public function render()
     {
-        return view('livewire.acc-depreciation-disaster-responseand-rescue-equipment-trash', [
+        return view('livewire.acc-depreciation-disaster-responseand-rescue-equipment-trash.', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

@@ -59,7 +59,7 @@ class DuetoGSISTrash extends Component
 
     public function render()
     {
-        return view('livewire.due-to-gsis-trash', [
+        return view('livewire.dueto-g-s-i-s-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

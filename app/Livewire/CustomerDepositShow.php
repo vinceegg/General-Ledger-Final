@@ -2,16 +2,16 @@
 
 namespace App\Livewire;
 
-use App\Exports\AccDepreciationTechnicalScientificEquipmentExport;
-use App\Imports\AccDepreciationTechnicalScientificEquipmentImport;
-use App\Models\AccDepreciationTechnicalScientificEquipmentModel;
+use App\Exports\CustomersDepositExport;
+use App\Imports\CustomersDepositImport;
+use App\Models\CustomersDepositModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
 
-class AccDepreciationTechnicalScientificEquipmentShow extends Component
+class CustomersDepositShow extends Component
 {
     use WithFileUploads;
 
@@ -69,7 +69,7 @@ class AccDepreciationTechnicalScientificEquipmentShow extends Component
             }
         }
 
-        AccDepreciationTechnicalScientificEquipmentModel::create($validatedData);
+        CustomersDepositModel::create($validatedData);
 
         // Update notification state
         $this->notificationMessage = 'Added Successfully';
@@ -83,7 +83,7 @@ class AccDepreciationTechnicalScientificEquipmentShow extends Component
 
     public function editGeneralLedger($general_ledger_id)
     {
-        $general_ledger = AccDepreciationTechnicalScientificEquipmentModel::find($general_ledger_id);
+        $general_ledger = CustomersDepositModel::find($general_ledger_id);
         if ($general_ledger) {
             
             $this->general_ledger_id = $general_ledger->id;
@@ -104,7 +104,7 @@ class AccDepreciationTechnicalScientificEquipmentShow extends Component
     {
         $validatedData = $this->validate();
 
-        AccDepreciationTechnicalScientificEquipmentModel::where('id', $this->general_ledger_id)->update([
+        CustomersDepositModel::where('id', $this->general_ledger_id)->update([
             'gl_date' => $validatedData['gl_date'],
             'gl_vouchernum' => $validatedData['gl_vouchernum'],
             'gl_particulars' => $validatedData['gl_particulars'],
@@ -145,7 +145,7 @@ class AccDepreciationTechnicalScientificEquipmentShow extends Component
     // Soft delete GeneralLedger
     public function softDeleteGeneralLedger($general_ledger_id)
     {
-        $general_ledger= AccDepreciationTechnicalScientificEquipmentModel::find($general_ledger_id);
+        $general_ledger= CustomersDepositModel::find($general_ledger_id);
         if ( $general_ledger) {
             $general_ledger->delete();
     }
@@ -169,7 +169,7 @@ class AccDepreciationTechnicalScientificEquipmentShow extends Component
     // Ensure that a file has been uploaded
         if ($this->file) {
         $filePath = $this->file->store('files');
-        Excel::import(new AccDepreciationTechnicalScientificEquipmentExport, $filePath);
+        Excel::import(new CustomersDepositImport, $filePath);
 
         return redirect()->route('LS')->with('message', 'File Imported Successfully');
         }
@@ -178,11 +178,11 @@ class AccDepreciationTechnicalScientificEquipmentShow extends Component
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportGL_XLSX(Request $request) 
     {
-        return Excel::download(new AccDepreciationTechnicalScientificEquipmentImport, 'Ledger Sheet.xlsx');
+        return Excel::download(new CustomersDepositExport, 'Ledger Sheet.xlsx');
     }
     public function exportGl_CSV(Request $request) 
     {
-        return Excel::download(new AccDepreciationTechnicalScientificEquipmentImport, 'Ledger Sheet.csv');
+        return Excel::download(new CustomersDepositExport, 'Ledger Sheet.csv');
     }
 
     public function searchAction()
@@ -212,7 +212,7 @@ class AccDepreciationTechnicalScientificEquipmentShow extends Component
     // Render the component
     public function render()
     {
-        $query = AccDepreciationTechnicalScientificEquipmentModel::query();
+        $query = CustomersDepositModel::query();
 
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {
@@ -239,7 +239,7 @@ class AccDepreciationTechnicalScientificEquipmentShow extends Component
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
 
-        $acc_depreciation_technical_scientific_equipment = $query->orderBy('id', 'ASC')->get(); // Changed from paginate() to get()
+        $customers_deposit = $query->orderBy('id', 'ASC')->get(); // Changed from paginate() to get()
 
         // Calculate the total balance, debit, and credit
         $this->totalBalanceDebit = $query->sum('gl_balance_debit');
@@ -247,6 +247,6 @@ class AccDepreciationTechnicalScientificEquipmentShow extends Component
         $this->totalCredit = $query->sum('gl_credit');
         $this->totalCreditBalance = $query->sum('gl_credit_balance');
 
-        return view('livewire.acc-depreciation-technical-scientific-equipment-show',['general_ledger' => $acc_depreciation_technical_scientific_equipment]);
+        return view('livewire.customers-deposit-show',['general_ledger' => $customers_deposit]);
     }
 }

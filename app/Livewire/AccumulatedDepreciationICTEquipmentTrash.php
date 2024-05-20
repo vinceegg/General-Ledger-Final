@@ -59,7 +59,7 @@ class AccumulatedDepreciationICTEquipmentTrash extends Component
 
     public function render()
     {
-        return view('livewire.accumulated-depreciation-ict-equipment-trash', [
+        return view('livewire.accumulated-depreciation-i-c-t-equipment-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

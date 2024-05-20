@@ -59,7 +59,7 @@ class AccumulatedDepreciationFurnitureandFixturesTrash extends Component
 
     public function render()
     {
-        return view('livewire.accumulated-depreciation-furniture-and-fixtures-trash', [
+        return view('livewire.accumulated-depreciation-furnitureand-fixtures-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

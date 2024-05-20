@@ -59,7 +59,7 @@ class DuetoBIRTrash extends Component
 
     public function render()
     {
-        return view('livewire.due-to-bir-trash', [
+        return view('livewire.dueto-b-i-r-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

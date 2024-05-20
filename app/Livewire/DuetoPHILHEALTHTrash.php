@@ -59,7 +59,7 @@ class DuetoPHILHEALTHTrash extends Component
 
     public function render()
     {
-        return view('livewire.due-to-philhealth-trash', [
+        return view('livewire.dueto-p-h-i-l-h-e-a-l-t-h-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

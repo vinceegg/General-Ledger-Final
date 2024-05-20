@@ -24,6 +24,7 @@ class AccountsReceivableShow extends Component
     $gl_credit,
     $gl_credit_balance,
     $deleteType; // Added deleteType property
+
     
     public $search;
     public $general_ledger_id;
@@ -168,9 +169,9 @@ class AccountsReceivableShow extends Component
     // Ensure that a file has been uploaded
         if ($this->file) {
         $filePath = $this->file->store('files');
-        Excel::import(new AccountsReceivableImport(), $filePath);
+        Excel::import(new AccountsReceivableImport, $filePath);
 
-        return redirect()->route('AccountReceivable')->with('message', 'File Imported Successfully');
+        return redirect()->route('LS')->with('message', 'File Imported Successfully');
         }
     }
 
@@ -206,15 +207,6 @@ class AccountsReceivableShow extends Component
     public function resetNotification()
     {
         $this->showNotification = false;
-    }
-    // Method to restore soft-deleted record
-    public function restoreGeneralLedger($id)
-    {
-        $general_ledger = AccountsReceivableModel::onlyTrashed()->find($id);
-        if ($general_ledger) {
-            $general_ledger->restore();
-            session()->flash('message', 'Record restored successfully.');
-        }
     }
 
     // Render the component

@@ -6,7 +6,7 @@ use App\Models\AccountsPayableModel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class AccountsReceivableExport implements  FromCollection, WithHeadings
+class AccountsPayableExport implements  FromCollection, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection

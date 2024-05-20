@@ -59,7 +59,7 @@ class DepreciationFurnituresandBooksTrash extends Component
 
     public function render()
     {
-        return view('livewire.depreciation-furnitures-and-books-trash', [
+        return view('livewire.depreciation-furnituresand-books-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

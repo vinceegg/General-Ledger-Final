@@ -59,7 +59,7 @@ class DuetoOfficersandEmployeesTrash extends Component
 
     public function render()
     {
-        return view('livewire.due-to-officers-and-employees-trash', [
+        return view('livewire.dueto-officersand-employees-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }
