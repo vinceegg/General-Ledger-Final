@@ -8,6 +8,6 @@ class ExtraordinaryandMiscellaneousExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.ExtraordinaryandMiscellaneousExpensesArchived');
+        return view('trashrecords.ExtraordinaryandMiscellaneousExpensesArchive');
     }
 }

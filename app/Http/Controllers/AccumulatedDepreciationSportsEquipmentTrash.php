@@ -8,7 +8,7 @@ class AccumulatedDepreciationSportsEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.AccumulatedDepreciationSportsEquipmentArchived');
+        return view('trashrecords.AccumulatedDepreciationSportsEquipmentArchive');
     }
 }
 

@@ -8,6 +8,6 @@ class HazardPayTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.HazardPayArchived');
+        return view('trashrecords.HazardPayArchive');
     }
 }

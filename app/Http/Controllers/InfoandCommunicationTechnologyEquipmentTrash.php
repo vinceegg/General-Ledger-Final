@@ -8,6 +8,6 @@ class InfoandCommunicationTechnologyEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.InfoandCommunicationTechnologyEquipmentArchived');
+        return view('trashrecords.InfoandCommunicationTechnologyEquipmentArchive');
     }
 }

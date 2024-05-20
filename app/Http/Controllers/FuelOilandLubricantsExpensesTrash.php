@@ -8,6 +8,6 @@ class FuelOilandLubricantsExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.FuelOilandLubricantsExpensesArchived');
+        return view('trashrecords.FuelOilandLubricantsExpensesArchive');
     }
 }

@@ -8,6 +8,6 @@ class AccountableFormsExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.AccountableFormsExpensesArchived');
+        return view('trashrecords.AccountableFormsExpensesArchive');
     }
 }

@@ -8,6 +8,6 @@ class FinesandPenaltiesServiceIncomeTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.FinesandPenaltiesServiceIncomeArchived');
+        return view('trashrecords.FinesandPenaltiesServiceIncomeArchive');
     }
 }

@@ -8,6 +8,6 @@ class ElectricityExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.ElectricityExpensesArchived');
+        return view('trashrecords.ElectricityExpensesArchive');
     }
 }

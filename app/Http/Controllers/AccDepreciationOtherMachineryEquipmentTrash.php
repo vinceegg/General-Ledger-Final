@@ -8,6 +8,6 @@ class AccDepreciationOtherMachineryEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.AccDepreciationOtherMachineryEquipmentArchived');
+        return view('trashrecords.AccDepreciationOtherMachineryEquipmentArchive');
     }
 }

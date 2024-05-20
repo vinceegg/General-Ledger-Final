@@ -8,6 +8,6 @@ class AccountsPayableTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.AccountsPayableArchived');
+        return view('trashrecords.AccountsPayableArchive');
     }
 }

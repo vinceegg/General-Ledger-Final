@@ -8,7 +8,7 @@ class GrantsDonationsinKindTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.GrantsDonationsinKindArchived');
+        return view('trashrecords.GrantsDonationsinKindArchive');
     }
 }
 

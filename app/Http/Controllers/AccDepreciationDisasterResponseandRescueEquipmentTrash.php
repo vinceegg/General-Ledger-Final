@@ -8,6 +8,6 @@ class AccDepreciationDisasterResponseandRescueEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.AccDepreciationDisasterResponseandRescueEquipmentArchived');
+        return view('trashrecords.AccDepreciationDisasterResponseandRescueEquipmentArchive');
     }
 }

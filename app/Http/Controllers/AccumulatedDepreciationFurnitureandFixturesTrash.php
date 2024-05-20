@@ -8,6 +8,6 @@ class AccumulatedDepreciationFurnitureandFixturesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.AccumulatedDepreciationFurnitureandFixturesArchived');
+        return view('trashrecords.AccumulatedDepreciationFurnitureandFixturesArchive');
     }
 }

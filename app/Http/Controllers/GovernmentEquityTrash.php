@@ -8,6 +8,6 @@ class GovernmentEquityTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.GovernmentEquityArchived');
+        return view('trashrecords.GovernmentEquityArchive');
     }
 }

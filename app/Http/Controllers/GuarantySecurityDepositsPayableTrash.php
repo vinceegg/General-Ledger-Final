@@ -8,6 +8,6 @@ class GuarantySecurityDepositsPayableTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.GuarantySecurityDepositsPayableArchived');
+        return view('trashrecords.GuarantySecurityDepositsPayableArchive');
     }
 }

@@ -8,6 +8,6 @@ class EmployeesCompensationInsurancePremiumsTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.EmployeesCompensationInsurancePremiumsArchived');
+        return view('trashrecords.EmployeesCompensationInsurancePremiumsArchive');
     }
 }

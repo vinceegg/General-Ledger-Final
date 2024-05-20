@@ -8,6 +8,6 @@ class AffiliationFeesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.AffiliationFeesArchived');
+        return view('trashrecords.AffiliationFeesArchive');
     }
 }

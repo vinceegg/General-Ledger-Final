@@ -8,6 +8,6 @@ class DepreciationMachineryandEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.DepreciationMachineryandEquipmentArchived');
+        return view('trashrecords.DepreciationMachineryandEquipmentArchive');
     }
 }

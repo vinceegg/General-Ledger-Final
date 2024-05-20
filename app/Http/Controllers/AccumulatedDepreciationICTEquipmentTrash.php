@@ -8,6 +8,6 @@ class AccumulatedDepreciationICTEquipmentTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.AccumulatedDepreciationICTEquipmentArchived');
+        return view('trashrecords.AccumulatedDepreciationICTEquipmentArchive');
     }
 }

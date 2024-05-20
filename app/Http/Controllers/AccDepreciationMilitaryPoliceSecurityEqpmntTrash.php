@@ -8,6 +8,6 @@ class AccDepreciationMilitaryPoliceSecurityEqpmntTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.AccDepreciationMilitaryPoliceSecurityEqpmntArchived');
+        return view('trashrecords.AccDepreciationMilitaryPoliceSecurityEqpmntArchive');
     }
 }
