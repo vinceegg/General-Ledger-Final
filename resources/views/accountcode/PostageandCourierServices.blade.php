@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:postage-and-courier-services-show/>
+    <livewire:postageand-courier-services-show/>
   </div>
   
 @endsection
