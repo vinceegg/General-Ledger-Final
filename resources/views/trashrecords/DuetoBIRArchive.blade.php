@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:due-to-bir-trash/>
+    <livewire:dueto-b-i-r-trash/>
   </div>
   
 @endsection

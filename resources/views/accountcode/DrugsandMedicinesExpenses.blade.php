@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:drugs-and-medicines-expenses-show/>
+    <livewire:drugsand-medicines-expenses-show/>
   </div>
   
 @endsection

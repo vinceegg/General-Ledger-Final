@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:depreciation-building-and-structures-trash/>
+    <livewire:depreciation-buildingand-structures-show-trash/>
   </div>
   
 @endsection
