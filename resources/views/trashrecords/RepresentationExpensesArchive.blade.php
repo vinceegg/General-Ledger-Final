@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:representation-allowance-trash/>
+    <livewire:representation-expenses-trash/>
   </div>
   
 @endsection

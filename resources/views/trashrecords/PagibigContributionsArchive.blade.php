@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:pag-ibig-contributions-trash/>
+    <livewire:pagibig-contributions-trash/>
   </div>
   
 @endsection

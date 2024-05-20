@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:subsidy-from-lgus-trash/>
+    <livewire:subsidyfrom-lgus-trash/>
   </div>
   
 @endsection
