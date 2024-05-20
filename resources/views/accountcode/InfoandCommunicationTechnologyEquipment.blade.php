@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:info-and-communication-technology-equipment-show/>
+    <livewire:infoand-communication-technology-equipment-show/>
   </div>
   
 @endsection

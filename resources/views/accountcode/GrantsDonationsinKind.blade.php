@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:grants-donations-in-kind-show/>
+    <livewire:grants-donationsin-kind-show/>
   </div>
   
 @endsection

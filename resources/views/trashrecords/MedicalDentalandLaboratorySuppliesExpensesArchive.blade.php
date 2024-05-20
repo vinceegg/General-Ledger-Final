@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:medical-dental-and-laboratory-supplies-expenses-trash/>
+    <livewire:medical-dentaland-laboratory-supplies-expenses-trash/>
   </div>
   
 @endsection
