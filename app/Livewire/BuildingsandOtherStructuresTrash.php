@@ -59,7 +59,7 @@ class BuildingsandOtherStructuresTrash extends Component
 
     public function render()
     {
-        return view('livewire.buildingsand-other-structures-trash', [
+        return view('livewire.buildings-and-other-structures-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

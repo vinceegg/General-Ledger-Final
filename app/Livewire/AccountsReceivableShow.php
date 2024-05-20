@@ -8,6 +8,6 @@ class DepreciationBuildingandStructuresTrash extends Component
 {
     public function render()
     {
-        return view('livewire.depreciation-buildingand-structures-trash');
+        return view('livewire.depreciation-building-and-structures-trash');
     }
 }

@@ -26,7 +26,7 @@ class RepairsandMaintTransportationEquipmentTrash extends Component
         if ($general_ledger) {
             $general_ledger->restore();
             session()->flash('message', 'Record restored successfully.');
-            $this->softDeletedData = RepairsandMaintTransportationEquipment::onlyTrashed()->get();
+            $this->softDeletedData = RepairsandMaintTransportationEquipmentModel::onlyTrashed()->get();
         }
     }
 
