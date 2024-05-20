@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:membership-dues-and-contribution-to-org-show/>
+    <livewire:membership-duesand-contributionto-org-show/>
   </div>
   
 @endsection

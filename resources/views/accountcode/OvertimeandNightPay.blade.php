@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:overtime-and-night-pay-show/>
+    <livewire:overtimeand-night-pay-show/>
   </div>
   
 @endsection

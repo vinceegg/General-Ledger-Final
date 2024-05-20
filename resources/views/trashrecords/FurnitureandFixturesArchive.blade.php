@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:furniture-and-fixtures-trash/>
+    <livewire:furnitureand-fixtures-trash/>
   </div>
   
 @endsection

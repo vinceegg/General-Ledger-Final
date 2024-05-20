@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:technical-and-scientific-equipment-trash/>
+    <livewire:technicaland-scientific-equipment-trash/>
   </div>
   
 @endsection
