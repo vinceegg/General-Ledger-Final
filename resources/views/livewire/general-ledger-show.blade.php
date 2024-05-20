@@ -71,8 +71,6 @@
 
                         <!-- Table Header -->
                         <thead class="text-base text-left text-black sticky top-0 bg-white">
-                            <!-- VINCEKORIN CODE -->
-                            <!-- Include message modal and session message -->
                             @include('livewire.general-ledger-modal')
                             <tr class="text-center shadow-md"> <!-- Table heading design -->
                                 <th scope="col" class="border-r p-2" style="width: 10px">No.</th>
@@ -83,7 +81,7 @@
                                 <th scope="col" class="border-l p-2" style="width: 120px">Debits</th>
                                 <th scope="col" class="border-l p-2" style="width: 120px">Credits</th>
                                 <th scope="col" class="border-l p-2" style="width: 180px">Credits Balance</th>
-                                <th scope="col" class="bg-white justify-end" style="width:10px">                                   
+                                <th class="bg-white" style="width: 10px"></th> <!--Ito yung header row sa rightmost para di tumagos 3dotmenu pag sinoscroll-->
                                 </th>                 
                             </tr>
                         </thead>
@@ -101,7 +99,7 @@
                                     <td class="border-r border-b border-l p-2 border-gray-300">₱{{ number_format($general_ledgers->gl_credit, 2, '.', ',') }}</td>                      
                                     <td class="border-b border-l p-2 border-gray-300">₱{{ number_format($general_ledgers->gl_credit_balance, 2, '.', ',') }}</td>                                     
                                     <td class="justify-end">
-                                        <div x-data="{ open: false }" @click.away="open = false" class="mt-2 relative inline-block text-gray-500 dark:text-gray-400">
+                                        <div x-data="{ open: false }" @click.away="open = false" class="mt-2 inline-block text-gray-500 dark:text-gray-400">
                                             <button @click="open = !open" id="dropdownButton" class="inline-block hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5">
                                                 <span class="sr-only">Open dropdown</span>
                                                 <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">

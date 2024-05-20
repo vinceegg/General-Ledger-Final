@@ -17,12 +17,8 @@ use Carbon\Carbon;
 
 class GeneralJournalShow extends Component
 {
-    use WithPagination;
     use WithFileUploads;
     
-
-    protected $paginationTheme = 'bootstrap';
-
     public $gj_entrynum_date,
     $gj_jevnum,
     $gj_particulars,
@@ -39,6 +35,8 @@ class GeneralJournalShow extends Component
     public $totalDebit = 0;
     public $totalCredit = 0;
     public $viewDeleted = false; // Property to toggle deleted records view
+    public $showNotification = false; // Control notification visibility
+    public $notificationMessage = ''; // Store the notification message
 
     // Validation rules
     //@korin:edited this
@@ -100,11 +98,16 @@ class GeneralJournalShow extends Component
                 'gj_debit' => $code['gj_debit'],
                 'gj_credit' => $code['gj_credit'],
             ]);
-        }
+        
 
-        session()->flash('message', 'Added Successfully');
+        // Update notification state
+        $this->notificationMessage = 'Added Successfully';
+        $this->showNotification = true;
+
         $this->resetInput();
-        $this->dispatch('close-modal');
+
+        $this->dispatch('notification-shown');
+        }
     }
 
 
@@ -157,7 +160,7 @@ class GeneralJournalShow extends Component
             'gj_accountcodes_data.*.gj_credit' => 'nullable|numeric',
         ]);
 
-        try {
+
             // Convert empty strings to null in the main journal data
             $validatedData = array_map(function($value) {
                 return $value === '' ? null : $value;
@@ -201,14 +204,16 @@ class GeneralJournalShow extends Component
                 // Delete sundry data not in the incoming data
                 GeneralJournal_AccountCodesModel ::destroy($sundryIdsToDelete);
 
-            session()->flash('message', 'Updated Successfully');
-        } catch (\Exception $e) {
-            session()->flash('error', "Failed to update: " . $e->getMessage());
-        }
-        
-            $this->resetInput();  // Reset all properties
-            $this->dispatch('close-modal');  // Assume you mean $this->emit to use Livewire's event system
-        }
+            // Update notification state
+            $this->notificationMessage = 'Updated Successfully';
+            $this->showNotification = true;
+            $this->resetInput();
+
+            // Dispatch browser event to handle notification visibility
+            $this->dispatch('notification-shown');
+
+            $this->dispatch('close-modal');
+    }
 
 
     // Delete GeneralJournal
@@ -238,7 +243,6 @@ class GeneralJournalShow extends Component
     public function closeModal()
     {
         $this->resetInput();
-        $this->dispatch('close-modal');
     }
 
     // Reset input values
@@ -327,6 +331,12 @@ class GeneralJournalShow extends Component
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
     
+        // Method to reset notification
+    public function resetNotification()
+    {
+        $this->showNotification = false;
+    }
+
     // Method to toggle viewDeleted
     public function toggleDeletedView()
     {

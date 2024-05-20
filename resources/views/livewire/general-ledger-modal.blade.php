@@ -129,7 +129,7 @@
 
             <!-- Modal body design -->
             <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
-                <!-- Function for adding -->    
+                <!-- Function for editing -->    
                 <form wire:submit.prevent="updateGeneralLedger" x-data>
                     <!-- Modal content -->
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">

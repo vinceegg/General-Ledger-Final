@@ -73,13 +73,46 @@
                                     <hr class="my-4 w-full border-t border-gray-300"> 
 
                                     <div class="grid gap-4">
-                                            <div class="col-span-2">
-                                                <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Account Code</label>
-                                                <input type="text" wire:model="gj_accountcodes_data.{{ $index }}.gj_accountcode" class="bg-gray-50 border 
-                                                {{ $errors->has('gj_accountcodes_data.' . $index . '.gj_accountcode') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} 
-                                                text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
-                                                    placeholder="X-XX-XX-XXX-X">
+                                            <div class="col-span-2" x-data="{ 
+                                                code: @entangle('gj_accountcodes_data.' . $index . '.gj_accountcode'),
+                                                items: ['Cash Local Treasury', 'Petty Cash', 'Cash in Bank Local Currency Current Account'],
+                                                filteredItems: [],
+                                                filterItems() {
+                                                    this.filteredItems = this.items.filter(item =>
+                                                        item.toLowerCase().includes(this.code.toLowerCase())
+                                                    );
+                                                },
+                                                setInputValue(value) {
+                                                    this.code = value;
+                                                    this.$nextTick(() => {
+                                                        this.$refs.accountInput.dispatchEvent(new Event('input'));
+                                                    });
+                                                    this.filteredItems = [];
+                                                },
+                                                selectTopSuggestion() {
+                                                    if (this.filteredItems.length > 0) {
+                                                        this.setInputValue(this.filteredItems[0]);
+                                                    }
+                                                },
+                                                clearSuggestions() {
+                                                    this.filteredItems = [];
+                                                }
+                                            }" x-init="$watch('code', value => filterItems())">
+                                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Account Code</label>
+                                            <input type="text" wire:model="gj_accountcodes_data.{{ $index }}.gj_accountcode" class="  bg-gray-50 border 
+                                            {{ $errors->has('crj_sundry_data.' . $index . '.crj_accountcode') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} 
+                                            text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                                    placeholder="Type account code here...">
                                                 @error('gj_accountcodes_data.' . $index . '.gj_accountcode') <span class="text-red-500">{{ $message }}</span> @enderror
+                                                <div class="relative">
+                                                    <ul class="text-gray-700 mt-1 w-full border-2 shadow-xl rounded-lg absolute bg-white  cursor-pointer focus:outline-none" x-show="filteredItems.length > 0" @mousedown.away="clearSuggestions">
+                                                        <template x-for="(item, index) in filteredItems" :key="item">
+                                                            <li class="p-2 border-t border-gray-200 hover:bg-gray-50" @mousedown.prevent="setInputValue(item)">
+                                                                <button type="button" x-text="item"></button>
+                                                            </li>
+                                                        </template>
+                                                    </ul>
+                                                </div>
                                             </div>
 
                                             <div class ="col-span-2 sm:col-span-1">
@@ -118,13 +151,33 @@
                     <!-- Modal footer -->
                     <div class="absolute bottom-0 left-0 w-full bg-white dark:bg-gray-700 rounded-b">
                         <div class="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 max-w-2xl mx-auto">
-                            <button type="button" data-modal-toggle="add-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
-                                Cancel
-                                <span class="sr-only">Close modal</span>
-                            </button>
-                            <button type="submit" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
-                                Add Transaction
-                            </button>
+                            
+
+                            <!-- Notification Message -->
+                            <div class="mr-4 ml-4 flex-grow text-left text-green-800" x-data="{ show: @entangle('showNotification') }">
+                                <div class="flex items-center" x-show="show" x-init="@this.on('notification-shown', () => { setTimeout(() => { $wire.call('resetNotification') }, 3000); })">
+                                    <div class="font-semibold w-full bg-green-50 rounded-lg px-5 py-2.5 flex items-center">
+                                        <svg class="w-5 h-5 mr-2" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"></path>
+                                        </svg>
+                                        {{ $notificationMessage }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="flex justify-end">
+                                <!-- Cancel Button -->
+                                <button type="button" data-modal-toggle="add-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+                                    Cancel
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+
+                                <!-- Add Transaction Button -->
+                                <button type="submit" @keydown.enter.prevent="$wire.saveGeneralLedger()" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
+                                    Add Transaction
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -212,13 +265,46 @@
                                     <hr class="my-4 w-full border-t border-gray-300"> 
 
                                     <div class="grid gap-4">
-                                            <div class="col-span-2">
-                                                <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Account Code</label>
-                                                <input type="text" wire:model="gj_accountcodes_data.{{ $index }}.gj_accountcode" class="bg-gray-50 border 
-                                                {{ $errors->has('gj_accountcodes_data.' . $index . '.gj_accountcode') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} 
-                                                text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
-                                                    placeholder="X-XX-XX-XXX-X">
+                                            <div class="col-span-2" x-data="{ 
+                                                code: @entangle('gj_accountcodes_data.' . $index . '.gj_accountcode'),
+                                                items: ['Cash Local Treasury', 'Petty Cash', 'Cash in Bank Local Currency Current Account'],
+                                                filteredItems: [],
+                                                filterItems() {
+                                                    this.filteredItems = this.items.filter(item =>
+                                                        item.toLowerCase().includes(this.code.toLowerCase())
+                                                    );
+                                                },
+                                                setInputValue(value) {
+                                                    this.code = value;
+                                                    this.$nextTick(() => {
+                                                        this.$refs.accountInput.dispatchEvent(new Event('input'));
+                                                    });
+                                                    this.filteredItems = [];
+                                                },
+                                                selectTopSuggestion() {
+                                                    if (this.filteredItems.length > 0) {
+                                                        this.setInputValue(this.filteredItems[0]);
+                                                    }
+                                                },
+                                                clearSuggestions() {
+                                                    this.filteredItems = [];
+                                                }
+                                            }" x-init="$watch('code', value => filterItems())">
+                                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Account Code</label>
+                                            <input type="text" wire:model="gj_accountcodes_data.{{ $index }}.gj_accountcode" class="  bg-gray-50 border 
+                                            {{ $errors->has('crj_sundry_data.' . $index . '.crj_accountcode') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} 
+                                            text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                                    placeholder="Type account code here...">
                                                 @error('gj_accountcodes_data.' . $index . '.gj_accountcode') <span class="text-red-500">{{ $message }}</span> @enderror
+                                                <div class="relative">
+                                                    <ul class="text-gray-700 mt-1 w-full border-2 shadow-xl rounded-lg absolute bg-white  cursor-pointer focus:outline-none" x-show="filteredItems.length > 0" @mousedown.away="clearSuggestions">
+                                                        <template x-for="(item, index) in filteredItems" :key="item">
+                                                            <li class="p-2 border-t border-gray-200 hover:bg-gray-50" @mousedown.prevent="setInputValue(item)">
+                                                                <button type="button" x-text="item"></button>
+                                                            </li>
+                                                        </template>
+                                                    </ul>
+                                                </div>
                                             </div>
 
                                             <div class ="col-span-2 sm:col-span-1">
@@ -257,13 +343,33 @@
                     <!-- Modal footer -->
                     <div class="absolute bottom-0 left-0 w-full bg-white dark:bg-gray-700 rounded-b">
                         <div class="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 max-w-2xl mx-auto">
-                            <button type="button" data-modal-toggle="edit-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
-                                Cancel
-                                <span class="sr-only">Close modal</span>
-                            </button>
-                            <button type="submit" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
-                                Save Changes
-                            </button>
+
+
+                            <!-- Notification Message -->
+                            <div class="mr-4 ml-4 flex-grow text-left text-green-800" x-data="{ show: @entangle('showNotification') }">
+                                <div class="flex items-center" x-show="show" x-init="@this.on('notification-shown', () => { setTimeout(() => { $wire.call('resetNotification') }, 3000); })">
+                                    <div class="font-semibold w-full bg-green-50 rounded-lg px-5 py-2.5 flex items-center">
+                                        <svg class="w-5 h-5 mr-2" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"></path>
+                                        </svg>
+                                        {{ $notificationMessage }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="flex justify-end">
+                                <!-- Cancel Button -->
+                                <button type="button" data-modal-toggle="edit-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+                                    Cancel
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+
+                                <!-- Add Transaction Button -->
+                                <button type="submit" @keydown.enter.prevent="$wire.saveGeneralLedger()" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
+                                    Save Changes
+                                </button>
+                            </div>
                         </div>
                     </div>
 

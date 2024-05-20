@@ -80,7 +80,7 @@
                                     </td>
                             @empty
                                 <tr>
-                                    <td colspan="5">No Record Found</td>
+                                    <td colspan="5" style="padding-top: 24px; padding-bottom: 24px;" class="p-2">No record found.</td>
                                 </tr>
                             @endforelse            
             </tbody>   

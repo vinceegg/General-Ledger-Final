@@ -15,10 +15,8 @@ use Carbon\Carbon;
 
 class CheckDisbursementJournalShow extends Component
 {
-    use WithPagination;
+   
     use WithFileUploads;
-
-    protected $paginationTheme = 'bootstrap';
 
     public $ckdj_entrynum_date,
     $ckdj_checknum,
@@ -50,6 +48,8 @@ class CheckDisbursementJournalShow extends Component
     public $totalHonoraria = 0;
     public $totalAccountCode = 0;
     public $viewDeleted = false; // Property to toggle deleted records view
+    public $showNotification = false; // Control notification visibility
+    public $notificationMessage = ''; // Store the notification message
 
     protected function rules()
     {
@@ -117,11 +117,16 @@ class CheckDisbursementJournalShow extends Component
                 'ckdj_credit' => $code['ckdj_credit'],
             ]);
         }
+        // Update notification state
+        $this->notificationMessage = 'Added Successfully';
+        $this->showNotification = true;
 
-        session()->flash('message', 'Added Successfully');
         $this->resetInput();
-        $this->dispatch('close-modal');
+
+        $this->dispatch('notification-shown');
     }
+ 
+
 
     //@korinlv: added this function
     public function addAccountCode()
@@ -185,7 +190,6 @@ class CheckDisbursementJournalShow extends Component
             'ckdj_sundry_data.*.ckdj_credit' => 'nullable|numeric|min:0|max:100000000',
         ]);
 
-        try {
             // Convert empty strings to null in the main journal data
             $validatedData = array_map(function($value) {
                 return $value === '' ? null : $value;
@@ -229,14 +233,16 @@ class CheckDisbursementJournalShow extends Component
             // Delete sundry data not in the incoming data
             CKDJ_SundryModel::destroy($sundryIdsToDelete);
 
-            session()->flash('message', 'Updated Successfully');
-        } catch (\Exception $e) {
-            session()->flash('error', "Failed to update: " . $e->getMessage());
-        }
-
+            // Update notification state
+            $this->notificationMessage = 'Updated Successfully';
+            $this->showNotification = true;
             $this->resetInput();
+
+            // Dispatch browser event to handle notification visibility
+            $this->dispatch('notification-shown');
+
             $this->dispatch('close-modal');
-        }
+    }
 
     // Delete CheckDisbursementJournal
     public function deleteCheckDisbursementJournal(int $check_disbursement_journal_id, $type = 'soft')
@@ -263,7 +269,6 @@ class CheckDisbursementJournalShow extends Component
     public function closeModal()
     {
         $this->resetInput();
-        $this->dispatch('close-modal');
     }
 
     //@korinlv: edited this function
@@ -360,6 +365,12 @@ class CheckDisbursementJournalShow extends Component
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
 
+    // Method to reset notification
+    public function resetNotification()
+    {
+        $this->showNotification = false;
+    }
+
     // Method to toggle viewDeleted
     public function toggleDeletedView()
     {
@@ -425,7 +436,7 @@ class CheckDisbursementJournalShow extends Component
         // $query->where('id', 'like', '%' . $this->search . '%');
 
         // @korin: edited this function
-
+        // @vince eto inedit ko
         $query->where(function ($q) {
             $q->where('id', 'like', '%' . $this->search . '%')
               ->orWhere('ckdj_checknum', 'like', '%' . $this->search . '%')

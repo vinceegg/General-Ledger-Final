@@ -50,6 +50,16 @@
                     data-modal-target="add-modal" data-modal-toggle="add-modal">
                         Add Transaction
                     </button>
+
+                    <!-- Archive button -->
+                    <a href="{{ route('CashLocalTreasuryArchived') }}" class="relative group border border-gray-300 bg-white hover:bg-gray-200 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
+                        <svg class="w-5 h-5" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"></path>
+                        </svg>
+                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-32  bg-white border border-gray-300 text-black shadow:md text-center text-sm rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            View Archives
+                        </div>
+                    </a>
                 </div>
         </div> <!-- 1st rectangle div tag -->
         
@@ -61,14 +71,7 @@
 
                         <!-- Table Header -->
                         <thead class="text-base text-left text-black sticky top-0 bg-white">
-                            <!-- VINCEKORIN CODE -->
-                            <!-- Include message modal and session message -->
-                            @include('livewire.general-journal-modal')
-                            @if (session()->has('message'))
-                            <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
-                                {{ session('message') }}
-                            </div>
-                            @endif
+                            @include('livewire.general-journal-modal')     
                             <tr class="text-center shadow-md"> <!-- Table heading design -->
                                 <th scope="col" class="border-r p-2" style="width: 10px">No.</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>
@@ -77,24 +80,7 @@
                                 <th scope="col" class="border-r border-l p-2" style="width: 200px">Account Code</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 120px">Debit</th>
                                 <th scope="col" class="border-l p-2" style="width: 120px">Credit</th>
-                                <th scope="col" class="bg-white justify-end" style="width:10px">
-                                    <div x-data="{ open: false }" @click.away="open = false" class="bg-white mt-1 relative ">
-                                        <button @click="open = !open" id="dropdownButton" class="bg-white inline-block focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5">
-                                            <span class="sr-only">Open dropdown</span>
-                                            <svg class="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                            </svg>
-                                        </button>
-                                        <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" 
-                                        class="absolute bg-white right-0 mt-2 py-2 
-                                        w-56 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">                         
-                                            <!-- Show Edit and Archive only for active records -->
-                                            <button type="button" wire:click="toggleDeletedView" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                {{ $viewDeleted ? 'Show Active Records' : 'Show Archived Records' }}
-                                            </button> 
-
-                                    </div>
-                                </th>                 
+                                <th scope="col" style="width:10px"></th>                                   
                             </tr>
                         </thead>
 
