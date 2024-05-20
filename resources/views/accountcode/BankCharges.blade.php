@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:bank-charges-show/>
   </div>
   
 @endsection

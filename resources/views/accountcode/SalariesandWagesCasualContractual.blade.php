@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:salaries-and-wages-casual-contractual-show/>
   </div>
   
 @endsection

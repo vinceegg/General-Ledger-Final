@@ -315,7 +315,9 @@
 
 
 
-<div class="grid sm:grid-cols-3 md:grid-cols-3 gap-4 mt-5">
+
+
+  <div class="grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-5">
   <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <div class="flex gap-2 pb-3">
     </div>
@@ -324,21 +326,7 @@
     </div>
   </div>
 
-  <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <div class="flex gap-2 pb-3">
-    </div>
-    <div class="grid sm:grid-cols-3 md:grid-cols-4 gap-4">
-      First
-    </div>
-  </div>
 
-  <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <div class="flex gap-2 pb-3">
-    </div>
-    <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
-      First
-    </div>
-  </div>
 
   <div class="pt-6 p-6 grid bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <div class="flex gap-2 pb-3">
@@ -353,7 +341,7 @@
     </div>
 
     <!-- CHARTS -->
-    <div class="pt-3">
+    <div class="sm:w-auto md:w-auto pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
       <canvas id="myChart"></canvas>
     </div>
 
@@ -361,7 +349,7 @@
 
     <script>
       const ctx = document.getElementById('myChart').getContext('2d');
-
+    
       new Chart(ctx, {
         type: 'bar',
         data: {

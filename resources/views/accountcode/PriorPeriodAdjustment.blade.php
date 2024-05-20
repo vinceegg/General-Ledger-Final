@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:prior-period-adjustment-show/>
   </div>
   
 @endsection

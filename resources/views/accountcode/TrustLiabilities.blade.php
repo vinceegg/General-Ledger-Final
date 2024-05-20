@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:trust-liabilities-show/>
   </div>
   
 @endsection
