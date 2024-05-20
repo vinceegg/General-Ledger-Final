@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:personnel-economic-relief-allowance-show/>
   </div>
   
 @endsection

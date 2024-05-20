@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:representation-allowance-show/>
   </div>
   
 @endsection

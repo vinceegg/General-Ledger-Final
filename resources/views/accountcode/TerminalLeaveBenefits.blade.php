@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:terminal-leave-benefits-show/>
   </div>
   
 @endsection

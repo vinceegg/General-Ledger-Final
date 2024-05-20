@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:transportation-allowance-show/>
   </div>
   
 @endsection

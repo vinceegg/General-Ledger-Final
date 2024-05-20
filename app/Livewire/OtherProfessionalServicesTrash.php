@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\OtherProfessionalServicesModelModel;
+use App\Models\OtherProfessionalServicesModel;
 
 class OtherProfessionalServicesTrash extends Component
 {
@@ -16,17 +16,17 @@ class OtherProfessionalServicesTrash extends Component
 
     public function mount()
     {
-        $this->softDeletedData = OtherProfessionalServicesModelModel::onlyTrashed()->get();
+        $this->softDeletedData = OtherProfessionalServicesModel::onlyTrashed()->get();
     }
 
     // Method to restore soft-deleted record
     public function restoreGeneralLedger($id)
     {
-        $general_ledger = OtherProfessionalServicesModelModel::onlyTrashed()->find($id);
+        $general_ledger = OtherProfessionalServicesModel::onlyTrashed()->find($id);
         if ($general_ledger) {
             $general_ledger->restore();
             session()->flash('message', 'Record restored successfully.');
-            $this->softDeletedData = OtherProfessionalServicesModelModel::onlyTrashed()->get();
+            $this->softDeletedData = OtherProfessionalServicesModel::onlyTrashed()->get();
         }
     }
 
@@ -39,7 +39,7 @@ class OtherProfessionalServicesTrash extends Component
     // Permanently delete 
     public function destroyGeneralLedger()
     {
-        $general_ledger = OtherProfessionalServicesModelModel::withTrashed()->find($this->general_ledger_id);
+        $general_ledger = OtherProfessionalServicesModel::withTrashed()->find($this->general_ledger_id);
         if ($this->deleteType == 'force') {
             $general_ledger->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');

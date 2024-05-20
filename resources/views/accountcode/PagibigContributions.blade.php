@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:pag-ibig-contributions-show/>
   </div>
   
 @endsection

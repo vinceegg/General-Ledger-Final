@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:retirement-and-life-insurance-premiums-show/>
   </div>
   
 @endsection

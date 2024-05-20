@@ -220,41 +220,6 @@ class AccountsReceivableShow extends Component
     // Render the component
     public function render()
     {
-        $query = AccountsReceivableModel::query();
-
-        // Apply the month filter if a month is selected
-        if ($this->selectedMonth) {
-            $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
-            $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
-            
-            $query->whereBetween('gl_date', [$startOfMonth, $endOfMonth]);
-        }
-
-        // Add the search filter
-        // Add the search filter
-        //@vince eto edited function sa search
-        $query->where(function ($q) {
-            $q ->where('id', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_date', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_vouchernum', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_particulars', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_balance_debit', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_debit', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_credit', 'like', '%' . $this->search . '%')
-            ->orWhere('gl_credit_balance', 'like', '%' . $this->search . '%');
-        });
-
-        // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
-        $query->orderBy($this->sortField , $this->sortDirection);
-
-        $accounts_receivable = $query->orderBy('id', 'ASC')->get(); // Changed from paginate() to get()
-
-        // Calculate the total balance, debit, and credit
-        $this->totalBalanceDebit = $query->sum('gl_balance_debit');
-        $this->totalDebit = $query->sum('gl_debit');
-        $this->totalCredit = $query->sum('gl_credit');
-        $this->totalCreditBalance = $query->sum('gl_credit_balance');
-
-        return view('livewire.accounts-receivable-show',['general_ledger' => $accounts_receivable]);
+        return view('livewire.depreciation-building-and-structures-trash');
     }
 }
