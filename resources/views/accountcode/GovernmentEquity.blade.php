@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:government-equity-show/>
   </div>
   
 @endsection

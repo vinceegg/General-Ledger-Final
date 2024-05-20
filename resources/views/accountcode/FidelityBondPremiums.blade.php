@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:fidelity-bond-premiums-show/>
   </div>
   
 @endsection

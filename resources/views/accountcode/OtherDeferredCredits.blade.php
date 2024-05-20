@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:other-deferred-credits-show/>
   </div>
   
 @endsection

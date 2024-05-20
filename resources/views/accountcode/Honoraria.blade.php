@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:honoraria-show/>
   </div>
   
 @endsection

@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:guaranty-security-deposits-payable-show/>
   </div>
   
 @endsection

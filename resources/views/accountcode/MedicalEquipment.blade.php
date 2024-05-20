@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:medical-equipment-show/>
   </div>
   
 @endsection
