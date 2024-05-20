@@ -8,6 +8,6 @@ class BankChargesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.BankChargesArchived');
+        return view('trashrecords.BankChargesArchive');
     }
 }

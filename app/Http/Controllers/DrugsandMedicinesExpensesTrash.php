@@ -8,6 +8,6 @@ class DrugsandMedicinesExpensesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.DrugsandMedicinesExpensesArchived');
+        return view('trashrecords.DrugsandMedicinesExpensesArchive');
     }
 }

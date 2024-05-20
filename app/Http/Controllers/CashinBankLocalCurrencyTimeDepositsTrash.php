@@ -8,6 +8,6 @@ class CashinBankLocalCurrencyTimeDepositsTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.CashinBankLocalCurrencyTimeDepositsArchived');
+        return view('trashrecords.CashinBankLocalCurrencyTimeDepositsArchive');
     }
 }

@@ -8,7 +8,7 @@ class HonorariaTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.HonorariaArchived');
+        return view('trashrecords.HonorariaArchive');
     }
 }
 

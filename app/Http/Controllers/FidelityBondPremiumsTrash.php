@@ -8,6 +8,6 @@ class FidelityBondPremiumsTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.FidelityBondPremiumsArchived');
+        return view('trashrecords.FidelityBondPremiumsArchive');
     }
 }

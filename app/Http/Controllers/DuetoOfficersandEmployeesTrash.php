@@ -8,6 +8,6 @@ class DuetoOfficersandEmployeesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.DuetoOfficersandEmployeesArchived');
+        return view('trashrecords.DuetoOfficersandEmployeesArchive');
     }
 }

@@ -8,6 +8,6 @@ class FurnitureandFixturesTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.FurnitureandFixturesArchived');
+        return view('trashrecords.FurnitureandFixturesArchive');
     }
 }

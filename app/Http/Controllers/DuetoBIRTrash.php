@@ -8,6 +8,6 @@ class DuetoBIRTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.DuetoBIRArchived');
+        return view('trashrecords.DuetoBIRArchive');
     }
 }

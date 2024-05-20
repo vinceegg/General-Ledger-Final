@@ -8,6 +8,6 @@ class DuetoPAGIBIGTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.DuetoPAGIBIGArchived');
+        return view('trashrecords.DuetoPAGIBIGArchive');
     }
 }

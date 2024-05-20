@@ -8,6 +8,6 @@ class DuetoPHILHEALTHTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.DuetoPHILHEALTHArchived');
+        return view('trashrecords.DuetoPHILHEALTHArchive');
     }
 }
