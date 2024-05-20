@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
-use App\Exports\GeneralLedgerExport;
-use App\Imports\GeneralLedgerImport;
-use App\Models\GeneralLedgerModel;
+use App\Exports\HonorariaExport;
+use App\Imports\HonorariaImport;
+use App\Models\HonorariaModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -69,7 +69,7 @@ class HonorariaShow extends Component
             }
         }
 
-        GeneralLedgerModel::create($validatedData);
+        HonorariaModel::create($validatedData);
 
         // Update notification state
         $this->notificationMessage = 'Added Successfully';
@@ -83,7 +83,7 @@ class HonorariaShow extends Component
 
     public function editGeneralLedger($general_ledger_id)
     {
-        $general_ledger = GeneralLedgerModel::find($general_ledger_id);
+        $general_ledger = HonorariaModel::find($general_ledger_id);
         if ($general_ledger) {
             
             $this->general_ledger_id = $general_ledger->id;
@@ -104,7 +104,7 @@ class HonorariaShow extends Component
     {
         $validatedData = $this->validate();
 
-        GeneralLedgerModel::where('id', $this->general_ledger_id)->update([
+        HonorariaModel::where('id', $this->general_ledger_id)->update([
             'gl_date' => $validatedData['gl_date'],
             'gl_vouchernum' => $validatedData['gl_vouchernum'],
             'gl_particulars' => $validatedData['gl_particulars'],
@@ -145,7 +145,7 @@ class HonorariaShow extends Component
     // Soft delete GeneralLedger
     public function softDeleteGeneralLedger($general_ledger_id)
     {
-        $general_ledger= GeneralLedgerModel::find($general_ledger_id);
+        $general_ledger= HonorariaModel::find($general_ledger_id);
         if ( $general_ledger) {
             $general_ledger->delete();
     }
@@ -169,7 +169,7 @@ class HonorariaShow extends Component
     // Ensure that a file has been uploaded
         if ($this->file) {
         $filePath = $this->file->store('files');
-        Excel::import(new GeneralLedgerImport, $filePath);
+        Excel::import(new HonorariaImport, $filePath);
 
         return redirect()->route('LS')->with('message', 'File Imported Successfully');
         }
@@ -178,11 +178,11 @@ class HonorariaShow extends Component
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportGL_XLSX(Request $request) 
     {
-        return Excel::download(new GeneralLedgerExport, 'Ledger Sheet.xlsx');
+        return Excel::download(new HonorariaExport, 'Ledger Sheet.xlsx');
     }
     public function exportGl_CSV(Request $request) 
     {
-        return Excel::download(new GeneralLedgerExport, 'Ledger Sheet.csv');
+        return Excel::download(new HonorariaExport, 'Ledger Sheet.csv');
     }
 
     public function searchAction()
@@ -208,20 +208,11 @@ class HonorariaShow extends Component
     {
         $this->showNotification = false;
     }
-    // Method to restore soft-deleted record
-    public function restoreGeneralLedger($id)
-    {
-        $general_ledger = GeneralLedgerModel::onlyTrashed()->find($id);
-        if ($general_ledger) {
-            $general_ledger->restore();
-            session()->flash('message', 'Record restored successfully.');
-        }
-    }
 
     // Render the component
     public function render()
     {
-        $query = GeneralLedgerModel::query();
+        $query = HonorariaModel::query();
 
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {
@@ -248,7 +239,7 @@ class HonorariaShow extends Component
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
 
-        $general_ledger = $query->orderBy('id', 'ASC')->get(); // Changed from paginate() to get()
+        $honoraria = $query->orderBy('id', 'ASC')->get(); // Changed from paginate() to get()
 
         // Calculate the total balance, debit, and credit
         $this->totalBalanceDebit = $query->sum('gl_balance_debit');
@@ -256,6 +247,6 @@ class HonorariaShow extends Component
         $this->totalCredit = $query->sum('gl_credit');
         $this->totalCreditBalance = $query->sum('gl_credit_balance');
 
-        return view('livewire.general-ledger-show',['general_ledger' => $general_ledger]);
+        return view('livewire.honoraria-show',['general_ledger' => $honoraria]);
     }
 }

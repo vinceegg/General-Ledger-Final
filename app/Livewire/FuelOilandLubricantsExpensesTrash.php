@@ -58,7 +58,7 @@ class FuelOilandLubricantsExpensesTrash extends Component
 
     public function render()
     {
-        return view('livewire.fuel-oil-and-lubricants-expenses-trash', [
+        return view('livewire.fuel-oiland-lubricants-expenses-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

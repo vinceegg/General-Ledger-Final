@@ -59,7 +59,7 @@ class MedicalDentalandLaboratorySuppliesExpensesTrash extends Component
 
     public function render()
     {
-        return view('livewire.medical-dental-and-laboratory-supplies-expenses-trash', [
+        return view('livewire.medical-dentaland-laboratory-supplies-expenses-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

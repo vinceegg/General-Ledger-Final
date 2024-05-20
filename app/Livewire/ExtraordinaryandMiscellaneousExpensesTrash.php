@@ -58,7 +58,7 @@ class ExtraordinaryandMiscellaneousExpensesTrash extends Component
 
     public function render()
     {
-        return view('livewire.extraordinary-and-miscellaneous-expenses-trash', [
+        return view('livewire.extraordinaryand-miscellaneous-expenses-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

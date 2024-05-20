@@ -2,18 +2,18 @@
 
 namespace App\Exports;
 
-use App\Models\InterestIncomeModel;
+use App\Models\InterestsReceivableModel;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class InterestIncomeExport implements  FromCollection, WithHeadings
+class InterestsReceivableExport implements  FromCollection, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return InterestIncomeModel::select(
+        return InterestsReceivableModel::select(
         "gl_date",
         "gl_vouchernum",
         "gl_particulars",

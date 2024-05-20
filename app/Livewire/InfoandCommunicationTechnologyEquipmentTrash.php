@@ -59,7 +59,7 @@ class InfoandCommunicationTechnologyEquipmentTrash extends Component
 
     public function render()
     {
-        return view('livewire.info-and-communication-technology-equipment-trash', [
+        return view('livewire.infoand-communication-technology-equipment-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

@@ -59,7 +59,7 @@ class FurnitureandFixturesTrash extends Component
 
     public function render()
     {
-        return view('livewire.furniture-and-fixtures-trash', [
+        return view('livewire.furnitureand-fixtures-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

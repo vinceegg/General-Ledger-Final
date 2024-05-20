@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('rent_expenses', function (Blueprint $table) {
             $table->id();
-            $table->id();
             $table->date('gl_date')->nullable();
             $table->string('gl_vouchernum')->nullable(); //@vince eto inedit ko
             $table->longText('gl_particulars')->nullable(); //@vince eto inedit ko

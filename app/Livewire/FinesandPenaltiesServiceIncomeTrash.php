@@ -59,7 +59,7 @@ class DepreciationTransportationEquipmentTrash extends Component
 
     public function render()
     {
-        return view('livewire.fines-and-penalties-service-income-trash', [
+        return view('livewire.finesand-penalties-service-income-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }
