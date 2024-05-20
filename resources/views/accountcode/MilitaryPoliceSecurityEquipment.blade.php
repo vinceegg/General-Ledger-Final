@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:military-police-security-equipment-show/>
   </div>
   
 @endsection

@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:fuel-oil-and-lubricants-expenses-show/>
   </div>
   
 @endsection
