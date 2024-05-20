@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:philhealth-contributions-trash/>
   </div>
   
 @endsection
