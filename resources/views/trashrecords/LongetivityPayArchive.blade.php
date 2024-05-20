@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:longetivity-pay-trash/>
   </div>
   
 @endsection
