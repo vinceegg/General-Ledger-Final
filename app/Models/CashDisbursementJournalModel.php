@@ -25,7 +25,7 @@ class CashDisbursementJournalModel extends Model
             'cdj_referencenum',
             'cdj_accountable_officer',
             'cdj_jevnum',
-            'cdj_accountcode',
+            'cdj_credit_accountcode',
             'cdj_amount',
             'cdj_account1',
             'cdj_account2',

@@ -38,8 +38,8 @@
                         </div>
                         <div class="mb-3">
                             <label>Account Code</label>
-                            <input type="number" wire:model="cdj_accountcode" class="form-control">
-                            @error('cdj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                            <input type="text" wire:model="cdj_credit_accountcode" class="form-control">
+                            @error('cdj_credit_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-3">
                             <label>Amount</label>
@@ -176,8 +176,8 @@
                         </div>
                         <div class="mb-3">
                             <label>Account Code</label>
-                            <input type="number" wire:model="cdj_accountcode" class="form-control">
-                            @error('cdj_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
+                            <input type="text" wire:model="cdj_credit_accountcode" class="form-control">
+                            @error('cdj_credit_accountcode') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-3">
                             <label>Amount</label>

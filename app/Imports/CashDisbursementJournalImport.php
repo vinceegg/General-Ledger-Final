@@ -20,30 +20,30 @@ class CashDisbursementJournalImport implements ToCollection, WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-        public function collection(Collection $rows)
+    public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
+            // Create the journal entry
             $journal = CashDisbursementJournalModel::create([
                 'cdj_entrynum_date' => $row['date'],
                 'cdj_referencenum' => $row['reference_num'],
                 'cdj_accountable_officer' => $row['accountable_officer'],
                 'cdj_jevnum' => $row['jev_no'],
-                'cdj_accountcode' => $row['account_code'],
+                'cdj_credit_accountcode' => $row['credit_account_code'],
                 'cdj_amount' => $row['amount'],
                 'cdj_account1' => $row['account1'],
                 'cdj_account2' => $row['account2'],
-                // Add more fields as needed
             ]);
 
-            if (isset($row['cdj_sundry_data'])) {
-                foreach ($row['cdj_sundry_data'] as $sundry) {
-                    $sundryModel = $journal->cdj_sundry_data()->create([
-                        'cdj_sundry_accountcode' => $sundry['account_code'],
-                        'cdj_pr' => $sundry['pr'],
-                        'cdj_debit' => $sundry['debit'],
-                        'cdj_credit' => $sundry['credit'],
-                    ]);
-                }
+            // Check if sundry data is present and create associated entries
+            if (!empty($row['sundry_account_code']) || !empty($row['pr']) || !empty($row['debit']) || !empty($row['credit'])) {
+                CDJ_SundryModel::create([
+                    'cash_disbursement_journal_id' => $journal->id, // Foreign key to the journal entry
+                    'cdj_sundry_accountcode' => $row['sundry_account_code'],
+                    'cdj_pr' => $row['pr'],
+                    'cdj_debit' => $row['debit'],
+                    'cdj_credit' => $row['credit'],
+                ]);
             }
         }
     }
@@ -51,20 +51,20 @@ class CashDisbursementJournalImport implements ToCollection, WithHeadingRow
     public function map($row): array
     {
         return [
-            'date' => $row['Date'],
-            'reference_num' => $row['Reference/RD No.'],
-            'accountable_officer' => $row['Accountable Officer'],
-            'jev_num' => $row['JEV No.'],
-            'account_code' => $row['Account Code (Main)'],
-            'amount' => $row['Amount'],
-            'account1' => $row['5-02-99-990'],
-            'account2' => $row['5-02-02-010'],
+            'cdj_date' => $row['date'],
+            'cdj_reference_num' => $row['reference_num'],
+            'cdj_accountable_officer' => $row['accountable_officer'],
+            'cdj_jev_num' => $row['jev_num'],
+            'cdj_credit_accountcode' => $row['credit_account_code'],
+            'cdj_amount' => $row['amount'],
+            'cdj_account1' => $row['account1'],
+            'cdj_account2' => $row['account2'],
             'cdj_sundry_data' => [
                 [
-                    'account_code' => $row['Account Code (Sundry)'],
-                    'pr' => $row['PR'],
-                    'debit' => $row['Debit'],
-                    'credit' => $row['Credit'],
+                    'cdj_sundry_accountcode' => $row['sundry_account_code'],
+                    'cdj_pr' => $row['pr'],
+                    'cdj_debit' => $row['debit'],
+                    'cdj_credit' => $row['credit'],
                 ]
             ],
         ];
@@ -73,18 +73,18 @@ class CashDisbursementJournalImport implements ToCollection, WithHeadingRow
     public function rules(): array
     {
         return [
-            '*.Date' => 'required|date',
-            '*.Reference/RD No.' => 'required|string',
-            '*.Accountable Officer' => 'required|string',
-            '*.JEV No.' => 'required|integer',
-            '*.Account Code (Main)' => 'required|integer',
-            '*.Amount' => 'required|numeric',
-            '*.5-02-99-990' => 'nullable|numeric',
-            '*.5-02-02-010' => 'nullable|numeric',
-            '*.Account Code (Sundry)' => 'sometimes|required',
-            '*.PR' => 'required_with:Account Code (Sundry)|string',
-            '*.Debit' => 'required_with:Account Code (Sundry)|numeric',
-            '*.Credit' => 'required_with:Account Code (Sundry)|numeric',
+            '*.date' => 'required|date',
+            '*.reference_num' => 'required|string',
+            '*.accountable_officer' => 'required|string',
+            '*.jev_no' => 'required|integer',
+            '*.credit_account_code' => 'required|string',
+            '*.amount' => 'required|numeric',
+            '*.account1' => 'required|integer',
+            '*.account2' => 'required|integer',
+            '*.sundry_account_code' => 'nullable|string',
+            '*.pr' => 'nullable|string',
+            '*.debit' => 'nullable|numeric',
+            '*.credit' => 'nullable|numeric',
         ];
     }
 

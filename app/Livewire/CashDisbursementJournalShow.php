@@ -24,7 +24,7 @@ class CashDisbursementJournalShow extends Component
     $cdj_referencenum,
     $cdj_accountable_officer,
     $cdj_jevnum,
-    $cdj_accountcode,
+    $cdj_credit_accountcode,
     $cdj_amount,
     $cdj_account1,
     $cdj_account2,
@@ -53,7 +53,7 @@ class CashDisbursementJournalShow extends Component
             'cdj_referencenum'=>'nullable|string',
             'cdj_accountable_officer'=>'nullable|string',
             'cdj_jevnum'=>'nullable|integer',
-            'cdj_accountcode'=>'nullable|integer',
+            'cdj_credit_accountcode'=>'nullable|string',
             'cdj_amount'=> 'nullable|numeric',
             'cdj_account1'=> 'nullable|numeric',
             'cdj_account2'=> 'nullable|numeric',
@@ -144,7 +144,7 @@ class CashDisbursementJournalShow extends Component
             $this->cdj_referencenum = $cash_disbursement_journal->cdj_referencenum;
             $this->cdj_accountable_officer = $cash_disbursement_journal->cdj_accountable_officer;
             $this->cdj_jevnum = $cash_disbursement_journal->cdj_jevnum;
-            $this->cdj_accountcode = $cash_disbursement_journal->cdj_accountcode;
+            $this->cdj_credit_accountcode = $cash_disbursement_journal->cdj_credit_accountcode;
             $this->cdj_amount = $cash_disbursement_journal->cdj_amount;
             $this->cdj_account1 = $cash_disbursement_journal->cdj_account1;
             $this->cdj_account2 = $cash_disbursement_journal->cdj_account2;
@@ -166,7 +166,7 @@ class CashDisbursementJournalShow extends Component
             'cdj_referencenum'=>'nullable|string',
             'cdj_accountable_officer'=>'nullable|string',
             'cdj_jevnum'=>'nullable|integer',
-            'cdj_accountcode'=>'nullable|integer',
+            'cdj_credit_accountcode'=>'nullable|string',
             'cdj_amount'=> 'nullable|numeric',
             'cdj_account1'=> 'nullable|numeric',
             'cdj_account2'=> 'nullable|numeric',
@@ -264,7 +264,7 @@ class CashDisbursementJournalShow extends Component
             $this->cdj_referencenum = '';
             $this->cdj_accountable_officer = '';
             $this->cdj_jevnum = '';
-            $this->cdj_accountcode ='';
+            $this->cdj_credit_accountcode ='';
             $this->cdj_amount = '';
             $this->cdj_account1 = '';
             $this->cdj_account2 = '';

@@ -100,7 +100,7 @@
                                     <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_referencenum }}</td>
                                     <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_accountable_officer}}</td>
                                     <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_jevnum }}</td>
-                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_accountcode }}</td>
+                                    <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_credit_accountcode }}</td>
                                     <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_amount }}</td>
                                     <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_account1 }}</td>
                                     <td rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_account2 }}</td>
@@ -118,7 +118,7 @@
                                     <td>{{ $cash_disbursement_journals->cdj_referencenum }}</td>
                                     <td>{{ $cash_disbursement_journals->cdj_accountable_officer }}</td>
                                     <td>{{ $cash_disbursement_journals->cdj_jevnum }}</td>
-                                    <td>{{ $cash_disbursement_journals->cdj_accountcode }}</td>
+                                    <td>{{ $cash_disbursement_journals->cdj_credit_accountcode }}</td>
                                     <td>{{ $cash_disbursement_journals->cdj_amount }}</td>
                                     <td>{{ $cash_disbursement_journals->cdj_account1 }}</td>
                                     <td>{{ $cash_disbursement_journals->cdj_account2 }}</td>
