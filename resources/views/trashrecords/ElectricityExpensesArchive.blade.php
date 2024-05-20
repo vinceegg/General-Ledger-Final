@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:/>
+    <livewire:electricity-expenses-trash/>
   </div>
   
 @endsection

@@ -171,7 +171,7 @@
 @section('content')
                                         
   <div>
-    <livewire:accounts-receivable-trash/>
+    <livewire:membership-dues-and-contribution-to-org-trash/>
   </div>
   
 @endsection
