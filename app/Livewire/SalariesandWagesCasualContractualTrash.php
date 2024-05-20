@@ -59,7 +59,7 @@ class SalariesandWagesCasualContractualTrash extends Component
 
     public function render()
     {
-        return view('livewire.salaries-and-wages-casual-contractual-trash', [
+        return view('livewire.salariesand-wages-casual-contractual-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

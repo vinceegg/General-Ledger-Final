@@ -59,7 +59,7 @@ class GrantsDonationsinKindTrash extends Component
 
     public function render()
     {
-        return view('livewire.grants-donations-in-kind-trash', [
+        return view('livewire.grants-donationsin-kind-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

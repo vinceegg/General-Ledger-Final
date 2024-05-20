@@ -59,7 +59,7 @@ class OtherMaintenanceandOperatingExpensesTrash extends Component
 
     public function render()
     {
-        return view('livewire.other-maintenance-and-operating-expenses-trash', [
+        return view('livewire.other-maintenanceand-operating-expenses-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

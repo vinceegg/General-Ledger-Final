@@ -59,7 +59,7 @@ class MembershipDuesandContributiontoOrgTrash extends Component
 
     public function render()
     {
-        return view('livewire.membership-dues-and-contribution-to-org-trash', [
+        return view('livewire.membership-duesand-contributionto-org-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }
