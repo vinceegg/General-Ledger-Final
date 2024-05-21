@@ -7,7 +7,7 @@ use App\Models\CheckDisbursementJournalModel;
 
 class CheckDisbursementJournalTrash extends Component
 {
-    public $general_ledger_id;
+    public $check_disbursement_journal_id;
     public $deleteType;
     public $softDeletedData;
     public $showNotification = false; // Control notification visibility
@@ -19,41 +19,51 @@ class CheckDisbursementJournalTrash extends Component
         $this->softDeletedData = CheckDisbursementJournalModel::onlyTrashed()->get();
     }
 
-    // Method to restore soft-deleted record
-    public function restoreGeneralLedger($id)
-    {
-        $general_ledger = CheckDisbursementJournalModel::onlyTrashed()->find($id);
-        if ($general_ledger) {
-            $general_ledger->restore();
-            session()->flash('message', 'Record restored successfully.');
-            $this->softDeletedData = CheckDisbursementJournalModel::onlyTrashed()->get();
-        }
-    }
+     //@korinlv: edited this function
+     public function restoreCheckDisbursementJournal($id)
+     {
+         $check_disbursement_journal = CheckDisbursementJournalModel::onlyTrashed()->find($id);
+         if ($check_disbursement_journal) {
+             // Load trashed sundries
+             $trashedSundries = $check_disbursement_journal->ckdj_sundry_data()->onlyTrashed()->get();
+             foreach ($trashedSundries as $sundry){
+                 $sundry->restore();
+             }
+ 
+             $check_disbursement_journal->restore();
+             session()->flash('message', 'Record restored successfully.');
+         }
+     }
 
-    public function deleteGeneralLedger(int $general_ledger_id, $type = 'soft')
+    // Delete CheckDisbursementJournal
+    public function deleteCheckDisbursementJournal(int $check_disbursement_journal_id, $type = 'soft')
     {
-        $this->general_ledger_id = $general_ledger_id;
+        $this->check_disbursement_journal_id = $check_disbursement_journal_id;
         $this->deleteType = $type; // Set the delete type
     }
 
-    // Permanently delete 
-    public function destroyGeneralLedger()
+    //permanently delete CheckDisbursementJournal
+    public function destroyCheckDisbursementJournal()
     {
-        $general_ledger = CheckDisbursementJournalModel::withTrashed()->find($this->general_ledger_id);
+        $check_disbursement_journal_id = CheckDisbursementJournalModel::withTrashed()->find($this->check_disbursement_journal_id);
         if ($this->deleteType == 'force') {
-            $general_ledger->forceDelete();
+            $check_disbursement_journal_id->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
         } else {
-            $general_ledger->delete();
-            session()->flash('message', 'Archived Successfully');
+            $check_disbursement_journal_id->delete();
+            session()->flash('message', 'Soft Deleted Successfully');
         }
         $this->dispatch('close-modal');
         $this->resetInput();
-        return redirect()->route('CKDJ')->with('message', 'Deleted Successfully');
+    }
+
+    public function closeModal()
+    {
+        $this->resetInput();
     }
 
     public function resetInput()
     {
-        $this->general_ledger_id = '';
+        $this->check_disbursement_journal_id = '';
     }
 }

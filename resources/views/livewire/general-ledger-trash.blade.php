@@ -49,7 +49,7 @@
 
                         <!-- Table Body -->
                         <tbody class="space-y-4  overflow-y-scroll  ">
-                            @forelse ($softDeletedData as  $general_ledgers)
+                            @forelse ($softDeletedData as  $check_disbursement_journals)
                             <tr class = "border-b border-gray-300 ">
                                     <td scope="row" class="border-r border-b p-2 border-gray-300 px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $general_ledgers-> id }}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_ledgers-> gl_date}}</td>
@@ -68,12 +68,12 @@
                                                 </svg>
                                             </button>                                  
                                             <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">                                                                                                                                                                                                                     
-                                                <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteGeneralLedger({{ $general_ledgers->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteCheckDisbursementJournal({{  $check_disbursement_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                     Delete
-                                                </button>   
-                                                <button type="button" wire:click="restoreGeneralLedger({{ $general_ledgers->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                </button>
+                                                <button type="button" wire:click="restoreCheckDisbursementJournal({{  $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                     Restore
-                                                </button>                                                                                                                                  
+                                                </button>                                                                                                                                   
                                             </div>
                                         </div>
                                     </td>

@@ -51,7 +51,7 @@
                     </button>
 
                     <!-- Archive button -->
-                    <a href="{{ route('CashLocalTreasuryArchived') }}" class="relative group border border-gray-300 bg-white hover:bg-gray-200 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
+                    <a href="{{ route('CheckDisbursementJournalArchived') }}" class="relative group border border-gray-300 bg-white hover:bg-gray-200 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
                         <svg class="w-5 h-5" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"></path>
                         </svg>
@@ -149,7 +149,6 @@
                                                     </svg>
                                                 </button>
                                                 <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
-                                                    @if (!$viewDeleted)
                                                     <!-- Show Edit and Archive only for active records -->
                                                         <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editCheckDisbursementJournal({{  $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                                 Edit
@@ -157,15 +156,8 @@
                                                         <button type="button" wire:click="softDeleteCheckDisbursementJournal({{  $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                                 Archive
                                                         </button>
-                                                    @else
                                                     <!-- Show Delete and Restore only for deleted records -->
-                                                        <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteCheckDisbursementJournal({{  $check_disbursement_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                            Delete
-                                                        </button>
-                                                        <button type="button" wire:click="restoreCheckDisbursementJournal({{  $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                            Restore
-                                                        </button>
-                                                    @endif                               
+                                                                                                                                   
                                                 </div>
                                             </div>
                                         </td> 

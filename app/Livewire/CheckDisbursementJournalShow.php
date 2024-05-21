@@ -47,7 +47,6 @@ class CheckDisbursementJournalShow extends Component
     public $totalSalaryWages = 0;
     public $totalHonoraria = 0;
     public $totalAccountCode = 0;
-    public $viewDeleted = false; // Property to toggle deleted records view
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
 
@@ -331,10 +330,6 @@ class CheckDisbursementJournalShow extends Component
         return redirect()->back();
         }
     }
-
-    public function importViewCKDJ(){
-        return view('journals.CKDJ');
-    }
     
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportCKDJ_XLSX(Request $request) 
@@ -371,12 +366,6 @@ class CheckDisbursementJournalShow extends Component
         $this->showNotification = false;
     }
 
-    // Method to toggle viewDeleted
-    public function toggleDeletedView()
-    {
-        $this->viewDeleted = !$this->viewDeleted;
-    }
-
     // Method to restore soft-deleted record
     //@korinlv: edited this function
     public function restoreCheckDisbursementJournal($id)
@@ -399,16 +388,8 @@ class CheckDisbursementJournalShow extends Component
     {
         $query = CheckDisbursementJournalModel::query();
 
-        // Fetch only soft-deleted records if viewDeleted is set to true
-        if ($this->viewDeleted) {
-            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
-        }
-
         //@korinlv:added this function
         $check_disbursement_journals = $query->with(['ckdj_sundry_data' => function ($query) {
-            if ($this->viewDeleted) {
-                $query->onlyTrashed();
-            }
         }])->get();
         
         $totalDebit = 0;

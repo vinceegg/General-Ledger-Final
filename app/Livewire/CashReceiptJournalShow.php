@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Exports\CashReceiptJournalExport;
 use App\Imports\CashReceiptJournalImport;
-use Livewire\WithPagination;
 use App\Models\CashReceiptJournalModel;
 use App\Models\CRJ_SundryModel;
 use Livewire\Component;
@@ -100,7 +99,6 @@ class CashReceiptJournalShow extends Component
                 return $value === '' ? null : $value;
             }, $code);
 
-
             $journal->crj_sundry_data()->create([
                 'crj_accountcode' => $code['crj_accountcode'],
                 'crj_debit' => $code['crj_debit'],
@@ -110,12 +108,9 @@ class CashReceiptJournalShow extends Component
         // Update notification state
         $this->notificationMessage = 'Added Successfully';
         $this->showNotification = true;
-
-        $this->resetInput();
-
         $this->dispatch('notification-shown');
+        $this->resetInput();     
         }
-    
     }
 
     //@korinlv: added this function
@@ -150,9 +145,7 @@ class CashReceiptJournalShow extends Component
             
             // Handle related data as array of objects or similar structure
             $this->crj_sundry_data = $cash_receipt_journal->crj_sundry_data->toArray();
-        } else {
-            return redirect() -> to('/cash_receipt_journal'); 
-        }
+        } 
     }
 
     //UPDATE FUNCTION
@@ -268,6 +261,12 @@ class CashReceiptJournalShow extends Component
         $this->crj_deposit_debit = '';
         $this->crj_deposit_credit = '';
         $this->crj_sundry_data = [];
+    }
+
+    // Method to reset notification
+    public function resetNotification()
+    {
+        $this->showNotification = false;
     }
 
     // Soft delete CashReceiptJournal

@@ -20,7 +20,7 @@
             <!-- Modal body design -->
             <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
                 <!-- Function for adding --> 
-                <form wire:submit.prevent="saveCashReceiptJournal">
+                <form wire:submit.prevent="saveCashReceiptJournal" x-data>
                     <!-- Modal content -->
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">
 
@@ -262,7 +262,7 @@
             <!-- Modal body design -->
             <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
                 <!-- Function for editing --> 
-                <form wire:submit.prevent="updateCashReceiptJournal">
+                <form wire:submit.prevent="updateCashReceiptJournal" x-data>
                     <!-- Modal content -->
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">
 
@@ -444,9 +444,8 @@
                     <!-- Modal footer -->
                     <div class="absolute bottom-0 left-0 w-full bg-white dark:bg-gray-700 rounded-b">
                         <div class="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 max-w-2xl mx-auto">
-
-                            <!-- Notification Message -->
-                            <div class="mr-4 ml-4 flex-grow text-left text-green-800" x-data="{ show: @entangle('showNotification') }">
+                             <!-- Notification Message -->
+                             <div class="mr-4 ml-4 flex-grow text-left text-green-800" x-data="{ show: @entangle('showNotification') }">
                                 <div class="flex items-center" x-show="show" x-init="@this.on('notification-shown', () => { setTimeout(() => { $wire.call('resetNotification') }, 3000); })">
                                     <div class="font-semibold w-full bg-green-50 rounded-lg px-5 py-2.5 flex items-center">
                                         <svg class="w-5 h-5 mr-2" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -456,7 +455,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <button type="button" data-modal-toggle="edit-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
                                 Cancel
                                 <span class="sr-only">Close modal</span>
