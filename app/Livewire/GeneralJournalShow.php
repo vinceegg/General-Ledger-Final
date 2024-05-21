@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Exports\GeneralJournalExport;
 use App\Imports\GeneralJournalImport;
-use Livewire\WithPagination;
 use App\Models\GeneralJournalModel;
 use App\Models\GeneralJournal_AccountCodesModel; //@korinlv: added  this
 use Livewire\Component;

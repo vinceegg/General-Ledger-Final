@@ -156,6 +156,7 @@
                                                         <button type="button" wire:click="softDeleteCheckDisbursementJournal({{  $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                                 Archive
                                                         </button>
+                                                        
                                                     <!-- Show Delete and Restore only for deleted records -->
                                                                                                                                    
                                                 </div>
