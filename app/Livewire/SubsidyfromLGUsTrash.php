@@ -59,7 +59,7 @@ class SubsidyfromLGUsTrash extends Component
 
     public function render()
     {
-        return view('livewire.subsidy-from-lgus-trash', [
+        return view('livewire.subsidyfrom-lgus-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

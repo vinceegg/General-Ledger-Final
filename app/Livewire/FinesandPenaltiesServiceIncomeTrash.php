@@ -3,9 +3,9 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\DepreciationTransportationEquipmentModel;
+use App\Models\FinesandPenaltiesServiceIncomeModel;
 
-class DepreciationTransportationEquipmentTrash extends Component
+class FinesandPenaltiesServiceIncomeTrash extends Component
 {
     public $general_ledger_id;
     public $deleteType;
@@ -16,17 +16,17 @@ class DepreciationTransportationEquipmentTrash extends Component
 
     public function mount()
     {
-        $this->softDeletedData = DepreciationTransportationEquipmentModel::onlyTrashed()->get();
+        $this->softDeletedData = FinesandPenaltiesServiceIncomeModel::onlyTrashed()->get();
     }
 
     // Method to restore soft-deleted record
     public function restoreGeneralLedger($id)
     {
-        $general_ledger = DepreciationTransportationEquipmentModel::onlyTrashed()->find($id);
+        $general_ledger = FinesandPenaltiesServiceIncomeModel::onlyTrashed()->find($id);
         if ($general_ledger) {
             $general_ledger->restore();
             session()->flash('message', 'Record restored successfully.');
-            $this->softDeletedData = DepreciationTransportationEquipmentModel::onlyTrashed()->get();
+            $this->softDeletedData = FinesandPenaltiesServiceIncomeModel::onlyTrashed()->get();
         }
     }
 
@@ -39,7 +39,7 @@ class DepreciationTransportationEquipmentTrash extends Component
     // Permanently delete 
     public function destroyGeneralLedger()
     {
-        $general_ledger = DepreciationTransportationEquipmentModel::withTrashed()->find($this->general_ledger_id);
+        $general_ledger = FinesandPenaltiesServiceIncomeModel::withTrashed()->find($this->general_ledger_id);
         if ($this->deleteType == 'force') {
             $general_ledger->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
@@ -49,7 +49,7 @@ class DepreciationTransportationEquipmentTrash extends Component
         }
         $this->dispatch('close-modal');
         $this->resetInput();
-        return redirect()->route('DepreciationTransportationEquipmentArchived')->with('message', 'Deleted Successfully');
+        return redirect()->route('FinesandPenaltiesServiceIncomeArchived')->with('message', 'Deleted Successfully');
     }
 
     public function resetInput()

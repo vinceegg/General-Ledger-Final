@@ -171,7 +171,7 @@ class CustomersDepositShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new CustomersDepositImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('CustomersDeposit')->with('message', 'File Imported Successfully');
         }
     }
 

@@ -6,8 +6,8 @@
         <div class="p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between">
                 <!-- Title -->
                 <div class="flex flex-col items-left justify-between">
-                    <p class="font-extrabold text-blue-800 text-3xl">Affiliation Fees</p>
-                    <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet > Affiliation Fees</span></p>
+                    <p class="font-extrabold text-blue-800 text-3xl">Bank Charges</p>
+                    <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet > Bank Charges</span></p>
                 </div>
 
                 <!-- Functions & features in first rectangle -->

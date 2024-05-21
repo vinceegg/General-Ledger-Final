@@ -172,7 +172,7 @@ class OtherPayablesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new OtherPayablesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('OtherPayables')->with('message', 'File Imported Successfully');
         }
     }
 

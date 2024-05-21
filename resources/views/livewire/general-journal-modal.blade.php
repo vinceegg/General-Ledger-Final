@@ -1,54 +1,429 @@
-
-
-<!-- EXPORT MODAL -->
-<div wire:ignore.self id="export-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative w-full max-w-lg max-h-full">
-        <!-- Modal content -->
+<!-- ADD TRANSACTION MODAL -->
+<div wire:ignore.self id="add-modal" tabindex="-1" aria-hidden="true" class="mt-10 hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-2xl max-h-full">
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
             <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white" >
-                    Export table to CSV or XLSX
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 fixed w-full max-w-2xl bg-white dark:bg-gray-700 z-10">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                    Add New General Journal Entry
                 </h3>
                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
-                data-modal-toggle="export-modal">
+                    data-modal-toggle="add-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            
-                <!-- Export body -->
-                <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" x-data="{ exportFormat: 'xlsx' }">
-                    <div class="flex flex-col mb-4">
-                        <div class="flex items-center">
-                            <input id="default-radio-1" type="radio" value="csv" name="default-radio" class="ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" @click="exportFormat = 'csv'">
-                            <label for="default-radio-1" class="ms-2 text-xl font-medium text-gray-900 dark:text-gray-300">CSV</label>
+
+            <!-- Modal body design -->
+            <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
+                <!-- Function for adding -->    
+                <form wire:submit.prevent="saveGeneralJournal">
+                    <!-- Modal content -->
+                    <div class="grid gap-4 p-4 mb-4 grid-cols-2">
+
+                    <!-- Journal Info Form Fields  -->
+                    <div class="col-span-2">
+                        <div class="bg-white border border-gray-300 rounded-lg p-4"> <!-- Outer Rectangle -->
+                            <text class="font-base font-bold">General Journal Information</text>
+                            <hr class="my-4 w-full border-t border-gray-300">
+                            <div class="grid gap-4 grid-cols-2">
+                                <div class="col-span-1">
+                                    <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
+                                        <input type="date" wire:model="gj_entrynum_date" class="mb-2 w-full bg-gray-50 border {{ $errors->has('gj_entrynum_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                                        @error('gj_entrynum_date') <span class="text-red-500">{{ $message }}</span> @enderror
+                                </div>
+
+                                <div class="col-span-1">
+                                    <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Jev Number</label>
+                                    <input type="number" wire:model="gj_jevnum" class="mb-2 bg-gray-50 border {{ $errors->has('gj_jevnum') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                    placeholder="YYYY-MM-JEV Number"> 
+                                    @error('gj_jevnum') <span class="text-red-500">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-span-2">
+                                <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
+                                <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('gj_particulars') ? 'border-red-500 ' : 'border-gray-300' }} focus:ring-blue-500 focus:border-blue-500 " id="description" 
+                                rows="2" wire:model="gj_particulars"></textarea>
+                                @error('gj_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
+                            </div>
                         </div>
-                        <div class="text-base text-gray-500 ml-6">Export table to Comma Separated Value file</div>
-                    </div>
-                    <div class="flex flex-col mb-4">
-                        <div class="flex items-center">
-                            <input checked id="default-radio-2" type="radio" value="xlsx" name="default-radio" class="ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" @click="exportFormat = 'xlsx'">
-                            <label for="default-radio-2" class="ms-2 text-xl font-medium text-gray-900 dark:text-gray-300">XLSX</label>
+                    </div>                       
+                            
+                        <!-- Sundry Form Fields  -->
+                        @foreach ($gj_accountcodes_data as $index => $entry)
+                            <div class="col-span-2">
+                                <div class="bg-white border border-gray-300 rounded-lg p-4"> <!-- Outer Rectangle -->
+                                    <div class="col-span-2 sm:col-span-1 items-center flex justify-between">
+                                        <div>
+                                            <text class="font-base font-bold ">Sundry</text>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-6 h-6 ms-auto inline-flex justify-center items-center" 
+                                                wire:click="removeAccountCode({{ $index }})">
+                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                </svg>
+                                            </button>   
+                                        </div>
+                                    </div>
+                                    <hr class="my-4 w-full border-t border-gray-300"> 
+
+                                    <div class="grid gap-4">
+                                            <div class="col-span-2" x-data="{ 
+                                                code: @entangle('gj_accountcodes_data.' . $index . '.gj_accountcode'),
+                                                items: ['Cash Local Treasury', 'Petty Cash', 'Cash in Bank Local Currency Current Account'],
+                                                filteredItems: [],
+                                                filterItems() {
+                                                    this.filteredItems = this.items.filter(item =>
+                                                        item.toLowerCase().includes(this.code.toLowerCase())
+                                                    );
+                                                },
+                                                setInputValue(value) {
+                                                    this.code = value;
+                                                    this.$nextTick(() => {
+                                                        this.$refs.accountInput.dispatchEvent(new Event('input'));
+                                                    });
+                                                    this.filteredItems = [];
+                                                },
+                                                selectTopSuggestion() {
+                                                    if (this.filteredItems.length > 0) {
+                                                        this.setInputValue(this.filteredItems[0]);
+                                                    }
+                                                },
+                                                clearSuggestions() {
+                                                    this.filteredItems = [];
+                                                }
+                                            }" x-init="$watch('code', value => filterItems())">
+                                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Account Code</label>
+                                            <input type="text" wire:model="gj_accountcodes_data.{{ $index }}.gj_accountcode" class="  bg-gray-50 border 
+                                            {{ $errors->has('crj_sundry_data.' . $index . '.crj_accountcode') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} 
+                                            text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                                    placeholder="Type account code here...">
+                                                @error('gj_accountcodes_data.' . $index . '.gj_accountcode') <span class="text-red-500">{{ $message }}</span> @enderror
+                                                <div class="relative">
+                                                    <ul class="text-gray-700 mt-1 w-full border-2 shadow-xl rounded-lg absolute bg-white  cursor-pointer focus:outline-none" x-show="filteredItems.length > 0" @mousedown.away="clearSuggestions">
+                                                        <template x-for="(item, index) in filteredItems" :key="item">
+                                                            <li class="p-2 border-t border-gray-200 hover:bg-gray-50" @mousedown.prevent="setInputValue(item)">
+                                                                <button type="button" x-text="item"></button>
+                                                            </li>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class ="col-span-2 sm:col-span-1">
+                                                <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white ">Debit</label>
+                                                <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_debit" class="bg-gray-50 border 
+                                                {{ $errors->has('gj_accountcodes_data.' . $index . '.gj_debit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                                placeholder="₱">
+                                                @error('gj_accountcodes_data.' . $index . '.gj_debit') <span class="text-red-500">{{ $message }}</span> @enderror
+                                            </div>
+                                            
+                                            <div class="col-span-2 sm:col-span-1">
+                                                <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credit</label>
+                                                <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_credit" class="bg-gray-50 border 
+                                                {{ $errors->has('gj_accountcodes_data.' . $index . '.gj_credit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                                placeholder="₱">
+                                                @error('gj_accountcodes_data.' . $index . '.gj_credit') <span class="text-red-500">{{ $message }}</span> @enderror
+                                            </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <!-- Add sundry button -->
+                        <div class="col-span-2">
+                            <label class="cursor-pointer border border-gray-300 mr-2 text-black w-full inline-flex items-center hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
+                                wire:click="addAccountCode">
+                                        <svg class="fill-current h-4 w-4 mr-2" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                                        </svg> Add Sundry
+                            </label> 
                         </div>
-                        <div class="text-base text-gray-500 ml-6">Export table to Microsoft Excel Spreadsheet File</div>
+
+                    </div> <!-- Modal content div tag -->
+
+                    <!-- Modal footer -->
+                    <div class="absolute bottom-0 left-0 w-full bg-white dark:bg-gray-700 rounded-b">
+                        <div class="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 max-w-2xl mx-auto">
+                            
+
+                            <!-- Notification Message -->
+                            <div class="mr-4 ml-4 flex-grow text-left text-green-800" x-data="{ show: @entangle('showNotification') }">
+                                <div class="flex items-center" x-show="show" x-init="@this.on('notification-shown', () => { setTimeout(() => { $wire.call('resetNotification') }, 3000); })">
+                                    <div class="font-semibold w-full bg-green-50 rounded-lg px-5 py-2.5 flex items-center">
+                                        <svg class="w-5 h-5 mr-2" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"></path>
+                                        </svg>
+                                        {{ $notificationMessage }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="flex justify-end">
+                                <!-- Cancel Button -->
+                                <button type="button" data-modal-toggle="add-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+                                    Cancel
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+
+                                <!-- Add Transaction Button -->
+                                <button type="submit" @keydown.enter.prevent="$wire.saveGeneralLedger()" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
+                                    Add Transaction
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
+                </form> <!-- Function div tag -->
 
-                    <div class="col-span-2 flex justify-end mr-2 mt-4">            
-                        <button id="export-csv" button class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
-                        wire:click="exportGJ_CSV" x-show="exportFormat === 'csv'">Export</button>
-                        <button id="export-xlsx" button class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
-                        wire:click="exportGJ_XLSX" x-show="exportFormat === 'xlsx'">Export</button>
-                    </div>
-
-                </div>
-            </form>
+            </div> <!-- Modal body design div tag -->
         </div>
-    </div>
-</div> 
+    </div> 
+</div>
+
+
+
+<!-- EDIT TRANSACTION MODAL -->
+<div wire:ignore.self id="edit-modal" tabindex="-1" aria-hidden="true" class="mt-10 hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-2xl max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 fixed w-full max-w-2xl bg-white dark:bg-gray-700 z-10">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                    Update General Journal Entry
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
+                    data-modal-toggle="edit-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+
+            <!-- Modal body design -->
+            <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
+                <!-- Function for editing -->
+                <form wire:submit.prevent="updateGeneralJournal"> 
+                    <!-- Modal content -->
+                    <div class="grid gap-4 p-4 mb-4 grid-cols-2">
+
+                        <!-- Journal Info Form Fields  -->
+                        <div class="col-span-2">
+                            <div class="bg-white border border-gray-300 rounded-lg p-4"> <!-- Outer Rectangle -->
+                                <text class="font-base font-bold">General Journal Information</text>
+                                <hr class="my-4 w-full border-t border-gray-300">
+                                <div class="grid gap-4 grid-cols-2">
+                                    <div class="col-span-1">
+                                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
+                                            <input type="date" wire:model="gj_entrynum_date" class="mb-2 w-full bg-gray-50 border {{ $errors->has('gj_entrynum_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                                            @error('gj_entrynum_date') <span class="text-red-500">{{ $message }}</span> @enderror
+                                    </div>
+
+                                    <div class="col-span-1">
+                                        <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Jev Number</label>
+                                        <input type="number" wire:model="gj_jevnum" class="mb-2 bg-gray-50 border {{ $errors->has('gj_jevnum') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                        placeholder="YYYY-MM-JEV Number"> 
+                                        @error('gj_jevnum') <span class="text-red-500">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-span-2">
+                                    <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
+                                    <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('gj_particulars') ? 'border-red-500 ' : 'border-gray-300' }} focus:ring-blue-500 focus:border-blue-500 " id="description" 
+                                    rows="2" wire:model="gj_particulars"></textarea>
+                                    @error('gj_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>                       
+                            
+                        <!-- Sundry Form Fields  -->
+                        @foreach ($gj_accountcodes_data as $index => $entry)
+                            <div class="col-span-2">
+                                <div class="bg-white border border-gray-300 rounded-lg p-4"> <!-- Outer Rectangle -->
+                                    <div class="col-span-2 sm:col-span-1 items-center flex justify-between">
+                                        <div>
+                                            <text class="font-base font-bold ">Sundry</text>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-6 h-6 ms-auto inline-flex justify-center items-center" 
+                                                wire:click="removeAccountCode({{ $index }})">
+                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                </svg>
+                                            </button>   
+                                        </div>
+                                    </div>
+                                    <hr class="my-4 w-full border-t border-gray-300"> 
+
+                                    <div class="grid gap-4">
+                                            <div class="col-span-2" x-data="{ 
+                                                code: @entangle('gj_accountcodes_data.' . $index . '.gj_accountcode'),
+                                                items: ['Cash Local Treasury', 'Petty Cash', 'Cash in Bank Local Currency Current Account'],
+                                                filteredItems: [],
+                                                filterItems() {
+                                                    this.filteredItems = this.items.filter(item =>
+                                                        item.toLowerCase().includes(this.code.toLowerCase())
+                                                    );
+                                                },
+                                                setInputValue(value) {
+                                                    this.code = value;
+                                                    this.$nextTick(() => {
+                                                        this.$refs.accountInput.dispatchEvent(new Event('input'));
+                                                    });
+                                                    this.filteredItems = [];
+                                                },
+                                                selectTopSuggestion() {
+                                                    if (this.filteredItems.length > 0) {
+                                                        this.setInputValue(this.filteredItems[0]);
+                                                    }
+                                                },
+                                                clearSuggestions() {
+                                                    this.filteredItems = [];
+                                                }
+                                            }" x-init="$watch('code', value => filterItems())">
+                                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Account Code</label>
+                                            <input type="text" wire:model="gj_accountcodes_data.{{ $index }}.gj_accountcode" class="  bg-gray-50 border 
+                                            {{ $errors->has('crj_sundry_data.' . $index . '.crj_accountcode') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} 
+                                            text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                                    placeholder="Type account code here...">
+                                                @error('gj_accountcodes_data.' . $index . '.gj_accountcode') <span class="text-red-500">{{ $message }}</span> @enderror
+                                                <div class="relative">
+                                                    <ul class="text-gray-700 mt-1 w-full border-2 shadow-xl rounded-lg absolute bg-white  cursor-pointer focus:outline-none" x-show="filteredItems.length > 0" @mousedown.away="clearSuggestions">
+                                                        <template x-for="(item, index) in filteredItems" :key="item">
+                                                            <li class="p-2 border-t border-gray-200 hover:bg-gray-50" @mousedown.prevent="setInputValue(item)">
+                                                                <button type="button" x-text="item"></button>
+                                                            </li>
+                                                        </template>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class ="col-span-2 sm:col-span-1">
+                                                <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white ">Debit</label>
+                                                <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_debit" class="bg-gray-50 border 
+                                                {{ $errors->has('gj_accountcodes_data.' . $index . '.gj_debit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                                placeholder="₱">
+                                                @error('gj_accountcodes_data.' . $index . '.gj_debit') <span class="text-red-500">{{ $message }}</span> @enderror
+                                            </div>
+                                            
+                                            <div class="col-span-2 sm:col-span-1">
+                                                <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credit</label>
+                                                <input type="number" wire:model="gj_accountcodes_data.{{ $index }}.gj_credit" class="bg-gray-50 border 
+                                                {{ $errors->has('gj_accountcodes_data.' . $index . '.gj_credit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
+                                                placeholder="₱">
+                                                @error('gj_accountcodes_data.' . $index . '.gj_credit') <span class="text-red-500">{{ $message }}</span> @enderror
+                                            </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        @endforeach
+
+                        <!-- Add sundry button -->
+                        <div class="col-span-2">
+                            <label class="cursor-pointer border border-gray-300 mr-2 text-black w-full inline-flex items-center hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center"
+                                wire:click="addAccountCode">
+                                        <svg class="fill-current h-4 w-4 mr-2" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                                        </svg> Add Sundry
+                            </label> 
+                        </div>
+
+                    </div> <!-- Modal content div tag -->
+
+                    <!-- Modal footer -->
+                    <div class="absolute bottom-0 left-0 w-full bg-white dark:bg-gray-700 rounded-b">
+                        <div class="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 max-w-2xl mx-auto">
+
+
+                            <!-- Notification Message -->
+                            <div class="mr-4 ml-4 flex-grow text-left text-green-800" x-data="{ show: @entangle('showNotification') }">
+                                <div class="flex items-center" x-show="show" x-init="@this.on('notification-shown', () => { setTimeout(() => { $wire.call('resetNotification') }, 3000); })">
+                                    <div class="font-semibold w-full bg-green-50 rounded-lg px-5 py-2.5 flex items-center">
+                                        <svg class="w-5 h-5 mr-2" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"></path>
+                                        </svg>
+                                        {{ $notificationMessage }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="flex justify-end">
+                                <!-- Cancel Button -->
+                                <button type="button" data-modal-toggle="edit-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+                                    Cancel
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+
+                                <!-- Add Transaction Button -->
+                                <button type="submit" @keydown.enter.prevent="$wire.saveGeneralLedger()" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form> <!-- Function div tag -->
+
+            </div> <!-- Modal body design div tag -->
+        </div>
+    </div> 
+</div>
+
+
+
+<!-- DELETE MODAL -->
+<div wire:ignore.self id="delete-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-lg max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                    Are you sure you want to delete this item?
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
+                    data-modal-toggle="delete-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <div class="p-3 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <!-- Modal body -->
+                <form wire:submit.prevent="destroyGeneralJournal">
+                    <div class="grid gap-4 p-2 mb-4">
+                        <p class="text-lg leading-relaxed text-gray-500 dark:text-gray-400">
+                            This action cannot be undone. This will permanently delete the row from the database. 
+                        </p>
+                    </div>
+                    <div class="col-span-2 flex justify-end mr-2">
+                            <button type="button" data-modal-toggle="delete-modal" class="mr-2 text-black inline-flex items-center bg-gray-200 hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+                                    Cancel
+                                    <span class="sr-only">Close modal</span>
+                            </button>    
+                            <button type="submit" class="text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-base px-5 py-2.5 text-center">
+                                    Delete
+                            </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> 
+</div>
+
+
 
 <!-- IMPORT MODAL -->
 <div wire:ignore.self id="import-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -61,14 +436,13 @@
                     Import data to journal
                 </h3>
                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
-                data-modal-toggle="import-modal">
+                    data-modal-toggle="import-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            
                 <!-- Import body -->
                 <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex items-center justify-center w-full">
@@ -103,5 +477,50 @@
 
 
 
-
-   
+<!-- EXPORT MODAL -->
+<div wire:ignore.self id="export-modal" tabindex="-1" aria-hidden="true" class="hidden modal fade overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-lg max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white" >
+                    Export table to CSV or XLSX
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-base w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
+                    data-modal-toggle="export-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+                <!-- Export body -->
+                <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" x-data="{ exportFormat: 'xlsx' }">
+                    <!-- Radio buttons -->
+                    <div class="flex flex-col mb-4">
+                        <div class="flex items-center">
+                            <input id="default-radio-1" type="radio" value="csv" name="default-radio" class="cursor-pointer ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" @click="exportFormat = 'csv'">
+                            <label for="default-radio-1" class="ms-2 text-xl font-medium text-gray-900 dark:text-gray-300">CSV</label>
+                        </div>
+                        <div class="text-base text-gray-500 ml-6">Export table to Comma Separated Value file</div>
+                    </div>
+                    <div class="flex flex-col mb-4">
+                        <div class="flex items-center">
+                            <input checked id="default-radio-2" type="radio" value="xlsx" name="default-radio" class="cursor-pointer ml-4 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" @click="exportFormat = 'xlsx'">
+                            <label for="default-radio-2" class="ms-2 text-xl font-medium text-gray-900 dark:text-gray-300">XLSX</label>
+                        </div>
+                        <div class="text-base text-gray-500 ml-6">Export table to Microsoft Excel Spreadsheet File</div>
+                    </div>
+                    <!-- Export button -->
+                    <div class="col-span-2 flex justify-end mr-2 mt-4">            
+                        <button id="export-csv" button class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+                        wire:click="exportGJ_CSV" x-show="exportFormat === 'csv'">Export</button>
+                        <button id="export-xlsx" button class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+                        wire:click="exportGJ_XLSX" x-show="exportFormat === 'xlsx'">Export</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 

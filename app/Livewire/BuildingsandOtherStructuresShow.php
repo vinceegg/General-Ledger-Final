@@ -171,7 +171,7 @@ class BuildingsandOtherStructuresShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new BuildingsandOtherStructuresImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('BuildingsandOtherStructures')->with('message', 'File Imported Successfully');
         }
     }
 

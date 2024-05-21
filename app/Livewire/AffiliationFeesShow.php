@@ -171,7 +171,7 @@ class AffiliationFeesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new AffiliationFeesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('AffiliationFees')->with('message', 'File Imported Successfully');
         }
     }
 

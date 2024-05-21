@@ -171,7 +171,7 @@ class RepresentationExpensesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new RepresentationExpensesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('RepresentationExpenses')->with('message', 'File Imported Successfully');
         }
     }
 

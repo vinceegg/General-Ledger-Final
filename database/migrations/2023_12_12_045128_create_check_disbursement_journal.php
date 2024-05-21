@@ -23,9 +23,6 @@ return new class extends Migration
             $table->decimal('ckdj_account3',15,2)->nullable();
             $table->decimal('ckdj_salary_wages',15,2)->nullable();
             $table->decimal('ckdj_honoraria',15,2)->nullable();
-            $table->string('ckdj_sundry_accountcode')->nullable();
-            $table->decimal('ckdj_debit', 15,2)->nullable();            
-            $table->decimal('ckdj_credit', 15,2)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

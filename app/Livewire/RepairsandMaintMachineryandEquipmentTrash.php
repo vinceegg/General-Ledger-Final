@@ -3,9 +3,9 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\RepairsandMaintTransportationEquipmentModel;
+use App\Models\RepairsandMaintMachineryandEquipmentModel;
 
-class RepairsandMaintTransportationEquipmentTrash extends Component
+class RepairsandMaintMachineryandEquipmentTrash extends Component
 {
     public $general_ledger_id;
     public $deleteType;
@@ -16,17 +16,17 @@ class RepairsandMaintTransportationEquipmentTrash extends Component
 
     public function mount()
     {
-        $this->softDeletedData = RepairsandMaintTransportationEquipmentModel::onlyTrashed()->get();
+        $this->softDeletedData = RepairsandMaintMachineryandEquipmentModel::onlyTrashed()->get();
     }
 
     // Method to restore soft-deleted record
     public function restoreGeneralLedger($id)
     {
-        $general_ledger = RepairsandMaintTransportationEquipmentModel::onlyTrashed()->find($id);
+        $general_ledger = RepairsandMaintMachineryandEquipmentModel::onlyTrashed()->find($id);
         if ($general_ledger) {
             $general_ledger->restore();
             session()->flash('message', 'Record restored successfully.');
-            $this->softDeletedData = RepairsandMaintTransportationEquipmentModel::onlyTrashed()->get();
+            $this->softDeletedData = RepairsandMaintMachineryandEquipmentModel::onlyTrashed()->get();
         }
     }
 
@@ -39,7 +39,7 @@ class RepairsandMaintTransportationEquipmentTrash extends Component
     // Permanently delete 
     public function destroyGeneralLedger()
     {
-        $general_ledger = RepairsandMaintTransportationEquipmentModel::withTrashed()->find($this->general_ledger_id);
+        $general_ledger = RepairsandMaintMachineryandEquipmentModel::withTrashed()->find($this->general_ledger_id);
         if ($this->deleteType == 'force') {
             $general_ledger->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
@@ -49,7 +49,7 @@ class RepairsandMaintTransportationEquipmentTrash extends Component
         }
         $this->dispatch('close-modal');
         $this->resetInput();
-        return redirect()->route('RepairsandMaintTransportationEquipmentModelArchived')->with('message', 'Deleted Successfully');
+        return redirect()->route('RepairsandMaintMachineryEquipmentModelArchive')->with('message', 'Deleted Successfully');
     }
 
     public function resetInput()
@@ -59,7 +59,7 @@ class RepairsandMaintTransportationEquipmentTrash extends Component
 
     public function render()
     {
-        return view('livewire.repairs-and-maint-machinery-and-equipment-trash', [
+        return view('livewire.repairsand-maint-machineryand-equipment-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

@@ -29,7 +29,7 @@
                         <thead class="text-base text-left text-black sticky top-0 bg-white">
                             <!-- VINCEKORIN CODE -->
                             <!-- Include message modal and session message -->
-                            @include('livewire.affiliation-fees-modall')
+                            @include('livewire.affiliation-fees-modal')
                             <tr class="text-center shadow-md"> <!-- Table heading design -->
                                 <th scope="col" class="border-r p-2" style="width: 10px">No.</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>

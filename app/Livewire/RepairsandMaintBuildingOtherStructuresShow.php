@@ -171,7 +171,7 @@ class RepairsandMaintBuildingOtherStructuresShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new RepairsandMaintBuildingOtherStructuresImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('RepairsandMaintBuildingOtherStructures')->with('message', 'File Imported Successfully');
         }
     }
 

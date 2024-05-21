@@ -172,7 +172,7 @@ class FidelityBondPremiumsShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new FidelityBondPremiumsImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('FidelityBondPremiums')->with('message', 'File Imported Successfully');
         }
     }
 

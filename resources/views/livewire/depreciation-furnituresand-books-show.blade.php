@@ -6,8 +6,8 @@
         <div class="p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between">
                 <!-- Title -->
                 <div class="flex flex-col items-left justify-between">
-                    <p class="font-extrabold text-blue-800 text-3xl">Depreciation Building and Structures</p>
-                    <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet > Depreciation Building and Structures</span></p>
+                    <p class="font-extrabold text-blue-800 text-3xl">Depreciation Furnitures and Books</p>
+                    <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet > Depreciation Furnitures and Books</span></p>
                 </div>
 
                 <!-- Functions & features in first rectangle -->
@@ -52,7 +52,7 @@
                     </button>
                  
                     <!-- Archive button -->
-                    <a href="{{ route('DepreciationBuildingandStructuresArchived') }}" class="relative group border border-gray-300 bg-white hover:bg-gray-200 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
+                    <a href="{{ route('DepreciationFurnituresandBooksArchived') }}" class="relative group border border-gray-300 bg-white hover:bg-gray-200 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
                         <svg class="w-5 h-5" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"></path>
                         </svg>
@@ -73,7 +73,7 @@
                         <thead class="text-base text-left text-black sticky top-0 bg-white">
                             <!-- VINCEKORIN CODE -->
                             <!-- Include message modal and session message -->
-                            @include('livewire.depreciation--building-and-structures-modal')
+                            @include('livewire.depreciation-furnitures-and-books-modal')
                             <tr class="text-center shadow-md"> <!-- Table heading design -->
                                 <th scope="col" class="border-r p-2" style="width: 10px">No.</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>

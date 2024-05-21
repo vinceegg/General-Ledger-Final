@@ -172,7 +172,7 @@ class InsuranceExpensesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new InsuranceExpensesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('InsuranceExpenses')->with('message', 'File Imported Successfully');
         }
     }
 

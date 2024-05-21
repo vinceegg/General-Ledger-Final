@@ -59,7 +59,7 @@ class PrintingandPublicationExpensesTrash extends Component
 
     public function render()
     {
-        return view('livewire.printing-and-publication-expenses-trash', [
+        return view('livewire.printingand-publication-expenses-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

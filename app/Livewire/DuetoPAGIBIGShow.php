@@ -152,6 +152,17 @@ class DuetoPAGIBIGShow extends Component
         }
     }
 
+    // Soft delete GeneralLedger
+    public function softDeleteGeneralLedger($general_ledger_id)
+    {
+        $general_ledger= DuetoPAGIBIGModel::find($general_ledger_id);
+        if ( $general_ledger) {
+            $general_ledger->delete();
+    }
+        $this->resetInput();
+        $this->dispatch('close-modal');
+    }
+
     public function importGL()
     {
     // Ensure that a file has been uploaded
@@ -159,7 +170,7 @@ class DuetoPAGIBIGShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new DuetoPAGIBIGImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('DuetoPAGIBIG')->with('message', 'File Imported Successfully');
         }
     }
 

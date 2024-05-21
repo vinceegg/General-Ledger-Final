@@ -34,6 +34,12 @@ class CheckDisbursementJournalModel extends Model
 
     ];
 
+        //@korinlv: added this function
+        public function ckdj_sundry_data()
+        {
+            return $this->hasMany(CKDJ_SundryModel::class, 'check_disbursement_journal_id');
+        }
+
         protected static $logAttributes = ['*'];
             
         public function getActivitylogOptions(): LogOptions

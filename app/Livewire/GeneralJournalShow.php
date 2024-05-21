@@ -12,37 +12,34 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Exception;
 
 
 
 class GeneralJournalShow extends Component
 {
-    use WithPagination;
     use WithFileUploads;
     
-
-    protected $paginationTheme = 'bootstrap';
-
     public $gj_entrynum_date,
     $gj_jevnum,
     $gj_particulars,
-    $gj_accountcodes_data = [],
+    $gj_accountcodes_data = [], //@korinlv: added this
     $deleteType; // Added deleteType property
 
     public $search;
     public $general_journal_id; // Add this property
     public $selectedMonth;
-    public $sortField = 'gj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
+    public $sortField = 'id'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
-    public $totalDebit;
-    public $totalCredit;
+    public $totalDebit = 0;
+    public $totalCredit = 0;
     public $viewDeleted = false; // Property to toggle deleted records view
+    public $showNotification = false; // Control notification visibility
+    public $notificationMessage = ''; // Store the notification message
 
     // Validation rules
+    //@korin:edited this
     protected function rules()
     {
         return [
@@ -51,8 +48,8 @@ class GeneralJournalShow extends Component
             'gj_particulars' => 'nullable|string',
             'gj_accountcodes_data' => 'required|array|min:1',
             'gj_accountcodes_data.*.gj_accountcode' => 'required|string',
-            'gj_accountcodes_data.*.gj_debit' => 'nullable|numeric|min:0|max:100000000',
-            'gj_accountcodes_data.*.gj_credit' => 'nullable|numeric|min:0|max:100000000',
+            'gj_accountcodes_data.*.gj_debit' => 'nullable|numeric',
+            'gj_accountcodes_data.*.gj_credit' => 'nullable|numeric',
         ];
     }
 
@@ -62,33 +59,55 @@ class GeneralJournalShow extends Component
         $this->validateOnly($fields);
     }
 
+    //@korinlv: added this function
     public function mount()
     {
-        // Example initialization, you might load this from a database or start with an empty array
-        $this->gj_accountcodes_data = [
-            ['gj_accountcode' => '', 'gj_debit' => '', 'gj_credit' => '']
-        ];
-    }
+        // Fetch existing sundry data for the given journal ID
+        $journal = GeneralJournalModel::find($this->general_journal_id);
 
+        if ($journal && $journal->gj_accountcodes_data()->exists()) {
+            // If there is existing sundry data in the database, load it
+            $this->gj_accountcodes_data = $journal->gj_accountcodes_data->toArray();
+        } else {
+            // Example initialization, you might load this from a database or start with an empty array
+            $this->gj_accountcodes_data = [
+                ['gj_accountcode' => '', 'gj_debit' => '', 'gj_credit' => '']
+            ];
+        }
+    }
     // Save new GeneralJournal
-    //@korinlv: update this function
+    //@korinlv: updated this function
     public function saveGeneralJournal()
     {
         $validatedData = $this->validate();
+        // Convert empty strings to null for the main journal data
+        $validatedData = array_map(function($value) {
+            return $value === '' ? null : $value;
+        }, $validatedData);
 
         $journal = GeneralJournalModel::create($validatedData);
 
         foreach ($validatedData['gj_accountcodes_data'] as $code) {
+            // Convert empty strings to null for each sundry data entry
+            $code = array_map(function($value) {
+                return $value === '' ? null : $value;
+            }, $code);
+
             $journal->gj_accountcodes_data()->create([
                 'gj_accountcode' => $code['gj_accountcode'],
                 'gj_debit' => $code['gj_debit'],
                 'gj_credit' => $code['gj_credit'],
             ]);
-        }
+        
 
-        session()->flash('message', 'Added Successfully');
+        // Update notification state
+        $this->notificationMessage = 'Added Successfully';
+        $this->showNotification = true;
+
         $this->resetInput();
-        $this->dispatch('close-modal');
+
+        $this->dispatch('notification-shown');
+        }
     }
 
 
@@ -106,8 +125,10 @@ class GeneralJournalShow extends Component
         logger('Account code removed', $this->gj_accountcodes_data);
     }
 
+
+
     // Edit GeneralJournal
-    //@korinlv: update this function
+    //@korinlv: updated this function
     public function editGeneralJournal($general_journal_id)
     {
         $generalJournal = GeneralJournalModel::with('gj_accountcodes_data')->find($general_journal_id);
@@ -126,39 +147,72 @@ class GeneralJournalShow extends Component
 
 
     // Update GeneralJournal
+    //@korinlv: edited this function
+    //@marii eto yung function na inupdate ko 
     public function updateGeneralJournal()
     {
         $validatedData = $this->validate([
-            'gj_entrynum_date' => 'required',
-            'gj_jevnum' => 'required',
-            'gj_particulars' => 'required',
-            'gj_accountcodes_data.*.gj_accountcode' => 'required',
-            'gj_accountcodes_data.*.gj_debit' => 'numeric|required',
-            'gj_accountcodes_data.*.gj_credit' => 'numeric|required',
+            'gj_entrynum_date' => 'nullable|date',
+            'gj_jevnum' => 'nullable|numeric',
+            'gj_particulars' => 'nullable|string',
+            'gj_accountcodes_data.*.gj_accountcode' => 'required|string',
+            'gj_accountcodes_data.*.gj_debit' => 'nullable|numeric',
+            'gj_accountcodes_data.*.gj_credit' => 'nullable|numeric',
         ]);
-    
-        try {
-            // Update the GeneralJournalModel directly
+
+
+            // Convert empty strings to null in the main journal data
+            $validatedData = array_map(function($value) {
+                return $value === '' ? null : $value;
+            }, $validatedData);
+
             $generalJournal = GeneralJournalModel::findOrFail($this->general_journal_id);
             $generalJournal->update($validatedData);
-    
-            // Update related account codes
-            foreach ($this->gj_accountcodes_data as $data) {
-                GeneralJournal_AccountCodesModel::updateOrCreate(
-                    ['id' => $data['id'] ?? null],
-                    ['gj_accountcode' => $data['gj_accountcode'], 'gj_debit' => $data['gj_debit'], 'gj_credit' => $data['gj_credit']]
-                );
-            }
-    
-            session()->flash('message', 'Updated Successfully');
-        } catch (\Exception $e) {
-            // Handle exception without rolling back since no explicit transaction is started
-            session()->flash('error', "Failed to update: " . $e->getMessage());
 
-        }
-        session()->flash('message', 'Updated Successfully');
-        $this->resetInput();  // Reset all properties
-        $this->dispatch('close-modal');  // Assume you mean $this->emit to use Livewire's event system
+            // Get existing sundry data IDs
+            $existingSundryIds = $generalJournal->gj_accountcodes_data->pluck('id')->toArray();
+
+            // Prepare an array to hold the IDs of incoming sundry data
+            $incomingSundryIds = [];
+
+            foreach ($this->gj_accountcodes_data as $data) {
+                // Convert empty strings to null for each sundry data entry
+                $data = array_map(function($value) {
+                    return $value === '' ? null : $value;
+                }, $data);
+
+                if (isset($data['id']) && $data['id']) {
+                    // Update existing account code
+                    $accountCode = GeneralJournal_AccountCodesModel::find($data['id']);
+                    if ($accountCode) {
+                        $accountCode->update($data);
+                        $incomingSundryIds[] = $data['id'];
+                    }
+                } else {
+                    // Create new account code
+                    $newAccountCode = $generalJournal->gj_accountcodes_data()->create($data);
+                    $incomingSundryIds[] = $newAccountCode->id;
+
+                    // Reset other fields except the newly added sundry entry
+                    $this->gj_accountcodes_data[] = ['gj_accountcode' => '', 'gj_debit' => '', 'gj_credit' => ''];
+                }
+            }
+
+                // Calculate sundry data IDs to delete (those that are not in the incoming data)
+                $sundryIdsToDelete = array_diff($existingSundryIds, $incomingSundryIds);
+
+                // Delete sundry data not in the incoming data
+                GeneralJournal_AccountCodesModel ::destroy($sundryIdsToDelete);
+
+            // Update notification state
+            $this->notificationMessage = 'Updated Successfully';
+            $this->showNotification = true;
+            $this->resetInput();
+
+            // Dispatch browser event to handle notification visibility
+            $this->dispatch('notification-shown');
+
+            $this->dispatch('close-modal');
     }
 
 
@@ -192,6 +246,7 @@ class GeneralJournalShow extends Component
     }
 
     // Reset input values
+    //@korinlv: edited this function
     public function resetInput()
     {
         $this->gj_entrynum_date = '';
@@ -200,10 +255,15 @@ class GeneralJournalShow extends Component
         $this->gj_accountcodes_data = [];
     }
 
+    //@korinlv: edited this function
     public function softDeleteGeneralJournal($general_journal_id)
     {
         $general_journal= GeneralJournalModel::find($general_journal_id);
         if ( $general_journal) {
+            foreach ($general_journal->gj_accountcodes_data as $accountCode){
+                $accountCode->delete();
+            }
+            
             $general_journal->delete();
             session()->flash('message', 'Soft Deleted Successfully');
     }    
@@ -271,6 +331,12 @@ class GeneralJournalShow extends Component
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
     
+        // Method to reset notification
+    public function resetNotification()
+    {
+        $this->showNotification = false;
+    }
+
     // Method to toggle viewDeleted
     public function toggleDeletedView()
     {
@@ -278,10 +344,15 @@ class GeneralJournalShow extends Component
     }
 
     // Method to restore soft-deleted record
+    //@korinlv: edited this function
     public function restoreGeneralJournal($id)
     {
         $general_journal = GeneralJournalModel::onlyTrashed()->find($id);
         if ($general_journal) {
+            $trashedAccountCodes = $general_journal->gj_accountcodes_data()->onlyTrashed()->get();
+            foreach ($trashedAccountCodes as $accountCode){
+                $accountCode->restore();
+            }
             $general_journal->restore();
             session()->flash('message', 'Record restored successfully.');
         }
@@ -291,6 +362,7 @@ class GeneralJournalShow extends Component
     public function render()
     {
         $query = GeneralJournalModel::query();
+        
 
         // Fetch only soft-deleted records if viewDeleted is set to true
         if ($this->viewDeleted) {
@@ -305,6 +377,26 @@ class GeneralJournalShow extends Component
             $query->whereBetween('gj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
+        //@korinlv:added this function
+        $general_journals = $query->with(['gj_accountcodes_data' => function($query){
+            if ($this->viewDeleted) {
+                $query->onlyTrashed();
+            }
+        }])->get();
+        
+        $totalDebit = 0;
+        $totalCredit = 0;
+
+        foreach ($general_journals as $journal) {
+            foreach ($journal->gj_accountcodes_data ?: [] as $accountCode) { // Ensure sundry data is treated as an array
+                $totalDebit += $accountCode->gj_debit ?? 0;
+                $totalCredit += $accountCode->gj_credit ?? 0;
+            }
+        }
+    
+        $this->totalDebit = $totalDebit;
+        $this->totalCredit = $totalCredit;
+
         // Add the search filter
         $query->where('id', 'like', '%' . $this->search . '%');
 
@@ -312,11 +404,9 @@ class GeneralJournalShow extends Component
         $query->orderBy($this->sortField , $this->sortDirection);
 
         // Get paginated results
-        $general_journal = $query->orderBy('id', 'ASC')->paginate(10);
+        $general_journal = $query->orderBy('id', 'ASC')->get(); // Changed from paginate() to get()
 
          // Compute the total debit and credit for the selected month
-         $this->totalDebit = GeneralJournal_AccountCodesModel::sum('gj_debit');
-         $this->totalCredit = GeneralJournal_AccountCodesModel::sum('gj_credit');
 
         return view('livewire.general-journal-show', ['general_journal' => $general_journal]);
     }

@@ -171,7 +171,7 @@ class RepairsandMaintMachineryandEquipmentShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new RepairsandMaintMachineryandEquipmentImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('RepairsandMaintMachineryandEquipment')->with('message', 'File Imported Successfully');
         }
     }
 
@@ -256,6 +256,6 @@ class RepairsandMaintMachineryandEquipmentShow extends Component
         $this->totalCredit = $query->sum('gl_credit');
         $this->totalCreditBalance = $query->sum('gl_credit_balance');
 
-        return view('livewire.repairsand-maint-machinery-and-equipment-show',['general_ledger' => $repairs_and_maint_machinery_and_equipment]);
+        return view('livewire.repairsand-maint-machineryand-equipment-show',['general_ledger' => $repairs_and_maint_machinery_and_equipment]);
     }
 }

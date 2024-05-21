@@ -3,9 +3,9 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\DepreciationTransportationEquipmentModel;
+use App\Models\FidelityBondPremiumsModel;
 
-class DepreciationTransportationEquipmentTrash extends Component
+class FidelityBondPremiumsTrash extends Component
 {
     public $general_ledger_id;
     public $deleteType;
@@ -16,17 +16,17 @@ class DepreciationTransportationEquipmentTrash extends Component
 
     public function mount()
     {
-        $this->softDeletedData = DepreciationTransportationEquipmentModel::onlyTrashed()->get();
+        $this->softDeletedData = FidelityBondPremiumsModel::onlyTrashed()->get();
     }
 
     // Method to restore soft-deleted record
     public function restoreGeneralLedger($id)
     {
-        $general_ledger = DepreciationTransportationEquipmentModel::onlyTrashed()->find($id);
+        $general_ledger = FidelityBondPremiumsModel::onlyTrashed()->find($id);
         if ($general_ledger) {
             $general_ledger->restore();
             session()->flash('message', 'Record restored successfully.');
-            $this->softDeletedData = DepreciationTransportationEquipmentModel::onlyTrashed()->get();
+            $this->softDeletedData = FidelityBondPremiumsModel::onlyTrashed()->get();
         }
     }
 
@@ -39,7 +39,7 @@ class DepreciationTransportationEquipmentTrash extends Component
     // Permanently delete 
     public function destroyGeneralLedger()
     {
-        $general_ledger = DepreciationTransportationEquipmentModel::withTrashed()->find($this->general_ledger_id);
+        $general_ledger = FidelityBondPremiumsModel::withTrashed()->find($this->general_ledger_id);
         if ($this->deleteType == 'force') {
             $general_ledger->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');

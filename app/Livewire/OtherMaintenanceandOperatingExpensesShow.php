@@ -172,7 +172,7 @@ class OtherMaintenanceandOperatingExpensesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new OtherMaintenanceandOperatingExpensesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('OtherMaintenanceandOperatingExpenses')->with('message', 'File Imported Successfully');
         }
     }
 

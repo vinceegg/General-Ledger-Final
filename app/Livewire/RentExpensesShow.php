@@ -171,7 +171,7 @@ class RentExpensesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new RentExpensesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('RentExpenses')->with('message', 'File Imported Successfully');
         }
     }
 

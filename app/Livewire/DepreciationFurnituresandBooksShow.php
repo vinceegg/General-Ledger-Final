@@ -171,7 +171,7 @@ class DepreciationFurnituresandBooksShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new DepreciationFurnituresandBooksImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('DepreciationFurnituresandBooks')->with('message', 'File Imported Successfully');
         }
     }
 

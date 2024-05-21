@@ -171,7 +171,7 @@ class DepreciationBuildingandStructuresShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new DepreciationBuildingandStructuresImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('DepreciationBuildingandStructuresImport')->with('message', 'File Imported Successfully');
         }
     }
 
@@ -247,6 +247,6 @@ class DepreciationBuildingandStructuresShow extends Component
         $this->totalCredit = $query->sum('gl_credit');
         $this->totalCreditBalance = $query->sum('gl_credit_balance');
 
-        return view('livewire.depreciation-buildingand-structures-show',['general_ledger' => $depreciation_building_and_structures]);
+        return view('livewire.depreciation-furnituresand-books-show',['general_ledger' => $depreciation_building_and_structures]);
     }
 }

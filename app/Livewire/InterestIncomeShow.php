@@ -172,7 +172,7 @@ class InterestIncomeShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new InterestIncomeImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('InterestIncome')->with('message', 'File Imported Successfully');
         }
     }
 

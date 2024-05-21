@@ -171,7 +171,7 @@ class AccumulatedDepreciationFurnitureandFixturesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new AccumulatedDepreciationFurnitureandFixturesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('AccumulatedDepreciationFurnitureandFixtures')->with('message', 'File Imported Successfully');
         }
     }
 

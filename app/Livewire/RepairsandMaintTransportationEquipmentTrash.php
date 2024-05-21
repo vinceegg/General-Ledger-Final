@@ -59,7 +59,7 @@ class RepairsandMaintTransportationEquipmentTrash extends Component
 
     public function render()
     {
-        return view('livewire.repairs-and-maint-transportation-equipment-trash', [
+        return view('livewire.repairsand-maint-transportation-equipment-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

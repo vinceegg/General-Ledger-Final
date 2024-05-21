@@ -171,7 +171,7 @@ class PrintingandPublicationExpensesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new PrintingandPublicationExpensesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('PrintingandPublicationExpenses')->with('message', 'File Imported Successfully');
         }
     }
 

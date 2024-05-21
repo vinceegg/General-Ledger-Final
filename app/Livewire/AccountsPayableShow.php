@@ -171,7 +171,7 @@ class AccountsPayableShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new AccountsPayableImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('AccountsPayable')->with('message', 'File Imported Successfully');
         }
     }
 

@@ -171,7 +171,7 @@ class DuetoGSISShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new DuetoGSISImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('DuetoGSIS')->with('message', 'File Imported Successfully');
         }
     }
 

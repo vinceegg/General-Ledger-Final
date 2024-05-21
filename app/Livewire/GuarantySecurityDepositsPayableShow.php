@@ -172,7 +172,7 @@ class GuarantySecurityDepositsPayableShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new GuarantySecurityDepositsPayableImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('GuarantySecurityDepositsPayable')->with('message', 'File Imported Successfully');
         }
     }
 

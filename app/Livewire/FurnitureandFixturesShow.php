@@ -172,7 +172,7 @@ class FurnitureandFixturesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new FurnitureandFixturesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('FurnitureandFixtures')->with('message', 'File Imported Successfully');
         }
     }
 

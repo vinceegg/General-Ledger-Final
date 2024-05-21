@@ -171,7 +171,7 @@ class RepairsandMaintTransportationEquipmentShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new RepairsandMaintTransportationEquipmentImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('RepairsandMaintTransportationEquipment')->with('message', 'File Imported Successfully');
         }
     }
 

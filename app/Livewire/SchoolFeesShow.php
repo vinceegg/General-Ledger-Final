@@ -171,7 +171,7 @@ class SchoolFeesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new SchoolFeesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('SchoolFees')->with('message', 'File Imported Successfully');
         }
     }
 

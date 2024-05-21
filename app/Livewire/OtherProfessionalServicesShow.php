@@ -171,7 +171,7 @@ class OtherProfessionalServicesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new OtherProfessionalServicesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('OtherProfessionalServices')->with('message', 'File Imported Successfully');
         }
     }
 
