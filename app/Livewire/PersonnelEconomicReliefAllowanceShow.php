@@ -95,9 +95,6 @@ class PersonnelEconomicReliefAllowanceShow extends Component
             $this->gl_credit = $general_ledger->gl_credit;
             $this->gl_credit_balance = $general_ledger->gl_credit_balance;
         } 
-        else {
-            return redirect() -> to('/general_ledger'); 
-        }
     }
 
     public function updateGeneralLedger()
@@ -171,7 +168,7 @@ class PersonnelEconomicReliefAllowanceShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new PersonnelEconomicReliefAllowanceImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('PersonnelEconomicReliefAllowance')->with('message', 'File Imported Successfully');
         }
     }
 

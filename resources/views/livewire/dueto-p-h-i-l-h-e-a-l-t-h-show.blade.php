@@ -6,8 +6,8 @@
         <div class="p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between">
                 <!-- Title -->
                 <div class="flex flex-col items-left justify-between">
-                    <p class="font-extrabold text-blue-800 text-3xl">Due to PHILHEALTH</p>
-                    <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet > Due to PHILHEALTH</span></p>
+                    <p class="font-extrabold text-blue-800 text-3xl">Due to PhilHealth</p>
+                    <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet > Due to PhilHealth</span></p>
                 </div>
 
                 <!-- Functions & features in first rectangle -->
@@ -20,7 +20,7 @@
                             </svg>
                         </div>
                         <input type="search" wire:model="search" wire:change="searchAction" class="w-44 ps-10 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Search ID..." required />
+                        placeholder="Search" required />
                     </div>    
 
                     <!-- Select Date -->        

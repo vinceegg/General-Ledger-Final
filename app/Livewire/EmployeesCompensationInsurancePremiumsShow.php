@@ -96,9 +96,6 @@ class EmployeesCompensationInsurancePremiumsShow extends Component
             $this->gl_credit = $general_ledger->gl_credit;
             $this->gl_credit_balance = $general_ledger->gl_credit_balance;
         } 
-        else {
-            return redirect() -> to('/general_ledger'); 
-        }
     }
 
     public function updateGeneralLedger()
@@ -172,7 +169,7 @@ class EmployeesCompensationInsurancePremiumsShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new EmployeesCompensationInsurancePremiumsImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('EmployeesCompensationInsurancePremiums')->with('message', 'File Imported Successfully');
         }
     }
 

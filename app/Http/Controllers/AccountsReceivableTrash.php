@@ -8,6 +8,6 @@ class AccountsReceivableTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.AccountsReceivableArchive');
+        return view('trashrecords.AccountsReceivableArchived');
     }
 }

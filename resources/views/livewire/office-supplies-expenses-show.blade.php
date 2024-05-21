@@ -20,7 +20,7 @@
                             </svg>
                         </div>
                         <input type="search" wire:model="search" wire:change="searchAction" class="w-44 ps-10 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Search ID..." required />
+                        placeholder="Search" required />
                     </div>    
 
                     <!-- Select Date -->        
@@ -73,7 +73,7 @@
                         <thead class="text-base text-left text-black sticky top-0 bg-white">
                             <!-- VINCEKORIN CODE -->
                             <!-- Include message modal and session message -->
-                            @include('livewire.office-supplies-expenses--modal')
+                            @include('livewire.office-supplies-expenses-modal')
                             <tr class="text-center shadow-md"> <!-- Table heading design -->
                                 <th scope="col" class="border-r p-2" style="width: 10px">No.</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>

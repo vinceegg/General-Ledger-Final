@@ -59,7 +59,7 @@ class OtherSuppliesandMaterialsExpensesTrash extends Component
 
     public function render()
     {
-        return view('livewire.other-supplies-and-materials-expenses-trash', [
+        return view('livewire.other-suppliesand-materials-expenses-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

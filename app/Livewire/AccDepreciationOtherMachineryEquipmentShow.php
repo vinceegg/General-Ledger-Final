@@ -95,9 +95,6 @@ class AccDepreciationOtherMachineryEquipmentShow extends Component
             $this->gl_credit = $general_ledger->gl_credit;
             $this->gl_credit_balance = $general_ledger->gl_credit_balance;
         } 
-        else {
-            return redirect() -> to('/general_ledger'); 
-        }
     }
 
     public function updateGeneralLedger()
@@ -171,7 +168,7 @@ class AccDepreciationOtherMachineryEquipmentShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new AccDepreciationOtherMachineryEquipmentImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('AccDepreciationOtherMachineryEquipment')->with('message', 'File Imported Successfully');
         }
     }
 

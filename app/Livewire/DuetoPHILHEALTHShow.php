@@ -83,7 +83,7 @@ class DuetoPHILHEALTHShow extends Component
 
     public function editGeneralLedger($general_ledger_id)
     {
-        $general_ledger = DuetoPHILHEALTHModel::find($general_ledger_id);
+        $general_ledger =DuetoPHILHEALTHModel::find($general_ledger_id);
         if ($general_ledger) {
             
             $this->general_ledger_id = $general_ledger->id;
@@ -247,6 +247,6 @@ class DuetoPHILHEALTHShow extends Component
         $this->totalCredit = $query->sum('gl_credit');
         $this->totalCreditBalance = $query->sum('gl_credit_balance');
 
-        return view('livewire.dueto-p-h-i-l-h-e-a-l-t-h-trash',['general_ledger' => $due_to_philhealth]);
+        return view('livewire.dueto-p-h-i-l-h-e-a-l-t-h-show',['general_ledger' => $due_to_philhealth]);
     }
 }

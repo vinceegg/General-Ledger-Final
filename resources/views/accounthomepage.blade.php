@@ -103,6 +103,34 @@
             </li>
         </ul>
     </div>
+    <ul class="fixed bottom-0 pb-10 left-2 w-56 pt-4 mt-4 space-y-2 font-small border-t border-gray-200 dark:border-gray-700">
+        <li>
+            @foreach([''] as $route) {{ $route }}
+            <a href="{{ url('/faqs' . $route) }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group">
+                <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.529 7.988a2.502 2.502 0 0 1 5 .191A2.441 2.441 0 0 1 10 10.582V12m-.01 3.008H10M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+                <span class="ms-3">Help / FAQ</span>
+            </a>
+            @endforeach
+        </li>
+        <li>
+        </li>
+        <li>
+           <form method="POST" action="{{ route('logout') }}">
+               @csrf
+               <a href="{{ route('logout') }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group"
+                   onclick="event.preventDefault();
+                            this.closest('form').submit();">
+                   <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
+                   </svg>
+                   <span class="ms-3">{{ __('Log Out') }}</span>
+               </a>
+           </form>
+       </li>        
+    </ul>     
+  </div>
 </aside>
 
 <div>
@@ -280,19 +308,6 @@
                 </tr>
                 <tr>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <a href="{{ route('CashLocalTreasury') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
-                            View
-                        </a> 
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    1 07 05 031
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    Accumulated Depreciation ICT Equipment
-                    </td>
-                </tr>
-                <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         <a href="{{ route('AccumulatedDepreciationICTEquipment') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
                             View
                         </a> 
@@ -353,7 +368,7 @@
                     1 07 05 101
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                   Acc Depreciation Military Police Security Eqpmnt
+                   Acc Depreciation Military Police Security Equipment
                     </td>
                 </tr>
                 <tr>
@@ -1526,37 +1541,37 @@
                 {name:'2 02 01 020 - Due to GSIS',url:'/DuetoGSIS'},
                 {name:'2 02 01 030 - Due to PAG IBIG',url:'/DuetoPAGIBIG'},
                 {name:'2 02 01 040 - Due to PHILHEALTH',url:'/DuetoPHILHEALTH'},
-                {name:'2 04 01 010 - Trust Liabilities',url:'/AffiliationFees'},
-                {name:'2 04 01 050 - Guaranty Security Deposits Payable',url:'/BankCharges'},
+                {name:'2 04 01 010 - Trust Liabilities',url:'/TrustLiabilities'},
+                {name:'2 04 01 050 - Guaranty Security Deposits Payable',url:'/GuarantySecurityDepositsPayable'},
                 {name:'2 04 01 050 - Customers Deposit',url:'/CustomersDeposit'},
-                {name:'2 05 01 990 - Other Deferred Credits',url:'/DepreciationBuildingandStructures'},
-                {name:'2 99 99 990 - Other Payables',url:'/DepreciationFurnituresandBooks'},
-                {name:'3 01 01 010 - Government Equity',url:'/DepreciationMachineryandEquipment'},
-                {name:'3 01 01 020 - Prior Period Adjustment',url:'/DepreciationTransportationEquipment'},
-                {name:'4 02 01 980 - Fines and Penalties Service Income',url:'/FidelityBondPremiums'},
-                {name:'4 02 02 010 - School Fees',url:'/FinesandPenaltiesServiceIncome'},
-                {name:'4 02 02 020 - Affiliation Fees',url:'/GovernmentEquity'},
-                {name:'4 02 02 050 - Rent Income',url:'/GuarantySecurityDepositsPayable'},
-                {name:'4 02 02 220 - Interest Income',url:'/InsuranceExpenses'},
-                {name:'4 02 02 990 - Other Business Income',url:'/InterestIncome'},
-                {name:'4 03 01 020 - Subsidy from LGUs',url:'/MembershipDuesandContributiontoOrg'},
-                {name:'5 02 11 990 - Other Professional Services',url:'/OtherBusinessIncome'},
-                {name:'5 02 13 040 - Repairs and Maint Building Other Structures',url:'/OtherDeferredCredits'},
-                {name:'5 02 13 050 - Repairs and Maint Machinery and Equipment',url:'/OtherMaintenanceandOperatingExpenses'},
-                {name:'5 02 13 060 - Repairs and Maint Transportation Equipment',url:'/OtherPayables'},
-                {name:'5 02 16 020 - Fidelity Bond Premiums',url:'/OtherProfessionalServices'},
-                {name:'5 02 16 030 - Insurance Expenses',url:'/PrintingandPublicationExpenses'},
-                {name:'5 02 99 020 - Printing and Publication Expenses',url:'/PriorPeriodAdjustment'},
-                {name:'5 02 99 030 - Representation Expenses',url:'/RentExpenses'},
-                {name:'5 02 99 050 - Rent Expenses',url:'/RentIncome'},
-                {name:'5 02 99 060 - Membership Dues and Contribution to Org',url:'/RepairsandMaintBuildingOtherStructures'},
-                {name:'5 02 99 070 - Subscription Expenses',url:'/RepairsandMaintMachineryandEquipment'},
-                {name:'5 02 99 990 - Other Maintenance and Operating Expenses',url:'/RepairsandMaintTransportationEquipment'},
-                {name:'5 03 01 040 - Bank Charges',url:'/RepresentationExpenses'},
-                {name:'5 05 01 040 - Depreciation  Building and Structures',url:'/SchoolFees'},
-                {name:'5 05 01 050 - Depreciation  Machinery and Equipment',url:'/SubscriptionExpenses'},
-                {name:'5 05 01 060 - Depreciation  Transportation Equipment',url:'/SubsidyfromLGUs'},
-                {name:'5 05 01 070 - Depreciation  Furnitures and Books',url:'/TrustLiabilities'},   
+                {name:'2 05 01 990 - Other Deferred Credits',url:'/OtherDeferredCredits'},
+                {name:'2 99 99 990 - Other Payables',url:'/OtherPayables'},
+                {name:'3 01 01 010 - Government Equity',url:'/GovernmentEquity'},
+                {name:'3 01 01 020 - Prior Period Adjustment',url:'/PriorPeriodAdjustment'},
+                {name:'4 02 01 980 - Fines and Penalties Service Income',url:'/FinesandPenaltiesServiceIncome'},
+                {name:'4 02 02 010 - School Fees',url:'/SchoolFees'},
+                {name:'4 02 02 020 - Affiliation Fees',url:'/AffiliationFees'},
+                {name:'4 02 02 050 - Rent Income',url:'/RentIncome'},
+                {name:'4 02 02 220 - Interest Income',url:'/InterestIncome'},
+                {name:'4 02 02 990 - Other Business Income',url:'/OtherBusinessIncome'},
+                {name:'4 03 01 020 - Subsidy from LGUs',url:'/SubsidyfromLGUs'},
+                {name:'5 02 11 990 - Other Professional Services',url:'/OtherProfessionalServices'},
+                {name:'5 02 13 040 - Repairs and Maint Building Other Structures',url:'/RepairsandMaintBuildingOtherStructures'},
+                {name:'5 02 13 050 - Repairs and Maint Machinery and Equipment',url:'/RepairsandMaintMachineryandEquipment'},
+                {name:'5 02 13 060 - Repairs and Maint Transportation Equipment',url:'/RepairsandMaintTransportationEquipment'},
+                {name:'5 02 16 020 - Fidelity Bond Premiums',url:'/FidelityBondPremiums'},
+                {name:'5 02 16 030 - Insurance Expenses',url:'/InsuranceExpenses'},
+                {name:'5 02 99 020 - Printing and Publication Expenses',url:'/PrintingandPublicationExpenses'},
+                {name:'5 02 99 030 - Representation Expenses',url:'/RepresentationExpenses'},
+                {name:'5 02 99 050 - Rent Expenses',url:'/RentExpenses'},
+                {name:'5 02 99 060 - Membership Dues and Contribution to Org',url:'/MembershipDuesandContributiontoOrg'},
+                {name:'5 02 99 070 - Subscription Expenses',url:'/SubscriptionExpenses'},
+                {name:'5 02 99 990 - Other Maintenance and Operating Expenses',url:'/OtherMaintenanceandOperatingExpenses'},
+                {name:'5 03 01 040 - Bank Charges',url:'/BankCharges'},
+                {name:'5 05 01 040 - Depreciation  Building and Structures',url:'/DepreciationBuildingandStructures'},
+                {name:'5 05 01 050 - Depreciation  Machinery and Equipment',url:'/DepreciationMachineryandEquipment'},
+                {name:'5 05 01 060 - Depreciation  Transportation Equipment',url:'/DepreciationTransportationEquipment'},
+                {name:'5 05 01 070 - Depreciation  Furnitures and Books',url:'/DepreciationFurnituresandBooks'},   
             ],
             updateResults() {
                 const search = this.search.trim().toLowerCase();
@@ -1599,7 +1614,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/datepicker.min.js"></script>
 {{-- type ahead script --}}
 <script src="https://unpkg.com/alpinejs@3.10.3" defer></script>
-
 
 </body>
 </html>

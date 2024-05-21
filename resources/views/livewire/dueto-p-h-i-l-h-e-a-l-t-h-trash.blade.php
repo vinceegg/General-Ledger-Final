@@ -4,65 +4,21 @@
 
         <!-- FIRST RECTANGLE CONTAINING TITLE, SEARCH, DATE, SORT, ETC. -->
         <div class="p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between">
-                <!-- Title -->
-                <div class="flex flex-col items-left justify-between">
-                    <p class="font-extrabold text-blue-800 text-3xl">Due to PHILHEALTH</p>
-                    <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet > Due to PHILHEALTH</span></p>
+            <!-- Title -->
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between w-full">
+                <p class="font-bold text-gray-800 text-xl">Archived Records of Due to PhilHealth</p>
+                
+                <!-- SVG Icon and Link -->
+                <div class="flex items-center mt-4 md:mt-0">
+
+                    <a href="{{ route('DuetoPHILHEALTH') }}" class="btn flex btn-primary text-blue-800 font-semibold">
+                    <svg class="w-5 h-5 mr-2" data-slot="icon" fill="none" stroke-width="1.8" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0L9 3M3 9h12a6 6 0 0 1 0 12h-3"></path>
+                    </svg>
+                    Go back to active records</a>
                 </div>
-
-                <!-- Functions & features in first rectangle -->
-                <div class="flex flex-wrap md:justify-end">
-                    <!-- Search -->
-                    <div class="relative">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                            </svg>
-                        </div>
-                        <input type="search" wire:model="search" wire:change="searchAction" class="w-44 ps-10 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Search ID..." required />
-                    </div>    
-
-                    <!-- Select Date -->        
-                    <label for="date-range" class="rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-0"></label>
-                    <input type="month" id="date-range" placeholder="Select Date" wire:model="selectedMonth" wire:change="sortDate" class="form-control rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" style="width: 170px;">
-
-                    <!-- Sort -->
-                    <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="asc">Newest First</option>
-                        <option value="desc">Oldest First</option>
-                    </select>
-                        
-                    <!-- Import -->                    
-                    <!-- Note: nilipat ko sa ginawa kong import modal yung choose file -mari -->
-                    <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
-                        data-modal-target="import-modal" data-modal-toggle="import-modal" >Import</button>
-
-                    <!-- Export -->
-                    <!-- @frontend heree need onting editing sa UI <3 done! -->
-                    <button type="button" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
-                        data-modal-target="export-modal" data-modal-toggle="export-modal">
-                            Export
-                    </button>
-
-                    <!-- Add -->
-                    <button type="button" wire:click="resetInput" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
-                    data-modal-target="add-modal" data-modal-toggle="add-modal">
-                        Add Transaction
-                    </button>
-                 
-                    <!-- Archive button -->
-                    <a href="{{ route('DuetoPHILHEALTHArchived') }}" class="relative group border border-gray-300 bg-white hover:bg-gray-200 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
-                        <svg class="w-5 h-5" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"></path>
-                        </svg>
-                        <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-32  bg-white border border-gray-300 text-black shadow:md text-center text-sm rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            View Archives
-                        </div>
-                    </a>
-                </div>
-</div> <!-- 1st rectangle div tag -->
-        
+            </div>
+        </div> <!-- 1st rectangle div tag -->        
         <!-- 2ND RECTANGLE CONTAINING THE JOURNAL TABLE -->
         <div class="p-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <!-- Table Container -->

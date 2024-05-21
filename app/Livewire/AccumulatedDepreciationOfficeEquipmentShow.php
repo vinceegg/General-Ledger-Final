@@ -4,7 +4,7 @@ namespace App\Livewire;
 
 use App\Exports\AccumulatedDepreciationOfficeEquipmentExport;
 use App\Imports\AccumulatedDepreciationOfficeEquipmentImport;
-use App\Models\AccumulatedDepreciationMotorVehiclesModel;
+use App\Models\AccumulatedDepreciationOfficeEquipmentModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -69,7 +69,7 @@ class AccumulatedDepreciationOfficeEquipmentShow extends Component
             }
         }
 
-        AccumulatedDepreciationMotorVehiclesModel::create($validatedData);
+        AccumulatedDepreciationOfficeEquipmentModel::create($validatedData);
 
         // Update notification state
         $this->notificationMessage = 'Added Successfully';
@@ -83,7 +83,7 @@ class AccumulatedDepreciationOfficeEquipmentShow extends Component
 
     public function editGeneralLedger($general_ledger_id)
     {
-        $general_ledger = AccumulatedDepreciationMotorVehiclesModel::find($general_ledger_id);
+        $general_ledger = AccumulatedDepreciationOfficeEquipmentModel::find($general_ledger_id);
         if ($general_ledger) {
             
             $this->general_ledger_id = $general_ledger->id;
@@ -95,16 +95,13 @@ class AccumulatedDepreciationOfficeEquipmentShow extends Component
             $this->gl_credit = $general_ledger->gl_credit;
             $this->gl_credit_balance = $general_ledger->gl_credit_balance;
         } 
-        else {
-            return redirect() -> to('/general_ledger'); 
-        }
     }
 
     public function updateGeneralLedger()
     {
         $validatedData = $this->validate();
 
-        AccumulatedDepreciationMotorVehiclesModel::where('id', $this->general_ledger_id)->update([
+        AccumulatedDepreciationOfficeEquipmentModel::where('id', $this->general_ledger_id)->update([
             'gl_date' => $validatedData['gl_date'],
             'gl_vouchernum' => $validatedData['gl_vouchernum'],
             'gl_particulars' => $validatedData['gl_particulars'],
@@ -145,7 +142,7 @@ class AccumulatedDepreciationOfficeEquipmentShow extends Component
     // Soft delete GeneralLedger
     public function softDeleteGeneralLedger($general_ledger_id)
     {
-        $general_ledger= AccumulatedDepreciationMotorVehiclesModel::find($general_ledger_id);
+        $general_ledger= AccumulatedDepreciationOfficeEquipmentModel::find($general_ledger_id);
         if ( $general_ledger) {
             $general_ledger->delete();
     }
@@ -171,7 +168,7 @@ class AccumulatedDepreciationOfficeEquipmentShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new AccumulatedDepreciationOfficeEquipmentImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('AccumulatedDepreciationOfficeEquipment')->with('message', 'File Imported Successfully');
         }
     }
 
@@ -212,7 +209,7 @@ class AccumulatedDepreciationOfficeEquipmentShow extends Component
     // Render the component
     public function render()
     {
-        $query = AccumulatedDepreciationMotorVehiclesModel::query();
+        $query =AccumulatedDepreciationOfficeEquipmentModel::query();
 
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {
