@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cash_receipt_journal_id')->constrained('cash_receipt_journal')->onDelete('cascade');
             $table->string('crj_accountcode')->nullable();
-            $table->decimal('crj_debit')->nullable();
-            $table->decimal('crj_credit')->nullable();
+            $table->decimal('crj_debit', 15,2)->nullable();
+            $table->decimal('crj_credit', 15,2)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

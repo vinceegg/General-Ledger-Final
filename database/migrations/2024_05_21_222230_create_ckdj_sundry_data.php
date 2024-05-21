@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('check_disbursement_journal_id')->constrained('check_disbursement_journal')->onDelete('cascade');
             $table->string('ckdj_accountcode')->nullable();
-            $table->decimal('ckdj_debit')->nullable();
-            $table->decimal('ckdj_credit')->nullable();
+            $table->decimal('ckdj_debit', 15,2)->nullable();
+            $table->decimal('ckdj_credit', 15,2)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

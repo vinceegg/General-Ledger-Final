@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('general_journal_id')->constrained('general_journal')->onDelete('cascade');
             $table->string('gj_accountcode')->nullable();
-            $table->decimal('gj_debit')->nullable();
-            $table->decimal('gj_credit')->nullable();
+            $table->decimal('gj_debit', 15,2)->nullable();
+            $table->decimal('gj_credit', 15,2)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
