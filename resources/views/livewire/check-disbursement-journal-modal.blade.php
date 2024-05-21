@@ -148,7 +148,35 @@
                                     <div class="grid gap-4"> <!-- Account code input field with typeahead logic ni ate korin-->
                                             <div class="col-span-2" x-data="{ 
                                                         code: @entangle('ckdj_sundry_data.' . $index . '.ckdj_accountcode'),
-                                                        items: ['Cash Local Treasury', 'Petty Cash', 'Cash in Bank Local Currency Current Account'],
+                                                        items: [
+                                                            '1 01 01 010 - Cash Local Treasury', '1 01 01 020 - Petty Cash', '1 01 02 010 - Cash in Bank Local Currency Current Account', '1 02 01 010 - Cash in Bank Local Currency Time Deposits',
+                                                            '1 03 01 010 - Accounts Receivable', '1 03 01 070 - Acc Depreciation Disaster Response and Rescue Equipment', '1 07 05 020 - Acc Depreciation Military Police Security Eqpmnt',
+                                                            '1 07 05 021 - Acc Depreciation Other Machinery Equipment', '1 07 05 030 - Acc Depreciation Technical Scientific Equipment',
+                                                            '1 07 05 031 - Accumulated Depreciation ICT Equipment', '1 07 05 090 - Accumulated Depreciation Medical Equipment',
+                                                            '1 07 05 091 - Accumulated Depreciation Office Equipment', '1 07 05 100 - Accumulated Depreciation Sports Equipment',
+                                                            '1 07 05 101 - Cash Gift', '1 07 05 110 - Clothing Uniform Allowance', '1 07 05 111 - Disaster Response and Rescue Equipment',
+                                                            '1 07 05 130 - Grants Donations in Kind', '1 07 05 131 - Hazard Pay', '1 07 05 140 - Honoraria', '1 07 05 141 - Info and Communication Technology Equipment',
+                                                            '1 07 05 990 - Interests Receivable', '1 07 05 991 - Longetivity Pay', '4 04 02 020 - Medical Equipment', '4 06 01 010 - Military Police Security Equipment',
+                                                            '5 01 01 010 - Miscellaneous Income', '5 01 01 020 - Office Equipment', '5 01 02 010 - Other Machinery Equipment', '5 01 02 020 - Overtime and Night Pay',
+                                                            '5 01 02 030 - Personnel Economic Relief Allowance', '5 01 02 040 - Representation Allowance', '5 01 02 100 - Salaries and Wages Casual Contractual',
+                                                            '5 01 02 110 - Salaries and Wages Regular', '5 01 02 120 - Sports Equipment', '5 01 02 130 - Technical and Scientific Equipment', '5 01 02 140 - Transportation Allowance',
+                                                            '5 01 02 150 - Year End Bonus', '5 01 03 010 - Accountable Forms Expenses', '5 01 03 020 - Accounts Payable', '5 01 03 030 - Accumulated Depreciation Furniture and Fixtures',
+                                                            '5 01 03 040 - Accumulated Depreciation Motor Vehicles', '5 01 04 030 - Buildings and Other Structures', '5 01 04 990 - Drugs and Medicines Expenses',
+                                                            '5 02 01 010 - Due to BIR', '5 02 02 010 - Due to GSIS', '5 02 03 010 - Due to Officers and Employees', '5 02 03 020 - Due to PAG IBIG',
+                                                            '5 02 03 070 - Due to PHILHEALTH', '5 02 03 080 - Electricity Expenses', '5 02 03 090 - Employees Compensation Insurance Premiums', 
+                                                            '5 02 03 990 - Extraordinary and Miscellaneous Expenses', '5 02 04 010 - Fuel Oil and Lubricants Expenses', '5 02 04 020 - Furniture and Fixtures',
+                                                            '5 02 05 010 - Internet Subscription Expenses', '5 02 05 020 - Medical Dental and Laboratory Supplies Expenses', '5 02 05 030 - Motor Vehicles',
+                                                            '5 02 10 030 - Office Supplies Expenses', '1 07 06 010 - Other Personnel Benefits', '1 07 06 011 - Other Supplies and Materials Expenses', '1 07 07 010 - Pag ibig Contributions',
+                                                            '1 07 07 011 - PhilHealth Contributions', '1 07 10 030 - Postage and Courier Services', '2 01 01 010 - Retirement and Life Insurance Premiums', '2 01 01 020 - Telephone Expenses', 
+                                                            '2 02 01 010 - Terminal Leave Benefits', '2 02 01 020 - Training Expenses', '2 02 01 030 - Traveling Expenses Local', '2 02 01 040 - Water Expenses', '2 04 01 010 - Affiliation Fees', 
+                                                            '2 04 01 050 - Bank Charges', '2 04 01 050 - Customers Deposit', '2 05 01 990 - Depreciation Building and Structures', '2 99 99 990 - Depreciation Furnitures and Books', 
+                                                            '3 01 01 010 - Depreciation Machinery and Equipment', '3 01 01 020 - Depreciation Transportation Equipment', '4 02 01 980 - Fidelity Bond Premiums', '4 02 02 010 - Fines and Penalties Service Income', 
+                                                            '4 02 02 020 - Government Equity', '4 02 02 050 - Guaranty Security Deposits Payable', '4 02 02 220 - Insurance Expenses', '4 02 02 990 - Interest Income', '4 03 01 020 - Membership Dues and Contribution to Org', 
+                                                            '5 02 11 990 - Other Business Income', '5 02 13 040 - Other Deferred Credits', '5 02 13 050 - Other Maintenance and Operating Expenses', '5 02 13 060 - Other Payables', '5 02 16 020 - Other Professional Services', 
+                                                            '5 02 16 030 - Printing and Publication Expenses', '5 02 99 020 - Prior Period Adjustment', '5 02 99 030 - Rent Expenses', '5 02 99 050 - Rent Income', '5 02 99 060 - Repairs and Maint Building Other Structures', 
+                                                            '5 02 99 070 - Repairs and Maint Machinery and Equipment', '5 02 99 990 - Repairs and Maint Transportation Equipment', '5 03 01 040 - Representation Expenses', '5 05 01 040 - School Fees', 
+                                                            '5 05 01 050 - Subscription Expenses', '5 05 01 060 - Subsidy from LGUs', '5 05 01 070 - Trust Liabilities'
+                                                        ],
                                                         filteredItems: [],
                                                         filterItems() {
                                                             this.filteredItems = this.items.filter(item =>
@@ -411,7 +439,35 @@
                                     <div class="grid gap-4"> <!-- Account code input field with typeahead logic ni ate korin-->
                                             <div class="col-span-2" x-data="{ 
                                                         code: @entangle('ckdj_sundry_data.' . $index . '.ckdj_accountcode'),
-                                                        items: ['Cash Local Treasury', 'Petty Cash', 'Cash in Bank Local Currency Current Account'],
+                                                        items:[
+                                                            '1 01 01 010 - Cash Local Treasury', '1 01 01 020 - Petty Cash', '1 01 02 010 - Cash in Bank Local Currency Current Account', '1 02 01 010 - Cash in Bank Local Currency Time Deposits',
+                                                            '1 03 01 010 - Accounts Receivable', '1 03 01 070 - Acc Depreciation Disaster Response and Rescue Equipment', '1 07 05 020 - Acc Depreciation Military Police Security Eqpmnt',
+                                                            '1 07 05 021 - Acc Depreciation Other Machinery Equipment', '1 07 05 030 - Acc Depreciation Technical Scientific Equipment',
+                                                            '1 07 05 031 - Accumulated Depreciation ICT Equipment', '1 07 05 090 - Accumulated Depreciation Medical Equipment',
+                                                            '1 07 05 091 - Accumulated Depreciation Office Equipment', '1 07 05 100 - Accumulated Depreciation Sports Equipment',
+                                                            '1 07 05 101 - Cash Gift', '1 07 05 110 - Clothing Uniform Allowance', '1 07 05 111 - Disaster Response and Rescue Equipment',
+                                                            '1 07 05 130 - Grants Donations in Kind', '1 07 05 131 - Hazard Pay', '1 07 05 140 - Honoraria', '1 07 05 141 - Info and Communication Technology Equipment',
+                                                            '1 07 05 990 - Interests Receivable', '1 07 05 991 - Longetivity Pay', '4 04 02 020 - Medical Equipment', '4 06 01 010 - Military Police Security Equipment',
+                                                            '5 01 01 010 - Miscellaneous Income', '5 01 01 020 - Office Equipment', '5 01 02 010 - Other Machinery Equipment', '5 01 02 020 - Overtime and Night Pay',
+                                                            '5 01 02 030 - Personnel Economic Relief Allowance', '5 01 02 040 - Representation Allowance', '5 01 02 100 - Salaries and Wages Casual Contractual',
+                                                            '5 01 02 110 - Salaries and Wages Regular', '5 01 02 120 - Sports Equipment', '5 01 02 130 - Technical and Scientific Equipment', '5 01 02 140 - Transportation Allowance',
+                                                            '5 01 02 150 - Year End Bonus', '5 01 03 010 - Accountable Forms Expenses', '5 01 03 020 - Accounts Payable', '5 01 03 030 - Accumulated Depreciation Furniture and Fixtures',
+                                                            '5 01 03 040 - Accumulated Depreciation Motor Vehicles', '5 01 04 030 - Buildings and Other Structures', '5 01 04 990 - Drugs and Medicines Expenses',
+                                                            '5 02 01 010 - Due to BIR', '5 02 02 010 - Due to GSIS', '5 02 03 010 - Due to Officers and Employees', '5 02 03 020 - Due to PAG IBIG',
+                                                            '5 02 03 070 - Due to PHILHEALTH', '5 02 03 080 - Electricity Expenses', '5 02 03 090 - Employees Compensation Insurance Premiums', 
+                                                            '5 02 03 990 - Extraordinary and Miscellaneous Expenses', '5 02 04 010 - Fuel Oil and Lubricants Expenses', '5 02 04 020 - Furniture and Fixtures',
+                                                            '5 02 05 010 - Internet Subscription Expenses', '5 02 05 020 - Medical Dental and Laboratory Supplies Expenses', '5 02 05 030 - Motor Vehicles',
+                                                            '5 02 10 030 - Office Supplies Expenses', '1 07 06 010 - Other Personnel Benefits', '1 07 06 011 - Other Supplies and Materials Expenses', '1 07 07 010 - Pag ibig Contributions',
+                                                            '1 07 07 011 - PhilHealth Contributions', '1 07 10 030 - Postage and Courier Services', '2 01 01 010 - Retirement and Life Insurance Premiums', '2 01 01 020 - Telephone Expenses', 
+                                                            '2 02 01 010 - Terminal Leave Benefits', '2 02 01 020 - Training Expenses', '2 02 01 030 - Traveling Expenses Local', '2 02 01 040 - Water Expenses', '2 04 01 010 - Affiliation Fees', 
+                                                            '2 04 01 050 - Bank Charges', '2 04 01 050 - Customers Deposit', '2 05 01 990 - Depreciation Building and Structures', '2 99 99 990 - Depreciation Furnitures and Books', 
+                                                            '3 01 01 010 - Depreciation Machinery and Equipment', '3 01 01 020 - Depreciation Transportation Equipment', '4 02 01 980 - Fidelity Bond Premiums', '4 02 02 010 - Fines and Penalties Service Income', 
+                                                            '4 02 02 020 - Government Equity', '4 02 02 050 - Guaranty Security Deposits Payable', '4 02 02 220 - Insurance Expenses', '4 02 02 990 - Interest Income', '4 03 01 020 - Membership Dues and Contribution to Org', 
+                                                            '5 02 11 990 - Other Business Income', '5 02 13 040 - Other Deferred Credits', '5 02 13 050 - Other Maintenance and Operating Expenses', '5 02 13 060 - Other Payables', '5 02 16 020 - Other Professional Services', 
+                                                            '5 02 16 030 - Printing and Publication Expenses', '5 02 99 020 - Prior Period Adjustment', '5 02 99 030 - Rent Expenses', '5 02 99 050 - Rent Income', '5 02 99 060 - Repairs and Maint Building Other Structures', 
+                                                            '5 02 99 070 - Repairs and Maint Machinery and Equipment', '5 02 99 990 - Repairs and Maint Transportation Equipment', '5 03 01 040 - Representation Expenses', '5 05 01 040 - School Fees', 
+                                                            '5 05 01 050 - Subscription Expenses', '5 05 01 060 - Subsidy from LGUs', '5 05 01 070 - Trust Liabilities'
+                                                        ],
                                                         filteredItems: [],
                                                         filterItems() {
                                                             this.filteredItems = this.items.filter(item =>
