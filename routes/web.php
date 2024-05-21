@@ -6,23 +6,9 @@ use App\Http\Controllers\TwoFactorController;
 
 
 Route::get('/', function () {
-    return view('auth.register');
-});
-
-Route::resource('verify', TwoFactorController::class);
-
-Route::get('/dashboard',  function () {
     return view('dashboard');
-})->middleware(['auth', 'verified', 'two_factor'])->name('dashboard');
-
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
- 
-require __DIR__.'/auth.php';
+
 
 //Routes for each table of journals
 Route::get('/CRJ', [App\Http\Controllers\CashReceiptJournalController::class, 'index'])->name('CRJ');
