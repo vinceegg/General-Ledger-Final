@@ -16,7 +16,7 @@ class RecentActivities extends Component
 
     public function mount()
     {
-        $this->activity_logs = ActivityLogModel::latest()->take(6)->get();
+        $this->activity_logs = ActivityLogModel::latest()->take(8)->get();
     }
 
     public function formatRoute($description)

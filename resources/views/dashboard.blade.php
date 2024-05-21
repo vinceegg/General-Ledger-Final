@@ -214,11 +214,58 @@
 
 
 
-
-<div class="p-4 sm:ml-64">
-   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+{{-- ROW 1 --}}
+<div class="p-5 sm:ml-64">
+   <div class="p-4 rounded-lg dark:border-gray-700 mt-14">
    <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com --> 
 <!-- Grid wrapper -->
+
+<div class="grid sm:grid-cols-1 md:grid-cols-1 mb-3 gap-4 ">
+  <div class="header-item  col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">  
+    <div class="flex gap-2">
+      <text class="white-card-title-lg">Welcome</text>
+    </div>
+    
+    <div class="flex gap-2 pb-3 pt-3">
+      <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>
+      </svg>
+      
+      <text id="current-date" class="white-card-title-sm"> --/--/----</text>
+      <text id="current-time" class="white-card-title-sm"> --:--:--</text>
+    </div>
+    
+    <div class="flex gap-2 pb-3">
+
+    </div>
+  </div>
+</div>
+
+{{-- TIME DATE JS LOGIC --}}
+<script>
+  function updateTimeAndDate() {
+    const currentTimeElement = document.getElementById('current-time');
+    const currentDateElement = document.getElementById('current-date');
+    const now = new Date();
+    
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    currentTimeElement.textContent = ` ${hours}:${minutes}:${seconds}`;
+    
+    const year = now.getFullYear();
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const month = monthNames[now.getMonth()];
+    const day = now.getDate();
+    currentDateElement.textContent = ` ${month} ${day}, ${year}`;
+  }
+
+  setInterval(updateTimeAndDate, 1000);
+  updateTimeAndDate();  // Initial call to set the time and date immediately when the page loads
+</script>
 
 <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
   <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">  
@@ -315,141 +362,254 @@
 
 
 
-
-
-  <div class="grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-5">
-  <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+{{-- ROW 3 --}}
+<div class="grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-5">
+  <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <div class="flex gap-2 pb-3">
-    </div>
-    <div class="grid sm:grid-cols-3 md:grid-cols-4 gap-4">
-      First
-    </div>
-  </div>
-
-
-
-  <div class="pt-6 p-6 grid bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-    <div class="flex gap-2 pb-3">
-      <div class="">
+      <div>
         <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1 1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
         </svg>
       </div>
-      <div class="">
-        <text class="white-card-title">Debit and Credit Balance per Journal</text>
+      <div>
+        <span class="white-card-title">Debit and Credit Balance per Journal</span>
+      </div>
+    </div>
+            <!-- BAR CHART -->
+            <div class="sm:w-auto md:w-auto pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
+              <canvas id="barChart"></canvas>
+            </div>
+  </div>
+  
+  
+
+  <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex gap-2 pb-3">
+      <div>
+        <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1 1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
+        </svg>
+      </div>
+      <div>
+        <span class="white-card-title">Adjustments per Month</span>
+      </div>
+    </div>
+        <!-- LINE CHART -->
+        <div class="sm:w-auto md:w-auto  pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
+          <canvas id="lineChart" style="flex:1;"></canvas>
+        </div>
+  </div>
+
+  <div class="pt-6 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex gap-2 pb-3">
+      <div>
+        <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+        </svg>
+
+      </div>
+      <div>
+        <span class="white-card-title">Archives Shortcut</span>
+      </div>
+
+    </div>
+
+    @foreach([''] as $route)
+    <a href="{{ url('/CKDJ' . $route) }}" class="text-decoration-none">    
+    <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+      <div class="flex gap-2 items-center">
+        <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+          CKD
+        </div>
+        <div class="flex-col">
+          <span class="text-gray-800 font-bold pl-2">Check Disbursements Journal Archive</span>
+        </div>
+      </div>
+    </div>
+  </a>
+  @endforeach
+
+
+  @foreach([''] as $route)
+  <a href="{{ url('/CDJ' . $route) }}"  class="text-decoration-none">  
+    <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+      <div class="flex gap-2 items-center">
+        <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+          CDJ
+        </div>
+        <div class="flex-col">
+          <span class="text-gray-800 font-bold pl-2">Cash Disbursement Journal Archive</span>
+        </div>
+      </div>
+    </div>
+  </a>
+  @endforeach
+
+
+  @foreach([''] as $route)
+  <a href="{{ url('/CRJ' . $route) }}" class="text-decoration-none">  
+    <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+      <div class="flex gap-2 items-center">
+        <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+          CRJ
+        </div>
+        <div class="flex-col">
+          <span class="text-gray-800 font-bold pl-2">Cash Receipt Journal Archive</span>
+        </div>
+      </div>
+    </div>
+  </a>
+  @endforeach
+
+
+  @foreach([''] as $route)
+  <a href="{{ url('/GJ' . $route) }}"  class="text-decoration-none"> 
+    <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+      <div class="flex gap-2 items-center">
+        <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+          GJA
+        </div>
+        <div class="flex-col">
+          <span class="text-gray-800 font-bold pl-2">General Journal Archive</span>
+        </div>
+      </div>
+    </div>
+  </a>
+  @endforeach
+
+  </div> 
+
+
+
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Bar Chart
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['CKDJ', 'CDJ', 'CRJ', 'GJ'],
+        datasets: [{
+            label: 'Debit',
+            data: [12, 19, 3, 5],
+            // data: [debitckdj, 19, 3, 5],
+            backgroundColor: '#ff4949',
+            borderWidth: 1
+          },
+          {
+            label: 'Credit',
+            data: [2, 3, 2, 3],
+            backgroundColor: '#ffcc3d',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  
+    // Line Chart
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    new Chart(lineCtx, {
+      type: 'line',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+            label: 'Dataset 1',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            borderColor: '#ff4949',
+            backgroundColor: 'rgba(255, 73, 73, 0.5)',
+          },
+          {
+            label: 'Dataset 2',
+            data: [28, 48, 40, 19, 86, 27, 90],
+            borderColor: '#36a2eb',
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Monthly Data Trends'
+          }
+        }
+      }
+    });
+  
+    // Pie Chart
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: 'Dataset 1',
+          data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: [
+            '#ff4949',
+            '#36a2eb',
+            '#ffcc3d',
+            '#4bc0c0',
+            '#9966ff',
+            '#ff9f40'
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Distribution of Colors'
+          }
+        }
+      }
+    });
+  </script>
+  </div>
+
+
+
+
+
+
+{{-- ROW 4 --}}
+  <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+    <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
+      <div class="flex gap-2 pb-3">
+        <div>
+          <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
+        </div>
+        <div>
+          <text class="white-card-title">Recent Activities </text> 
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-1 mb-10 md:grid-cols-2 gap-4 h-30" style="max-height: 500px; overflow-y: auto;">
+        <livewire:recent-activities />
       </div>
     </div>
 
-    <!-- CHARTS -->
-    <div class="sm:w-auto md:w-auto pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
-      <canvas id="myChart"></canvas>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-      const ctx = document.getElementById('myChart').getContext('2d');
-    
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['CKDJ', 'CDJ', 'CRJ', 'GJ'],
-          datasets: [{
-              label: 'Debit',
-              data: [12, 19, 3, 5], // Debit data
-              backgroundColor: '#ff4949', // Tailwind CSS text-blue-800 color for Debit
-              borderWidth: 1
-            },
-            {
-              label: 'Credit',
-              data: [2, 3, 2, 3], // Credit data
-              backgroundColor: '#ffcc3d', // Tailwind CSS text-blue-500 color for Credit
-              borderWidth: 1
-            }
-          ]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-
-      const config = {
-  type: 'line',
-  data: data,
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart.js Line Chart'
-      }
-    }
-  },
-};
-
-const DATA_COUNT = 7;
-const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
-
-const labels = Utils.months({count: 7});
-const data = {
-  labels: labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.red,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-    },
-    {
-      label: 'Dataset 2',
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.blue,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
-    }
-  ]
-};
-
-    </script>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-<div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-5">
-<div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
-  <div class="flex gap-2 pb-3">
-        <div class="">
-        <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-        </svg>
-        </div>
-        <div class="">
-          <text class="white-card-title"> Recent Activities </text> 
-        </div>
-    </div>
-    <div class="grid sm:grid-cols-1 mb-10 md:grid-cols-2 gap-4 h-30">
-        <livewire:recent-activities />
-        <!-- Second column content -->
-        <div>
-          <!-- Your content for the second column goes here -->
-          <livewire:recent-activities />
-        </div>
-    </div>
-</div>
-
 <div>
+  
     <livewire:todo-component />
 </div>
 

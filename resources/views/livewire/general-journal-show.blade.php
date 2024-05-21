@@ -171,8 +171,5 @@
     </table>
 </div>
 
-    <!-- Pagination -->
-    <div>
-        {{ $general_journal->links() }}
-    </div>
+
 </div>
