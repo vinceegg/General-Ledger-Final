@@ -6,7 +6,7 @@
         <div class="p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between">
             <!-- Title -->
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between w-full">
-                <p class="font-bold text-gray-800 text-xl">Archived Records of Due to PHILHEALTH</p>
+                <p class="font-bold text-gray-800 text-xl">Archived Records of Due to PhilHealth</p>
                 
                 <!-- SVG Icon and Link -->
                 <div class="flex items-center mt-4 md:mt-0">

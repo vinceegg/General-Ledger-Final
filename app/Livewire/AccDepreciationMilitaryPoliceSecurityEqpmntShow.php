@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Imports\AccDepreciationMilitaryPoliceSecurityImport;
+use App\Imports\AccDepreciationMilitaryPoliceSecurityEqpmntImport;
 use App\Exports\AccDepreciationMilitaryPoliceSecurityEqpmntExport;
 use App\Models\AccDepreciationMilitaryPoliceSecurityEqpmntModel;
 use Livewire\Component;
@@ -95,9 +95,6 @@ class AccDepreciationMilitaryPoliceSecurityEqpmntShow extends Component
             $this->gl_credit = $general_ledger->gl_credit;
             $this->gl_credit_balance = $general_ledger->gl_credit_balance;
         } 
-        else {
-            return redirect() -> to('/general_ledger'); 
-        }
     }
 
     public function updateGeneralLedger()
@@ -169,9 +166,9 @@ class AccDepreciationMilitaryPoliceSecurityEqpmntShow extends Component
     // Ensure that a file has been uploaded
         if ($this->file) {
         $filePath = $this->file->store('files');
-        Excel::import(new AccDepreciationMilitaryPoliceSecurityImport, $filePath);
+        Excel::import(new AccDepreciationMilitaryPoliceSecurityEqpmntImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('AccDepreciationMilitaryPoliceSecurityEqpmnt')->with('message', 'File Imported Successfully');
         }
     }
 

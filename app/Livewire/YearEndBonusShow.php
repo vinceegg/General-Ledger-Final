@@ -95,9 +95,6 @@ class YearEndBonusShow extends Component
             $this->gl_credit = $general_ledger->gl_credit;
             $this->gl_credit_balance = $general_ledger->gl_credit_balance;
         } 
-        else {
-            return redirect() -> to('/general_ledger'); 
-        }
     }
 
     public function updateGeneralLedger()
@@ -171,7 +168,7 @@ class YearEndBonusShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new YearEndBonusImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('YearEndBonus')->with('message', 'File Imported Successfully');
         }
     }
 

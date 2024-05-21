@@ -8,6 +8,6 @@ class GeneralLedgerTrash extends Controller
 {
     public function index()
     {
-        return view('trashrecords.CashLocalTreasuryArchive');
+        return view('trashrecords.CashLocalTreasuryArchived');
     }
 }

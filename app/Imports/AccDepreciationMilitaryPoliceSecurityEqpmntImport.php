@@ -6,7 +6,7 @@ use App\Models\AccDepreciationMilitaryPoliceSecurityEqpmntModel;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class  AccDepreciationMilitaryPoliceSecurityImport implements ToModel, WithHeadingRow
+class  AccDepreciationMilitaryPoliceSecurityEqpmntImport implements ToModel, WithHeadingRow
 {
     /**
     * @param Collection $collection

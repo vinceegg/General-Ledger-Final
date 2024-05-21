@@ -59,7 +59,7 @@ class PhilHealthContributionsTrash extends Component
 
     public function render()
     {
-        return view('livewire.philhealth-contributions-trash', [
+        return view('livewire.phil-health-contributions-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

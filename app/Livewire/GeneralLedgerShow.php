@@ -209,15 +209,6 @@ class GeneralLedgerShow extends Component
     {
         $this->showNotification = false;
     }
-    // Method to restore soft-deleted record
-    public function restoreGeneralLedger($id)
-    {
-        $general_ledger = GeneralLedgerModel::onlyTrashed()->find($id);
-        if ($general_ledger) {
-            $general_ledger->restore();
-            session()->flash('message', 'Record restored successfully.');
-        }
-    }
 
     // Render the component
     public function render()

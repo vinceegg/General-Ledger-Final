@@ -28,9 +28,9 @@
                         <!-- Table Header -->
                         <thead class="text-base text-left text-black sticky top-0 bg-white">
                             <!-- VINCEKORIN CODE -->
-                            @if (session()->has('message'))
+                            {{-- @if (session()->has('message'))
                             <h5 class="alert alert-success">{{ session('message') }}</h5>
-                        @endif
+                        @endif --}}
                             <!-- Include message modal and session message -->
                             @include('livewire.general-ledger-modal')
                             <tr class="text-center shadow-md"> <!-- Table heading design -->

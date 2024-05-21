@@ -59,7 +59,7 @@ class PostageandCourierServicesTrash extends Component
 
     public function render()
     {
-        return view('livewire.postage-and-courier-services-trash', [
+        return view('livewire.postageand-courier-services-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

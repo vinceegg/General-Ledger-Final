@@ -95,9 +95,6 @@ class DisasterResponseandRescueEquipmentShow extends Component
             $this->gl_credit = $general_ledger->gl_credit;
             $this->gl_credit_balance = $general_ledger->gl_credit_balance;
         } 
-        else {
-            return redirect() -> to('/general_ledger'); 
-        }
     }
 
     public function updateGeneralLedger()
@@ -141,6 +138,17 @@ class DisasterResponseandRescueEquipmentShow extends Component
         $this->gl_credit_balance = '';
     }
 
+    // Soft delete GeneralLedger
+    public function softDeleteGeneralLedger($general_ledger_id)
+    {
+        $general_ledger = DisasterResponseandRescueEquipmentModel::find($general_ledger_id);
+        if ( $general_ledger) {
+            $general_ledger->delete();
+    }
+        $this->resetInput();
+        $this->dispatch('close-modal');
+    }
+
     // Sorting logic SA SORT TO KORINNE HA
     public function sortBy($field)
     {
@@ -159,7 +167,7 @@ class DisasterResponseandRescueEquipmentShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new DisasterResponseandRescueEquipmentImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('DisasterResponseandRescueEquipment')->with('message', 'File Imported Successfully');
         }
     }
 

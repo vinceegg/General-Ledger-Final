@@ -20,7 +20,7 @@
                             </svg>
                         </div>
                         <input type="search" wire:model="search" wire:change="searchAction" class="w-44 ps-10 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Search ID..." required />
+                        placeholder="Search" required />
                     </div>    
 
                     <!-- Select Date -->        

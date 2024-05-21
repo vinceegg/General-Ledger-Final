@@ -59,7 +59,7 @@ class RetirementandLifeInsurancePremiumsTrash extends Component
 
     public function render()
     {
-        return view('livewire.retirement-and-life-insurance-premiums-trash', [
+        return view('livewire.retirementand-life-insurance-premiums-trash', [
             'softDeletedData' => $this->softDeletedData
         ]);
     }

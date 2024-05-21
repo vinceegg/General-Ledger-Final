@@ -95,9 +95,6 @@ class AccumulatedDepreciationICTEquipmentShow extends Component
             $this->gl_credit = $general_ledger->gl_credit;
             $this->gl_credit_balance = $general_ledger->gl_credit_balance;
         } 
-        else {
-            return redirect() -> to('/general_ledger'); 
-        }
     }
 
     public function updateGeneralLedger()
@@ -171,7 +168,7 @@ class AccumulatedDepreciationICTEquipmentShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new AccumulatedDepreciationICTEquipmentImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('AccumulatedDepreciationICTEquipment')->with('message', 'File Imported Successfully');
         }
     }
 
@@ -247,6 +244,6 @@ class AccumulatedDepreciationICTEquipmentShow extends Component
         $this->totalCredit = $query->sum('gl_credit');
         $this->totalCreditBalance = $query->sum('gl_credit_balance');
 
-        return view('livewire.accumulated-depreciation-i-c-t-equipment-show',['general_ledger' => $accumulated_depreciation_ict_equipment]);
+        return view('livewire.accumulated-depreciation-i-c-t-equipment',['general_ledger' => $accumulated_depreciation_ict_equipment]);
     }
 }

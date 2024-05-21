@@ -95,9 +95,6 @@ class AccountableFormsExpensesShow extends Component
             $this->gl_credit = $general_ledger->gl_credit;
             $this->gl_credit_balance = $general_ledger->gl_credit_balance;
         } 
-        else {
-            return redirect() -> to('/general_ledger'); 
-        }
     }
 
     public function updateGeneralLedger()
@@ -171,7 +168,7 @@ class AccountableFormsExpensesShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new AccountableFormsExpensesImport, $filePath);
 
-        return redirect()->route('LS')->with('message', 'File Imported Successfully');
+        return redirect()->route('AccountableFormsExpenses')->with('message', 'File Imported Successfully');
         }
     }
 

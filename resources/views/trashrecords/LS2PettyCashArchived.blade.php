@@ -8,8 +8,8 @@
     <link href ="/css/main.css" rel ="stylesheet">
     <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-    
-    <title>Cash Local Treasury Trash</title>
+     
+    <title>Petty Cash Trash</title>
     @livewireStyles
     @vite('resources/css/app.css')
 </head>
