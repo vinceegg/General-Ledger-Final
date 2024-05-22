@@ -2,58 +2,83 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\CashDisbursementJournalModel;
+use Livewire\Component;
+use App\Exports\CashDisbursementJournalExport;
+use App\Imports\CashDisbursementJournalImport;
+use App\Models\CDJ_SundryModel;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
+use Carbon\Carbon;
 
 class CashDisbursementJournalTrash extends Component
 {
-    public $general_ledger_id;
-    public $deleteType;
+    use WithFileUploads;
+
+    public 
+    $cdj_sundry_data = [], //@korinlv: added this
+    $deleteType;
+// Added deleteType property
+
+    public $search;
+    public $cash_disbursement_journal_id;
     public $softDeletedData;
+    public $file;
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
-    public $file;
 
+
+    //@korinlv: added this function
     public function mount()
     {
-        $this->softDeletedData = CashDisbursementJournalModel::onlyTrashed()->get();
+        $this->softDeletedData = CashDisbursementJournalModel::onlyTrashed()
+            ->with(['cdj_sundry_data' => function ($query) {
+                $query->withTrashed();
+            }])
+            ->get();
     }
 
-    // Method to restore soft-deleted record
-    public function restoreGeneralLedger($id)
+    //@korinlv: edited this function
+    public function restoreCashDisbursementJournal($id)
     {
-        $general_ledger = CashDisbursementJournalModel::onlyTrashed()->find($id);
-        if ($general_ledger) {
-            $general_ledger->restore();
+        $cash_disbursement_journal = CashDisbursementJournalModel::onlyTrashed()->find($id);
+        if ($cash_disbursement_journal) {
+            // Load trashed sundries
+            $trashedSundries = $cash_disbursement_journal->cdj_sundry_data()->onlyTrashed()->get();
+            foreach ($trashedSundries as $sundry){
+                $sundry->restore();
+            }
+
+            $cash_disbursement_journal->restore();
             session()->flash('message', 'Record restored successfully.');
-            $this->softDeletedData = CashDisbursementJournalModel::onlyTrashed()->get();
         }
     }
 
-    public function deleteGeneralLedger(int $general_ledger_id, $type = 'soft')
+    public function deleteCashDisbursementJournal(int $cash_disbursement_journal_id, $type = 'soft')
     {
-        $this->general_ledger_id = $general_ledger_id;
+        $this->cash_disbursement_journal_id = $cash_disbursement_journal_id;
         $this->deleteType = $type; // Set the delete type
     }
 
-    // Permanently delete 
-    public function destroyGeneralLedger()
+    //permanently delete CheckDisbursementJournal
+    public function destroyCashDisbursementJournal()
     {
-        $general_ledger = CashDisbursementJournalModel::withTrashed()->find($this->general_ledger_id);
+        $cash_disbursement_journal_id = CashDisbursementJournalModel::withTrashed()->find($this->cash_disbursement_journal_id);
         if ($this->deleteType == 'force') {
-            $general_ledger->forceDelete();
+            $cash_disbursement_journal_id->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
         } else {
-            $general_ledger->delete();
+            $cash_disbursement_journal_id->delete();
             session()->flash('message', 'Archived Successfully');
         }
         $this->dispatch('close-modal');
         $this->resetInput();
-        return redirect()->route('CDJ')->with('message', 'Deleted Successfully');
+        return redirect()->route('CashDisbursementJournalArchived')->with('message', 'Deleted Successfully');
     }
 
     public function resetInput()
     {
-        $this->general_ledger_id = '';
+        $this-> cash_disbursement_journal_id = '';
     }
 }

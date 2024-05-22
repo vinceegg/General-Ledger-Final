@@ -716,7 +716,7 @@
             </div>
             <div class="p-3 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <!-- Modal body -->
-                <form wire:submit.prevent="destroyGeneralJournal">
+                <form wire:submit.prevent="destroyCashDisbursementJournal">
                     <div class="grid gap-4 p-2 mb-4">
                         <p class="text-lg leading-relaxed text-gray-500 dark:text-gray-400">
                             This action cannot be undone. This will permanently delete the row from the database. 
