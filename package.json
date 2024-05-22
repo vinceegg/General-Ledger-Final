@@ -16,6 +16,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "chart.js": "^4.4.3",
         "flowbite": "^2.2.0"
     }
 }

@@ -54,8 +54,6 @@
                                 <th class="border-r border-l text-sm" style="width: 120px">2-02-01-010-E</th>
                             </tr>
                         </thead>
-                
-                        <!-- Table Body -->
                         <!-- Table Body -->
                         <tbody class="space-y-4  overflow-y-scroll  ">
                             @forelse ($softDeletedData as $check_disbursement_journals)
