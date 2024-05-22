@@ -12,8 +12,6 @@ use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
 
-
-
 class GeneralJournalShow extends Component
 {
     use WithFileUploads;
