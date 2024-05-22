@@ -14,6 +14,8 @@
         <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
         <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     </head>
     <body>
         <div id="app">
