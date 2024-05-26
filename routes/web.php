@@ -249,5 +249,10 @@ Route::get('/settings', function () {
 });
 
 
+Route::get('/ledgersheet', function () {
+    return view('ledgersheet.ledgerSheetView');
+});
+
+
 
 
