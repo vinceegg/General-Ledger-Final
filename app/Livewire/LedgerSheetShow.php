@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Exports\InternetSubscriptionExpensesExport;
-use App\Imports\InternetSubscriptionExpensesImport;
+use App\Exports\ledgerSheetExport;
+use App\Imports\ledgerSheetImport;
 use App\Models\ledgerSheetModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
@@ -28,10 +28,9 @@ class LedgerSheetShow extends Component
 
     public $ls_accountname;
     public $ledger_sheet;
-    public $search;
-    public $general_ledger_id;
+    public $search = '';
     public $selectedMonth;
-    public $sortField = 'ls_id'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
+    public $sortField = 'ls_vouchernum'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
@@ -41,6 +40,7 @@ class LedgerSheetShow extends Component
     public $totalCreditBalance = 0;
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
+    public $query;
 
     
     
@@ -49,8 +49,8 @@ class LedgerSheetShow extends Component
     protected function rules()
     {
         return [
-            'ls_date'=>'required|date',
-            'ls_vouchernum'=>'nullable|string', //@vince yung data type inedit ko 
+            'ls_date'=>'nullable|date',
+            'ls_vouchernum'=>'required|string|max:255', //@vince yung data type inedit ko 
             'ls_particulars'=>'nullable|string', 
             'ls_balance_debit'=> 'nullable|numeric|min:0|max:100000000',
             'ls_debit'=> 'nullable|numeric|min:0|max:100000000',
@@ -60,159 +60,156 @@ class LedgerSheetShow extends Component
         ];
     }
 
-    public function set_accountname($value)
+    public function setAccountName($value)
     {
         $this->ls_accountname = $value;
     }
 
-    // public function updated($fields)
-    // {
-    //     $this->validateOnly($fields);
-    // }
+    public function updated($fields)
+    {
+        $this->validateOnly($fields);
+    }
 
-    // public function saveGeneralLedger()
-    // {       
-    //     $validatedData = $this->validate();
+    public function saveGeneralLedger()
+    {       
+        $validatedData = $this->validate();
 
-    //     $validatedData['ls_accountname'] = $this->ls_accountname;
+        $validatedData['ls_accountname'] = $this->ls_accountname;
 
-    //     // Convert empty strings to null
-    //     foreach ($validatedData as $key => $value) {
-    //         if ($value === '') {
-    //             $validatedData[$key] = null;
-    //         }
-    //     }
+        // Convert empty strings to null
+        foreach ($validatedData as $key => $value) {
+            if ($value === '') {
+                $validatedData[$key] = null;
+            }
+        }
 
-    //     ledgerSheetModel::create($validatedData);
+        ledgerSheetModel::create($validatedData);
 
-    //     // Update notification state
-    //     $this->notificationMessage = 'Added Successfully';
-    //     $this->showNotification = true;
+        // Update notification state
+        $this->notificationMessage = 'Added Successfully';
+        $this->showNotification = true;
 
-    //     $this->resetInput();
+        $this->resetInput();
 
-    //     $this->dispatch('notification-shown');
+        $this->dispatch('notification-shown');
 
-    // }
+    }
 
-    // public function editGeneralLedger($general_ledger_id)
-    // {
-    //     $general_ledger = ledgerSheetModel::find($general_ledger_id);
-    //     if ($general_ledger) {
+    public function editGeneralLedger($ls_vouchernum)
+    {
+        $general_ledger = ledgerSheetModel::find($ls_vouchernum);
+        if ($general_ledger) {
             
-    //         $this->general_ledger_id = $general_ledger->ls_id;
-    //         $this->ls_date = $general_ledger->ls_date;
-    //         $this->ls_vouchernum = $general_ledger->ls_vouchernum;
-    //         $this->ls_particulars = $general_ledger->ls_particulars;
-    //         $this->ls_balance_debit = $general_ledger->ls_balance_debit;
-    //         $this->ls_debit = $general_ledger->ls_debit;
-    //         $this->ls_credit = $general_ledger->ls_credit;
-    //         $this->ls_credit_balance = $general_ledger->ls_credit_balance;
-    //     } 
-    // }
+            $this->ls_date = $general_ledger->ls_date;
+            $this->ls_vouchernum = $general_ledger->ls_vouchernum;
+            $this->ls_particulars = $general_ledger->ls_particulars;
+            $this->ls_balance_debit = $general_ledger->ls_balance_debit;
+            $this->ls_debit = $general_ledger->ls_debit;
+            $this->ls_credit = $general_ledger->ls_credit;
+            $this->ls_credit_balance = $general_ledger->ls_credit_balance;
+            $this->ls_accountname = $general_ledger->ls_accountname;;
+        } 
+    }
 
-    // public function updateGeneralLedger()
+    public function updateGeneralLedger()
+    {
+        $validatedData = $this->validate();
+        $validatedData['ls_accountname'] = $this->ls_accountname;
+
+        ledgerSheetModel::where('ls_vouchernum', $this->ls_vouchernum)->update([
+            'ls_date' => $validatedData['ls_date'],
+            'ls_particulars' => $validatedData['ls_particulars'],
+            'ls_balance_debit' => $validatedData['ls_balance_debit'],
+            'ls_debit' => $validatedData['ls_debit'],
+            'ls_credit' => $validatedData['ls_credit'],
+            'ls_credit_balance' => $validatedData['ls_credit_balance'],
+            'ls_accountname' => $validatedData['ls_accountname'], 
+        ]);
+        // Update notification state
+        $this->notificationMessage = 'Updated Successfully';
+        $this->showNotification = true;
+        $this->resetInput();
+
+        // Dispatch browser event to handle notification visibility
+        $this->dispatch('notification-shown');
+
+        $this->dispatch('close-modal');
+    }
+
+    public function closeModal()
+    {
+        $this->resetInput();
+    }
+
+    public function resetInput()
+    {
+        $this->ls_date = '';
+        $this->ls_vouchernum = '';
+        $this->ls_particulars = '';
+        $this->ls_balance_debit = '';
+        $this->ls_debit = '';
+        $this->ls_credit = '';
+        $this->ls_credit_balance = '';
+    }
+
+    //ITO NA YUNG DINAGSAG KO 
+    // Soft delete GeneralLedger
+    public function softDeleteGeneralLedger($ls_vouchernum)
+    {
+        $general_ledger= ledgerSheetModel::find($ls_vouchernum);
+        if ( $general_ledger) {
+            $general_ledger->delete();
+    }
+        $this->resetInput();
+        $this->dispatch('close-modal');
+    }
+
+    // Sorting logic SA SORT TO KORINNE HA
+    public function sortBy($field)
+    {
+        if ($this->sortField == $field) {
+            $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortField = $field;
+            $this->sortDirection = 'asc';
+        }
+    }
+
+    public function importGL()
+    {
+    // Ensure that a file has been uploaded
+        if ($this->file) {
+        $filePath = $this->file->store('files');
+        Excel::import(new ledgerSheetImport, $filePath);
+
+        return redirect()->route('LedgerSheet')->with('message', 'File Imported Successfully');
+        }
+    }
+
+    //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
+    public function exportGL_XLSX(Request $request) 
+    {
+        return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname .'.xlsx');
+    }
+    public function exportGl_CSV(Request $request) 
+    {
+        return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname .'.csv');
+    }
+
+
+
+    // public function sortAction($query)
     // {
-    //     $validatedData = $this->validate();
-
-    //     ledgerSheetModel::where('ls_id', $this->general_ledger_id)->update([
-    //         'ls_date' => $validatedData['ls_date'],
-    //         'ls_vouchernum' => $validatedData['ls_vouchernum'],
-    //         'ls_particulars' => $validatedData['ls_particulars'],
-    //         'ls_balance_debit' => $validatedData['ls_balance_debit'],
-    //         'ls_debit' => $validatedData['ls_debit'],
-    //         'ls_credit' => $validatedData['ls_credit'],
-    //         'ls_credit_balance' => $validatedData['ls_credit_balance'],
-    //     ]);
-    //     // Update notification state
-    //     $this->notificationMessage = 'Updated Successfully';
-    //     $this->showNotification = true;
-    //     $this->resetInput();
-
-    //     // Dispatch browser event to handle notification visibility
-    //     $this->dispatch('notification-shown');
-
-    //     $this->dispatch('close-modal');
-    // }
-
-    // public function closeModal()
-    // {
-    //     $this->resetInput();
-    // }
-
-    // public function resetInput()
-    // {
-    //     $this->general_ledger_id = '';
-    //     $this->ls_date = '';
-    //     $this->ls_vouchernum = '';
-    //     $this->ls_particulars = '';
-    //     $this->ls_balance_debit = '';
-    //     $this->ls_debit = '';
-    //     $this->ls_credit = '';
-    //     $this->ls_credit_balance = '';
-    // }
-
-    // //ITO NA YUNG DINAGSAG KO 
-    // // Soft delete GeneralLedger
-    // public function softDeleteGeneralLedger($general_ledger_id)
-    // {
-    //     $general_ledger= ledgerSheetModel::find($general_ledger_id);
-    //     if ( $general_ledger) {
-    //         $general_ledger->delete();
-    // }
-    //     $this->resetInput();
-    //     $this->dispatch('close-modal');
-    // }
-
-    // // Sorting logic SA SORT TO KORINNE HA
-    // public function sortBy($field)
-    // {
-    //     if ($this->sortField == $field) {
-    //         $this->sortDirection = $this->sortDirection == 'asc' ? 'desc' : 'asc';
-    //     } else {
-    //         $this->sortField = $field;
-    //         $this->sortDirection = 'asc';
+    //         // Apply the month filter if a month is selected
+    //     if ($this->selectedMonth) {
+    //         $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
+    //         $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
+            
+    //         $query->whereBetween('ls_date', [$startOfMonth, $endOfMonth]);
     //     }
     // }
 
-    // public function importGL()
-    // {
-    // // Ensure that a file has been uploaded
-    //     if ($this->file) {
-    //     $filePath = $this->file->store('files');
-    //     Excel::import(new InternetSubscriptionExpensesImport, $filePath);
-
-    //     return redirect()->route('InternetSubscriptionExpenses')->with('message', 'File Imported Successfully');
-    //     }
-    // }
-
-    // //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    // public function exportGL_XLSX(Request $request) 
-    // {
-    //     return Excel::download(new InternetSubscriptionExpensesExport, 'Ledger Sheet.xlsx');
-    // }
-    // public function exportGl_CSV(Request $request) 
-    // {
-    //     return Excel::download(new InternetSubscriptionExpensesExport, 'Ledger Sheet.csv');
-    // }
-
-    // public function searchAction()
-    // {
-    //     // This method will be triggered when the Enter key is pressed.
-    //     // Since it's just a placeholder, you don't need to add any code here.
-    // }
-
-    // public function sortAction()
-    // {
-    //     // This method will be triggered when the Enter key is pressed.
-    //     // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
-    // }
-
-    // public function sortDate()
-    // {
-    //     // This method will be triggered when the Enter key is pressed.
-    //     // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
-    // }
+    
 
     // Method to reset notification
     public function resetNotification()
@@ -220,82 +217,99 @@ class LedgerSheetShow extends Component
         $this->showNotification = false;
     }
 
-    // Render the component
-    // public function render()
+
+
+    // public function calculatetotalsperYear()
     // {
-    //     $query = ledgerSheetModel::query();
-
-    //     // Apply the month filter if a month is selected
-    //     if ($this->selectedMonth) {
-    //         $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
-    //         $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
-            
-    //         $query->whereBetween('ls_date', [$startOfMonth, $endOfMonth]);
-    //     }
-
-    //     // Add the search filter
-    //     // Add the search filter
-    //     //@vince eto edited function sa search
-    //     $query->where(function ($q) {
-    //         $q ->where('ls_id', 'like', '%' . $this->search . '%')
-    //         ->orWhere('ls_date', 'like', '%' . $this->search . '%')
-    //         ->orWhere('ls_vouchernum', 'like', '%' . $this->search . '%')
-    //         ->orWhere('ls_particulars', 'like', '%' . $this->search . '%')
-    //         ->orWhere('ls_balance_debit', 'like', '%' . $this->search . '%')
-    //         ->orWhere('ls_debit', 'like', '%' . $this->search . '%')
-    //         ->orWhere('ls_credit', 'like', '%' . $this->search . '%')
-    //         ->orWhere('ls_credit_balance', 'like', '%' . $this->search . '%');
-    //     });
-
-    //     // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
-    //     $query->orderBy($this->sortField , $this->sortDirection);
-
-    //     $internet_subscription_expenses = $query->orderBy('id', 'ASC')->get(); // Changed from paginate() to get()
-
-    //     // Calculate the total balance, debit, and credit
-    //     $this->totalBalanceDebit = $query->sum('ls_balance_debit');
-    //     $this->totalDebit = $query->sum('ls_debit');
-    //     $this->totalCredit = $query->sum('ls_credit');
-    //     $this->totalCreditBalance = $query->sum('ls_credit_balance');
-
-    //     return view('livewire.internet-subscription-expenses-show',['general_ledger' => $internet_subscription_expenses]);
+    //     calculate totals per account name by year
+    //     save in database
     // }
 
+    // public function calculatetotalsperMonth()
+    // {
+    //     calculate totals per account name by month
+    //     save in database
+    // }
+
+
+    public function searchAction()
+    {
+        $query = ledgerSheetModel::query();
+        $this->ledger_sheet = $query->where(function ($q) {
+            $q ->where('ls_accountname', 'like', '%' . $this->search . '%')
+            ->orWhere('ls_date', 'like', '%' . $this->search . '%')
+            ->orWhere('ls_vouchernum', 'like', '%' . $this->search . '%')
+            ->orWhere('ls_particulars', 'like', '%' . $this->search . '%')
+            ->orWhere('ls_balance_debit', 'like', '%' . $this->search . '%')
+            ->orWhere('ls_debit', 'like', '%' . $this->search . '%')
+            ->orWhere('ls_credit', 'like', '%' . $this->search . '%')
+            ->orWhere('ls_credit_balance', 'like', '%' . $this->search . '%');
+        })->get();
+    }
+    
     public function fetchGeneralLedgerData()
     {
         // Check if ls_accountname is set
         if ($this->ls_accountname) {
             // Fetch general ledger data filtered by ls_accountname
-            $this->ledger_sheet = ledgerSheetModel::where('ls_accountname', $this->ls_accountname)->get(); and year is 2024
+            $this->ledger_sheet = ledgerSheetModel::where('ls_accountname', $this->ls_accountname)->get(); //and year is 2024
         } else {
             // If ls_accountname is not set, fetch all general ledger data
             $this->ledger_sheet = ledgerSheetModel::all();
         }
     }
 
-    // public function calculatetotalsperYear()
-    // {
-    //     calculate totals ng cash local treasury this month
-    //     save sa database
-    // }
+    //Sort Newest or Oldest First 
+    public function sortAction()
+    {
+        $this->ledger_sheet = $this->ledger_sheet->sortBy('created_at', SORT_REGULAR, $this->sortDirection === 'asc');
+    }
+    
+    //Sort by Month
+    public function sortDate()
+    {
+        if ($this->selectedMonth) {
+            $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
+            $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
+            
+            $this->ledger_sheet = $this->ledger_sheet->whereBetween('ls_date', [$startOfMonth, $endOfMonth]);
+        }
+    }
 
-    // public function calculatetotalsperMonth()
-    // {
-    //     calculate totals ng cash local treasury this year
-    //     save sa database
-    // }
+    public function calculateTotals($query)
+    {
+        // Calculate totals
+        $this->totalBalanceDebit = $query->sum('ls_balance_debit');
+        $this->totalDebit = $query->sum('ls_debit');
+        $this->totalCredit = $query->sum('ls_credit');
+        $this->totalCreditBalance = $query->sum('ls_credit_balance');
+    }
 
-
+        // Render the component
     public function render()
     {
-        // Call fetchGeneralLedgerData method to fetch data
-        $this->fetchGeneralLedgerData();
+        $query = ledgerSheetModel::query();
 
-        // Return view with general ledger data
-        return view('livewire.ledger-sheet-show', [
-            'ledger_sheet' => $this->ledger_sheet,
-        ]);
+    
+        if ($this->search) {
+            $this->searchAction();
+        } else {
+            $this->fetchGeneralLedgerData();
+        }
+    
+        // Apply sorting
+        $this->sortAction();
+        $this->sortDate();
 
-        // return view('livewire.ledger-sheet-show');
+        // Calculate totals
+        $this->calculateTotals($query);
+
+        // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
+        $query->orderBy($this->sortField , $this->sortDirection);
+
+        $ledger_sheet = $query->orderBy('ls_vouchernum', 'ASC')->get(); // Changed from paginate() to get()
+
+        return view('livewire.ledger-sheet-show',['ledger_sheet' => $ledger_sheet]);
     }
+
 }

@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ledgersheet', function (Blueprint $table) {
-            $table->id('ls_id');
+            $table->string('ls_vouchernum', 255)->primary();
             $table->string('ls_accountname');
             $table->date('ls_date')->nullable();
-            $table->string('ls_vouchernum')->nullable(); //@vince eto inedit ko
             $table->longText('ls_particulars')->nullable(); //@vince eto inedit ko
             $table->decimal('ls_balance_debit',15,2)->nullable();
             $table->decimal('ls_debit', 15,2)->nullable();

@@ -28,13 +28,14 @@
                     <input type="month" id="date-range" placeholder="Select Date" wire:model="selectedMonth" wire:change="sortDate" class="form-control rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" style="width: 170px;">
 
                     
-                    <select wire:model="ls_accountcode" wire:change="set_accountname($event.target.value)">
+                    <!-- Select Account Name -->
+                    <select wire:model="ls_accountcode" wire:change="setAccountName($event.target.value)">
                     <option value="">Select Account</option>
                     <option value="Cash Local Treasury">Cash Local Treasury</option>
                     <option value="Accounts Receivable">Accounts Receivable</option>
                     <option value="Rent Income">Rent Income</option>
-
                     </select>
+
                     <!-- Sort -->
                     <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
                         <option value="asc">Newest First</option>
@@ -60,7 +61,7 @@
                     </button>
                  
                     <!-- Archive button -->
-                    <a href="{{ route('AccDepreciationDisasterResponseandRescueEquipmentArchived') }}" class="relative group border border-gray-300 bg-white hover:bg-gray-200 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
+                    <a href="{{ route('LedgerSheetArchive') }}" class="relative group border border-gray-300 bg-white hover:bg-gray-200 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
                         <svg class="w-5 h-5" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"></path>
                         </svg>
@@ -85,7 +86,6 @@
                             <!-- Include message modal and session message -->
                             @include('livewire.ledger-sheet-modal')
                             <tr class="text-center shadow-md"> <!-- Table heading design -->
-                                <th scope="col" class="border-r p-2" style="width: 10px">No.</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 150px">Voucher No.</th>
                                 <th scope="col" class="border-r border-l p-2">Particulars</th>
@@ -102,7 +102,6 @@
                         <tbody class="space-y-4  overflow-y-scroll  ">
                             @forelse ($ledger_sheet as $ledger_sheets)
                                 <tr class = "border-b border-gray-300 ">
-                                    <td scope="row" class="border-r border-b p-2 border-gray-300 px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $ledger_sheets-> ls_id }}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300">{{ $ledger_sheets-> ls_date}}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300">{{ $ledger_sheets-> ls_vouchernum}}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300">{{ $ledger_sheets-> ls_particulars}}</td>                               
@@ -120,10 +119,10 @@
                                             </button>
                                             <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">  
                                                 <!-- Show Edit and Archive only for active records -->
-                                                <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editGeneralLedger({{ $ledger_sheets->ls_id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editGeneralLedger({{ $ledger_sheets->ls_vouchernum }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                     Edit
                                                 </button> 
-                                                <button type="button" wire:click="softDeleteGeneralLedger({{ $ledger_sheets->ls_id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                <button type="button" wire:click="softDeleteGeneralLedger({{ $ledger_sheets->ls_vouchernum }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                     Archive
                                                 </button>                                                                                                                                                                                                                                                                                                                                                           
                                             </div>
@@ -156,9 +155,6 @@
 
     </div> <!-- journal main content div tag 2 -->
 
-    <!-- <div>
-        <p class="font-extrabold text-blue-800 text-3xl">{{$ls_accountname ?? "Ledger Sheets"}}</p>
-    </div> -->
 
 
 

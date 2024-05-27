@@ -16,7 +16,8 @@ class ledgerSheetModel extends Model
     use LogsActivity;
 
     protected $table = 'ledgersheet';
-    protected $primaryKey = 'ls_id';
+    protected $primaryKey = 'ls_vouchernum';
+    public $incrementing = false;
 
     protected $fillable = [
         'ls_accountname',

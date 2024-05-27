@@ -253,6 +253,13 @@ Route::get('/ledgersheet', function () {
     return view('ledgersheet.ledgerSheetView');
 });
 
+Route::get('/ledgersheetarchive', function () {
+    return view('ledgersheet.ledgerSheetView');
+});
+
+Route::get('/ledgersheet', [App\Http\Controllers\ledgerSheetController::class, 'index'])->name('LedgerSheet');
+Route::get('/ledgersheetarchive', [App\Http\Controllers\ledgerSheetTrash::class, 'index'])->name('LedgerSheetArchive');
+
 
 
 

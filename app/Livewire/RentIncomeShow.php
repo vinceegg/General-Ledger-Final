@@ -216,6 +216,8 @@ class RentIncomeShow extends Component
         }
     }
 
+    
+
     // Render the component
     public function render()
     {

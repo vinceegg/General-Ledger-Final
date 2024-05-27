@@ -22,47 +22,58 @@
                 <form wire:submit.prevent="saveGeneralLedger" x-data>
                     <!-- Modal content -->
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">
+                        <input type="hidden" wire:model="ls_accountname">
+                        <div class="col-span-2">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Account Name</label>
+                            <select wire:model="ls_accountname" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('ls_accountname') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="">Select Account Name</option>
+                                <option value="Cash Local Treasury">Cash Local Treasury</option>
+                                <option value="Accounts Receivable">Accounts Receivable</option>
+                                <option value="Rent Income">Rent Income</option>
+                            </select>
+                            @error('ls_accountname') <span class="text-red-500">{{ $message }}</span> @enderror
+                        </div> 
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
-                            <input type="date" wire:model="gl_date" class="w-full bg-gray-50 border {{ $errors->has('gl_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            @error('gl_date') <span class="text-red-500">{{ $message }}</span> @enderror
+                            <input type="date" wire:model="ls_date" class="w-full bg-gray-50 border {{ $errors->has('ls_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('ls_date') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Voucher No.</label>
-                            <input type="text" wire:model="gl_vouchernum" class="bg-gray-50 border {{ $errors->has('gl_vouchernum') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <input type="text" wire:model="ls_vouchernum" class="bg-gray-50 border {{ $errors->has('ls_vouchernum') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="YYYY-MM-JEV Number"> 
-                            @error('gl_vouchernum') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('ls_vouchernum') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-2">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
-                            <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('gl_particulars') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                            textarea id="description" rows="2" wire:model="gl_particulars">
-                            @error('gl_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
+                            <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('ls_particulars') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                            textarea id="description" rows="2" wire:model="ls_particulars">
+                            @error('ls_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
                             </textarea>
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Balance Debit</label>
-                            <input type="number" wire:model="gl_balance_debit" class="bg-gray-50 border {{ $errors->has('gl_balance_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <input type="number" wire:model="ls_balance_debit" class="bg-gray-50 border {{ $errors->has('ls_balance_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="₱">
-                            @error('gl_balance_debit') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('ls_balance_debit') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Debits</label>
-                            <input type="number" wire:model="gl_debit" class="bg-gray-50 border {{ $errors->has('gl_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <input type="number" wire:model="ls_debit" class="bg-gray-50 border {{ $errors->has('ls_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="₱">
-                            @error('gl_debit') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('ls_debit') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits</label>
-                            <input type="number" wire:model="gl_credit" class="bg-gray-50 border {{ $errors->has('gl_credit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <input type="number" wire:model="ls_credit" class="bg-gray-50 border {{ $errors->has('ls_credit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="₱">
-                            @error('gl_credit') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('ls_credit') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits Balance</label>
-                            <input type="number" wire:model="gl_credit_balance" class="bg-gray-50 border {{ $errors->has('gl_credit_balance') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <input type="number" wire:model="ls_credit_balance" class="bg-gray-50 border {{ $errors->has('ls_credit_balance') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="₱">
-                            @error('gl_credit_balance') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('ls_credit_balance') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>      
                     </div> <!-- Modal content div tag -->
 
@@ -119,49 +130,54 @@
             <div class="p-4 pt-20 pb-16 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 overflow-y-auto max-h-[calc(100vh-160px)]">
                 <!-- Function for adding -->    
                 <form wire:submit.prevent="updateGeneralLedger" x-data>
-                    <!-- Modal content -->
+                    <!-- Modal content -->                
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">
-                        <div class="col-span-2 sm:col-span-1">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
-                            <input type="date" wire:model="gl_date" class="w-full bg-gray-50 border {{ $errors->has('gl_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            @error('gl_date') <span class="text-red-500">{{ $message }}</span> @enderror
+                    <input type="hidden" wire:model="ls_accountname">
+                        <div class="col-span-2">
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Account Name</label>
+                            <select wire:model="ls_accountname" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('ls_accountname') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="">Select Account Name</option>
+                                <option value="Cash Local Treasury">Cash Local Treasury</option>
+                                <option value="Accounts Receivable">Accounts Receivable</option>
+                                <option value="Rent Income">Rent Income</option>
+                            </select>
+                            @error('ls_accountname') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Voucher No.</label>
-                            <input type="text" wire:model="gl_vouchernum" class="bg-gray-50 border {{ $errors->has('gl_vouchernum') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="YYYY-MM-JEV Number"> 
-                            @error('gl_vouchernum') <span class="text-red-500">{{ $message }}</span> @enderror
+                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
+                            <input type="date" wire:model="ls_date" class="w-full bg-gray-50 border {{ $errors->has('ls_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            @error('ls_date') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-2">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Particulars</label>
-                            <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('gl_particulars') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                            textarea id="description" rows="2" wire:model="gl_particulars">
-                            @error('gl_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
+                            <textarea class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('ls_particulars') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                            textarea id="description" rows="2" wire:model="ls_particulars">
+                            @error('ls_particulars') <span class="text-red-500">{{ $message }}</span> @enderror
                             </textarea>
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Balance Debit</label>
-                            <input type="number" wire:model="gl_balance_debit" class="bg-gray-50 border {{ $errors->has('gl_balance_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <input type="number" wire:model="ls_balance_debit" class="bg-gray-50 border {{ $errors->has('ls_balance_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="₱">
-                            @error('gl_balance_debit') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('ls_balance_debit') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Debits</label>
-                            <input type="number" wire:model="gl_debit" class="bg-gray-50 border {{ $errors->has('gl_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <input type="number" wire:model="ls_debit" class="bg-gray-50 border {{ $errors->has('ls_debit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="₱">
-                            @error('gl_debit') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('ls_debit') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits</label>
-                            <input type="number" wire:model="gl_credit" class="bg-gray-50 border {{ $errors->has('gl_credit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <input type="number" wire:model="ls_credit" class="bg-gray-50 border {{ $errors->has('ls_credit') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="₱">
-                            @error('gl_credit') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('ls_credit') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credits Balance</label>
-                            <input type="number" wire:model="gl_credit_balance" class="bg-gray-50 border {{ $errors->has('gl_credit_balance') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            <input type="number" wire:model="ls_credit_balance" class="bg-gray-50 border {{ $errors->has('ls_credit_balance') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="₱">
-                            @error('gl_credit_balance') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('ls_credit_balance') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>      
                     </div> <!-- Modal content div tag -->
 
