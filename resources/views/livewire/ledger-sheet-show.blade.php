@@ -140,7 +140,7 @@
                         <tfoot>
                             <!-- Subtotal -->
                             <tr class="border-t shadow-inner  sticky bottom-0 bg-white">
-                                <td colspan="4" class="px-6 py-4 font-large text-gray-900 whitespace-nowrap dark:text-white text-right font-bold">Sub Total:</td>
+                                <td colspan="3" class="px-6 py-4 font-large text-gray-900 whitespace-nowrap dark:text-white text-right font-bold">Sub Total:</td>
                                 <td class="font-bold">₱{{ number_format($totalBalanceDebit, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>
@@ -154,6 +154,8 @@
          <!-- 2nd rectangle div tag --> 
 
     </div> <!-- journal main content div tag 2 -->
+
+    
 
 
 

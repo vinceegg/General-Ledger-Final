@@ -7,44 +7,51 @@ use App\Models\GeneralJournalModel;
 
 class GeneralJournalTrash extends Component
 {
-    public $general_ledger_id;
+    public 
+    $gj_accountcodes_data = []; //@korinlv: added this
+
+    public $general_journal_id;
     public $deleteType;
     public $softDeletedData;
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
-    public $file;
+  
 
     public function mount()
     {
-        $this->softDeletedData = GeneralJournalModel::onlyTrashed()->get();
+        $this->softDeletedData = GeneralJournalModel::onlyTrashed()
+        ->with(['gj_accountcodes_data' => function ($query) {
+            $query->withTrashed();
+        }])
+        ->get();    
     }
 
     // Method to restore soft-deleted record
-    public function restoreGeneralLedger($id)
+    public function restoreGeneralJournal($id)
     {
-        $general_ledger = GeneralJournalModel::onlyTrashed()->find($id);
-        if ($general_ledger) {
-            $general_ledger->restore();
+        $general_journal = GeneralJournalModel::onlyTrashed()->find($id);
+        if ($general_journal) {
+            $general_journal->restore();
             session()->flash('message', 'Record restored successfully.');
             $this->softDeletedData = GeneralJournalModel::onlyTrashed()->get();
         }
     }
 
-    public function deleteGeneralLedger(int $general_ledger_id, $type = 'soft')
+    public function deleteGeneralJournal(int $general_journal_id, $type = 'soft')
     {
-        $this->general_ledger_id = $general_ledger_id;
+        $this->general_journal_id = $general_journal_id;
         $this->deleteType = $type; // Set the delete type
     }
 
     // Permanently delete 
-    public function destroyGeneralLedger()
+    public function destroyGeneralJournal()
     {
-        $general_ledger = GeneralJournalModel::withTrashed()->find($this->general_ledger_id);
+        $general_journal = GeneralJournalModel::withTrashed()->find($this->general_journal_id);
         if ($this->deleteType == 'force') {
-            $general_ledger->forceDelete();
+            $general_journal->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
         } else {
-            $general_ledger->delete();
+            $general_journal->delete();
             session()->flash('message', 'Archived Successfully');
         }
         $this->dispatch('close-modal');
@@ -54,6 +61,6 @@ class GeneralJournalTrash extends Component
 
     public function resetInput()
     {
-        $this->general_ledger_id = '';
+        $this->general_journal_id = '';
     }
 }
