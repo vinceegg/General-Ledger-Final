@@ -229,6 +229,24 @@ class GeneralJournalShow extends Component
         }
     }
 
+    public function softDeleteGeneralJournal($gj_jevnum)
+    {
+        $general_journal = GeneralJournalModel::with('gj_accountcodes_data')->find($gj_jevnum);
+        if ($general_journal) {
+            // Delete the related sundries first
+            foreach ($general_journal->gj_accountcodes_data as $sundry) {
+                $sundry->delete();
+            }
+
+        // Now soft delete the journal
+        $general_journal->delete();
+        session()->flash('message', 'Soft Deleted Successfully');
+    }
+
+        $this->resetInput();
+        $this->dispatch('close-modal');
+    }
+
     public function importGJ()
     {
     // Ensure that a file has been uploaded

@@ -4,13 +4,7 @@ namespace App\Livewire;
 
 use App\Models\CashDisbursementJournalModel;
 use Livewire\Component;
-use App\Exports\CashDisbursementJournalExport;
-use App\Imports\CashDisbursementJournalImport;
-use App\Models\CDJ_SundryModel;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
-use Carbon\Carbon;
 
 class CashDisbursementJournalTrash extends Component
 {
@@ -19,10 +13,9 @@ class CashDisbursementJournalTrash extends Component
     public 
     $cdj_sundry_data = [], //@korinlv: added this
     $deleteType;
-// Added deleteType property
 
     public $search;
-    public $cash_disbursement_journal_id;
+    public $cdj_jevnum;
     public $softDeletedData;
     public $file;
     public $showNotification = false; // Control notification visibility
@@ -40,9 +33,9 @@ class CashDisbursementJournalTrash extends Component
     }
 
     //@korinlv: edited this function
-    public function restoreCashDisbursementJournal($id)
+    public function restoreCashDisbursementJournal($cdj_jevnum)
     {
-        $cash_disbursement_journal = CashDisbursementJournalModel::onlyTrashed()->find($id);
+        $cash_disbursement_journal = CashDisbursementJournalModel::onlyTrashed()->find($cdj_jevnum);
         if ($cash_disbursement_journal) {
             // Load trashed sundries
             $trashedSundries = $cash_disbursement_journal->cdj_sundry_data()->onlyTrashed()->get();
@@ -55,21 +48,21 @@ class CashDisbursementJournalTrash extends Component
         }
     }
 
-    public function deleteCashDisbursementJournal(int $cash_disbursement_journal_id, $type = 'soft')
+    public function deleteCashDisbursementJournal(string $cdj_jevnum, $type = 'soft')
     {
-        $this->cash_disbursement_journal_id = $cash_disbursement_journal_id;
+        $this->cdj_jevnum = $cdj_jevnum;
         $this->deleteType = $type; // Set the delete type
     }
 
     //permanently delete CheckDisbursementJournal
     public function destroyCashDisbursementJournal()
     {
-        $cash_disbursement_journal_id = CashDisbursementJournalModel::withTrashed()->find($this->cash_disbursement_journal_id);
+        $cdj_jevnum = CashDisbursementJournalModel::withTrashed()->find($this->cdj_jevnum);
         if ($this->deleteType == 'force') {
-            $cash_disbursement_journal_id->forceDelete();
+            $cdj_jevnum->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
         } else {
-            $cash_disbursement_journal_id->delete();
+            $cdj_jevnum->delete();
             session()->flash('message', 'Archived Successfully');
         }
         $this->dispatch('close-modal');
@@ -79,6 +72,6 @@ class CashDisbursementJournalTrash extends Component
 
     public function resetInput()
     {
-        $this-> cash_disbursement_journal_id = '';
+        $this-> cdj_jevnum = '';
     }
 }
