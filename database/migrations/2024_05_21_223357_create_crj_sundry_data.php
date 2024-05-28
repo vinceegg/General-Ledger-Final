@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('crj_sundry_data', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('cash_receipt_journal_id')->constrained('cash_receipt_journal')->onDelete('cascade');
+            $table->bigIncrements('crj_id');
+            $table->string('crj_jevnum'); // Define the foreign key column
+            $table->foreign('crj_jevnum')->references('crj_jevnum')->on('cash_receipt_journal')->onDelete('cascade'); // Set the foreign key constraint
             $table->string('crj_accountcode')->nullable();
             $table->decimal('crj_debit', 15,2)->nullable();
             $table->decimal('crj_credit', 15,2)->nullable();

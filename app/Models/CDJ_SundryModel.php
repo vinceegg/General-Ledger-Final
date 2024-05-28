@@ -13,8 +13,13 @@ class CDJ_SundryModel extends Model
 
     protected $table = 'cdj_sundry_data';
 
+    protected $primaryKey = 'cdj_id'; // Specify the new primary key
+
+    public $incrementing = true; // Ensure the primary key is auto-incrementing
+
+    protected $keyType = 'int'; 
+
     protected $fillable = [
-        'cash_disbursement_journal_id',
         'cdj_pr',
         'cdj_sundry_accountcode',
         'cdj_debit',
@@ -23,6 +28,6 @@ class CDJ_SundryModel extends Model
 
     public function cashDisbursementJournal()
     {
-        return $this->belongsTo(CashDisbursementJournalModel::class, 'cash_disbursement_journal_id');
+        return $this->belongsTo(CashDisbursementJournalModel::class, 'cdj_jevnum');
     }
 }

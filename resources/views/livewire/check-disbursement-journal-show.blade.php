@@ -72,9 +72,8 @@
                         <thead class="text-base text-left shadow-md text-black sticky top-0 bg-white">
                             @include('livewire.check-disbursement-journal-modal')
                             <tr class="text-center p-1">
-                                <th rowspan="3" class="border-r p-2" style="width: 10px">No.</th>
-                                <th rowspan="3" class="border-r border-l " style="width: 130px">Date</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 120px">Check No.</th>
+                                <th rowspan="3" class="border-r border-l " style="width: 130px">Date</th>                            
                                 <th rowspan="3" class="border-r border-l " style="width: 300px">Payee</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 150px">BUR</th>
                                 <th colspan="4" class="border-r border-b border-l ">Credit</th>
@@ -110,9 +109,8 @@
                             @foreach ($ckdj_sundry_data as $index => $ckdj_sundries_data)
                             <tr class="{{ $index === $lastRowIndex && $ckdj_sundries_data->ckdj_credit ? 'border-b' : '' }} border-gray-300 ">
                                     @if ($index == 0) {{-- Only display these cells on the first iteration --}}
-                                        <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $check_disbursement_journals->id }}</td>
+                                        <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $check_disbursement_journals->ckdj_checknum }}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_entrynum_date}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_checknum}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_payee}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_bur}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_cib_lcca}}</td>
@@ -127,9 +125,8 @@
                                     <td class="border-l p-1 border-gray-300">₱{{ number_format($ckdj_sundries_data->ckdj_credit, 2, '.', ',') }}</td>
                             @endforeach
                             @if ($ckdj_sundry_data->isEmpty()) {{-- If there are no account codes, show a single row --}}
-                                    <td class="border-r border-b p-2 border-gray-300">{{ $check_disbursement_journals-> id }}</td>
+                                    <td class="border-r border-b p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_checknum }}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_entrynum_date}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_checknum}}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_payee}}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_bur}}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_cib_lcca}}</td>
@@ -150,15 +147,12 @@
                                                 </button>
                                                 <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
                                                     <!-- Show Edit and Archive only for active records -->
-                                                        <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editCheckDisbursementJournal({{  $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                        <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editCheckDisbursementJournal('{{  $check_disbursement_journals->ckdj_checknum }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                                 Edit
                                                         </button>
-                                                        <button type="button" wire:click="softDeleteCheckDisbursementJournal({{  $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                        <button type="button" wire:click="softDeleteCheckDisbursementJournal('{{  $check_disbursement_journals->ckdj_checknum }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                                 Archive
-                                                        </button>
-                                                        
-                                                    <!-- Show Delete and Restore only for deleted records -->
-                                                                                                                                   
+                                                        </button>                                                                                    
                                                 </div>
                                             </div>
                                         </td> 
@@ -174,7 +168,7 @@
                         <tfoot>
                             <!-- Subtotal -->
                             <tr class="border-t shadow-inner  sticky bottom-0 bg-white">
-                                <td colspan="5" class="px-6 py-4 text-right font-bold text-gray-900 whitespace-nowrap dark:text-white">Sub Total:</td>
+                                <td colspan="4" class="px-6 py-4 text-right font-bold text-gray-900 whitespace-nowrap dark:text-white">Sub Total:</td>
                                 <td class="font-bold">₱{{ number_format($totalCib, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalAccount1, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalAccount2, 2) }}</td>

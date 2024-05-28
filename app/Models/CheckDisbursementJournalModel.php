@@ -17,9 +17,16 @@ class CheckDisbursementJournalModel extends Model
 
     protected $table = 'check_disbursement_journal';
 
+    
+    protected $primaryKey = 'ckdj_checknum'; 
+
+    public $incrementing = false; 
+
+    protected $keyType = 'string'; 
+
     protected $fillable = [
-        'ckdj_entrynum_date',
         'ckdj_checknum',
+        'ckdj_entrynum_date',
         'ckdj_payee',
         'ckdj_bur',
         'ckdj_cib_lcca',
@@ -31,33 +38,32 @@ class CheckDisbursementJournalModel extends Model
         'ckdj_sundry_accountcode',
         'ckdj_debit',
         'ckdj_credit',
-
     ];
 
-        //@korinlv: added this function
-        public function ckdj_sundry_data()
-        {
-            return $this->hasMany(CKDJ_SundryModel::class, 'check_disbursement_journal_id');
-        }
+    //@korinlv: added this function
+    public function ckdj_sundry_data()
+    {
+        return $this->hasMany(CKDJ_SundryModel::class, 'ckdj_checknum');
+    }
 
-        protected static $logAttributes = ['*'];
-            
-        public function getActivitylogOptions(): LogOptions
-        {
-            return LogOptions::defaults()
-                ->logOnly(self::$logAttributes);
-        }
+    protected static $logAttributes = ['*'];
+        
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(self::$logAttributes);
+    }
 
-        public function getDescriptionForEvent(string $eventName): string
-        {
+    public function getDescriptionForEvent(string $eventName): string
+    {
 
-            $tableName = "Check Disbursement Journal";
-            
-            return "{$tableName}";
-        }
+        $tableName = "Check Disbursement Journal";
+        
+        return "{$tableName}";
+    }
 
-        protected function getCauser()
-        {
-            return User::find($this->employee_id);
-        }
+    protected function getCauser()
+    {
+        return User::find($this->employee_id);
+    }
 }

@@ -16,37 +16,41 @@ class GeneralJournalModel extends Model
     use LogsActivity;
     
     protected $table = 'general_journal';
+
+    protected $primaryKey = 'gj_jevnum'; 
+
+    public $incrementing = false; 
+
+    protected $keyType = 'string';
  
     protected $fillable = [
-        'gj_entrynum',
-        'gj_entrynum_date',
         'gj_jevnum',
+        'gj_entrynum_date',
         'gj_particulars',
     ];
 
-        //@korinlv: added  this
-        public function gj_accountcodes_data()
-        {
-            return $this->hasMany(GeneralJournal_AccountCodesModel::class, 'general_journal_id');
-        }
-        protected static $logAttributes = ['*'];
-    
-        public function getActivitylogOptions(): LogOptions
-        {
-            return LogOptions::defaults()
-                ->logOnly(self::$logAttributes);
-        }
+    //@korinlv: added  this
+    public function gj_accountcodes_data()
+    {
+        return $this->hasMany(GeneralJournal_AccountCodesModel::class, 'gj_jevnum');
+    }
+    protected static $logAttributes = ['*'];
 
-        public function getDescriptionForEvent(string $eventName): string
-        {
-            $tableName = "General Journal";
-            
-            return "{$tableName}";
-        }
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(self::$logAttributes);
+    }
 
-        protected function getCauser()
-        {
-            return User::find($this->employee_id);
-        }
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        $tableName = "General Journal";
+        
+        return "{$tableName}";
+    }
 
+    protected function getCauser()
+    {
+        return User::find($this->employee_id);
+    }
 }

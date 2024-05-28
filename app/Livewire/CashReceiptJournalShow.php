@@ -27,9 +27,8 @@ class CashReceiptJournalShow extends Component
     $deleteType; // Added deleteType property
 
     public $search;
-    public $cash_receipt_journal_id; // Add this property
     public $selectedMonth;
-    public $sortField = 'crj_entrynum_date'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
+    public $sortField = 'crj_jevnum'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
@@ -39,15 +38,14 @@ class CashReceiptJournalShow extends Component
     public $totalCollectionCredit = 0;
     public $totalDepositDebit = 0;
     public $totalDepositCredit = 0;
-    public $viewDeleted = false; // Property to toggle deleted records view
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
 
     protected function rules()
     {
         return [
-            'crj_entrynum_date' => 'nullable|date',
-            'crj_jevnum' => 'nullable|integer',
+            'crj_jevnum' => 'nullable|string',
+            'crj_entrynum_date' => 'nullable|date',        
             'crj_payor' => 'nullable|string',
             'crj_collection_debit' => 'nullable|numeric',
             'crj_collection_credit' => 'nullable|numeric',
@@ -69,7 +67,7 @@ class CashReceiptJournalShow extends Component
     public function mount()
     {
         // Fetch existing sundry data for the given journal ID
-        $journal = CashReceiptJournalModel::find($this->cash_receipt_journal_id);
+        $journal = CashReceiptJournalModel::find($this->crj_jevnum);
 
         if ($journal && $journal->crj_sundry_data()->exists()) {
             // If there is existing sundry data in the database, load it
@@ -129,14 +127,12 @@ class CashReceiptJournalShow extends Component
 
     //EDIT FUNCTION
     //@korinlv: updated this function
-    public function editCashReceiptJournal(int $cash_receipt_journal_id)
+    public function editCashReceiptJournal(string $crj_jevnum)
     {
-        $cash_receipt_journal = CashReceiptJournalModel::with('crj_sundry_data')->find($cash_receipt_journal_id);
+        $cash_receipt_journal = CashReceiptJournalModel::with('crj_sundry_data')->find($crj_jevnum);
         if ($cash_receipt_journal) {
-
-            $this->cash_receipt_journal_id = $cash_receipt_journal->id;
-            $this->crj_entrynum_date = $cash_receipt_journal->crj_entrynum_date;
             $this->crj_jevnum = $cash_receipt_journal->crj_jevnum;
+            $this->crj_entrynum_date = $cash_receipt_journal->crj_entrynum_date;       
             $this->crj_payor = $cash_receipt_journal->crj_payor;
             $this->crj_collection_debit = $cash_receipt_journal->crj_collection_debit;
             $this->crj_collection_credit = $cash_receipt_journal->crj_collection_credit;
@@ -154,8 +150,8 @@ class CashReceiptJournalShow extends Component
     public function updateCashReceiptJournal()
     {
         $validatedData = $this->validate([
-            'crj_entrynum_date' => 'nullable|date',
-            'crj_jevnum' => 'nullable|integer',
+            'crj_jevnum' => 'nullable|string',
+            'crj_entrynum_date' => 'nullable|date',           
             'crj_payor' => 'nullable|string',
             'crj_collection_debit' => 'nullable|numeric',
             'crj_collection_credit' => 'nullable|numeric',
@@ -172,11 +168,11 @@ class CashReceiptJournalShow extends Component
                 return $value === '' ? null : $value;
             }, $validatedData);
 
-            $cash_receipt_journal = CashReceiptJournalModel::findOrFail($this->cash_receipt_journal_id);
+            $cash_receipt_journal = CashReceiptJournalModel::findOrFail($this->crj_jevnum);
             $cash_receipt_journal->update($validatedData);
 
             // Get existing sundry data IDs
-            $existingSundryIds = $cash_receipt_journal->crj_sundry_data->pluck('id')->toArray();
+            $existingSundryIds = $cash_receipt_journal->crj_sundry_data->pluck('crj_id')->toArray();
 
             // Prepare an array to hold the IDs of incoming sundry data
             $incomingSundryIds = [];
@@ -187,17 +183,17 @@ class CashReceiptJournalShow extends Component
                     return $value === '' ? null : $value;
                 }, $data);
 
-                if (isset($data['id']) && $data['id']) {
+                if (isset($data['crj_id']) && $data['crj_id']) {
                     // Update existing account code
-                    $accountCode = CRJ_SundryModel::find($data['id']);
+                    $accountCode = CRJ_SundryModel::find($data['crj_id']);
                     if ($accountCode) {
                         $accountCode->update($data);
-                        $incomingSundryIds[] = $data['id'];
+                        $incomingSundryIds[] = $data['crj_id'];
                     }
                 } else {
                     // Create new account code
                     $newAccountCode = $cash_receipt_journal->crj_sundry_data()->create($data);
-                    $incomingSundryIds[] = $newAccountCode->id;
+                    $incomingSundryIds[] = $newAccountCode->ckdj_id;
                     
                     // Reset other fields except the newly added sundry entry
                     $this->crj_sundry_data[$key] = ['crj_accountcode' => '', 'crj_debit' => '', 'crj_credit' => ''];
@@ -220,30 +216,6 @@ class CashReceiptJournalShow extends Component
 
             $this->dispatch('close-modal');
     }
-
-
-    //DELETE FUNCTION
-    public function deleteCashReceiptJournal(int $cash_receipt_journal_id, $type = 'soft')
-    {
-        $this->cash_receipt_journal_id = $cash_receipt_journal_id;
-        $this->deleteType = $type; // Set the delete type
-    }
-
-    // Permanently delete 
-    public function destroyCashReceiptJournal()
-    {
-        $cash_receipt_journal = CashReceiptJournalModel::withTrashed()->find($this->cash_receipt_journal_id);
-        if ($this->deleteType == 'force') {
-            $cash_receipt_journal->forceDelete();
-            session()->flash('message', 'Permanently Deleted Successfully');
-        } else {
-            $cash_receipt_journal->delete();
-            session()->flash('message', 'Soft Deleted Successfully');
-        }
-        $this->dispatch('close-modal');
-        $this->resetInput();
-    }
-
 
     public function closeModal()
     {
@@ -271,9 +243,9 @@ class CashReceiptJournalShow extends Component
 
     // Soft delete CashReceiptJournal
     //@korinlv: edited this function
-    public function softDeleteCashReceiptJournal($cash_receipt_journal_id)
+    public function softDeleteCashReceiptJournal($crj_jevnum)
     {
-        $cash_receipt_journal = CashReceiptJournalModel::with('crj_sundry_data')->find($cash_receipt_journal_id);
+        $cash_receipt_journal = CashReceiptJournalModel::with('crj_sundry_data')->find($crj_jevnum);
         if ($cash_receipt_journal) {
             // Delete the related sundries first
             foreach ($cash_receipt_journal->crj_sundry_data as $sundry) {
@@ -312,14 +284,6 @@ class CashReceiptJournalShow extends Component
         }
     }
 
-    public function importViewCRJ(){
-        return view('journals.CRJ');
-    }
-
-    //EXPORT FUNCTION
-    public function exportCRJ(Request $request){
-        return Excel::download(new CashReceiptJournalExport, 'CRJ.xlsx');
-    }
     // @korin: edited this function
     public function exportCRJ_XLSX(Request $request) 
     {
@@ -348,37 +312,9 @@ class CashReceiptJournalShow extends Component
         // Since the sorting is already handled by the sortBy method, you don't need to add any code here.
     }
 
-
-    // Method to toggle viewDeleted
-    public function toggleDeletedView()
-    {
-        $this->viewDeleted = !$this->viewDeleted;
-    }
-
-
-    // Method to restore soft-deleted record
-    //@korinlv: edited this function
-    public function restoreCashReceiptJournal($id)
-    {
-        $cash_receipt_journal = CashReceiptJournalModel::onlyTrashed()->find($id);
-        if ($cash_receipt_journal) {
-            $trashedAccountCodes = $cash_receipt_journal->crj_sundry_data()->onlyTrashed()->get();
-            foreach ($trashedAccountCodes as $accountCode){
-                $accountCode->restore();
-            }
-            $cash_receipt_journal->restore();
-            session()->flash('message', 'Record restored successfully.');
-        }
-    }
-
     public function render()
     {
         $query = CashReceiptJournalModel::query();
-
-        // Fetch only soft-deleted records if viewDeleted is set to true
-        if ($this->viewDeleted) {
-            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
-        }
 
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {
@@ -388,28 +324,8 @@ class CashReceiptJournalShow extends Component
             $query->whereBetween('crj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
-        //@korinlv:added this function
-        $cash_receipt_journals = $query->with(['crj_sundry_data' => function($query){
-            if ($this->viewDeleted) {
-                $query->onlyTrashed();
-            }
-        }])->get();
-                
-        $totalDebit = 0;
-        $totalCredit = 0;
-        
-        foreach ($cash_receipt_journals as $journal) {
-            foreach ($journal->crj_sundry_data ?: [] as $sundry) { // Ensure sundry data is treated as an array
-                $totalDebit += $sundry->crj_debit ?? 0;
-                $totalCredit += $sundry->crj_credit ?? 0;
-            }
-        }
-            
-        $this->totalDebit = $totalDebit;
-        $this->totalCredit = $totalCredit;
-
         // Add the search filter
-        $query->where('id', 'like', '%' . $this->search . '%');
+        $query->where('crj_jevnum', 'like', '%' . $this->search . '%');
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);

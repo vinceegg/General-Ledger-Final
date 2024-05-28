@@ -29,19 +29,17 @@
                         <thead class="text-base text-left text-black sticky shadow-md top-0 bg-white">
                             @include('livewire.cash-disbursement-journal-modal')
                             <tr class="text-center p-1">
-                                <th rowspan="3" class="border-r p-2" style="width: 10px">No.</th>
+                                <th rowspan="3" class="border-r border-l " style="width: 120px">JEV No.</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 130px">Date</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 120px">Reference/<br>RD No.</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 120px">BUR No.</th>
-                                <th rowspan="3" class="border-r border-l " style="width: 400px">Accountable Officer</th>
-                                <th rowspan="3" class="border-r border-l " style="width: 120px">JEV No.</th>
+                                <th rowspan="3" class="border-r border-l " style="width: 400px">Accountable Officer</th>                 
                                 <th colspan="2" class="border-r border-b border-l ">Credit</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 150px">5-02-99-990</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 150px">5-02-02-010</th>
                                 <th colspan="4" class="border-b border-l ">Sundry</th>
                                 <th rowspan="3" style="width: 10px"></th> <!--Ito yung header row sa rightmost para di tumagos 3dotmenu pag sinoscroll-->
                             </tr>
-
                             <tr class="text-center ">
                                 <th rowspan="2" class="border-r border-l " style="width: 150px">Account Code</span></th>
                                 <th rowspan="2" class="border-r border-l " style="width: 150px">Amount</span></th>
@@ -51,7 +49,6 @@
                                 <th rowspan="2" class=" border-l " style="width: 150px">Credit</th>
                             </tr>     
                     </thead>
-
                        <!-- Table Body -->
                        <tbody class="space-y-4  overflow-y-scroll  ">
                             @forelse ($softDeletedData as $cash_disbursement_journals)

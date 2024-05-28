@@ -17,6 +17,12 @@ class CashReceiptJournalModel extends Model
     
     protected $table = 'cash_receipt_journal';
 
+    protected $primaryKey = 'crj_jevnum';
+
+    public $incrementing = false; 
+
+    protected $keyType = 'string';
+
     protected $fillable = [
         'crj_entrynum_date',
         'crj_jevnum',
@@ -33,8 +39,9 @@ class CashReceiptJournalModel extends Model
     //@korinlv: added  this
     public function crj_sundry_data()
     {
-        return $this->hasMany(CRJ_SundryModel::class, 'cash_receipt_journal_id');
+        return $this->hasMany(CRJ_SundryModel::class, 'crj_jevnum');
     }
+
     protected static $logAttributes = ['*'];
             
     public function getActivitylogOptions(): LogOptions

@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('general_journal', function (Blueprint $table) {
-            $table->id();
+            $table->string('gj_jevnum')->primary();
             $table->date('gj_entrynum_date')->nullable();
-            $table->integer('gj_jevnum')->nullable();
             $table->string('gj_particulars')->nullable();
             $table->softDeletes();
             $table->timestamps();

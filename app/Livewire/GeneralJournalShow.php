@@ -23,15 +23,13 @@ class GeneralJournalShow extends Component
     $deleteType; // Added deleteType property
 
     public $search;
-    public $general_journal_id; // Add this property
     public $selectedMonth;
-    public $sortField = 'id'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
+    public $sortField = 'gj_jevnum'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
     public $totalDebit = 0;
     public $totalCredit = 0;
-    public $viewDeleted = false; // Property to toggle deleted records view
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
 
@@ -41,7 +39,7 @@ class GeneralJournalShow extends Component
     {
         return [
             'gj_entrynum_date' => 'nullable|date',
-            'gj_jevnum' => 'nullable|integer',
+            'gj_jevnum' => 'nullable|string',
             'gj_particulars' => 'nullable|string',
             'gj_accountcodes_data' => 'required|array|min:1',
             'gj_accountcodes_data.*.gj_accountcode' => 'nullable|string',
@@ -60,7 +58,7 @@ class GeneralJournalShow extends Component
     public function mount()
     {
         // Fetch existing sundry data for the given journal ID
-        $journal = GeneralJournalModel::find($this->general_journal_id);
+        $journal = GeneralJournalModel::find($this->gj_jevnum);
 
         if ($journal && $journal->gj_accountcodes_data()->exists()) {
             // If there is existing sundry data in the database, load it
@@ -122,52 +120,44 @@ class GeneralJournalShow extends Component
         logger('Account code removed', $this->gj_accountcodes_data);
     }
 
-
-
     // Edit GeneralJournal
     //@korinlv: updated this function
-    public function editGeneralJournal($general_journal_id)
+    public function editGeneralJournal($gj_jevnum)
     {
-        $generalJournal = GeneralJournalModel::with('gj_accountcodes_data')->find($general_journal_id);
+        $generalJournal = GeneralJournalModel::with('gj_accountcodes_data')->find($gj_jevnum);
         if ($generalJournal) {
-            $this->general_journal_id = $generalJournal->id;
-            $this->gj_entrynum_date = $generalJournal->gj_entrynum_date;
             $this->gj_jevnum = $generalJournal->gj_jevnum;
+            $this->gj_entrynum_date = $generalJournal->gj_entrynum_date;
             $this->gj_particulars = $generalJournal->gj_particulars;
 
             // Handle related data as array of objects or similar structure
             $this->gj_accountcodes_data = $generalJournal->gj_accountcodes_data->toArray();
-        } else {
-            return redirect()->to('/GJ');
-        }
+        } 
     }
-
-
-    // Update GeneralJournal
+   // Update GeneralJournal
     //@korinlv: edited this function
     //@marii eto yung function na inupdate ko 
     public function updateGeneralJournal()
     {
         $validatedData = $this->validate([
             'gj_entrynum_date' => 'nullable|date',
-            'gj_jevnum' => 'nullable|numeric',
+            'gj_jevnum' => 'nullable|string',
             'gj_particulars' => 'nullable|string',
             'gj_accountcodes_data.*.gj_accountcode' => 'required|string',
             'gj_accountcodes_data.*.gj_debit' => 'nullable|numeric',
             'gj_accountcodes_data.*.gj_credit' => 'nullable|numeric',
         ]);
 
-
             // Convert empty strings to null in the main journal data
             $validatedData = array_map(function($value) {
                 return $value === '' ? null : $value;
             }, $validatedData);
 
-            $generalJournal = GeneralJournalModel::findOrFail($this->general_journal_id);
+            $generalJournal = GeneralJournalModel::findOrFail($this->gj_jevnum);
             $generalJournal->update($validatedData);
 
             // Get existing sundry data IDs
-            $existingSundryIds = $generalJournal->gj_accountcodes_data->pluck('id')->toArray();
+            $existingSundryIds = $generalJournal->gj_accountcodes_data->pluck('gj_id')->toArray();
 
             // Prepare an array to hold the IDs of incoming sundry data
             $incomingSundryIds = [];
@@ -178,62 +168,38 @@ class GeneralJournalShow extends Component
                     return $value === '' ? null : $value;
                 }, $data);
 
-                if (isset($data['id']) && $data['id']) {
+                if (isset($data['gj_id']) && $data['gj_id']) {
                     // Update existing account code
-                    $accountCode = GeneralJournal_AccountCodesModel::find($data['id']);
+                    $accountCode = GeneralJournal_AccountCodesModel::find($data['gj_id']);
                     if ($accountCode) {
                         $accountCode->update($data);
-                        $incomingSundryIds[] = $data['id'];
+                        $incomingSundryIds[] = $data['gj_id'];
                     }
                 } else {
                     // Create new account code
                     $newAccountCode = $generalJournal->gj_accountcodes_data()->create($data);
-                    $incomingSundryIds[] = $newAccountCode->id;
+                    $incomingSundryIds[] = $newAccountCode->gj_id;
 
                     // Reset other fields except the newly added sundry entry
                     $this->gj_accountcodes_data[] = ['gj_accountcode' => '', 'gj_debit' => '', 'gj_credit' => ''];
                 }
             }
 
-                // Calculate sundry data IDs to delete (those that are not in the incoming data)
-                $sundryIdsToDelete = array_diff($existingSundryIds, $incomingSundryIds);
+        // Calculate sundry data IDs to delete (those that are not in the incoming data)
+        $sundryIdsToDelete = array_diff($existingSundryIds, $incomingSundryIds);
 
-                // Delete sundry data not in the incoming data
-                GeneralJournal_AccountCodesModel ::destroy($sundryIdsToDelete);
+        // Delete sundry data not in the incoming data
+        GeneralJournal_AccountCodesModel ::destroy($sundryIdsToDelete);
 
-            // Update notification state
-            $this->notificationMessage = 'Updated Successfully';
-            $this->showNotification = true;
-            $this->resetInput();
-
-            // Dispatch browser event to handle notification visibility
-            $this->dispatch('notification-shown');
-
-            $this->dispatch('close-modal');
-    }
-
-
-    // Delete GeneralJournal
-    public function deleteGeneralJournal(int $general_journal_id, $type = 'soft')
-    {
-        $this->general_journal_id = $general_journal_id;
-        $this->deleteType = $type; // Set the delete type
-    }
-
-    // Permanently delete 
-    public function destroyGeneralJournal()
-    {
-        $general_journal = GeneralJournalModel::withTrashed()->find($this->general_journal_id);
-        if ($this->deleteType == 'force') {
-            $general_journal->forceDelete();
-            session()->flash('message', 'Permanently Deleted Successfully');
-        } else {
-            $general_journal->delete();
-            session()->flash('message', 'Soft Deleted Successfully');
-        }
-        
-        $this->dispatch('close-modal');
+        // Update notification state
+        $this->notificationMessage = 'Updated Successfully';
+        $this->showNotification = true;
         $this->resetInput();
+
+        // Dispatch browser event to handle notification visibility
+        $this->dispatch('notification-shown');
+
+        $this->dispatch('close-modal');
     }
 
     // Close modal and reset input
@@ -250,22 +216,6 @@ class GeneralJournalShow extends Component
         $this->gj_jevnum = '';
         $this->gj_particulars = '';
         $this->gj_accountcodes_data = [];
-    }
-
-    //@korinlv: edited this function
-    public function softDeleteGeneralJournal($general_journal_id)
-    {
-        $general_journal= GeneralJournalModel::find($general_journal_id);
-        if ( $general_journal) {
-            foreach ($general_journal->gj_accountcodes_data as $accountCode){
-                $accountCode->delete();
-            }
-            
-            $general_journal->delete();
-            session()->flash('message', 'Soft Deleted Successfully');
-    }    
-        $this->resetInput();
-        $this->dispatch('close-modal');
     }
 
     // Sorting logic SA SORT TO KORINNE HA
@@ -290,16 +240,7 @@ class GeneralJournalShow extends Component
         return redirect()->back()->with('success', 'Data imported successfully');
         }
     }
-    
-    public function importViewGJ(){
-        return view('journals.GJ');
-    }
 
-    //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportGJ(Request $request) 
-    {
-        return Excel::download(new GeneralJournalExport, 'GJ.xlsx');
-    }
     // @korin: edited this function
     public function exportGJ_XLSX(Request $request) 
     {
@@ -334,38 +275,11 @@ class GeneralJournalShow extends Component
         $this->showNotification = false;
     }
 
-    // Method to toggle viewDeleted
-    public function toggleDeletedView()
-    {
-        $this->viewDeleted = !$this->viewDeleted;
-    }
-
-    // Method to restore soft-deleted record
-    //@korinlv: edited this function
-    public function restoreGeneralJournal($id)
-    {
-        $general_journal = GeneralJournalModel::onlyTrashed()->find($id);
-        if ($general_journal) {
-            $trashedAccountCodes = $general_journal->gj_accountcodes_data()->onlyTrashed()->get();
-            foreach ($trashedAccountCodes as $accountCode){
-                $accountCode->restore();
-            }
-            $general_journal->restore();
-            session()->flash('message', 'Record restored successfully.');
-        }
-    }
-
     // Render the component
     public function render()
     {
         $query = GeneralJournalModel::query();
         
-
-        // Fetch only soft-deleted records if viewDeleted is set to true
-        if ($this->viewDeleted) {
-            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
-        }
-
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {
             $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
@@ -374,34 +288,13 @@ class GeneralJournalShow extends Component
             $query->whereBetween('gj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
-        //@korinlv:added this function
-        $general_journals = $query->with(['gj_accountcodes_data' => function($query){
-            if ($this->viewDeleted) {
-                $query->onlyTrashed();
-            }
-        }])->get();
-        
-        $totalDebit = 0;
-        $totalCredit = 0;
-
-        foreach ($general_journals as $journal) {
-            foreach ($journal->gj_accountcodes_data ?: [] as $accountCode) { // Ensure sundry data is treated as an array
-                $totalDebit += $accountCode->gj_debit ?? 0;
-                $totalCredit += $accountCode->gj_credit ?? 0;
-            }
-        }
-    
-        $this->totalDebit = $totalDebit;
-        $this->totalCredit = $totalCredit;
-
         // Add the search filter
-        $query->where('id', 'like', '%' . $this->search . '%');
+        $query->where('gj_jevnum', 'like', '%' . $this->search . '%');
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);
 
-        // Get paginated results
-        $general_journal = $query->orderBy('id', 'ASC')->get(); // Changed from paginate() to get()
+        $general_journal = $query->orderBy('gj_jevnum', 'ASC')->get(); // Changed from paginate() to get()
 
          // Compute the total debit and credit for the selected month
 

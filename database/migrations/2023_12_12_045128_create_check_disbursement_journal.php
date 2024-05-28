@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('check_disbursement_journal', function (Blueprint $table) {
-            $table->id();
-            $table->date('ckdj_entrynum_date')->nullable();
-            $table->integer('ckdj_checknum')->nullable();
+            $table->string('ckdj_checknum')->primary();
+            $table->date('ckdj_entrynum_date')->nullable();      
             $table->string('ckdj_payee')->nullable();
             $table->integer('ckdj_bur')->nullable();
             $table->decimal('ckdj_cib_lcca',15,2)->nullable();
