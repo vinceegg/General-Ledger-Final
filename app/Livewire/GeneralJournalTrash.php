@@ -20,7 +20,6 @@ class GeneralJournalTrash extends Component
     public $file;
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
-    
 
    //@korinlv: added this function
     public function mount()
@@ -43,7 +42,7 @@ class GeneralJournalTrash extends Component
                 $sundry->restore();
             }
             $general_journal->restore();
-            session()->flash('message', 'Record restored successfully.');
+            return redirect()->route('GeneralJournalArchived')->with('message', 'Restored Successfully');
         }
     }
 

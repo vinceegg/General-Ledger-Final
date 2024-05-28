@@ -70,6 +70,7 @@ class GeneralJournalShow extends Component
             ];
         }
     }
+    
     // Save new GeneralJournal
     //@korinlv: updated this function
     public function saveGeneralJournal()

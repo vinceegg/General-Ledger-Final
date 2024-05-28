@@ -44,7 +44,7 @@ class CashDisbursementJournalTrash extends Component
             }
 
             $cash_disbursement_journal->restore();
-            session()->flash('message', 'Record restored successfully.');
+            return redirect()->route('CashDisbursementJournalArchived')->with('message', 'Restored Successfully');
         }
     }
 

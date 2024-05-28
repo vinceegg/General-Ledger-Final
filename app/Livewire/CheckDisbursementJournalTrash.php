@@ -44,7 +44,7 @@ class CheckDisbursementJournalTrash extends Component
             }
 
             $check_disbursement_journal->restore();
-            session()->flash('message', 'Record restored successfully.');
+            return redirect()->route('CheckDisbursementJournalArchived')->with('message', 'Restored Successfully');
         }
     }
 

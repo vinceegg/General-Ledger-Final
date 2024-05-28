@@ -44,7 +44,7 @@ class CashReceiptJournalTrash extends Component
             }
 
             $cash_receipt_journal->restore();
-            session()->flash('message', 'Record restored successfully.');
+            return redirect()->route('CashReceiptJournalArchived')->with('message', 'Restored Successfully');
         }
     }
 
