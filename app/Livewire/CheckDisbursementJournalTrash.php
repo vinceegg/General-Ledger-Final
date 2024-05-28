@@ -74,6 +74,11 @@ class CheckDisbursementJournalTrash extends Component
     {
         $this-> ckdj_checknum = '';
     }
+
+    public function render()
+    {
+        return view('livewire.check-disbursement-journal-trash');
+    }
 }
 
 

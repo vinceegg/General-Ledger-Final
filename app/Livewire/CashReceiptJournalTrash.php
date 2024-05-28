@@ -74,4 +74,9 @@ class CashReceiptJournalTrash extends Component
     {
         $this->crj_jevnum = '';
     }
+
+    public function render()
+    {
+        return view('livewire.cash-receipt-journal-trash');
+    }
 }

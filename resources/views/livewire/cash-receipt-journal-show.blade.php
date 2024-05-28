@@ -44,7 +44,7 @@
                     </button>
 
                     <!-- Add -->
-                    <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
+                    <button type="button" wire:click="resetInput" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
                     data-modal-target="add-modal" data-modal-toggle="add-modal">
                         Add Transaction
                     </button>

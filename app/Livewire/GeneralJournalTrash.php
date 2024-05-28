@@ -20,6 +20,7 @@ class GeneralJournalTrash extends Component
     public $file;
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
+    
 
    //@korinlv: added this function
     public function mount()
@@ -71,5 +72,10 @@ class GeneralJournalTrash extends Component
     public function resetInput()
     {
         $this->gj_jevnum = '';
+    }
+
+    public function render()
+    {
+        return view('livewire.general-journal-trash');
     }
 }

@@ -74,4 +74,9 @@ class CashDisbursementJournalTrash extends Component
     {
         $this-> cdj_jevnum = '';
     }
+
+    public function render()
+    {
+        return view('livewire.cash-disbursement-journal-trash');
+    }
 }
