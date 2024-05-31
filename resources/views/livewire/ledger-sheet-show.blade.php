@@ -152,6 +152,16 @@
                 </div>   <!-- table container div tag -->             
         </div>
          <!-- 2nd rectangle div tag --> 
+         <div>
+            <button wire:click="calculateTotalsPerMonth" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;">Calculate Monthly Totals</button>
+            <button wire:click="calculateTotalsPerYear" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;">Calculate Yearly Totals</button>
+
+            @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
+        </div>
 
     </div> <!-- journal main content div tag 2 -->
 

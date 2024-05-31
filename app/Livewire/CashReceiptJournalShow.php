@@ -370,24 +370,8 @@ class CashReceiptJournalShow extends Component
             session()->flash('message', 'Record restored successfully.');
         }
     }
-
-    public function render()
-    {
-        $query = CashReceiptJournalModel::query();
-
-        // Fetch only soft-deleted records if viewDeleted is set to true
-        if ($this->viewDeleted) {
-            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
-        }
-
-        // Apply the month filter if a month is selected
-        if ($this->selectedMonth) {
-            $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
-            $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
-            
-            $query->whereBetween('crj_entrynum_date', [$startOfMonth, $endOfMonth]);
-        }
-
+    
+    public function totalsCashReceiptJournal($query){
         //@korinlv:added this function
         $cash_receipt_journals = $query->with(['crj_sundry_data' => function($query){
             if ($this->viewDeleted) {
@@ -407,6 +391,27 @@ class CashReceiptJournalShow extends Component
             
         $this->totalDebit = $totalDebit;
         $this->totalCredit = $totalCredit;
+    }
+
+    public function render()
+    {
+        $query = CashReceiptJournalModel::query();
+
+        // Fetch only soft-deleted records if viewDeleted is set to true
+        if ($this->viewDeleted) {
+            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
+        }
+
+        // Apply the month filter if a month is selected
+        if ($this->selectedMonth) {
+            $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
+            $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
+            
+            $query->whereBetween('crj_entrynum_date', [$startOfMonth, $endOfMonth]);
+        }
+
+        $this->totalsCashReceiptJournal($query);
+        
 
         // Add the search filter
         $query->where('id', 'like', '%' . $this->search . '%');

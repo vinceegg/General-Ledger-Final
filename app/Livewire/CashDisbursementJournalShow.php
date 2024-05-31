@@ -379,6 +379,28 @@ class CashDisbursementJournalShow extends Component
             session()->flash('message', 'Record restored successfully.');
         }
     }
+
+    public function totalsCashDisbursementJournal($query){
+        //@korinlv:added this function
+        $cash_disbursement_journals = $query->with(['cdj_sundry_data' => function($query){
+            if ($this->viewDeleted) {
+                $query->onlyTrashed();
+            }
+        }])->get();
+        
+        $totalDebit = 0;
+        $totalCredit = 0;
+
+        foreach ($cash_disbursement_journals as $journal) {
+            foreach ($journal->cdj_sundry_data ?: [] as $accountCode) { // Ensure sundry data is treated as an array
+                $totalDebit += $accountCode->cdj_debit ?? 0;
+                $totalCredit += $accountCode->cdj_credit ?? 0;
+            }
+        }
+
+        $this->totalDebit = $totalDebit;
+        $this->totalCredit = $totalCredit;
+    }
     
     public function render()
     {
@@ -397,25 +419,7 @@ class CashDisbursementJournalShow extends Component
             $query->whereBetween('cdj_entrynum_date', [$startOfMonth, $endOfMonth]);
         }
 
-        //@korinlv:added this function
-        $cash_disbursement_journals = $query->with(['cdj_sundry_data' => function($query){
-            if ($this->viewDeleted) {
-                $query->onlyTrashed();
-            }
-        }])->get();
-        
-        $totalDebit = 0;
-        $totalCredit = 0;
-
-        foreach ($cash_disbursement_journals as $journal) {
-            foreach ($journal->cdj_sundry_data ?: [] as $accountCode) { // Ensure sundry data is treated as an array
-                $totalDebit += $accountCode->cdj_debit ?? 0;
-                $totalCredit += $accountCode->cdj_credit ?? 0;
-            }
-        }
-    
-        $this->totalDebit = $totalDebit;
-        $this->totalCredit = $totalCredit;
+        $this->totalsCashDisbursementJournal($query);
 
         // Add the search filter
         $query->where('id', 'like', '%' . $this->search . '%');

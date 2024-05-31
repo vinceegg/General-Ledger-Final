@@ -151,6 +151,6 @@
                     </table>                   
                 </div>   <!-- table container div tag -->             
         </div> <!-- 2nd rectangle div tag -->
-        
+
     </div> <!-- journal main content div tag 2 -->
 </div> <!-- journal main content div tag 1 -->

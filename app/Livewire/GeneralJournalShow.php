@@ -355,25 +355,7 @@ class GeneralJournalShow extends Component
         }
     }
 
-    // Render the component
-    public function render()
-    {
-        $query = GeneralJournalModel::query();
-        
-
-        // Fetch only soft-deleted records if viewDeleted is set to true
-        if ($this->viewDeleted) {
-            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
-        }
-
-        // Apply the month filter if a month is selected
-        if ($this->selectedMonth) {
-            $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
-            $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
-            
-            $query->whereBetween('gj_entrynum_date', [$startOfMonth, $endOfMonth]);
-        }
-
+    public function totalsGeneralJournal($query){
         //@korinlv:added this function
         $general_journals = $query->with(['gj_accountcodes_data' => function($query){
             if ($this->viewDeleted) {
@@ -393,6 +375,32 @@ class GeneralJournalShow extends Component
     
         $this->totalDebit = $totalDebit;
         $this->totalCredit = $totalCredit;
+
+    }
+
+
+    // Render the component
+    public function render()
+    {
+        $query = GeneralJournalModel::query();
+        
+
+        // Fetch only soft-deleted records if viewDeleted is set to true
+        if ($this->viewDeleted) {
+            $query = $query->onlyTrashed(); // Fetch only soft-deleted records
+        }
+
+        // Apply the month filter if a month is selected
+        if ($this->selectedMonth) {
+            $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
+            $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
+            
+            $query->whereBetween('gj_entrynum_date', [$startOfMonth, $endOfMonth]);
+        }
+
+        $this->totalsGeneralJournal($query);
+        
+        
 
         // Add the search filter
         $query->where('id', 'like', '%' . $this->search . '%');

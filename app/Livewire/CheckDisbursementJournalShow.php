@@ -382,11 +382,7 @@ class CheckDisbursementJournalShow extends Component
         }
     }
 
-    // Render the component
-    public function render()
-    {
-        $query = CheckDisbursementJournalModel::query();
-
+    public function totalsCheckDisbursementJournal($query){
         //@korinlv:added this function
         $check_disbursement_journals = $query->with(['ckdj_sundry_data' => function ($query) {
         }])->get();
@@ -403,6 +399,13 @@ class CheckDisbursementJournalShow extends Component
     
         $this->totalDebit = $totalDebit;
         $this->totalCredit = $totalCredit;
+    }
+
+    // Render the component
+    public function render()
+    {
+        $query = CheckDisbursementJournalModel::query();
+
     
         // Apply the month filter if a month is selected
         if ($this->selectedMonth) {
@@ -446,7 +449,7 @@ class CheckDisbursementJournalShow extends Component
         $this->totalSalaryWages = $query->sum('ckdj_salary_wages');
         $this->totalHonoraria = $query->sum('ckdj_honoraria');
 
-        
+        $this->totalsCheckDisbursementJournal($query);
 
         // Get paginated results with eager loading of 'sundries' relationship
         $check_disbursement_journal = $query->get();
