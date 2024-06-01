@@ -4,13 +4,7 @@ namespace App\Livewire;
 
 use App\Models\CheckDisbursementJournalModel;
 use Livewire\Component;
-use App\Exports\CheckDisbursementJournalExport;
-use App\Imports\CheckDisbursementJournalImport;
-use App\Models\CKDJ_SundryModel;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
-use Carbon\Carbon;
 
 class CheckDisbursementJournalTrash extends Component
 {
@@ -21,7 +15,7 @@ class CheckDisbursementJournalTrash extends Component
     $deleteType; // Added deleteType property
 
     public $search;
-    public $check_disbursement_journal_id;
+    public $ckdj_checknum;
     public $softDeletedData;
     public $file;
     public $showNotification = false; // Control notification visibility
@@ -39,9 +33,9 @@ class CheckDisbursementJournalTrash extends Component
     }
 
     //@korinlv: edited this function
-    public function restoreCheckDisbursementJournal($id)
+    public function restoreCheckDisbursementJournal($ckdj_checknum)
     {
-        $check_disbursement_journal = CheckDisbursementJournalModel::onlyTrashed()->find($id);
+        $check_disbursement_journal = CheckDisbursementJournalModel::onlyTrashed()->find($ckdj_checknum);
         if ($check_disbursement_journal) {
             // Load trashed sundries
             $trashedSundries = $check_disbursement_journal->ckdj_sundry_data()->onlyTrashed()->get();
@@ -50,25 +44,25 @@ class CheckDisbursementJournalTrash extends Component
             }
 
             $check_disbursement_journal->restore();
-            session()->flash('message', 'Record restored successfully.');
+            return redirect()->route('CheckDisbursementJournalArchived')->with('message', 'Restored Successfully');
         }
     }
 
-    public function deleteCheckDisbursementJournal(int $check_disbursement_journal_id, $type = 'soft')
+    public function deleteCheckDisbursementJournal(string $ckdj_checknum, $type = 'soft')
     {
-        $this->check_disbursement_journal_id = $check_disbursement_journal_id;
+        $this->ckdj_checknum = $ckdj_checknum;
         $this->deleteType = $type; // Set the delete type
     }
 
     //permanently delete CheckDisbursementJournal
     public function destroyCheckDisbursementJournal()
     {
-        $check_disbursement_journal_id = CheckDisbursementJournalModel::withTrashed()->find($this->check_disbursement_journal_id);
+        $ckdj_checknum = CheckDisbursementJournalModel::withTrashed()->find($this->ckdj_checknum);
         if ($this->deleteType == 'force') {
-            $check_disbursement_journal_id->forceDelete();
+            $ckdj_checknum->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
         } else {
-            $check_disbursement_journal_id->delete();
+            $ckdj_checknum->delete();
             session()->flash('message', 'Archived Successfully');
         }
         $this->dispatch('close-modal');
@@ -78,11 +72,11 @@ class CheckDisbursementJournalTrash extends Component
 
     public function resetInput()
     {
-        $this-> check_disbursement_journal_id = '';
+        $this-> ckdj_checknum = '';
+    }
+
+    public function render()
+    {
+        return view('livewire.check-disbursement-journal-trash');
     }
 }
-
-
-
-
-

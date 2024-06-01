@@ -4,54 +4,63 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\GeneralJournalModel;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class GeneralJournalTrash extends Component
 {
-    public 
-    $gj_accountcodes_data = []; //@korinlv: added this
+    use WithFileUploads;
 
-    public $general_journal_id;
-    public $deleteType;
+    public 
+    $gj_accountcodes_data = [], //@korinlv: added this
+    $deleteType; // Added deleteType property
+
+    public $search;
+    public $gj_jevnum;
     public $softDeletedData;
+    public $file;
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
-  
 
+   //@korinlv: added this function
     public function mount()
     {
         $this->softDeletedData = GeneralJournalModel::onlyTrashed()
-        ->with(['gj_accountcodes_data' => function ($query) {
-            $query->withTrashed();
-        }])
-        ->get();    
+            ->with(['gj_accountcodes_data' => function ($query) {
+                $query->withTrashed();
+            }])
+            ->get();
     }
 
-    // Method to restore soft-deleted record
-    public function restoreGeneralJournal($id)
+    //@korinlv: edited this function
+    public function restoreGeneralJournal(string $gj_jevnum)
     {
-        $general_journal = GeneralJournalModel::onlyTrashed()->find($id);
+        $general_journal = GeneralJournalModel::onlyTrashed()->find($gj_jevnum);
         if ($general_journal) {
+            // Load trashed sundries
+            $trashedSundries = $general_journal->gj_accountcodes_data()->onlyTrashed()->get();
+            foreach ($trashedSundries as $sundry){
+                $sundry->restore();
+            }
             $general_journal->restore();
-            session()->flash('message', 'Record restored successfully.');
-            $this->softDeletedData = GeneralJournalModel::onlyTrashed()->get();
+            return redirect()->route('GeneralJournalArchived')->with('message', 'Restored Successfully');
         }
     }
 
-    public function deleteGeneralJournal(int $general_journal_id, $type = 'soft')
+    public function deleteGeneralJournal(string $gj_jevnum, $type = 'soft')
     {
-        $this->general_journal_id = $general_journal_id;
+        $this->gj_jevnum = $gj_jevnum;
         $this->deleteType = $type; // Set the delete type
     }
 
-    // Permanently delete 
+    //permanently delete CheckDisbursementJournal
     public function destroyGeneralJournal()
     {
-        $general_journal = GeneralJournalModel::withTrashed()->find($this->general_journal_id);
+        $gj_jevnum = GeneralJournalModel::withTrashed()->find($this->gj_jevnum);
         if ($this->deleteType == 'force') {
-            $general_journal->forceDelete();
+            $gj_jevnum->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
         } else {
-            $general_journal->delete();
+            $gj_jevnum->delete();
             session()->flash('message', 'Archived Successfully');
         }
         $this->dispatch('close-modal');
@@ -61,6 +70,11 @@ class GeneralJournalTrash extends Component
 
     public function resetInput()
     {
-        $this->general_journal_id = '';
+        $this->gj_jevnum = '';
+    }
+
+    public function render()
+    {
+        return view('livewire.general-journal-trash');
     }
 }

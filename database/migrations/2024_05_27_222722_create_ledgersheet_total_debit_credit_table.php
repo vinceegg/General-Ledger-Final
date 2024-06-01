@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('ledgersheet_total_debit_credit', function (Blueprint $table) {
             $table->id('ls_totals_id');
-            $table->string('ls_accountname');
-            $table->enum('ls_summary_type', ['monthly', 'yearly']);
+            $table->string('ls_account_title_code', 255);
+            $table->string('ls_summary_type');
             $table->string('ls_summary_month')->nullable(); // Nullable for yearly summaries
             $table->string('ls_summary_year');
             $table->decimal('ls_total_credit', 15, 2);
@@ -23,7 +23,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

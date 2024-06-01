@@ -5,7 +5,6 @@ namespace App\Livewire;
 use App\Exports\ledgerSheetExport;
 use App\Imports\ledgerSheetImport;
 use App\Models\ledgerSheetModel;
-use App\Models\ledgerSheetTotalDebitCreditModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -57,7 +56,105 @@ class LedgerSheetShow extends Component
             'ls_debit'=> 'nullable|numeric|min:0|max:100000000',
             'ls_credit'=> 'nullable|numeric|min:0|max:100000000',
             'ls_credit_balance'=> 'nullable|numeric|min:0|max:100000000',
-            'ls_accountname' => ['required', 'string', Rule::in(['Cash Local Treasury', 'Accounts Receivable', 'Rent Income'])],
+            'ls_accountname' => ['required', 'string', Rule::in([ '1 01 01 010 - Cash Local Treasury',
+            '1 01 01 020 - Petty Cash',
+            '1 01 02 010 - Cash in Bank Local Currency Current Account',
+            '1 02 01 010 - Cash in Bank Local Currency Time Deposits',
+            '1 03 01 010 - Accounts Receivable',
+            '1 03 01 070 - Interests Receivable',
+            '1 07 05 020 - Office Equipment',
+            '1 07 05 021 - Accumulated Depreciation Office Equipment',
+            '1 07 05 030 - Info and Communication Technology Equipment',
+            '1 07 05 031 - Accumulated Depreciation ICT Equipment',
+            '1 07 05 090 - Disaster Response and Rescue Equipment',
+            '1 07 05 091 - Acc Depreciation Disaster Response and Rescue Equipment',
+            '1 07 05 100 - Military Police Security Equipment',
+            '1 07 05 101 - Acc Depreciation Military Police Security Eqpmnt',
+            '1 07 05 110 - Medical Equipment',
+            '1 07 05 111 - Accumulated Depreciation Medical Equipment',
+            '1 07 05 130 - Sports Equipment',
+            '1 07 05 131 - Accumulated Depreciation Sports Equipment',
+            '1 07 05 140 - Technical and Scientific Equipment',
+            '1 07 05 141 - Acc Depreciation Technical Scientific Equipment',
+            '1 07 05 990 - Other Machinery Equipment',
+            '1 07 05 991 - Acc Depreciation Other Machinery Equipment',
+            '4 04 02 020 - Grants Donations in Kind',
+            '4 06 01 010 - Miscellaneous Income',
+            '5 01 01 010 - Salaries and Wages Regular',
+            '5 01 01 020 - Salaries and Wages Casual Contractual',
+            '5 01 02 010 - Personnel Economic Relief Allowance',
+            '5 01 02 020 - Representation Allowance',
+            '5 01 02 030 - Transportation Allowance',
+            '5 01 02 040 - Clothing Uniform Allowance',
+            '5 01 02 100 - Honoraria',
+            '5 01 02 110 - Hazard Pay',
+            '5 01 02 120 - Longetivity Pay',
+            '5 01 02 130 - Overtime and Night Pay',
+            '5 01 02 140 - Year End Bonus',
+            '5 01 02 150 - Cash Gift',
+            '5 01 03 010 - Retirement and Life Insurance Premiums',
+            '5 01 03 020 - Pag ibig Contributions',
+            '5 01 03 030 - PhilHealth Contributions',
+            '5 01 03 040 - Employees Compensation Insurance Premiums',
+            '5 01 04 030 - Terminal Leave Benefits',
+            '5 01 04 990 - Other Personnel Benefits',
+            '5 02 01 010 - Traveling Expenses Local',
+            '5 02 02 010 - Training Expenses',
+            '5 02 03 010 - Office Supplies Expenses',
+            '5 02 03 020 - Accountable Forms Expenses',
+            '5 02 03 070 - Drugs and Medicines Expenses',
+            '5 02 03 080 - Medical Dental and Laboratory Supplies Expenses',
+            '5 02 03 090 - Fuel Oil and Lubricants Expenses',
+            '5 02 03 990 - Other Supplies and Materials Expenses',
+            '5 02 04 010 - Water Expenses',
+            '5 02 04 020 - Electricity Expenses',
+            '5 02 05 010 - Postage and Courier Services',
+            '5 02 05 020 - Telephone Expenses',
+            '5 02 05 030 - Internet Subscription Expenses',
+            '5 02 10 030 - Extraordinary and Miscellaneous Expenses',
+            '1 07 06 010 - Motor Vehicles',
+            '1 07 06 011 - Accumulated Depreciation Motor Vehicles',
+            '1 07 07 010 - Furniture and Fixtures',
+            '1 07 07 011 - Accumulated Depreciation Furniture and Fixtures',
+            '1 07 10 030 - Buildings and Other Structures',
+            '2 01 01 010 - Accounts Payable',
+            '2 01 01 020 - Due to Officers and Employees',
+            '2 02 01 010 - Due to BIR',
+            '2 02 01 020 - Due to GSIS',
+            '2 02 01 030 - Due to PAG IBIG',
+            '2 02 01 040 - Due to PHILHEALTH',
+            '2 04 01 010 - Trust Liabilities',
+            '2 04 01 050 - Guaranty Security Deposits Payable',
+            '2 04 01 050 - Customers Deposit',
+            '2 05 01 990 - Other Deferred Credits',
+            '2 99 99 990 - Other Payables',
+            '3 01 01 010 - Government Equity',
+            '3 01 01 020 - Prior Period Adjustment',
+            '4 02 01 980 - Fines and Penalties Service Income',
+            '4 02 02 010 - School Fees',
+            '4 02 02 020 - Affiliation Fees',
+            '4 02 02 050 - Rent Income',
+            '4 02 02 220 - Interest Income',
+            '4 02 02 990 - Other Business Income',
+            '4 03 01 020 - Subsidy from LGUs',
+            '5 02 11 990 - Other Professional Services',
+            '5 02 13 040 - Repairs and Maint Building Other Structures',
+            '5 02 13 050 - Repairs and Maint Machinery and Equipment',
+            '5 02 13 060 - Repairs and Maint Transportation Equipment',
+            '5 02 16 020 - Fidelity Bond Premiums',
+            '5 02 16 030 - Insurance Expenses',
+            '5 02 99 020 - Printing and Publication Expenses',
+            '5 02 99 030 - Representation Expenses',
+            '5 02 99 050 - Rent Expenses',
+            '5 02 99 060 - Membership Dues and Contribution to Org',
+            '5 02 99 070 - Subscription Expenses',
+            '5 02 99 990 - Other Maintenance and Operating Expenses',
+            '5 03 01 040 - Bank Charges',
+            '5 05 01 040 - Depreciation Building and Structures',
+            '5 05 01 050 - Depreciation Machinery and Equipment',
+            '5 05 01 060 - Depreciation Transportation Equipment',
+            '5 05 01 070 - Depreciation Furnitures and Books'
+])],
         ];
     }
 
@@ -235,8 +332,10 @@ class LedgerSheetShow extends Component
 
     public function searchAction()
     {
-        $this->ledger_sheet = ledgerSheetModel::where(function ($q) {
-            $q ->Where('ls_date', 'like', '%' . $this->search . '%')
+        $query = ledgerSheetModel::query();
+        $this->ledger_sheet = $query->where(function ($q) {
+            $q ->where('ls_accountname', 'like', '%' . $this->search . '%')
+            ->orWhere('ls_date', 'like', '%' . $this->search . '%')
             ->orWhere('ls_vouchernum', 'like', '%' . $this->search . '%')
             ->orWhere('ls_particulars', 'like', '%' . $this->search . '%')
             ->orWhere('ls_balance_debit', 'like', '%' . $this->search . '%')
@@ -275,100 +374,13 @@ class LedgerSheetShow extends Component
         }
     }
 
-    public function calculateTotals()
+    public function calculateTotals($query)
     {
-        // Start with the base query
-        $query = LedgerSheetModel::query();
-
-        // Apply filtering based on account name
-        if ($this->ls_accountname) {
-            $query->where('ls_accountname', $this->ls_accountname);
-        }
-
-        // Apply date filtering if a month is selected
-        if ($this->selectedMonth) {
-            $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
-            $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
-            $query->whereBetween('ls_date', [$startOfMonth, $endOfMonth]);
-        }
-
-        // Apply sorting
-        $query->orderBy('ls_date', $this->sortDirection);
-
-        // Apply search filter
-        if ($this->search) {
-            $query->where(function ($q) {
-                $q->where('ls_date', 'like', '%' . $this->search . '%')
-                    ->orWhere('ls_vouchernum', 'like', '%' . $this->search . '%')
-                    ->orWhere('ls_particulars', 'like', '%' . $this->search . '%')
-                    ->orWhere('ls_balance_debit', 'like', '%' . $this->search . '%')
-                    ->orWhere('ls_debit', 'like', '%' . $this->search . '%')
-                    ->orWhere('ls_credit', 'like', '%' . $this->search . '%')
-                    ->orWhere('ls_credit_balance', 'like', '%' . $this->search . '%');
-            });
-        }
-
-        // Calculate the totals
+        // Calculate totals
         $this->totalBalanceDebit = $query->sum('ls_balance_debit');
         $this->totalDebit = $query->sum('ls_debit');
         $this->totalCredit = $query->sum('ls_credit');
         $this->totalCreditBalance = $query->sum('ls_credit_balance');
-
-        // Update the totals directly from $this->ledger_sheet
-        $this->ledger_sheet->transform(function ($item) use ($query) {
-            return $item->setAttribute('total_balance_debit', $query->sum('ls_balance_debit'))
-                        ->setAttribute('total_debit', $query->sum('ls_debit'))
-                        ->setAttribute('total_credit', $query->sum('ls_credit'))
-                        ->setAttribute('total_credit_balance', $query->sum('ls_credit_balance'));
-        });
-    }
-
-    public function calculateTotalsPerYear()
-    {
-        $year = Carbon::now()->year; // Replace with selected year if needed
-        $totals = LedgerSheetModel::whereYear('ls_date', $year)
-            ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
-            ->groupBy('ls_accountname')
-            ->get();
-
-        foreach ($totals as $total) {
-            ledgerSheetTotalDebitCreditModel::updateOrCreate(
-                [
-                    'ls_accountname' => $total->ls_accountname,
-                    'ls_summary_type' => 'yearly',
-                    'ls_summary_year' => $year,
-                ],
-                [
-                    'ls_total_credit' => $total->total_credit,
-                    'ls_total_debit' => $total->total_debit,
-                ]
-            );
-        }
-    }
-
-    public function calculateTotalsPerMonth()
-    {
-        $selectedMonth = Carbon::parse($this->selectedMonth);
-        $totals = LedgerSheetModel::whereYear('ls_date', $selectedMonth->year)
-            ->whereMonth('ls_date', $selectedMonth->month)
-            ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
-            ->groupBy('ls_accountname')
-            ->get();
-
-        foreach ($totals as $total) {
-            ledgerSheetTotalDebitCreditModel::updateOrCreate(
-                [
-                    'ls_accountname' => $total->ls_accountname,
-                    'ls_summary_type' => 'monthly',
-                    'ls_summary_year' => $selectedMonth->year,
-                    'ls_summary_month' => $selectedMonth->month,
-                ],
-                [
-                    'ls_total_credit' => $total->total_credit,
-                    'ls_total_debit' => $total->total_debit,
-                ]
-            );
-        }
     }
 
         // Render the component
@@ -388,7 +400,7 @@ class LedgerSheetShow extends Component
         $this->sortDate();
 
         // Calculate totals
-        $this->calculateTotals();
+        $this->calculateTotals($query);
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);

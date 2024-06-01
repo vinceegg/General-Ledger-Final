@@ -8,13 +8,13 @@
     <link href ="/css/main.css" rel ="stylesheet">
     <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-
     <title>PLM | General Ledger</title>
     @livewireStyles
     @vite('resources/css/app.css')
 </head>
 <body>
 @csrf
+
 <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
@@ -32,7 +32,80 @@
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-blue-800">PLM LEDGER</span>
         </a>
       </div>
-      
+      <!-- Settings Dropdown -->
+          <div class="hidden sm:flex sm:items-center sm:ms-6">
+              <x-dropdown align="right" width="48">
+                  <x-slot name="trigger">
+                      <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                          <div>{{ Auth::user()->email }}</div> <!-- Updated to show email -->
+                          <div class="ms-1">
+                              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                              </svg>
+                          </div>
+                      </button>
+                  </x-slot>
+
+                  <x-slot name="content">
+                      <x-dropdown-link :href="route('profile.edit')">
+                          {{ __('Profile') }}
+                      </x-dropdown-link>
+                      <!-- Authentication -->
+                      <form method="POST" action="{{ route('logout') }}">
+                          @csrf
+                          <x-dropdown-link :href="route('logout')"
+                                  onclick="event.preventDefault();
+                                              this.closest('form').submit();">
+                              {{ __('Log Out') }}
+                          </x-dropdown-link>
+                      </form>
+                  </x-slot>
+              </x-dropdown>
+          </div>
+
+          <!-- Hamburger -->
+          <div class="-me-2 flex items-center sm:hidden">
+              <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                  <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                      <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                      <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <!-- Responsive Navigation Menu -->
+  <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+      <div class="pt-2 pb-3 space-y-1">
+          <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+              {{ __('Dashboard') }}
+          </x-responsive-nav-link>
+      </div>
+
+      <!-- Responsive Settings Options -->
+      <div class="pt-4 pb-1 border-t border-gray-200">
+          <div class="px-4">
+              <div class="font-medium text-base text-gray-800">{{ Auth::user()->email }}</div> <!-- Also updated here for mobile view -->
+              <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+          </div>
+
+          <div class="mt-3 space-y-1">
+              <x-responsive-nav-link :href="route('profile.edit')">
+                  {{ __('Profile') }}
+              </x-responsive-nav-link>
+              <!-- Authentication -->
+              <form method="POST" action="{{ route('logout') }}">
+                  @csrf
+                  <x-responsive-nav-link :href="route('logout')"
+                          onclick="event.preventDefault();
+                                      this.closest('form').submit();">
+                      {{ __('Log Out') }}
+                  </x-responsive-nav-link>
+              </form>
+          </div>
+      </div>
+  </div>
 </nav>
 
 <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-blue-800 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
@@ -107,15 +180,92 @@
                  <span class="ms-3">Help / FAQ</span>
              </a>
              @endforeach
-         </li>        
+         </li>
+         <li>
+             @foreach([''] as $route) {{ $route }}
+             <a href="{{ url('/settings' . $route) }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group">
+                 <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                     <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                         <path d="M19 11V9a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L12 2.757V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L2.929 4.343a1 1 0 0 0 0 1.414l.536.536L2.757 8H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535L8 17.243V18a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H18a1 1 0 0 0 1-1Z"/>
+                         <path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                     </g>
+                 </svg>
+                 <span class="ms-3">Settings</span>
+             </a>
+             @endforeach
+         </li>
+         <li>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <a href="{{ route('logout') }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group"
+                    onclick="event.preventDefault();
+                             this.closest('form').submit();">
+                    <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 8h6m-9-3.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0ZM5 11h3a4 4 0 0 1 4 4v2H1v-2a4 4 0 0 1 4-4Z"/>
+                    </svg>
+                    <span class="ms-3">{{ __('Log Out') }}</span>
+                </a>
+            </form>
+        </li>        
      </ul>     
    </div>
 </aside>
 
-<div class="p-4 sm:ml-64">
-  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-  <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com --> 
+
+
+
+{{-- ROW 1 --}}
+<div class="p-5 sm:ml-64">
+   <div class="p-4 rounded-lg dark:border-gray-700 mt-14">
+   <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com --> 
 <!-- Grid wrapper -->
+
+<div class="grid sm:grid-cols-1 md:grid-cols-1 mb-3 gap-4 ">
+  <div class="header-item  col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">  
+    <div class="flex gap-2">
+      <text class="white-card-title-lg">Welcome</text>
+    </div>
+    
+    <div class="flex gap-2 pb-3 pt-3">
+      <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>
+      </svg>
+      
+      <text id="current-date" class="white-card-title-sm"> --/--/----</text>
+      <text id="current-time" class="white-card-title-sm"> --:--:--</text>
+    </div>
+    
+    <div class="flex gap-2 pb-3">
+
+    </div>
+  </div>
+</div>
+
+{{-- TIME DATE JS LOGIC --}}
+<script>
+  function updateTimeAndDate() {
+    const currentTimeElement = document.getElementById('current-time');
+    const currentDateElement = document.getElementById('current-date');
+    const now = new Date();
+    
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    currentTimeElement.textContent = ` ${hours}:${minutes}:${seconds}`;
+    
+    const year = now.getFullYear();
+    const monthNames = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    const month = monthNames[now.getMonth()];
+    const day = now.getDate();
+    currentDateElement.textContent = ` ${month} ${day}, ${year}`;
+  }
+
+  setInterval(updateTimeAndDate, 1000);
+  updateTimeAndDate();  // Initial call to set the time and date immediately when the page loads
+</script>
 
 <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
   <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">  
@@ -140,48 +290,50 @@
       </div>
          </a>
       @endforeach
-          </div> 
-        </div>     
+   </div> 
+      </div>     
       <div>
-          @foreach([''] as $route)
-            <a href="{{ url('/CDJ' . $route) }}" target="_blank" class="text-decoration-none">
-            <div class="journal-item">
-              <div class="journal-title">
-                  <div class="journal-title">CDJ</div>
-                  <div class="journal-subtitle"><br>Cash Disbursement</div>
-              </div>
-            </a>
-            @endforeach
-          </div> 
-        </div>
+      @foreach([''] as $route)
+        <a href="{{ url('/CDJ' . $route) }}" target="_blank" class="text-decoration-none">
+      <div class="journal-item">
+            <div class="journal-title">
+                <div class="journal-title">CDJ</div>
+                <div class="journal-subtitle"><br>Cash Disbursement</div>
+            </div>
+        </a>
+      @endforeach
+      </div> 
+      </div>
       <div>
       @foreach([''] as $route)
         <a href="{{ url('/CRJ' . $route) }}" target="_blank" class="text-decoration-none">
       <div class="journal-item">
+
             <div class="journal-title">
                 <div class="journal-title">CRJ</div>
                 <div class="journal-subtitle"><br>Cash Receipt</div>
             </div>
-            </a>
-          @endforeach
-        </div> 
-        </div>
+        </a>
+      @endforeach
+      </div> 
+      </div>
       <div>
       @foreach([''] as $route)
         <a href="{{ url('/GJ' . $route) }}" target="_blank" class="text-decoration-none">
       <div class="journal-item">
+
             <div class="journal-title">
                 <div class="journal-title">GJ</div>
                 <div class="journal-subtitle"><br>General Journal</div>
             </div>
-            </a>
-          @endforeach
-        </div> 
+        </a>
+      @endforeach
+      </div> 
       </div>
-    </div>
-  </div>
+      </div>
+      </div>
   <div class="p-6 grid sm:col-span-1 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
-    <div class="flex gap-2 pb-3">
+   <div class="flex gap-2 pb-3">
       <div class="">
          <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
          <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1-1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
@@ -190,52 +342,275 @@
       <div class="">
          <text class="white-card-title">  General Ledger </text> 
       </div>
-    </div>     
-   <div>
+   </div>
+      <div>
       @foreach([''] as $route)
         <a href="{{ url('/AC' . $route) }}" target="_blank" class="text-decoration-none">
-          <div class="journal-item">
+      <div class="journal-item">
+
             <div class="journal-title">
-              <div class="journal-title">LS</div>
-              <div class="journal-subtitle"><br>Ledger Sheets</div>
-          </div>
+                <div class="journal-title">LS</div>
+                <div class="journal-subtitle"><br>Ledger Sheets</div>
+            </div>
         </a>
       @endforeach
       </div> 
-    </div>
-  </div>
-</div>
+      </div>
+   </div></div>
 
+
+
+
+
+{{-- ROW 3 --}}
+<div class="grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-5">
+  <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex gap-2 pb-3">
+      <div>
+        <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1 1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
+        </svg>
+      </div>
+      <div>
+        <span class="white-card-title">Debit and Credit Balance per Journal</span>
+      </div>
+    </div>
+            <!-- BAR CHART -->
+            <div class="sm:w-auto md:w-auto pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
+              <canvas id="barChart"></canvas>
+            </div>
+  </div>
+  
   
 
-<div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-5">
-<div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
-  <div class="flex gap-2 pb-3">
-        <div class="">
-        <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+  <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex gap-2 pb-3">
+      <div>
+        <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1 1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
         </svg>
-        </div>
-        <div class="">
-          <text class="white-card-title"> Recent Activities </text> 
-        </div>
+      </div>
+      <div>
+        <span class="white-card-title">Debit and Credit Balance per Journal</span>
+      </div>
     </div>
-    <div class="grid sm:grid-cols-1 mb-10 md:grid-cols-2 gap-4 h-30">
-        <livewire:recent-activities />
-        <!-- Second column content -->
+        <!-- LINE CHART -->
+        <div class="sm:w-auto md:w-auto  pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
+          <canvas id="lineChart" style="flex:1;"></canvas>
+        </div>
+  </div>
+
+  <div class="pt-6 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex gap-2 pb-3">
+      <div>
+        <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+        </svg>
+
+      </div>
+      <div>
+        <span class="white-card-title">Archives Shortcut</span>
+      </div>
+
+    </div>
+
+    @foreach([''] as $route)
+    <a href="{{ url('/CKDJ' . $route) }}" class="text-decoration-none">    
+    <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+      <div class="flex gap-2 items-center">
+        <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+          CKD
+        </div>
+        <div class="flex-col">
+          <span class="text-gray-800 font-bold pl-2">Check Disbursements Journal Archive</span>
+        </div>
+      </div>
+    </div>
+  </a>
+  @endforeach
+
+
+  @foreach([''] as $route)
+  <a href="{{ url('/CDJ' . $route) }}"  class="text-decoration-none">  
+    <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+      <div class="flex gap-2 items-center">
+        <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+          CDJ
+        </div>
+        <div class="flex-col">
+          <span class="text-gray-800 font-bold pl-2">Cash Disbursement Journal Archive</span>
+        </div>
+      </div>
+    </div>
+  </a>
+  @endforeach
+
+
+  @foreach([''] as $route)
+  <a href="{{ url('/CRJ' . $route) }}" class="text-decoration-none">  
+    <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+      <div class="flex gap-2 items-center">
+        <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+          CRJ
+        </div>
+        <div class="flex-col">
+          <span class="text-gray-800 font-bold pl-2">Cash Receipt Journal Archive</span>
+        </div>
+      </div>
+    </div>
+  </a>
+  @endforeach
+
+
+  @foreach([''] as $route)
+  <a href="{{ url('/GJ' . $route) }}"  class="text-decoration-none"> 
+    <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+      <div class="flex gap-2 items-center">
+        <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+          GJA
+        </div>
+        <div class="flex-col">
+          <span class="text-gray-800 font-bold pl-2">General Journal Archive</span>
+        </div>
+      </div>
+    </div>
+  </a>
+  @endforeach
+
+  </div> 
+
+
+
+
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Bar Chart
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['CKDJ', 'CDJ', 'CRJ', 'GJ'],
+        datasets: [{
+            label: 'Debit',
+            data: [12, 19, 3, 5],
+            // data: [debitckdj, 19, 3, 5],
+            backgroundColor: '#ff4949',
+            borderWidth: 1
+          },
+          {
+            label: 'Credit',
+            data: [2, 3, 2, 3],
+            backgroundColor: '#ffcc3d',
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  
+    // Line Chart
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    new Chart(lineCtx, {
+      type: 'line',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+            label: 'Dataset 1',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            borderColor: '#ff4949',
+            backgroundColor: 'rgba(255, 73, 73, 0.5)',
+          },
+          {
+            label: 'Dataset 2',
+            data: [28, 48, 40, 19, 86, 27, 90],
+            borderColor: '#36a2eb',
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Monthly Data Trends'
+          }
+        }
+      }
+    });
+  
+    // Pie Chart
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: 'Dataset 1',
+          data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: [
+            '#ff4949',
+            '#36a2eb',
+            '#ffcc3d',
+            '#4bc0c0',
+            '#9966ff',
+            '#ff9f40'
+          ]
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Distribution of Colors'
+          }
+        }
+      }
+    });
+  </script>
+  </div>
+
+
+
+
+
+
+{{-- ROW 4 --}}
+  <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+    <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
+      <div class="flex gap-2 pb-3">
         <div>
-          <!-- Your content for the second column goes here -->
-          <livewire:recent-activities />
+          <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+          </svg>
         </div>
+        <div>
+          <text class="white-card-title">Recent Activities </text> 
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-1 mb-10 md:grid-cols-2 gap-4 h-30" style="max-height: 500px; overflow-y: auto;">
+        <livewire:recent-activities />
+      </div>
     </div>
-</div>
 
 <div>
+  
     <livewire:todo-component />
-</div>
-
-<div>
-    <livewire:charts />
 </div>
 
 @livewireScripts

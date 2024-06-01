@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gj_accountcodes_data', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('general_journal_id')->constrained('general_journal')->onDelete('cascade');
+            $table->bigIncrements('gj_id');
+            $table->string('gj_jevnum'); // Define the foreign key column
+            $table->foreign('gj_jevnum')->references('gj_jevnum')->on('general_journal')->onDelete('cascade');
             $table->string('gj_accountcode')->nullable();
             $table->decimal('gj_debit', 15,2)->nullable();
             $table->decimal('gj_credit', 15,2)->nullable();

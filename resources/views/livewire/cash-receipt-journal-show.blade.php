@@ -9,8 +9,6 @@
                 <p class="font-extrabold text-blue-800 text-3xl">Cash Receipt Journal</p>
                 <p class="text-yellow-600 mt-2">Journals > <span class="text-black">Cash Receipt Journal</span></p>
         </div>
-
-
                 <!-- Functions & features in first rectangle -->
                 <div class="flex flex-wrap md:justify-end">
                     <!-- Search -->
@@ -46,7 +44,7 @@
                     </button>
 
                     <!-- Add -->
-                    <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
+                    <button type="button" wire:click="resetInput" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
                     data-modal-target="add-modal" data-modal-toggle="add-modal">
                         Add Transaction
                     </button>
@@ -73,9 +71,9 @@
                         <thead class="text-base text-left text-black sticky shadow-md top-0 bg-white">
                             @include('livewire.cash-receipt-journal-modal')
                             <tr class="text-center p-1">
-                                <th rowspan="3" class="border-r p-2" style="width: 10px">No.</th>
-                                <th rowspan="3" class="border-r border-l " style="width: 130px">Date</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 120px">JEV No.</th>
+                                <th rowspan="3" class="border-r border-l " style="width: 130px">Date</th>
+                                
                                 <th rowspan="3" class="border-r border-l ">Payor</th>
                                 <th colspan="2" class="border-r border-b border-l ">Collection</th>
                                 <th colspan="2" class="border-r border-b border-l ">Deposit</th>
@@ -106,9 +104,8 @@
                             @foreach ($crj_sundry_data as $index => $crj_sundries_data)
                             <tr class="{{ $index === $lastRowIndex && $crj_sundries_data->crj_credit ? 'border-b' : '' }} border-gray-300 ">
                                     @if ($index == 0) {{-- Only display these cells on the first iteration --}}
-                                        <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $cash_receipt_journals-> id }}</td>
+                                        <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $cash_receipt_journals->crj_jevnum }}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_entrynum_date}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_jevnum}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_payor}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_collection_debit}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals-> crj_collection_credit}}</td>
@@ -120,9 +117,8 @@
                                     <td class=" border-l p-1 border-gray-300">₱{{ number_format($crj_sundries_data->crj_credit, 2, '.', ',') }}</td>
                             @endforeach
                             @if ($crj_sundry_data->isEmpty()) {{-- If there are no account codes, show a single row --}}
-                                <td class="border-r border-b p-2 border-gray-300">{{ $cash_receipt_journals-> id }}</td>
+                                <td class="border-r border-b p-2 border-gray-300">{{ $cash_receipt_journals->crj_jevnum }}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300" {{ $cash_receipt_journals-> crj_entrynum_date}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300" {{ $cash_receipt_journals-> crj_jevnum}}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300" {{ $cash_receipt_journals-> crj_payor}}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300" {{ $cash_receipt_journals-> crj_collection_debit}}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300" {{ $cash_receipt_journals-> crj_collection_credit}}</td>
@@ -140,23 +136,13 @@
                                                     </svg>
                                                 </button>
                                                 <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
-                                                    @if (!$viewDeleted)
                                                     <!-- Show Edit and Archive only for active records -->
-                                                    <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editCashReceiptJournal({{ $cash_receipt_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                                Edit
-                                                        </button>
-                                                        <button type="button" wire:click="softDeleteCashReceiptJournal({{  $cash_receipt_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                    <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editCashReceiptJournal('{{ $cash_receipt_journals->crj_jevnum }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                        Edit
+                                                    </button>
+                                                        <button type="button" wire:click="softDeleteCashReceiptJournal('{{  $cash_receipt_journals->crj_jevnum }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                                 Archive
-                                                        </button>
-                                                    @else
-                                                    <!-- Show Delete and Restore only for deleted records -->
-                                                    <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteCashReceiptJournal({{ $cash_receipt_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                        Delete
-                                                    </button>
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#restoreCashReceiptJournal" wire:click="restoreCashReceiptJournal({{ $cash_receipt_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                        Restore
-                                                    </button>
-                                                    @endif  
+                                                        </button>                                                 
                                                     </div>
                                             </div>
                                         </td> 
@@ -172,7 +158,7 @@
                         <tfoot>
                             <!-- Subtotal -->
                             <tr class="border-t shadow-inner  sticky bottom-0 bg-white">
-                            <td colspan="4" class="px-6 py-4 text-right font-bold text-gray-900 whitespace-nowrap dark:text-white">Sub Total:</td>
+                            <td colspan="3" class="px-6 py-4 text-right font-bold text-gray-900 whitespace-nowrap dark:text-white">Sub Total:</td>
                                 <td class="font-bold">₱{{ number_format($totalCollectionDebit, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalCollectionCredit, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalDepositDebit, 2) }}</td>

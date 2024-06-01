@@ -13,8 +13,13 @@ class CKDJ_SundryModel extends Model
 
     protected $table = 'ckdj_sundry_data';
 
+    protected $primaryKey = 'ckdj_id'; 
+
+    public $incrementing = true; 
+
+    protected $keyType = 'int';
+
     protected $fillable = [
-        'check_disbursement_journal_id',
         'ckdj_accountcode',
         'ckdj_debit',
         'ckdj_credit',
@@ -22,6 +27,6 @@ class CKDJ_SundryModel extends Model
 
     public function checkDisbursementJournal()
     {
-        return $this->belongsTo(CheckDisbursementJournalModel::class, 'check_disbursement_journal_id');
+        return $this->belongsTo(CheckDisbursementJournalModel::class, 'ckdj_checknum');
     }
 }

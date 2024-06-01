@@ -20,7 +20,7 @@
                             </svg>
                         </div>
                         <input type="search" wire:model="search" wire:change="searchAction" class="w-44 ps-10 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Search ID..." required />
+                        placeholder="Search" required />
                     </div>    
 
                     <!-- Select Date -->        
@@ -46,7 +46,7 @@
                     </button>
 
                     <!-- Add -->
-                    <button type="button" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
+                    <button type="button" wire:click="resetInput" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
                     data-modal-target="add-modal" data-modal-toggle="add-modal">
                         Add Transaction
                     </button>
@@ -71,11 +71,10 @@
 
                         <!-- Table Header -->
                         <thead class="text-base text-left text-black sticky top-0 bg-white">
-                        @include('livewire.general-journal-modal')     
+                            @include('livewire.general-journal-modal')     
                             <tr class="text-center shadow-md"> <!-- Table heading design -->
-                                <th scope="col" class="border-r p-2" style="width: 10px">No.</th>
-                                <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 150px">Jev Number</th>
+                                <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>         
                                 <th scope="col" class="border-r border-l p-2">Particulars</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 200px">Account Code</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 120px">Debit</th>
@@ -83,7 +82,6 @@
                                 <th scope="col" style="width:10px"></th>                                   
                             </tr>
                         </thead>
-
                         <!-- Table Body -->
                         <tbody class="space-y-4  overflow-y-scroll  ">
                             @forelse ($general_journal as $general_journals)
@@ -95,9 +93,8 @@
                                     @foreach ($gj_accountcodes_data as $index => $gj_accountcode_data)
                                     <tr class="{{ $index === $lastRowIndex && $gj_accountcode_data->gj_credit ? 'border-b' : '' }} border-gray-300 ">
                                         @if ($index == 0)
-                                            <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $general_journals->id }}</td>
+                                            <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $general_journals->gj_jevnum }}</td>
                                             <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $general_journals->gj_entrynum_date }}</td>
-                                            <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $general_journals->gj_jevnum }}</td>
                                             <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $general_journals->gj_particulars }}</td>
                                         @endif
                                         <td class="border-r border-l p-1 border-gray-300">{{ $gj_accountcode_data->gj_accountcode }}</td>
@@ -105,9 +102,8 @@
                                         <td class="border-l p-1 border-gray-300">₱{{ number_format($gj_accountcode_data->gj_credit, 2, '.', ',') }}</td>                              
                                     @endforeach
                                     @if ($gj_accountcodes_data->isEmpty())
-                                            <td class="border-r border-b p-2 border-gray-300">{{ $general_journals->id }}</td>
+                                            <td class="border-r border-b p-2 border-gray-300">{{ $general_journals->gj_jevnum }}</td>
                                             <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_journals->gj_entrynum_date }}</td>
-                                            <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_journals->gj_jevnum }}</td>
                                             <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_journals->gj_particulars }}</td>
                                             <td class="border-l border-b p-1 border-gray-300" colspan="3">No Account Data</td>
                                     @endif
@@ -120,13 +116,12 @@
                                                     </svg>
                                                 </button>
                                                 <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
-                                                    <!-- Show Delete and Restore only for deleted records -->
-                                                        <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteGeneralJournal({{ $general_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                            Delete
+                                                        <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editGeneralJournal('{{ $general_journals->gj_jevnum }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                                Edit
                                                         </button>
-                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#restoreGeneralJournalModal" wire:click="restoreGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                            Restore
-                                                        </button>                          
+                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteGeneralJournalModal" wire:click="softDeleteGeneralJournal('{{ $general_journals->gj_jevnum }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                                Archive
+                                                        </button>                             
                                                 </div>
                                             </div>
                                         </td> 
@@ -142,7 +137,7 @@
                         <tfoot>
                             <!-- Subtotal -->
                             <tr class="border-t shadow-inner  sticky bottom-0 bg-white">
-                                <td colspan="5" class="px-6 py-4 text-right font-bold text-gray-900 whitespace-nowrap dark:text-white">Sub Total:</td>
+                                <td colspan="4" class="px-6 py-4 text-right font-bold text-gray-900 whitespace-nowrap dark:text-white">Sub Total:</td>
                                 <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>
                                 <td></td>
@@ -151,6 +146,6 @@
                     </table>                   
                 </div>   <!-- table container div tag -->             
         </div> <!-- 2nd rectangle div tag -->
-
+        
     </div> <!-- journal main content div tag 2 -->
 </div> <!-- journal main content div tag 1 -->

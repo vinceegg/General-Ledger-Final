@@ -13,8 +13,13 @@ class CRJ_SundryModel extends Model
 
     protected $table = 'crj_sundry_data';
 
+    protected $primaryKey = 'crj_id'; // Specify the new primary key
+
+    public $incrementing = true; // Ensure the primary key is auto-incrementing
+
+    protected $keyType = 'int'; // Set the type of the primary key
+
     protected $fillable = [
-        'cash_receipt_journal_id',
         'crj_accountcode',
         'crj_debit',
         'crj_credit',
@@ -22,6 +27,6 @@ class CRJ_SundryModel extends Model
 
     public function cashReceiptJournal()
     {
-        return $this->belongsTo(CashReceiptJournalModel::class, 'cash_receipt_journal_id');
+        return $this->belongsTo(CashReceiptJournalModel::class, 'crj_jevnum');
     }
 }

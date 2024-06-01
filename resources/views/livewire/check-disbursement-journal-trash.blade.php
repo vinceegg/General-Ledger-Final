@@ -28,9 +28,8 @@
                         <thead class="text-base text-left text-black sticky top-0 bg-white">
                             @include('livewire.check-disbursement-journal-modal')
                             <tr class="text-center p-1">
-                                <th rowspan="3" class="border-r p-2" style="width: 10px">No.</th>
-                                <th rowspan="3" class="border-r border-l " style="width: 130px">Date</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 120px">Check No.</th>
+                                <th rowspan="3" class="border-r border-l " style="width: 130px">Date</th>                               
                                 <th rowspan="3" class="border-r border-l " style="width: 300px">Payee</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 150px">BUR</th>
                                 <th colspan="4" class="border-r border-b border-l ">Credit</th>
@@ -65,34 +64,32 @@
                             @foreach ($ckdj_sundry_data as $index => $ckdj_sundries_data)
                             <tr class="{{ $index === $lastRowIndex && $ckdj_sundries_data->ckdj_credit ? 'border-b' : '' }} border-gray-300 ">
                                     @if ($index == 0) {{-- Only display these cells on the first iteration --}}
-                                        <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $check_disbursement_journals->id }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_entrynum_date}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_checknum}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_payee}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_bur}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_cib_lcca}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_account1}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_account2}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_account3}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_salary_wages}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals-> ckdj_honoraria}}</td>
+                                        <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $check_disbursement_journals->ckdj_checknum }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_entrynum_date}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_payee}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_bur}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_cib_lcca}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_account1}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_account2}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_account3}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_salary_wages}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_honoraria}}</td>
                                     @endif
                                     <td class="border-r border-l p-1 border-gray-300">{{ $ckdj_sundries_data->ckdj_accountcode}}</td>
                                     <td class="border-r border-l p-1 border-gray-300">₱{{ number_format($ckdj_sundries_data->ckdj_debit, 2, '.', ',') }}</td>
                                     <td class="border-l p-1 border-gray-300">₱{{ number_format($ckdj_sundries_data->ckdj_credit, 2, '.', ',') }}</td>
                             @endforeach
                             @if ($ckdj_sundry_data->isEmpty()) {{-- If there are no account codes, show a single row --}}
-                                    <td class="border-r border-b p-2 border-gray-300">{{ $check_disbursement_journals-> id }}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_entrynum_date}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_checknum}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_payee}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_bur}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_cib_lcca}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_account1}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_account2}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_account3}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_salary_wages}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals-> ckdj_honoraria}}</td>
+                                    <td class="border-r border-b p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_checknum }}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_entrynum_date}}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_payee}}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_bur}}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_cib_lcca}}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_account1}}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_account2}}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_account3}}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_salary_wages}}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $check_disbursement_journals->ckdj_honoraria}}</td>
                                     <td class="border-l border-b p-1 border-gray-300" colspan="3">No Account Data</td>
                             @endif
                             <td class="justify-end">
@@ -104,10 +101,10 @@
                                                 </svg>
                                             </button>                                  
                                             <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">                                                                                                                                                                                                                     
-                                                <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteCheckDisbursementJournal({{ $check_disbursement_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteCheckDisbursementJournal('{{ $check_disbursement_journals->ckdj_checknum }}', 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                     Delete
                                                 </button>   
-                                                <button type="button" wire:click="restoreCheckDisbursementJournal({{ $check_disbursement_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                <button type="button" wire:click="restoreCheckDisbursementJournal('{{ $check_disbursement_journals->ckdj_checknum }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                     Restore
                                                 </button>                                                                                                                                  
                                             </div>
