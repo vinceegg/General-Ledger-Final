@@ -71,7 +71,7 @@
 
                         <!-- Table Header -->
                         <thead class="text-base text-left text-black sticky top-0 bg-white">
-                            @include('livewire.general-journal-modal')     
+                        @include('livewire.general-journal-modal')     
                             <tr class="text-center shadow-md"> <!-- Table heading design -->
                                 <th scope="col" class="border-r p-2" style="width: 10px">No.</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>
@@ -120,23 +120,13 @@
                                                     </svg>
                                                 </button>
                                                 <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
-                                                    @if (!$viewDeleted)
-                                                    <!-- Show Edit and Archive only for active records -->
-                                                        <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                                Edit
-                                                        </button>
-                                                        <button type="button" data-bs-toggle="modal" data-bs-target="#softDeleteGeneralJournalModal" wire:click="softDeleteGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                                Archive
-                                                        </button>
-                                                    @else
                                                     <!-- Show Delete and Restore only for deleted records -->
                                                         <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteGeneralJournal({{ $general_journals->id }}, 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                             Delete
                                                         </button>
                                                         <button type="button" data-bs-toggle="modal" data-bs-target="#restoreGeneralJournalModal" wire:click="restoreGeneralJournal({{ $general_journals->id }})" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                             Restore
-                                                        </button>
-                                                    @endif                               
+                                                        </button>                          
                                                 </div>
                                             </div>
                                         </td> 
@@ -161,6 +151,6 @@
                     </table>                   
                 </div>   <!-- table container div tag -->             
         </div> <!-- 2nd rectangle div tag -->
-        
+
     </div> <!-- journal main content div tag 2 -->
 </div> <!-- journal main content div tag 1 -->

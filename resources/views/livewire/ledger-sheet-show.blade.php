@@ -140,7 +140,7 @@
                         <tfoot>
                             <!-- Subtotal -->
                             <tr class="border-t shadow-inner  sticky bottom-0 bg-white">
-                                <td colspan="4" class="px-6 py-4 font-large text-gray-900 whitespace-nowrap dark:text-white text-right font-bold">Sub Total:</td>
+                                <td colspan="3" class="px-6 py-4 font-large text-gray-900 whitespace-nowrap dark:text-white text-right font-bold">Sub Total:</td>
                                 <td class="font-bold">₱{{ number_format($totalBalanceDebit, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalDebit, 2) }}</td>
                                 <td class="font-bold">₱{{ number_format($totalCredit, 2) }}</td>
@@ -152,8 +152,20 @@
                 </div>   <!-- table container div tag -->             
         </div>
          <!-- 2nd rectangle div tag --> 
+         <div>
+            <button wire:click="calculateTotalsPerMonth" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;">Calculate Monthly Totals</button>
+            <button wire:click="calculateTotalsPerYear" class="mr-2 text-white bg-blue-800 hover:bg-blue-700  focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;">Calculate Yearly Totals</button>
+
+            @if (session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @endif
+        </div>
 
     </div> <!-- journal main content div tag 2 -->
+
+    
 
 
 

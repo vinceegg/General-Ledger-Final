@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Exports\ledgerSheetExport;
 use App\Imports\ledgerSheetImport;
 use App\Models\ledgerSheetModel;
+use App\Models\ledgerSheetTotalDebitCreditModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -234,10 +235,8 @@ class LedgerSheetShow extends Component
 
     public function searchAction()
     {
-        $query = ledgerSheetModel::query();
-        $this->ledger_sheet = $query->where(function ($q) {
-            $q ->where('ls_accountname', 'like', '%' . $this->search . '%')
-            ->orWhere('ls_date', 'like', '%' . $this->search . '%')
+        $this->ledger_sheet = ledgerSheetModel::where(function ($q) {
+            $q ->Where('ls_date', 'like', '%' . $this->search . '%')
             ->orWhere('ls_vouchernum', 'like', '%' . $this->search . '%')
             ->orWhere('ls_particulars', 'like', '%' . $this->search . '%')
             ->orWhere('ls_balance_debit', 'like', '%' . $this->search . '%')
@@ -276,13 +275,100 @@ class LedgerSheetShow extends Component
         }
     }
 
-    public function calculateTotals($query)
+    public function calculateTotals()
     {
-        // Calculate totals
+        // Start with the base query
+        $query = LedgerSheetModel::query();
+
+        // Apply filtering based on account name
+        if ($this->ls_accountname) {
+            $query->where('ls_accountname', $this->ls_accountname);
+        }
+
+        // Apply date filtering if a month is selected
+        if ($this->selectedMonth) {
+            $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
+            $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
+            $query->whereBetween('ls_date', [$startOfMonth, $endOfMonth]);
+        }
+
+        // Apply sorting
+        $query->orderBy('ls_date', $this->sortDirection);
+
+        // Apply search filter
+        if ($this->search) {
+            $query->where(function ($q) {
+                $q->where('ls_date', 'like', '%' . $this->search . '%')
+                    ->orWhere('ls_vouchernum', 'like', '%' . $this->search . '%')
+                    ->orWhere('ls_particulars', 'like', '%' . $this->search . '%')
+                    ->orWhere('ls_balance_debit', 'like', '%' . $this->search . '%')
+                    ->orWhere('ls_debit', 'like', '%' . $this->search . '%')
+                    ->orWhere('ls_credit', 'like', '%' . $this->search . '%')
+                    ->orWhere('ls_credit_balance', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        // Calculate the totals
         $this->totalBalanceDebit = $query->sum('ls_balance_debit');
         $this->totalDebit = $query->sum('ls_debit');
         $this->totalCredit = $query->sum('ls_credit');
         $this->totalCreditBalance = $query->sum('ls_credit_balance');
+
+        // Update the totals directly from $this->ledger_sheet
+        $this->ledger_sheet->transform(function ($item) use ($query) {
+            return $item->setAttribute('total_balance_debit', $query->sum('ls_balance_debit'))
+                        ->setAttribute('total_debit', $query->sum('ls_debit'))
+                        ->setAttribute('total_credit', $query->sum('ls_credit'))
+                        ->setAttribute('total_credit_balance', $query->sum('ls_credit_balance'));
+        });
+    }
+
+    public function calculateTotalsPerYear()
+    {
+        $year = Carbon::now()->year; // Replace with selected year if needed
+        $totals = LedgerSheetModel::whereYear('ls_date', $year)
+            ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
+            ->groupBy('ls_accountname')
+            ->get();
+
+        foreach ($totals as $total) {
+            ledgerSheetTotalDebitCreditModel::updateOrCreate(
+                [
+                    'ls_accountname' => $total->ls_accountname,
+                    'ls_summary_type' => 'yearly',
+                    'ls_summary_year' => $year,
+                ],
+                [
+                    'ls_total_credit' => $total->total_credit,
+                    'ls_total_debit' => $total->total_debit,
+                ]
+            );
+        }
+    }
+
+    public function calculateTotalsPerMonth()
+    {
+        $selectedMonth = Carbon::parse($this->selectedMonth);
+        $totals = LedgerSheetModel::whereYear('ls_date', $selectedMonth->year)
+            ->whereMonth('ls_date', $selectedMonth->month)
+            ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
+            ->groupBy('ls_accountname')
+            ->get();
+
+        foreach ($totals as $total) {
+            ledgerSheetTotalDebitCreditModel::updateOrCreate(
+                [
+                    'ls_accountname' => $total->ls_accountname,
+                    'ls_summary_type' => 'monthly',
+                    'ls_summary_year' => $selectedMonth->year,
+                    'ls_summary_month' => $selectedMonth->month,
+                ],
+                [
+                    'ls_total_credit' => $total->total_credit,
+                    'ls_total_debit' => $total->total_debit,
+                ]
+            );
+        }
     }
 
         // Render the component
@@ -302,7 +388,7 @@ class LedgerSheetShow extends Component
         $this->sortDate();
 
         // Calculate totals
-        $this->calculateTotals($query);
+        $this->calculateTotals();
 
         // Apply sorting ITO PA KORINNE SA SORT DIN TO SO COPY MO LANG TO SA IBANG JOURNALS HA?
         $query->orderBy($this->sortField , $this->sortDirection);

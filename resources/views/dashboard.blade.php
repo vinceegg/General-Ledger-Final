@@ -234,6 +234,10 @@
     <livewire:todo-component />
 </div>
 
+<div>
+    <livewire:charts />
+</div>
+
 @livewireScripts
 @stack('scripts')
 </body>

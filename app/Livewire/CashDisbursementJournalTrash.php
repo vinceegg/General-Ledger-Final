@@ -20,11 +20,8 @@ class CashDisbursementJournalTrash extends Component
     $cdj_sundry_data = [], //@korinlv: added this
     $deleteType;
 // Added deleteType property
-
-    public $search;
     public $cash_disbursement_journal_id;
     public $softDeletedData;
-    public $file;
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
 
