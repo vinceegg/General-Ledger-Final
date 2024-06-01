@@ -422,7 +422,7 @@
                 </button>
             </div>
                 <!-- Export body -->
-                <div class="p-4 mb-4  rounded-lg ">
+                <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" x-data="{ exportFormat: 'xlsx' }">
                     <!-- Radio buttons -->
                     <div class="flex flex-col mb-4">
                         <div class="flex items-center">
