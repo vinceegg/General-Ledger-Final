@@ -12,7 +12,7 @@
                     <p class="font-extrabold text-blue-800 text-3xl">Ledger Sheets</p>
                 </div>
               </div>
-              <div class="bg-white rounded-lg">
+              <div class="bg-white rounded-lg flex flex-wrap md:justify-end">
                 <!-- Content for second cell -->
                 @php
         $accountNames = [
@@ -116,140 +116,106 @@
             '5 05 01 070 - Depreciation Furnitures and Books'
         ];
         @endphp
-        <!-- Select Account Name -->
-        <select id="account" wire:model="ls_accountcode" wire:change="setAccountName($event.target.value)" class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
-            <option value="" class="text-gray-500">Select Account</option>
-            @foreach ($accountNames as $account)
-                <option value="{{ $account }}" class="text-gray-700">{{ $account }}</option>
-            @endforeach
-        </select>
+    
+        <!-- Flex Container for Dropdown and Buttons -->
+<div class="flex items-center gap-2">
+    <!-- Select Account Name -->
+    <select id="account" wire:model="ls_accountcode" wire:change="setAccountName($event.target.value)" class="border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700" style="width: 692px;">
+        <option value="" class="text-gray-500">Select Account</option>
+        @foreach ($accountNames as $account)
+            <option value="{{ $account }}" class="text-gray-700">{{ $account }}</option>
+        @endforeach
+    </select>
+
+    <!-- Save Button -->
+    <label class="hover:cursor-pointer group-hover relative group border border-gray-300 bg-white hover:bg-gray-100 hover:text-black rounded-lg px-3 py-2 text-center inline-flex items-center"
+            data-modal-target="save-modal" data-modal-toggle="save-modal">
+        <svg class="w-6 h-6 text-gray-700 group-hover:text-green-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
+            <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
+        </svg>
+        <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-15 bg-white border border-gray-300 text-black shadow:md text-center text-sm rounded-lg px-1 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            Save
+        </div>
+    </label>
+    
+                     <!-- Archive Button -->
+                    <a href="{{ route('LedgerSheetArchive') }}" class="relative group group-hover border border-gray-300 bg-white hover:bg-gray-100 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
+                        <svg class="w-5 h-5 group-hover:text-red-400" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"></path>
+                        </svg>
+                        <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-32  bg-white border border-gray-300 text-black shadow:md text-center text-sm rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            View Archives
+                        </div>
+                    </a>
+</div>
+
         
-              </div>
+</div>
+
+
+
+
               <div class="p-2 bg-white rounded-lg ">
                 
                 <!-- Content for third cell -->
                 <div class="flex flex-col items-start justify-between">
-                    <p class="font-bold text-gray-800 text-xl">{{$ls_accountname ?? "All Accounts Ledger Entries"}}</p>
+                    <p class="font-bold text-blue-800 text-xl">{{$ls_accountname ?? "All Accounts Ledger Entries"}}</p>
                     {{-- <p class="text-yellow-600 mt-2">General Ledger > <span class="text-black">Ledger Sheet > {{$ls_accountname ?? "Ledger Sheets"}}</span></p> --}}
                 </div>
                                 <div class="flex flex-col items-left justify-between">
                     <p class="text-yellow-600 mt-2"> General Ledger <span class="text-black">> Ledger Sheet</span></p>
                 </div>
               </div>
-              <div class="bg-white rounded-lg">
-                <div class="bg-white  rounded-lg">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      <div class="bg-white rounded-lg">
-                        <!-- Content for first cell -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            <div class="bg-white rounded-lg">
-                                <!-- Content for first cell Search -->
-                                <div class="w-full bg-white rounded-lg relative flex-1" x-data="searchComponent()" @keydown.escape.window="search = ''; results = []" @click.away="search = ''; results = []">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                        </svg>
-                                    </div>
-                                    <input type="text" x-model="search" @input.debounce.300="updateResults()" @blur="search ? null : results = []" class="w-full pl-10 pr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Search...">
-                                    <div x-show="results.length > 0" class="shadow-xl absolute z-10 mt-1 bg-white border border-gray-300 rounded w-full">
-                                        <ul class="divide-y divide-gray-300">
-                                            <template x-for="item in results" :key="item.name">
-                                                <li class="px-4 py-2 cursor-pointer hover:bg-gray-100" @click="window.location.href = item.url">
-                                                    <span x-text="item.name"></span>
-                                                </li>
-                                            </template>
-                                        </ul>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            <div class="bg-white  rounded-lg">
-                                <!-- Content for second cell Datepicker-->
-                                <!-- Select Date -->        
-                                <label for="date-range" class="rounded-lg focus:ring-blue-500 focus:border-blue-500 mb-0"></label>
-                                <input type="month" id="date-range" placeholder="Select Date" wire:model="selectedMonth" wire:change="sortDate" class="form-control w-full rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-                            </div>
-                      </div>
-                      <div class="bg-white  rounded-lg dark:bg-gray-800 dark:border-green-500">
-                        <!-- Content for second cell Multiple Buttons for Import, Export, Add Transaction-->
-                        
-                        <div class="grid grid-cols-3 gap-2 text-center items-center justify-center h-full">
-                            <div class="text-center items-center">
-                                <!-- Import -->
-                                <button class="w-full text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center flex justify-center items-center" style="font-weight: bold;" 
-                                data-modal-target="import-modal" data-modal-toggle="import-modal">Import</button>
-                            </div>
-                            <div class="text-center items-center">
-                                <!-- Export -->
-                                <button class="w-full text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center flex justify-center items-center" style="font-weight: bold;" 
-                                data-modal-target="export-modal" data-modal-toggle="export-modal">Export</button>
-                            </div>
-                            <div class="text-center items-center">
-                                <!-- Add -->
-                                <button type="button" wire:click="resetInput" class="w-full text-white bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center justify-center flex items-center" style="font-weight: bold;"
-                                data-modal-target="add-modal" data-modal-toggle="add-modal">+ Add Entry</button>
-                            </div>
-                        </div>
-                    
-                      </div>
-                    
-                    </div>
-                  </div>
-                  
-                <!-- Content for fourth cell -->
-                    
-                <!-- Functions & features in first rectangle -->
-                <div class="flex flex-wrap md:justify-end">
-                                             <!-- Sort Button -->
-                                             <div x-data="{ open: false }" class="relative inline-block text-left">
-                                                <a @click="open = !open" class="relative group bg-white hover:bg-yellow-250 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center cursor-pointer">
-                                                    <svg class="w-6 h-6 text-gray-700 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 20V10m0 10-3-3m3 3 3-3m5-13v10m0-10 3 3m-3-3-3 3"/>
-                                                    </svg>
-                                                    <span class="ml-2">
-                                                        <span x-text="$wire.sortDirection === 'asc' ? '' : ($wire.sortDirection === 'desc' ? 'Oldest First' : 'Sort')"></span>
-                                                    </span>
-                                                    <!-- Tooltip -->
-                                                    <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-32 bg-white border border-gray-300 text-black shadow-md text-center text-sm rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                        Sort Options
-                                                    </div>
-                                                </a>
-                                                <div x-show="open" @click.away="open = false" class="absolute z-10 mt-2 bg-white border border-gray-300 text-black shadow-md rounded-lg">
-                                                    <div class="block w-full rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 px-3 py-2 text-center text-sm">
-                                                        <div @click="open = false; $wire.sortDirection = 'asc'; $wire.sortAction()" class="cursor-pointer py-1 px-2 hover:bg-gray-200">Newest Added Entries</div>
-                                                        <div @click="open = false; $wire.sortDirection = 'desc'; $wire.sortAction()" class="cursor-pointer py-1 px-2 hover:bg-gray-200">Oldest Added Entries</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
 
+              
+ <div class="ml-11 mt-2 bg-white rounded-lg">
+    <!-- Flex Container for Search and Buttons -->
+    <div class="flex items-center">
+        <!-- Search -->
+        <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+            </div>
+            <input type="search" wire:model="search" wire:change="searchAction" class="w-44 ps-10 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" 
+            placeholder="Search" required />
+        </div>
 
-                                                <!-- Save Button -->
-                                              <a href="{{ route('LedgerSheetArchive') }}" class="relative group border-none bg-none rounded-lg px-3 py-2.5 text-center inline-flex items-center">
-                                                <svg class="w-6 h-6 text-gray-700 hover:text-green-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                                  <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
-                                                  <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
-                                                </svg>
-                                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-32 bg-white border border-gray-300 text-black shadow:md text-center text-sm rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                  Save
-                                                </div>
-                                              </a>
-                                            
-                                              <!-- Archive button -->
-                                              <a href="{{ route('LedgerSheetArchive') }}" class="relative group rounded-lg px-3 py-2.5 text-center inline-flex items-center">
-                                                <svg class="w-6 h-6" data-slot="icon" fill="none" stroke-width="1.5" stroke="#000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"></path>
-                                                </svg>
-                                                <div class="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-32 bg-white border border-gray-300 text-black shadow:md text-center text-sm rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                  View Archives
-                                                </div>
-                                              </a>
-                                            </div>
+        <!-- Select Date -->        
+        <label for="date-range" class="rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500 mb-0"></label>
+        <input type="month" id="date-range" placeholder="Select Date" wire:model="selectedMonth" wire:change="sortDate" class="form-control rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500" style="width: 170px;">
+
+        <!-- Sort -->
+        <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+            <option value="asc">Newest First</option>
+            <option value="desc">Oldest First</option>
+        </select>
+        
+        <!-- Import -->                    
+        <!-- Note: nilipat ko sa ginawa kong import modal yung choose file -mari -->
+        <button class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;" 
+            data-modal-target="import-modal" data-modal-toggle="import-modal">Import</button>
+
+        <!-- Export -->
+        <!-- @frontend heree need onting editing sa UI <3 done! -->
+        <button type="button" class="mr-2 text-blue-700 bg-blue-100 hover:bg-blue-700 hover:text-white focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
+            data-modal-target="export-modal" data-modal-toggle="export-modal">
+                Export
+        </button>
+
+        <!-- Add -->
+        <button type="button" wire:click="resetInput" class="text-white bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
+        data-modal-target="add-modal" data-modal-toggle="add-modal">
+            Add Entry
+        </button>
+    </div>
+</div>
+
 
   
 
-              </div>
             </div>
         </div>
           
