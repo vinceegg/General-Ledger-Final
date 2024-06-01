@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Exports\ledgerSheetExport;
 use App\Imports\ledgerSheetImport;
 use App\Models\ledgerSheetModel;
+use App\Models\ledgerSheetTotalDebitCreditModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class LedgerSheetShow extends Component
     $ls_credit_balance,
     $deleteType; // Added deleteType property
 
-    public $ls_accountname;
+    public $ls_accountname = '', $ls_account_title_code = '';
     public $ledger_sheet;
     public $search = '';
     public $selectedMonth;
@@ -41,6 +42,10 @@ class LedgerSheetShow extends Component
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
     public $query;
+    public $saveSelectedYear, $saveSelectedMonth;
+
+    public $monthlyTotals =[], $yearlyTotals =[];
+
 
     
     
@@ -49,7 +54,7 @@ class LedgerSheetShow extends Component
     protected function rules()
     {
         return [
-            'ls_date'=>'nullable|date',
+            'ls_date'=>'required|date',
             'ls_vouchernum'=>'required|string|max:255', //@vince yung data type inedit ko 
             'ls_particulars'=>'nullable|string', 
             'ls_balance_debit'=> 'nullable|numeric|min:0|max:100000000',
@@ -154,13 +159,18 @@ class LedgerSheetShow extends Component
             '5 05 01 050 - Depreciation Machinery and Equipment',
             '5 05 01 060 - Depreciation Transportation Equipment',
             '5 05 01 070 - Depreciation Furnitures and Books'
-])],
-        ];
+        ])],
+                ];
     }
 
     public function setAccountName($value)
     {
         $this->ls_accountname = $value;
+    }
+
+    public function setAccountNameforTotals($value)
+    {
+        $this->ls_account_title_code = $value;
     }
 
     public function updated($fields)
@@ -287,27 +297,13 @@ class LedgerSheetShow extends Component
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportGL_XLSX(Request $request) 
     {
-        return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname .'.xlsx');
+        return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname ?? 'LedgerSheet' .'.xlsx');
     }
     public function exportGl_CSV(Request $request) 
     {
         return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname .'.csv');
     }
-
-
-
-    // public function sortAction($query)
-    // {
-    //         // Apply the month filter if a month is selected
-    //     if ($this->selectedMonth) {
-    //         $startOfMonth = Carbon::parse($this->selectedMonth)->startOfMonth();
-    //         $endOfMonth = Carbon::parse($this->selectedMonth)->endOfMonth();
-            
-    //         $query->whereBetween('ls_date', [$startOfMonth, $endOfMonth]);
-    //     }
-    // }
-
-    
+   
 
     // Method to reset notification
     public function resetNotification()
@@ -316,26 +312,11 @@ class LedgerSheetShow extends Component
     }
 
 
-
-    // public function calculatetotalsperYear()
-    // {
-    //     calculate totals per account name by year
-    //     save in database
-    // }
-
-    // public function calculatetotalsperMonth()
-    // {
-    //     calculate totals per account name by month
-    //     save in database
-    // }
-
-
     public function searchAction()
     {
         $query = ledgerSheetModel::query();
         $this->ledger_sheet = $query->where(function ($q) {
-            $q ->where('ls_accountname', 'like', '%' . $this->search . '%')
-            ->orWhere('ls_date', 'like', '%' . $this->search . '%')
+            $q ->Where('ls_date', 'like', '%' . $this->search . '%')
             ->orWhere('ls_vouchernum', 'like', '%' . $this->search . '%')
             ->orWhere('ls_particulars', 'like', '%' . $this->search . '%')
             ->orWhere('ls_balance_debit', 'like', '%' . $this->search . '%')
@@ -373,15 +354,124 @@ class LedgerSheetShow extends Component
             $this->ledger_sheet = $this->ledger_sheet->whereBetween('ls_date', [$startOfMonth, $endOfMonth]);
         }
     }
+    public function removeSuffix($accountName)
+    {
+        // Check if the string contains the suffix
+        if (strpos($accountName, ' - Petty Cash') !== false) {
+            // Remove the suffix and return the modified string
+            return str_replace(' - Petty Cash', '', $accountName);
+        } else {
+            // If the suffix is not found, return the original string
+            return $accountName;
+        }
+    }
+    
+    public function calculateTotalsPerYear()
+    {
+        if (!$this->ls_account_title_code) {
+            $this->addError('ls_account_title_code', 'Please select an account name.');
+            return;
+        }
+        if (!$this->saveSelectedYear) {
+            $this->addError('saveSelectedYear', 'Please input a year.');
+            return;
+        }
+    
+        $this->ls_accountname = $this->ls_account_title_code;
+        $saveSelectedYear = $this->saveSelectedYear;
+        $totals = LedgerSheetModel::whereYear('ls_date', $saveSelectedYear)
+            ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
+            ->groupBy('ls_accountname')
+            ->get();
+    
+        foreach ($totals as $total) {
+            ledgerSheetTotalDebitCreditModel::updateOrCreate(
+                [
+                    'ls_account_title_code' => $this->removeSuffix($total->ls_accountname),
+                    'ls_summary_type' => 'yearly',
+                    'ls_summary_year' => $saveSelectedYear,
+                ],
+                [
+                    'ls_total_credit' => $total->total_credit ?? 0,
+                    'ls_total_debit' => $total->total_debit ?? 0,
+                ]
+            );
+        }
+    }
+    
+    public function calculateTotalsPerMonth()
+    {
+        if (!$this->ls_account_title_code) {
+            $this->addError('ls_account_title_code', 'Please select an account name.');
+            return;
+        }
+        if (!$this->saveSelectedMonth) {
+            $this->addError('saveSelectedMonth', 'Please select a month.');
+            return;
+        }
+        if (!$this->saveSelectedYear) {
+            $this->addError('saveSelectedYear', 'Please input a year.');
+            return;
+        }
+    
+        $this->ls_accountname = $this->ls_account_title_code;
+        $totals = LedgerSheetModel::whereYear('ls_date', $this->saveSelectedYear)
+            ->whereMonth('ls_date', $this->saveSelectedMonth)
+            ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
+            ->groupBy('ls_accountname')
+            ->get();
+
+        foreach ($totals as $total) {
+            ledgerSheetTotalDebitCreditModel::updateOrCreate(
+                [
+                    'ls_account_title_code' => $this->removeSuffix($total->ls_accountname),
+                    'ls_summary_type' => 'monthly',
+                    'ls_summary_year' => $this->saveSelectedYear,
+                    'ls_summary_month' => $this->saveSelectedMonth,
+                ],
+                [
+                    'ls_total_credit' => $total->total_credit ?? 0,
+                    'ls_total_debit' => $total->total_debit ?? 0,
+                ]
+            );
+        }
+    }
+    
 
     public function calculateTotals($query)
     {
-        // Calculate totals
-        $this->totalBalanceDebit = $query->sum('ls_balance_debit');
-        $this->totalDebit = $query->sum('ls_debit');
-        $this->totalCredit = $query->sum('ls_credit');
-        $this->totalCreditBalance = $query->sum('ls_credit_balance');
+        if ($this->ls_accountname) {
+            // Calculate totals for the selected ls_accountname
+            $filteredQuery = $query->where('ls_accountname', $this->ls_accountname);
+
+            // Calculate totals for the selected ls_accountname
+            $this->totalBalanceDebit = $filteredQuery->sum('ls_balance_debit');
+            $this->totalDebit = $filteredQuery->sum('ls_debit');
+            $this->totalCredit = $filteredQuery->sum('ls_credit');
+            $this->totalCreditBalance = $filteredQuery->sum('ls_credit_balance');
+        } else {
+            // Calculate totals for all account names
+            $this->totalBalanceDebit = $query->sum('ls_balance_debit');
+            $this->totalDebit = $query->sum('ls_debit');
+            $this->totalCredit = $query->sum('ls_credit');
+            $this->totalCreditBalance = $query->sum('ls_credit_balance');
+        }
     }
+
+
+
+
+    // Pangcheck lang to kung nassave ng tama sa DB (remove this function later)
+    public function showTotals()
+    {
+        // Fetch totals for all months and years
+        $this->monthlyTotals = LedgerSheetTotalDebitCreditModel::where('ls_summary_type', 'monthly')->get();
+        $this->yearlyTotals = LedgerSheetTotalDebitCreditModel::where('ls_summary_type', 'yearly')->get();
+    }
+    
+
+
+
 
         // Render the component
     public function render()
@@ -399,6 +489,8 @@ class LedgerSheetShow extends Component
         $this->sortAction();
         $this->sortDate();
 
+        $this->showTotals();
+
         // Calculate totals
         $this->calculateTotals($query);
 
@@ -409,5 +501,7 @@ class LedgerSheetShow extends Component
 
         return view('livewire.ledger-sheet-show',['ledger_sheet' => $ledger_sheet]);
     }
+
+    
 
 }

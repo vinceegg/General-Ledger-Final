@@ -128,7 +128,7 @@
                             ];
                             @endphp
                         <!-- Select Account Name -->
-                        <select id="account" wire:model="ls_accountcode" wire:change="setAccountName($event.target.value)" class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
+                        <select id="account" wire:model="ls_accountname" wire:change="setAccountName($event.target.value)" class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
                             <option value="" class="text-gray-500">Select Account</option>
                             @foreach ($accountNames as $account)
                                 <option value="{{ $account }}" class="text-gray-700">{{ $account }}</option>

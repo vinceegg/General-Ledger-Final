@@ -9,6 +9,11 @@ Route::get('/', function () {
     return view('dashboard');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
+
 
 //Routes for each table of journals
 Route::get('/CRJ', [App\Http\Controllers\CashReceiptJournalController::class, 'index'])->name('CRJ');
@@ -16,9 +21,6 @@ Route::get('/CKDJ', [App\Http\Controllers\CheckDisbursementJournalController::cl
 Route::get('/CDJ', [App\Http\Controllers\CashDisbursementJournalController::class, 'index'])->name('CDJ');
 Route::get('/GJ', [App\Http\Controllers\GeneralJournalController::class, 'index'])->name('GJ');
 
-Route::get('/AC', function () {
-    return view('accounthomepage');
-});
 
 
 //ROUTES FOR ARCHIVED RECORDS

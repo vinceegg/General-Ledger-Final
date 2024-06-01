@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ledgersheet_total_debit_credit', function (Blueprint $table) {
-            $table->id('ls_totals_id');
+            $table->uuid('ls_totals_id')->primary();
             $table->string('ls_account_title_code', 255);
             $table->string('ls_summary_type');
             $table->string('ls_summary_month')->nullable(); // Nullable for yearly summaries
