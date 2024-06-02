@@ -27,6 +27,7 @@ class GeneralJournal_AccountCodesModel extends Model
 
     public function generalJournal()
     {
-        return $this->belongsTo(GeneralJournalModel::class, 'gj_jevnum');
+        return $this->belongsTo(GeneralJournalModel::class, 'generaljournal_no');
     }
+
 }

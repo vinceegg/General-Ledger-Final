@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
+use App\Models\LedgerSheetModel;
 
 class CheckDisbursementJournalShow extends Component
 {
@@ -18,6 +19,8 @@ class CheckDisbursementJournalShow extends Component
     use WithFileUploads;
 
     public $ckdj_entrynum_date,
+    $checkdisbursementjournal_no,
+    $ckdj_jevnum,
     $ckdj_checknum,
     $ckdj_payee,
     $ckdj_bur,
@@ -32,7 +35,7 @@ class CheckDisbursementJournalShow extends Component
 
     public $search;
     public $selectedMonth;
-    public $sortField = 'ckdj_checknum'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
+    public $sortField = 'checkdisbursementjournal_no'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $softDeletedData;
     public $file;
@@ -52,19 +55,20 @@ class CheckDisbursementJournalShow extends Component
     {
         return [
             'ckdj_entrynum_date'=>'nullable|date',
+            'ckdj_jevnum'=>'nullable|string', 
             'ckdj_checknum'=>'nullable|string',
             'ckdj_payee'=>'nullable|string',
-            'ckdj_bur'=>'nullable|integer',
-            'ckdj_cib_lcca'=> 'nullable|numeric',
-            'ckdj_account1'=> 'nullable|numeric',
-            'ckdj_account2'=> 'nullable|numeric',
-            'ckdj_account3'=> 'nullable|numeric',
-            'ckdj_salary_wages'=> 'nullable|numeric',
-            'ckdj_honoraria'=> 'nullable|numeric',
+            'ckdj_bur'=>'nullable|string',
+            'ckdj_cib_lcca'=> 'nullable|numeric|min:0|max:1000000000',
+            'ckdj_account1'=> 'nullable|numeric|min:0|max:1000000000',
+            'ckdj_account2'=> 'nullable|numeric|min:0|max:1000000000',
+            'ckdj_account3'=> 'nullable|numeric|min:0|max:1000000000',
+            'ckdj_salary_wages'=> 'nullable|numeric|min:0|max:1000000000',
+            'ckdj_honoraria'=> 'nullable|numeric|min:0|max:1000000000',
             'ckdj_sundry_data' => 'required|array|min:1',
             'ckdj_sundry_data.*.ckdj_accountcode'=>'nullable|string', //@korinlv: edited this
-            'ckdj_sundry_data.*.ckdj_debit'=> 'nullable|numeric|min:0|max:100000000',
-            'ckdj_sundry_data.*.ckdj_credit'=> 'nullable|numeric|min:0|max:100000000',
+            'ckdj_sundry_data.*.ckdj_debit'=> 'nullable|numeric|min:0|max:10000000000',
+            'ckdj_sundry_data.*.ckdj_credit'=> 'nullable|numeric|min:0|max:10000000000',
         ];
     }
 
@@ -77,7 +81,7 @@ class CheckDisbursementJournalShow extends Component
     public function mount()
     {
         // Fetch existing sundry data for the given journal ID
-        $journal = CheckDisbursementJournalModel::find($this->ckdj_checknum);
+        $journal = CheckDisbursementJournalModel::find($this->checkdisbursementjournal_no);
 
         if ($journal && $journal->ckdj_sundry_data()->exists()) {
             // If there is existing sundry data in the database, load it
@@ -122,6 +126,57 @@ class CheckDisbursementJournalShow extends Component
         $this->dispatch('notification-shown');
     }
 
+    //VINCE REMEMBER
+    public function saveLedgerSheetCode()
+    {
+        $this->validate([
+            'ckdj_sundry_data.*.ckdj_accountcode'=>'nullable|string', //@korinlv: edited this
+            'ckdj_sundry_data.*.ckdj_debit'=> 'nullable|numeric|min:0|max:10000000000',
+            'ckdj_sundry_data.*.ckdj_credit'=> 'nullable|numeric|min:0|max:10000000000',
+        ]);
+    
+        foreach ($this->ckdj_sundry_data as $code) {
+            $debit = $code['ckdj_debit'] ?? null; // Default to the provided debit value
+            $credit = $code['ckdj_credit'] ?? null; // Default to the provided credit value
+    
+            switch ($code['ckdj_accountcode']) {
+                case '1 01 01 010 - Cash Local Treasury':
+                    $credit = null; // Set credit to null for Cash Local Treasury
+                    break;
+                case '1 03 01 010 - Accounts Receivable':
+                    $credit = null; // Set credit to null for Accounts Receivable
+                    break;
+                case '5 02 99 050 - Rent Income':
+                    $debit = null; // Set debit to null for Rent Income
+                    break;
+                case '1 01 01 020 - Petty Cash':
+                    $credit = null; // Set credit to null for Cash Local Treasury
+                    break;
+                case '1 01 02 010 - Cash in Bank - Local Current Account':
+                    $credit = null; // Set credit to null for Accounts Receivable
+                    break;
+                case '1 02 01 010 - Cash in Bank - Local Currency Time Deposits':
+                    $credit = null; // Set debit to null for Rent Income
+                    break;
+                case '1 03 01 070 - Interests Receivable':
+                    $credit = null; // Set credit to null for Cash Local Treasury
+                    break;
+                
+            }
+    
+            LedgerSheetModel::create([
+                'ls_vouchernum' => $this->ckdj_jevnum, 
+                'ls_date' => $this->ckdj_entrynum_date, 
+                'ls_particulars' => $this->ckdj_payee, 
+                'ls_accountname' => $code['ckdj_accountcode'], 
+                'ls_debit' => $debit, 
+                'ls_credit' => $credit, 
+                'ls_credit_balance' => null,
+                'ls_balance_debit' => null
+            ]);
+        }
+    }
+
     //@korinlv: added this function
     public function addAccountCode()
     {
@@ -139,12 +194,14 @@ class CheckDisbursementJournalShow extends Component
 
 
     //@korinlv: updated this function
-    public function editCheckDisbursementJournal($ckdj_checknum)
+    public function editCheckDisbursementJournal($checkdisbursementjournal_no)
     {
-        $check_disbursement_journal = CheckDisbursementJournalModel::with('ckdj_sundry_data')->find($ckdj_checknum);
+        $check_disbursement_journal = CheckDisbursementJournalModel::with('ckdj_sundry_data')->find($checkdisbursementjournal_no);
         if ($check_disbursement_journal) {
 
+            $this->checkdisbursementjournal_no = $check_disbursement_journal->$checkdisbursementjournal_no;
             $this->ckdj_checknum = $check_disbursement_journal->ckdj_checknum;
+            $this->ckdj_jevnum = $check_disbursement_journal->ckdj_jevnum;
             $this->ckdj_entrynum_date = $check_disbursement_journal->ckdj_entrynum_date;
             $this->ckdj_payee = $check_disbursement_journal->ckdj_payee;
             $this->ckdj_bur = $check_disbursement_journal->ckdj_bur;
@@ -165,9 +222,10 @@ class CheckDisbursementJournalShow extends Component
     {
         $validatedData = $this->validate([
             'ckdj_entrynum_date' => 'nullable|date',
+            'ckdj_jevnum' => 'nullable|string',
             'ckdj_checknum' => 'nullable|string',
             'ckdj_payee' => 'nullable|string',
-            'ckdj_bur' => 'nullable|integer',
+            'ckdj_bur' => 'nullable|string',
             'ckdj_cib_lcca' => 'nullable|numeric',
             'ckdj_account1' => 'nullable|numeric',
             'ckdj_account2' => 'nullable|numeric',
@@ -185,7 +243,7 @@ class CheckDisbursementJournalShow extends Component
                 return $value === '' ? null : $value;
             }, $validatedData);
 
-            $journal = CheckDisbursementJournalModel::findOrFail($this->ckdj_checknum);
+            $journal = CheckDisbursementJournalModel::findOrFail($this->checkdisbursementjournal_no);
             $journal->update($validatedData);
 
             // Get existing sundry data IDs
@@ -243,7 +301,8 @@ class CheckDisbursementJournalShow extends Component
     public function resetInput()
     {
         $this->ckdj_entrynum_date = '';            
-        $this->ckdj_checknum = '';        
+        $this->ckdj_checknum = '';    
+        $this->ckdj_jevnum = '';    
         $this->ckdj_payee = '';
         $this->ckdj_bur = '';
         $this->ckdj_cib_lcca = '';
@@ -258,9 +317,9 @@ class CheckDisbursementJournalShow extends Component
 
     // Soft delete CheckDisbursementJournal
     //@korinlv: edited this function
-    public function softDeleteCheckDisbursementJournal($ckdj_checknum)
+    public function softDeleteCheckDisbursementJournal($checkdisbursementjournal_no)
     {
-        $check_disbursement_journal = CheckDisbursementJournalModel::with('ckdj_sundry_data')->find($ckdj_checknum);
+        $check_disbursement_journal = CheckDisbursementJournalModel::with('ckdj_sundry_data')->find($checkdisbursementjournal_no);
         if ($check_disbursement_journal) {
             // Delete the related sundries first
             foreach ($check_disbursement_journal->ckdj_sundry_data as $sundry) {
@@ -355,6 +414,8 @@ class CheckDisbursementJournalShow extends Component
         $query->where(function ($q) {
             $q->where('ckdj_checknum', 'like', '%' . $this->search . '%')
               ->orWhere('ckdj_checknum', 'like', '%' . $this->search . '%')
+                ->orWhere('ckdj_entrynum_date', 'like', '%' . $this->search . '%')
+                ->orWhere('ckdj_jevnum', 'like', '%' . $this->search . '%')
               ->orWhere('ckdj_payee', 'like', '%' . $this->search . '%')
               ->orWhere('ckdj_bur', 'like', '%' . $this->search . '%')
               ->orWhere('ckdj_cib_lcca', 'like', '%' . $this->search . '%')

@@ -11,12 +11,14 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
+use App\Models\LedgerSheetModel;
 
 class CashReceiptJournalShow extends Component
 {
     use WithFileUploads;
 
     public $crj_entrynum_date,
+    $cashreceiptjournal_no,
     $crj_jevnum,
     $crj_payor,
     $crj_collection_debit,
@@ -28,7 +30,7 @@ class CashReceiptJournalShow extends Component
 
     public $search;
     public $selectedMonth;
-    public $sortField = 'crj_jevnum'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
+    public $sortField = 'cashreceiptjournal_no'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $softDeletedData;
@@ -49,12 +51,12 @@ class CashReceiptJournalShow extends Component
             'crj_payor' => 'nullable|string',
             'crj_collection_debit' => 'nullable|numeric',
             'crj_collection_credit' => 'nullable|numeric',
-            'crj_deposit_debit' => 'nullable|numeric',
-            'crj_deposit_credit' => 'nullable|numeric',
+            'crj_deposit_debit' => 'nullable|numeric|min:0|max:1000000000',
+            'crj_deposit_credit' => 'nullable|numeric|min:0|max:1000000000',
             'crj_sundry_data' => 'required|array|min:1',
             'crj_sundry_data.*.crj_accountcode' => 'nullable|string',
-            'crj_sundry_data.*.crj_debit' => 'nullable|numeric|min:0|max:100000000',
-            'crj_sundry_data.*.crj_credit' => 'nullable|numeric|min:0|max:100000000',
+            'crj_sundry_data.*.crj_debit' => 'nullable|numeric|min:0|max:1000000000',
+            'crj_sundry_data.*.crj_credit' => 'nullable|numeric|min:0|max:1000000000',
         ];
     }
 
@@ -67,7 +69,7 @@ class CashReceiptJournalShow extends Component
     public function mount()
     {
         // Fetch existing sundry data for the given journal ID
-        $journal = CashReceiptJournalModel::find($this->crj_jevnum);
+        $journal = CashReceiptJournalModel::find($this->cashreceiptjournal_no);
 
         if ($journal && $journal->crj_sundry_data()->exists()) {
             // If there is existing sundry data in the database, load it
@@ -111,6 +113,57 @@ class CashReceiptJournalShow extends Component
         }
     }
 
+    //VINCE REMEMBER
+    public function saveLedgerSheetCode()
+    {
+        $this->validate([
+            'crj_sundry_data.*.crj_accountcode' => 'nullable|string',
+            'crj_sundry_data.*.crj_debit' => 'nullable|numeric|min:0|max:1000000000',
+            'crj_sundry_data.*.crj_credit' => 'nullable|numeric|min:0|max:1000000000',
+        ]);
+    
+        foreach ($this->crj_sundry_data as $code) {
+            $debit = $code['crj_debit'] ?? null; // Default to the provided debit value
+            $credit = $code['crj_credit'] ?? null; // Default to the provided credit value
+    
+            switch ($code['crj_accountcode']) {
+                case '1 01 01 010 - Cash Local Treasury':
+                    $credit = null; // Set credit to null for Cash Local Treasury
+                    break;
+                case '1 03 01 010 - Accounts Receivable':
+                    $credit = null; // Set credit to null for Accounts Receivable
+                    break;
+                case '5 02 99 050 - Rent Income':
+                    $debit = null; // Set debit to null for Rent Income
+                    break;
+                case '1 01 01 020 - Petty Cash':
+                    $credit = null; // Set credit to null for Cash Local Treasury
+                    break;
+                case '1 01 02 010 - Cash in Bank - Local Current Account':
+                    $credit = null; // Set credit to null for Accounts Receivable
+                    break;
+                case '1 02 01 010 - Cash in Bank - Local Currency Time Deposits':
+                    $credit = null; // Set debit to null for Rent Income
+                    break;
+                case '1 03 01 070 - Interests Receivable':
+                    $credit = null; // Set credit to null for Cash Local Treasury
+                    break;
+                
+            }
+    
+            LedgerSheetModel::create([
+                'ls_vouchernum' => $this->crj_jevnum, 
+                'ls_date' => $this->crj_entrynum_date, 
+                'ls_particulars' => $this->crj_payor, 
+                'ls_accountname' => $code['crj_accountcode'], 
+                'ls_debit' => $debit, 
+                'ls_credit' => $credit, 
+                'ls_credit_balance' => null,
+                'ls_balance_debit' => null
+            ]);
+        }
+    }
+
     //@korinlv: added this function
     public function addAccountCode()
     {
@@ -127,10 +180,11 @@ class CashReceiptJournalShow extends Component
 
     //EDIT FUNCTION
     //@korinlv: updated this function
-    public function editCashReceiptJournal(string $crj_jevnum)
+    public function editCashReceiptJournal($cashreceiptjournal_no)
     {
-        $cash_receipt_journal = CashReceiptJournalModel::with('crj_sundry_data')->find($crj_jevnum);
+        $cash_receipt_journal = CashReceiptJournalModel::with('crj_sundry_data')->find($cashreceiptjournal_no);
         if ($cash_receipt_journal) {
+            $this->cashreceiptjournal_no = $cash_receipt_journal->$cashreceiptjournal_no;
             $this->crj_jevnum = $cash_receipt_journal->crj_jevnum;
             $this->crj_entrynum_date = $cash_receipt_journal->crj_entrynum_date;       
             $this->crj_payor = $cash_receipt_journal->crj_payor;
@@ -168,7 +222,7 @@ class CashReceiptJournalShow extends Component
                 return $value === '' ? null : $value;
             }, $validatedData);
 
-            $cash_receipt_journal = CashReceiptJournalModel::findOrFail($this->crj_jevnum);
+            $cash_receipt_journal = CashReceiptJournalModel::findOrFail($this->cashreceiptjournal_no);
             $cash_receipt_journal->update($validatedData);
 
             // Get existing sundry data IDs
@@ -243,9 +297,9 @@ class CashReceiptJournalShow extends Component
 
     // Soft delete CashReceiptJournal
     //@korinlv: edited this function
-    public function softDeleteCashReceiptJournal($crj_jevnum)
+    public function softDeleteCashReceiptJournal($cashreceiptjournal_no)
     {
-        $cash_receipt_journal = CashReceiptJournalModel::with('crj_sundry_data')->find($crj_jevnum);
+        $cash_receipt_journal = CashReceiptJournalModel::with('crj_sundry_data')->find($cashreceiptjournal_no);
         if ($cash_receipt_journal) {
             // Delete the related sundries first
             foreach ($cash_receipt_journal->crj_sundry_data as $sundry) {

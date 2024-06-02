@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('gj_accountcodes_data', function (Blueprint $table) {
             $table->bigIncrements('gj_id');
-            $table->string('gj_jevnum'); // Define the foreign key column
-            $table->foreign('gj_jevnum')->references('gj_jevnum')->on('general_journal')->onDelete('cascade');
+            $table->unsignedBigInteger('generaljournal_no');
+            $table->foreign('generaljournal_no')->references('generaljournal_no')->on('general_journal')->onDelete('cascade');
             $table->string('gj_accountcode')->nullable();
             $table->decimal('gj_debit', 15,2)->nullable();
             $table->decimal('gj_credit', 15,2)->nullable();

@@ -35,6 +35,9 @@ Route::get('/AC', function () {
     return view('accounthomepage');
 });
 
+//RoutesAccountCode
+Route::get('/LedgerSheets', [App\Http\Controllers\LedgerSheetController::class, 'index'])->name('LedgerSheet');
+Route::get('/LedgerSheetArchived', [App\Http\Controllers\LedgerSheetTrash::class, 'index'])->name('LedgerSheetArchived');
 
 //ROUTES FOR ARCHIVED RECORDS
 Route::get('/CashDisbursementJournalArchived', [App\Http\Controllers\CashDisbursementJournalTrash::class, 'index'])->name('CashDisbursementJournalArchived');

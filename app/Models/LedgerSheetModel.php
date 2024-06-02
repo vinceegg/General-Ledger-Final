@@ -8,36 +8,31 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Models\User;
-use App\Models\GeneralJournal_AccountCodesModel;
 
-class GeneralJournalModel extends Model
+class LedgerSheetModel extends Model
 {
     use HasFactory;
     use SoftDeletes;
     use LogsActivity;
-    
-    protected $table = 'general_journal';
 
-    protected $primaryKey = 'generaljournal_no'; 
-
-    public $incrementing = true; 
-
+    protected $table = 'ledgersheet';
+    protected $primaryKey = 'ledgersheet_no';
+    public $incrementing = true;
     protected $keyType = 'int';
- 
+
     protected $fillable = [
-        'gj_jevnum',
-        'gj_entrynum_date',
-        'gj_particulars',
+        'ls_vouchernum',
+        'ls_accountname',
+        'ls_date',
+        'ls_particulars',
+        'ls_balance_debit',
+        'ls_debit',
+        'ls_credit',
+        'ls_credit_balance',
     ];
 
-    //@korinlv: added  this
-    public function gj_accountcodes_data()
-    {
-        return $this->hasMany(GeneralJournal_AccountCodesModel::class, 'generaljournal_no');
-    }
-
     protected static $logAttributes = ['*'];
-
+        
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -46,7 +41,8 @@ class GeneralJournalModel extends Model
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        $tableName = "General Journal";
+
+        $tableName = "Ledger Sheet";
         
         return "{$tableName}";
     }

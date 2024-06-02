@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('check_disbursement_journal', function (Blueprint $table) {
-            $table->string('ckdj_checknum')->primary();
+            $table->bigIncrements('checkdisbursementjournal_no');
+            $table->string('ckdj_jevnum')->nullable();
+            $table->string('ckdj_checknum')->nullable();
             $table->date('ckdj_entrynum_date')->nullable();      
             $table->string('ckdj_payee')->nullable();
-            $table->integer('ckdj_bur')->nullable();
+            $table->string('ckdj_bur')->nullable();
             $table->decimal('ckdj_cib_lcca',15,2)->nullable();
             $table->decimal('ckdj_account1',15,2)->nullable();
             $table->decimal('ckdj_account2',15,2)->nullable();

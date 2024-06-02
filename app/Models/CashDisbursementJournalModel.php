@@ -18,11 +18,11 @@ class CashDisbursementJournalModel extends Model
 
     protected $table = 'cash_disbursement_journal';
 
-    protected $primaryKey = 'cdj_jevnum'; // Specify the new primary key
+    protected $primaryKey = 'cashdisbursementjournal_no'; // Specify the new primary key
 
-    public $incrementing = false; // Since the primary key is not auto-incrementing
+    public $incrementing = true; // Since the primary key is not auto-incrementing
 
-    protected $keyType = 'string'; 
+    protected $keyType = 'int'; 
 
     protected $fillable = [
         'cdj_jevnum',
@@ -43,7 +43,7 @@ class CashDisbursementJournalModel extends Model
     //@korinlv: added  this
     public function cdj_sundry_data()
     {
-        return $this->hasMany(CDJ_SundryModel::class, 'cdj_jevnum');
+        return $this->hasMany(CDJ_SundryModel::class, 'cashdisbursementjournal_no');
     }
 
     protected static $logAttributes = ['*'];

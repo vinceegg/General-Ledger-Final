@@ -18,13 +18,14 @@ class CheckDisbursementJournalModel extends Model
     protected $table = 'check_disbursement_journal';
 
     
-    protected $primaryKey = 'ckdj_checknum'; 
+    protected $primaryKey = 'checkdisbursementjournal_no'; 
 
-    public $incrementing = false; 
+    public $incrementing = true; 
 
-    protected $keyType = 'string'; 
+    protected $keyType = 'int'; 
 
     protected $fillable = [
+        'ckdj_jevnum',
         'ckdj_checknum',
         'ckdj_entrynum_date',
         'ckdj_payee',
@@ -43,7 +44,7 @@ class CheckDisbursementJournalModel extends Model
     //@korinlv: added this function
     public function ckdj_sundry_data()
     {
-        return $this->hasMany(CKDJ_SundryModel::class, 'ckdj_checknum');
+        return $this->hasMany(CKDJ_SundryModel::class, 'checkdisbursementjournal_no');
     }
 
     protected static $logAttributes = ['*'];

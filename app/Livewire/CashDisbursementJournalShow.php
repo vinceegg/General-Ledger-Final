@@ -11,12 +11,14 @@ use App\Imports\CashDisbursementJournalImport;
 use App\Models\CDJ_SundryModel;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\LedgerSheetModel;
 
 class CashDisbursementJournalShow extends Component
 {
     use WithFileUploads;
 
     public $cdj_entrynum_date,
+    $cashdisbursementjournal_no,
     $cdj_referencenum,
     $cdj_bur,
     $cdj_accountable_officer,
@@ -30,7 +32,7 @@ class CashDisbursementJournalShow extends Component
 
     public $search;
     public $selectedMonth;
-    public $sortField = 'cdj_jevnum'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
+    public $sortField = 'cashdisbursementjournal_no'; // New property for sorting //ITO YUNG DINAGDAG SA SORTINGGGG
     public $sortDirection = 'asc'; // New property for sorting // KASAMA TOO
     public $file;
     public $totalDebit = 0;
@@ -57,8 +59,8 @@ class CashDisbursementJournalShow extends Component
             'cdj_sundry_data'=>'required|array|min:1',
             'cdj_sundry_data.*.cdj_sundry_accountcode'=>'nullable|string',
             'cdj_sundry_data.*.cdj_pr'=>'nullable|string',
-            'cdj_sundry_data.*.cdj_debit'=> 'nullable|numeric|min:0|max:100000000',
-            'cdj_sundry_data.*.cdj_credit'=> 'nullable|numeric|min:0|max:100000000',
+            'cdj_sundry_data.*.cdj_debit'=> 'nullable|numeric|min:0|max:1000000000',
+            'cdj_sundry_data.*.cdj_credit'=> 'nullable|numeric|min:0|max:1000000000',
         ];
     }
 
@@ -71,7 +73,7 @@ class CashDisbursementJournalShow extends Component
     public function mount()
     {
         // Fetch existing sundry data for the given journal ID
-        $cash_disbursement_journal = CashDisbursementJournalModel::find($this->cdj_jevnum);
+        $cash_disbursement_journal = CashDisbursementJournalModel::find($this->cashdisbursementjournal_no);
 
         if ($cash_disbursement_journal && $cash_disbursement_journal->cdj_sundry_data()->exists()) {
             // If there is existing sundry data in the database, load it
@@ -93,7 +95,6 @@ class CashDisbursementJournalShow extends Component
         $validatedData = array_map(function($value) {
             return $value === '' ? null : $value;
         }, $validatedData);
-        
 
         $cash_disbursement_journal = CashDisbursementJournalModel::create($validatedData);
 
@@ -120,6 +121,61 @@ class CashDisbursementJournalShow extends Component
         $this->dispatch('notification-shown');
     }
     
+    //VINCE REMEMBER
+    public function saveLedgerSheetCode()
+    {
+        $this->validate([
+            'cdj_sundry_data.*.cdj_sundry_accountcode'=>'nullable|string',
+            'cdj_sundry_data.*.cdj_pr'=>'nullable|string',
+            'cdj_sundry_data.*.cdj_debit'=> 'nullable|numeric|min:0|max:1000000000',
+            'cdj_sundry_data.*.cdj_credit'=> 'nullable|numeric|min:0|max:1000000000',
+        ]);
+    
+        foreach ($this->cdj_sundry_data as $code) {
+            $debit = $code['cdj_debit'] ?? null; // Default to the provided debit value
+            $credit = $code['cdj_credit'] ?? null; // Default to the provided credit value
+    
+            switch ($code['cdj_sundry_accountcode']) {
+                case '1 01 01 010 - Cash Local Treasury':
+                    $credit = null; // Set credit to null for Cash Local Treasury
+                    break;
+                case '1 03 01 010 - Accounts Receivable':
+                    $credit = null; // Set credit to null for Accounts Receivable
+                    break;
+                case '5 02 99 050 - Rent Income':
+                    $debit = null; // Set debit to null for Rent Income
+                    break;
+                case '1 01 01 020 - Petty Cash':
+                    $credit = null; // Set credit to null for Cash Local Treasury
+                    break;
+                case '1 01 02 010 - Cash in Bank - Local Current Account':
+                    $credit = null; // Set credit to null for Accounts Receivable
+                    break;
+                case '1 02 01 010 - Cash in Bank - Local Currency Time Deposits':
+                    $credit = null; // Set debit to null for Rent Income
+                    break;
+                case '1 03 01 070 - Interests Receivable':
+                    $credit = null; // Set credit to null for Cash Local Treasury
+                    break;
+                
+            }
+    
+            LedgerSheetModel::create([
+                'ls_vouchernum' => $this->cdj_jevnum, 
+                'ls_date' => $this->cdj_entrynum_date, 
+                'ls_particulars' => $this->cdj_accountable_officer, 
+                'ls_accountname' => $code['cdj_sundry_accountcode'], 
+                'ls_debit' => $debit, 
+                'ls_credit' => $credit, 
+                'ls_credit_balance' => null,
+                'ls_balance_debit' => null
+            ]);
+        }
+    
+        // Notification message to show that the operation was successful
+        $this->notificationMessage = 'Ledger entries added successfully';
+        $this->showNotification = true;
+    }
 
     //@korinlv: added this function
     public function addAccountCode()
@@ -136,11 +192,11 @@ class CashDisbursementJournalShow extends Component
     }
 
     //@korinlv: updated this function
-    public function editCashDisbursementJournal(string $cdj_jevnum)
+    public function editCashDisbursementJournal($cashdisbursementjournal_no)
     {
-        $cash_disbursement_journal = CashDisbursementJournalModel::find($cdj_jevnum);
+        $cash_disbursement_journal = CashDisbursementJournalModel::find($cashdisbursementjournal_no);
         if ($cash_disbursement_journal) {
-
+            $this->cashdisbursementjournal_no =  $cash_disbursement_journal->$cashdisbursementjournal_no;
             $this->cdj_jevnum = $cash_disbursement_journal->cdj_jevnum;
             $this->cdj_entrynum_date = $cash_disbursement_journal->cdj_entrynum_date;
             $this->cdj_referencenum = $cash_disbursement_journal->cdj_referencenum;
@@ -182,7 +238,7 @@ class CashDisbursementJournalShow extends Component
                 return $value === '' ? null : $value;
             }, $validatedData);
 
-            $cash_disbursement_journal = CashDisbursementJournalModel::findOrFail($this->cdj_jevnum);
+            $cash_disbursement_journal = CashDisbursementJournalModel::findOrFail($this->cashdisbursementjournal_no);
             $cash_disbursement_journal->update($validatedData);
 
             // Get existing sundry data IDs
@@ -253,9 +309,9 @@ class CashDisbursementJournalShow extends Component
     }
 
     //@korinlv: edited this function
-    public function softDeleteCashDisbursementJournal($cdj_jevnum)
+    public function softDeleteCashDisbursementJournal($cashdisbursementjournal_no)
     {
-        $cash_disbursement_journal= CashDisbursementJournalModel::find($cdj_jevnum);
+        $cash_disbursement_journal= CashDisbursementJournalModel::find($cashdisbursementjournal_no);
         if ( $cash_disbursement_journal) {
             foreach ($cash_disbursement_journal->cdj_sundry_data as $accountCode){
                 $accountCode->delete();
