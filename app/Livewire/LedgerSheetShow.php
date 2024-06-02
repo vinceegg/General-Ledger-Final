@@ -300,14 +300,14 @@ class LedgerSheetShow extends Component
     }
 
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportGL_XLSX(Request $request) 
+    public function exportGL_XLSX(Request $request)
     {
         $cleanAccountName = $this->ls_accountname ? $this->cleanAccountName($this->ls_accountname) : 'LedgerSheet';
         $fileName = $cleanAccountName . '.xlsx';
         return Excel::download(new ledgerSheetExport($this->ls_accountname), $fileName);
     }
 
-    public function exportGl_CSV(Request $request) 
+    public function exportGl_CSV(Request $request)
     {
         $cleanAccountName = $this->ls_accountname ? $this->cleanAccountName($this->ls_accountname) : 'LedgerSheet';
         $fileName = $cleanAccountName . '.csv';
@@ -366,86 +366,107 @@ class LedgerSheetShow extends Component
     }
     public function removeSuffix($accountName)
     {
-        // Check if the string contains the suffix
-        if (strpos($accountName, ' - Petty Cash') !== false) {
-            // Remove the suffix and return the modified string
-            return str_replace(' - Petty Cash', '', $accountName);
-        } else {
-            // If the suffix is not found, return the original string
-            return $accountName;
-        }
+        // Use a regular expression to remove all non-numeric characters
+        return preg_replace('/[^0-9 ]/', '', $accountName);
     }
-    
-    public function calculateTotalsPerYear()
+    public function cleanAccountName($accountName)
     {
-        if (!$this->ls_account_title_code) {
-            $this->addError('ls_account_title_code', 'Please select an account name.');
-            return;
-        }
-        if (!$this->saveSelectedYear) {
-            $this->addError('saveSelectedYear', 'Please input a year.');
-            return;
-        }
-    
-        $this->ls_accountname = $this->ls_account_title_code;
-        $saveSelectedYear = $this->saveSelectedYear;
-        $totals = LedgerSheetModel::whereYear('ls_date', $saveSelectedYear)
-            ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
-            ->groupBy('ls_accountname')
-            ->get();
-    
-        foreach ($totals as $total) {
-            ledgerSheetTotalDebitCreditModel::updateOrCreate(
-                [
-                    'ls_account_title_code' => $this->removeSuffix($total->ls_accountname),
-                    'ls_summary_type' => 'yearly',
-                    'ls_summary_year' => $saveSelectedYear,
-                ],
-                [
-                    'ls_total_credit' => $total->total_credit ?? 0,
-                    'ls_total_debit' => $total->total_debit ?? 0,
-                ]
-            );
-        }
+        // Remove all digits and dashes from the string
+        $cleanedName = preg_replace('/[\d-]+/', '', $accountName);
+        // Replace multiple spaces with a single space and trim leading/trailing spaces
+        return trim(preg_replace('/\s+/', ' ', $cleanedName));
     }
-    
-    public function calculateTotalsPerMonth()
-    {
-        if (!$this->ls_account_title_code) {
-            $this->addError('ls_account_title_code', 'Please select an account name.');
-            return;
-        }
-        if (!$this->saveSelectedMonth) {
-            $this->addError('saveSelectedMonth', 'Please select a month.');
-            return;
-        }
-        if (!$this->saveSelectedYear) {
-            $this->addError('saveSelectedYear', 'Please input a year.');
-            return;
-        }
-    
-        $this->ls_accountname = $this->ls_account_title_code;
-        $totals = LedgerSheetModel::whereYear('ls_date', $this->saveSelectedYear)
-            ->whereMonth('ls_date', $this->saveSelectedMonth)
-            ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
-            ->groupBy('ls_accountname')
-            ->get();
 
-        foreach ($totals as $total) {
-            ledgerSheetTotalDebitCreditModel::updateOrCreate(
-                [
-                    'ls_account_title_code' => $this->removeSuffix($total->ls_accountname),
-                    'ls_summary_type' => 'monthly',
-                    'ls_summary_year' => $this->saveSelectedYear,
-                    'ls_summary_month' => $this->saveSelectedMonth,
-                ],
-                [
-                    'ls_total_credit' => $total->total_credit ?? 0,
-                    'ls_total_debit' => $total->total_debit ?? 0,
-                ]
-            );
+    public function calculateTotalDebitCredit()
+    {
+        // Validate required fields
+        $this->validate([
+            'ls_account_title_code' => 'required',
+            'selectedSummaryType' => 'required',
+            'saveSelectedYear' => 'required_if:selectedSummaryType,yearly',
+            'saveSelectedMonth' => 'required_if:selectedSummaryType,monthly',
+        ]);
+
+        // Set the account name
+        $this->ls_accountname = $this->ls_account_title_code;
+
+        // Initialize error message
+        $this->notificationMessage = '';
+
+        if ($this->selectedSummaryType === 'yearly') {
+            // Calculate totals for the selected year
+            $totals = LedgerSheetModel::whereYear('ls_date', $this->saveSelectedYear)
+                ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
+                ->groupBy('ls_accountname')
+                ->get();
+
+            // Check if totals are found
+            if ($totals->isEmpty()) {
+                $this->notificationMessage = 'No data found for the selected year.';
+                $this->showNotification = true;
+                return;
+            }
+
+            // Process the totals...
+            foreach ($totals as $total) {
+                ledgerSheetTotalDebitCreditModel::updateOrCreate(
+                    [
+                        'ls_account_title_code' => $this->removeSuffix($total->ls_accountname),
+                        'ls_summary_type' => 'yearly',
+                        'ls_summary_year' => $this->saveSelectedYear,
+                    ],
+                    [
+                        'ls_total_credit' => $total->total_credit ?? 0,
+                        'ls_total_debit' => $total->total_debit ?? 0,
+                    ]
+                );
+            }
+        } elseif ($this->selectedSummaryType === 'monthly') {
+            // Parse the selected month
+            $saveSelectedMonth = Carbon::parse($this->saveSelectedMonth);
+
+            // Calculate totals for the selected month and year
+            $totals = LedgerSheetModel::whereYear('ls_date', $saveSelectedMonth->year)
+                ->whereMonth('ls_date', $saveSelectedMonth->month)
+                ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
+                ->groupBy('ls_accountname')
+                ->get();
+
+            // Check if totals are found
+            if ($totals->isEmpty()) {
+                $this->notificationMessage = 'No data found for the selected month and year.';
+                $this->showNotification = true;
+                return;
+            }
+
+            // Process the totals...
+            foreach ($totals as $total) {
+                ledgerSheetTotalDebitCreditModel::updateOrCreate(
+                    [
+                        'ls_account_title_code' => $this->removeSuffix($total->ls_accountname),
+                        'ls_summary_type' => 'monthly',
+                        'ls_summary_year' => $saveSelectedMonth->year,
+                        'ls_summary_month' => $saveSelectedMonth->month,
+                    ],
+                    [
+                        'ls_total_credit' => $total->total_credit ?? 0,
+                        'ls_total_debit' => $total->total_debit ?? 0,
+                    ]
+                );
+            }
         }
+
+        // Notify user of success if no errors
+        if (empty($this->notificationMessage)) {
+            $this->notificationMessage = 'Summary saved successfully!';
+        }
+        $this->showNotification = true;
+        $this->dispatch('notification-shown');
+        $this->resetInput();
     }
+
+
+
     
 
     public function calculateTotals($query)
