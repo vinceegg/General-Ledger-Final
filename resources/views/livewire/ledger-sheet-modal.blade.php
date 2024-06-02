@@ -235,17 +235,6 @@
                 <form wire:submit.prevent="updateGeneralLedger" x-data>
                     <!-- Modal content -->                
                     <div class="grid gap-4 p-4 mb-4 grid-cols-2">
-                    <input type="hidden" wire:model="ls_accountname">
-                        <div class="col-span-2">
-                            <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Account Name</label>
-                            <select wire:model="ls_accountname" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border {{ $errors->has('ls_accountname') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="">Select Account Name</option>
-                                <option value="Cash Local Treasury">Cash Local Treasury</option>
-                                <option value="Accounts Receivable">Accounts Receivable</option>
-                                <option value="Rent Income">Rent Income</option>
-                            </select>
-                            @error('ls_accountname') <span class="text-red-500">{{ $message }}</span> @enderror
-                        </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Date</label>
                             <input type="date" wire:model="ls_date" class="w-full bg-gray-50 border {{ $errors->has('ls_date') ? 'border-red-500 ' : 'border-gray-300 text-gray-900' }} border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -581,13 +570,13 @@
                             ];
                             @endphp
                         <!-- Select Account Name -->
-                        <select id="account" wire:model="ls_accountcode" wire:change="setAccountName($event.target.value)" class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
+                        <select id="account" wire:model="ls_account_title_code" wire:change="setAccountNameforTotals($event.target.value)" class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
                             <option value="" class="text-gray-500">Select Account</option>
                             @foreach ($accountNames as $account)
                                 <option value="{{ $account }}" class="text-gray-700">{{ $account }}</option>
                             @endforeach
                         </select>
-                            @error('ls_accountname') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('ls_account_title_code') <span class="text-red-500">{{ $message }}</span> @enderror
                     
 
                     <div class="col-span-1 mb-4">
@@ -596,36 +585,41 @@
 
                         <div class="col-span-1 flex flex-col ps-4 border border-gray-300 rounded-md dark:border-gray-700">
                             <div class="flex items-center">
-                                <input id="bordered-radio-1" type="radio" value="" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input id="bordered-radio-1" type="radio"  value="monthly" wire:model="selectedSummaryType" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="bordered-radio-1" class="w-full py-4 ms-2 text-gray-900 dark:text-gray-300">Save monthly summary</label>
                             </div>
                             <div class="flex flex-col pl-6">
                                     <div class="flex flex-col mr-2">
-                                        @php
-                                            $today = date('Y-m');
-                                        @endphp
                                         <label for="month-input" class="text-sm mb-1">Select month and year</label>
-                                        <input type="month" id="month-input" value="{{ $today }}"
+                                        <input type="month" id="month-input" wire:model="saveSelectedMonth"
                                             class="form-control mb-8 text-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg mr-4">
+                                            @error('saveSelectedMonth')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
                                     </div>
                             </div>
                         </div>
 
                         <div class="col-span-1 flex flex-col ps-4 border border-gray-300 rounded-md dark:border-gray-700">
                             <div class="flex items-center">
-                                <input checked id="bordered-radio-2" type="radio" value="" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <input checked id="bordered-radio-2" type="radio" value="yearly" wire:model="selectedSummaryType" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="bordered-radio-2" class="w-full py-4 ms-2 text-gray-900 dark:text-gray-300">Save yearly summary</label>
                             </div>
                             <div class="flex flex-col pl-6">
                                     <div class="flex flex-col mr-2">
                                     <label for="month-input" class="text-sm mb-1">Input year</label>
-                                        <input type="number"
-                                            class="mb-8 text-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg mr-4">                                    </div>
+                                        <input type="number" wire:model="saveSelectedYear"
+                                            class="mb-8 text-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg mr-4">
+                                            @error('saveSelectedYear')
+                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                        @enderror
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            @error('selectedSummaryType') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
-
-                        </div>
-                    </div>
+                    </div> 
 
 
 
@@ -636,8 +630,6 @@
                     <!-- Modal footer -->
                     <div class="absolute bottom-0 left-0 w-full bg-white dark:bg-gray-700 rounded-b">
                         <div class="flex justify-end p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600 max-w-2xl mx-auto">
-                            
-
                             <!-- Notification Message -->
                             <div class="mr-4 ml-4 flex-grow text-left text-green-800" x-data="{ show: @entangle('showNotification') }">
                                 <div class="flex items-center" x-show="show" x-init="@this.on('notification-shown', () => { setTimeout(() => { $wire.call('resetNotification') }, 3000); })">
@@ -659,12 +651,13 @@
                                 </button>
 
                                 <!-- Add Transaction Button -->
-                                <button type="submit" @keydown.enter.prevent="$wire.saveGeneralLedger()" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
+                                <button type="submit" wire:click="calculateTotalDebitCredit" @keydown.enter.prevent="$wire.calculateTotalDebitCredit()" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
                                     Save
                                 </button>
                             </div>
                         </div>
                     </div>
+
             </div>
 </div> 
 </div>

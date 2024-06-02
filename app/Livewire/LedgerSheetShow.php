@@ -42,7 +42,7 @@ class LedgerSheetShow extends Component
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
     public $query;
-    public $saveSelectedYear, $saveSelectedMonth;
+    public $saveSelectedYear, $saveSelectedMonth, $selectedSummaryType;
 
     public $monthlyTotals =[], $yearlyTotals =[];
 
@@ -61,6 +61,10 @@ class LedgerSheetShow extends Component
             'ls_debit'=> 'nullable|numeric|min:0|max:100000000',
             'ls_credit'=> 'nullable|numeric|min:0|max:100000000',
             'ls_credit_balance'=> 'nullable|numeric|min:0|max:100000000',
+            'ls_account_title_code' => '',
+            'selectedSummaryType' => '',
+            'saveSelectedYear' => '',
+            'saveSelectedMonth' => '',
             'ls_accountname' => ['required', 'string', Rule::in([ '1 01 01 010 - Cash Local Treasury',
             '1 01 01 020 - Petty Cash',
             '1 01 02 010 - Cash in Bank Local Currency Current Account',
@@ -252,6 +256,7 @@ class LedgerSheetShow extends Component
     public function resetInput()
     {
         $this->ls_date = '';
+        $this->ls_accountname = '';
         $this->ls_vouchernum = '';
         $this->ls_particulars = '';
         $this->ls_balance_debit = '';
@@ -297,11 +302,16 @@ class LedgerSheetShow extends Component
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportGL_XLSX(Request $request) 
     {
-        return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname ?? 'LedgerSheet' .'.xlsx');
+        $cleanAccountName = $this->ls_accountname ? $this->cleanAccountName($this->ls_accountname) : 'LedgerSheet';
+        $fileName = $cleanAccountName . '.xlsx';
+        return Excel::download(new ledgerSheetExport($this->ls_accountname), $fileName);
     }
+
     public function exportGl_CSV(Request $request) 
     {
-        return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname .'.csv');
+        $cleanAccountName = $this->ls_accountname ? $this->cleanAccountName($this->ls_accountname) : 'LedgerSheet';
+        $fileName = $cleanAccountName . '.csv';
+        return Excel::download(new ledgerSheetExport($this->ls_accountname), $fileName);
     }
    
 
