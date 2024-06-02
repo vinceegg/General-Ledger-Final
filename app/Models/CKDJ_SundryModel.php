@@ -27,6 +27,6 @@ class CKDJ_SundryModel extends Model
 
     public function checkDisbursementJournal()
     {
-        return $this->belongsTo(CheckDisbursementJournalModel::class, 'ckdj_checknum');
+        return $this->belongsTo(CheckDisbursementJournalModel::class, 'checkdisbursementjournal_no');
     }
 }

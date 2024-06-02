@@ -16,13 +16,14 @@ class ledgerSheetModel extends Model
     use LogsActivity;
 
     protected $table = 'ledgersheet';
-    protected $primaryKey = 'ls_vouchernum';
-    public $incrementing = false;
+    protected $primaryKey = 'ledgersheet_no';
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
+        'ls_vouchernum',
         'ls_accountname',
         'ls_date',
-        'ls_vouchernum',
         'ls_particulars',
         'ls_balance_debit',
         'ls_debit',
@@ -30,26 +31,24 @@ class ledgerSheetModel extends Model
         'ls_credit_balance',
     ];
 
+    protected static $logAttributes = ['*'];
+        
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(self::$logAttributes);
+    }
 
-        protected static $logAttributes = ['*'];
-            
-        public function getActivitylogOptions(): LogOptions
-        {
-            return LogOptions::defaults()
-                ->logOnly(self::$logAttributes);
-        }
+    public function getDescriptionForEvent(string $eventName): string
+    {
 
-        public function getDescriptionForEvent(string $eventName): string
-        {
+        $tableName = "Ledger Sheet";
+        
+        return "{$tableName}";
+    }
 
-            $tableName = "Ledger Sheet";
-            
-            return "{$tableName}";
-        }
-
-        protected function getCauser()
-        {
-            return User::find($this->employee_id);
-        }
-
+    protected function getCauser()
+    {
+        return User::find($this->employee_id);
+    }
 }

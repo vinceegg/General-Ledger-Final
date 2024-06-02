@@ -16,6 +16,7 @@ class GeneralJournalTrash extends Component
 
     public $search;
     public $gj_jevnum;
+    public $generaljournal_no;
     public $softDeletedData;
     public $file;
     public $showNotification = false; // Control notification visibility
@@ -32,9 +33,9 @@ class GeneralJournalTrash extends Component
     }
 
     //@korinlv: edited this function
-    public function restoreGeneralJournal(string $gj_jevnum)
+    public function restoreGeneralJournal($generaljournal_no)
     {
-        $general_journal = GeneralJournalModel::onlyTrashed()->find($gj_jevnum);
+        $general_journal = GeneralJournalModel::onlyTrashed()->find($generaljournal_no);
         if ($general_journal) {
             // Load trashed sundries
             $trashedSundries = $general_journal->gj_accountcodes_data()->onlyTrashed()->get();
@@ -46,21 +47,21 @@ class GeneralJournalTrash extends Component
         }
     }
 
-    public function deleteGeneralJournal(string $gj_jevnum, $type = 'soft')
+    public function deleteGeneralJournal($generaljournal_no, $type = 'soft')
     {
-        $this->gj_jevnum = $gj_jevnum;
+        $this->generaljournal_no = $generaljournal_no;
         $this->deleteType = $type; // Set the delete type
     }
 
     //permanently delete CheckDisbursementJournal
     public function destroyGeneralJournal()
     {
-        $gj_jevnum = GeneralJournalModel::withTrashed()->find($this->gj_jevnum);
+        $generaljournal_no = GeneralJournalModel::withTrashed()->find($this->generaljournal_no);
         if ($this->deleteType == 'force') {
-            $gj_jevnum->forceDelete();
+            $generaljournal_no->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
         } else {
-            $gj_jevnum->delete();
+            $generaljournal_no->delete();
             session()->flash('message', 'Archived Successfully');
         }
         $this->dispatch('close-modal');
@@ -70,7 +71,7 @@ class GeneralJournalTrash extends Component
 
     public function resetInput()
     {
-        $this->gj_jevnum = '';
+        $this->generaljournal_no = '';
     }
 
     public function render()

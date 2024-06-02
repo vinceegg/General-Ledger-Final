@@ -5,19 +5,20 @@ namespace App\Livewire;
 use App\Exports\ledgerSheetExport;
 use App\Imports\ledgerSheetImport;
 use App\Models\ledgerSheetModel;
-use App\Models\ledgerSheetTotalDebitCreditModel;
 use Livewire\Component;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
+use App\Models\LedgerSheetTotalDebitCreditModel;
 
 class LedgerSheetShow extends Component
 {
     use WithFileUploads;
 
     public 
+    $ledgersheet_no,
     $ls_date,
     $ls_vouchernum,
     $ls_particulars,
@@ -27,7 +28,7 @@ class LedgerSheetShow extends Component
     $ls_credit_balance,
     $deleteType; // Added deleteType property
 
-    public $ls_accountname = '', $ls_account_title_code = '';
+    public $ls_accountname= '', $ls_account_title_code = '';
     public $ledger_sheet;
     public $search = '';
     public $selectedMonth;
@@ -42,125 +43,174 @@ class LedgerSheetShow extends Component
     public $showNotification = false; // Control notification visibility
     public $notificationMessage = ''; // Store the notification message
     public $query;
-    public $saveSelectedYear, $saveSelectedMonth;
-
+    public $saveSelectedYear, $saveSelectedMonth, $selectedSummaryType;
     public $monthlyTotals =[], $yearlyTotals =[];
 
-
-    
-    
-
-    
+ 
     protected function rules()
     {
-        return [
-            'ls_date'=>'required|date',
-            'ls_vouchernum'=>'required|string|max:255', //@vince yung data type inedit ko 
+        return [         
+            'ls_vouchernum'=>'nullable|string', //@vince yung data type inedit ko 
+            'ls_date'=>'required|nullable|date',
             'ls_particulars'=>'nullable|string', 
-            'ls_balance_debit'=> 'nullable|numeric|min:0|max:100000000',
-            'ls_debit'=> 'nullable|numeric|min:0|max:100000000',
-            'ls_credit'=> 'nullable|numeric|min:0|max:100000000',
-            'ls_credit_balance'=> 'nullable|numeric|min:0|max:100000000',
-            'ls_accountname' => ['required', 'string', Rule::in([ '1 01 01 010 - Cash Local Treasury',
-            '1 01 01 020 - Petty Cash',
-            '1 01 02 010 - Cash in Bank Local Currency Current Account',
-            '1 02 01 010 - Cash in Bank Local Currency Time Deposits',
-            '1 03 01 010 - Accounts Receivable',
-            '1 03 01 070 - Interests Receivable',
-            '1 07 05 020 - Office Equipment',
-            '1 07 05 021 - Accumulated Depreciation Office Equipment',
-            '1 07 05 030 - Info and Communication Technology Equipment',
-            '1 07 05 031 - Accumulated Depreciation ICT Equipment',
-            '1 07 05 090 - Disaster Response and Rescue Equipment',
-            '1 07 05 091 - Acc Depreciation Disaster Response and Rescue Equipment',
-            '1 07 05 100 - Military Police Security Equipment',
-            '1 07 05 101 - Acc Depreciation Military Police Security Eqpmnt',
-            '1 07 05 110 - Medical Equipment',
-            '1 07 05 111 - Accumulated Depreciation Medical Equipment',
-            '1 07 05 130 - Sports Equipment',
-            '1 07 05 131 - Accumulated Depreciation Sports Equipment',
-            '1 07 05 140 - Technical and Scientific Equipment',
-            '1 07 05 141 - Acc Depreciation Technical Scientific Equipment',
-            '1 07 05 990 - Other Machinery Equipment',
-            '1 07 05 991 - Acc Depreciation Other Machinery Equipment',
-            '4 04 02 020 - Grants Donations in Kind',
-            '4 06 01 010 - Miscellaneous Income',
-            '5 01 01 010 - Salaries and Wages Regular',
-            '5 01 01 020 - Salaries and Wages Casual Contractual',
-            '5 01 02 010 - Personnel Economic Relief Allowance',
-            '5 01 02 020 - Representation Allowance',
-            '5 01 02 030 - Transportation Allowance',
-            '5 01 02 040 - Clothing Uniform Allowance',
-            '5 01 02 100 - Honoraria',
-            '5 01 02 110 - Hazard Pay',
-            '5 01 02 120 - Longetivity Pay',
-            '5 01 02 130 - Overtime and Night Pay',
-            '5 01 02 140 - Year End Bonus',
-            '5 01 02 150 - Cash Gift',
-            '5 01 03 010 - Retirement and Life Insurance Premiums',
-            '5 01 03 020 - Pag ibig Contributions',
-            '5 01 03 030 - PhilHealth Contributions',
-            '5 01 03 040 - Employees Compensation Insurance Premiums',
-            '5 01 04 030 - Terminal Leave Benefits',
-            '5 01 04 990 - Other Personnel Benefits',
-            '5 02 01 010 - Traveling Expenses Local',
-            '5 02 02 010 - Training Expenses',
-            '5 02 03 010 - Office Supplies Expenses',
-            '5 02 03 020 - Accountable Forms Expenses',
-            '5 02 03 070 - Drugs and Medicines Expenses',
-            '5 02 03 080 - Medical Dental and Laboratory Supplies Expenses',
-            '5 02 03 090 - Fuel Oil and Lubricants Expenses',
-            '5 02 03 990 - Other Supplies and Materials Expenses',
-            '5 02 04 010 - Water Expenses',
-            '5 02 04 020 - Electricity Expenses',
-            '5 02 05 010 - Postage and Courier Services',
-            '5 02 05 020 - Telephone Expenses',
-            '5 02 05 030 - Internet Subscription Expenses',
-            '5 02 10 030 - Extraordinary and Miscellaneous Expenses',
-            '1 07 06 010 - Motor Vehicles',
-            '1 07 06 011 - Accumulated Depreciation Motor Vehicles',
-            '1 07 07 010 - Furniture and Fixtures',
-            '1 07 07 011 - Accumulated Depreciation Furniture and Fixtures',
-            '1 07 10 030 - Buildings and Other Structures',
-            '2 01 01 010 - Accounts Payable',
-            '2 01 01 020 - Due to Officers and Employees',
-            '2 02 01 010 - Due to BIR',
-            '2 02 01 020 - Due to GSIS',
-            '2 02 01 030 - Due to PAG IBIG',
-            '2 02 01 040 - Due to PHILHEALTH',
-            '2 04 01 010 - Trust Liabilities',
-            '2 04 01 050 - Guaranty Security Deposits Payable',
-            '2 04 01 050 - Customers Deposit',
-            '2 05 01 990 - Other Deferred Credits',
-            '2 99 99 990 - Other Payables',
+            'ls_balance_debit'=> 'nullable|numeric|min:0|max:1000000000',
+            'ls_debit'=> 'nullable|numeric|min:0|max:1000000000',
+            'ls_credit'=> 'nullable|numeric|min:0|max:1000000000',
+            'ls_credit_balance'=> 'nullable|numeric|min:0|max:1000000000',
+            'ls_accountname' => ['required', 'string', Rule::in([
+            '1 01 01 010 - Cash Local Treasury ',
+            '1 01 01 020 - Petty Cash ',
+            '1 01 02 010 - Cash in Bank - Local Currency Current Account ',
+            '1 01 02 020 - Cash in Bank - Local Currency Savings Account ',
+            '1 02 01 010 - Cash in Bank - Local Currency Time Deposits ',
+            '1 01 03 020 - Cash in Bank - Foreign Currency Savings Account ',
+            '1 02 05 010 - Guaranty Deposits ',
+            '1 03 01 010 - Accounts Receivable ',
+            '1 03 01 070 - Interests Receivable ',
+            '1 03 03 010 - Due from National Government Agencies ',
+            '1 03 03 030 - Due from Local Government Units ',
+            '1 03 05 020 - Advances for Payroll ',
+            '1 03 05 030 - Advances to Special Disbursing Officer ',
+            '1 03 05 040 - Advances for Officer and Employees ',
+            '1 03 06 010 - Receivables - Disallowances / Charges ',
+            '1 03 06 020 - Due from Officers and Employees ',
+            '1 03 06 990 - Other Receivables ',
+            '1 03 01 011 - Allowance for Impairment Loss ',
+            '1 04 04 010 - Office Supplies Inventory ',
+            '1 04 04 020 - Accountable Forms, Plates and Stickers ',
+            '1 04 04 060 - Drugs and Medicines Inventory ',
+            '1 04 04 070 - Medical, Dental and Laboratory Supplies Inventory ',
+            '1 04 04 990 - Other Supplies and Materials Inventory ',
+            '1 05 01 010 - Advances to Contractors ',
+            '1 05 01 050 - Prepaid Insurance ',
+            '1 05 01 990 - Other Prepayments ',
+            '1 07 04 020 - School Buildings ',
+            '1 07 04 021 - Accumulated Depreciation - School Buildings ',
+            '1 07 04 990 - Other Structures ',
+            '1 07 04 991 - Accumulated Depreciation - Other Structures ',
+            '1 07 05 010 - Machinery ',
+            '1 07 05 011 - Accumulated Depreciation - Machinery ',
+            '1 07 05 020 - Office Equipment ',
+            '1 07 05 021 - Accumulated Depreciation - Office Equipment ',
+            '1 07 05 030 - Info and Communication Technology Equipment ',
+            '1 07 05 031 - Accumulated Depreciation - ICT Equipment ',
+            '1 07 05 070 - Communication Equipment ',
+            '1 07 05 071 - Acc Depreciation - Communication Equipment ',
+            '1 07 05 090 - Disaster Response and Rescue Equipment ',
+            '1 07 05 091 - Acc Depreciation - Disaster Response and Rescue Equipment ',
+            '1 07 05 100 - Military, Police & Security Equipment ',
+            '1 07 05 101 - Acc Depreciation - Military, Police & Security Eqpmt ',
+            '1 07 05 110 - Medical Equipment ',
+            '1 07 05 111 - Accumulated Depreciation - Medical Equipment ',
+            '1 07 05 130 - Sports Equipment ',
+            '1 07 05 131 - Accumulated Depreciation - Sports Equipment ',
+            '1 07 05 140 - Technical and Scientific Equipment ',
+            '1 07 05 141 - Acc Depreciation - Technical & Scientific Equipment ',
+            '1 07 05 990 - Other Machinery & Equipment ',
+            '1 07 05 991 - Acc Depreciation - Other Machinery & Equipment ',
+            '1 07 06 010 - Motor Vehicles ',
+            '1 07 06 011 - Accumulated Depreciation - Motor Vehicles ',
+            '1 07 07 010 - Furniture and Fixtures ',
+            '1 07 07 011 - Accumulated Depreciation - Furniture and Fixtures ',
+            '1 07 07 020 - Books ',
+            '1 07 07 021 - Accumulated Depreciation - Books ',
+            '1 07 99 090 - Disaster Response & Rescue Equipt ',
+            '1 07 99 990 - Other Property, Plant and Equipment ',
+            '1 07 99 991 - Acc Depreciation - Property, Plant and Equipment ',
+            '1 07 10 020 - Infrastructure Assets ',
+            '1 07 10 030 - Buildings and Other Structures ',
+            '2 01 01 010 - Accounts Payable ',
+            '2 01 01 020 - Due to Officers and Employees ',
+            '2 02 01 010 - Due to BIR ',
+            '2 02 01 020 - Due to GSIS ',
+            '2 02 01 030 - Due to PAG-IBIG ',
+            '2 02 01 040 - Due to PHILHEALTH ',
+            '2 04 01 010 - Trust Liabilities ',
+            '2 04 01 040 - Guaranty/Security Deposits Payable ',
+            '2 04 01 050 - Customers Deposit ',
+            '2 05 01 990 - Other Deferred Credits ',
+            '2 99 99 990 - Other Payables ',
             '3 01 01 010 - Government Equity',
             '3 01 01 020 - Prior Period Adjustment',
-            '4 02 01 980 - Fines and Penalties Service Income',
-            '4 02 02 010 - School Fees',
-            '4 02 02 020 - Affiliation Fees',
-            '4 02 02 050 - Rent Income',
-            '4 02 02 220 - Interest Income',
-            '4 02 02 990 - Other Business Income',
-            '4 03 01 020 - Subsidy from LGUs',
-            '5 02 11 990 - Other Professional Services',
-            '5 02 13 040 - Repairs and Maint Building Other Structures',
-            '5 02 13 050 - Repairs and Maint Machinery and Equipment',
-            '5 02 13 060 - Repairs and Maint Transportation Equipment',
-            '5 02 16 020 - Fidelity Bond Premiums',
-            '5 02 16 030 - Insurance Expenses',
-            '5 02 99 020 - Printing and Publication Expenses',
-            '5 02 99 030 - Representation Expenses',
-            '5 02 99 050 - Rent Expenses',
-            '5 02 99 060 - Membership Dues and Contribution to Org',
-            '5 02 99 070 - Subscription Expenses',
-            '5 02 99 990 - Other Maintenance and Operating Expenses',
-            '5 03 01 040 - Bank Charges',
-            '5 05 01 040 - Depreciation Building and Structures',
-            '5 05 01 050 - Depreciation Machinery and Equipment',
-            '5 05 01 060 - Depreciation Transportation Equipment',
-            '5 05 01 070 - Depreciation Furnitures and Books'
-        ])],
-                ];
+            '4 02 01 040 - Clearance and Certification Fees ',
+            '4 02 01 980 - Fines and Penalties - Service Income ',
+            '4 02 01 990 - Other Service Income ',
+            '4 02 02 010 - School Fees ',
+            '4 02 02 020 - Affiliation Fees ',
+            '4 02 02 050 - Rent Income ',
+            '4 02 02 220 - Interest Income ',
+            '4 02 02 990 - Other Business Income ',
+            '4 03 01 020 - Subsidy from LGUs ',
+            '4 04 02 010 - Grants & Donations in Cash ',
+            '4 04 02 020 - Grants & Donations in Kind ',
+            '4 06 01 010 - Miscellaneous Income ',
+            '4 03 01 020 - Subsidy from LGUs ',
+            '5 01 01 010 - Salaries and Wages - Regular ',
+            '5 01 01 020 - Salaries and Wages - Casual/Contractual ',
+            '5 01 02 010 - Personnel Economic Relief Allowance ( PERA ) ',
+            '5 01 02 020 - Representation Allowance ( RA ) ',
+            '5 01 02 030 - Transportation Allowance ( TA ) ',
+            '5 01 02 040 - Clothing / Uniform Allowance ',
+            '5 01 02 050 - Subsistence Allowance ',
+            '5 01 02 060 - Laundry Allowance ',
+            '5 01 02 080 - Productivity Incentive Allowance ',
+            '5 01 02 100 - Honoraria ',
+            '5 01 02 110 - Hazard Pay ',
+            '5 01 02 120 - Longevity Pay ',
+            '5 01 02 130 - Overtime and Night Pay ',
+            '5 01 02 140 - Year End Bonus ',
+            '5 01 02 150 - Cash Gift ',
+            '5 01 02 990 - Other Bonuses and Allowances ',
+            '5 01 03 010 - Retirement and Life Insurance Premiums ',
+            '5 01 03 020 - Pag-ibig Contributions ',
+            '5 01 03 030 - PhilHealth Contributions ',
+            '5 01 03 040 - Employees Compensation Insurance Premiums ',
+            '5 01 04 030 - Terminal Leave Benefits ',
+            '5 01 04 990 - Other Personnel Benefits ',
+            '5 02 01 010 - Travelling Expenses - Local ',
+            '5 02 01 020 - Travelling Expenses - Foreign ',
+            '5 02 02 010 - Training Expenses ',
+            '5 02 03 010 - Office Supplies Expenses ',
+            '5 02 03 020 - Accountable Forms Expenses ',
+            '5 02 03 070 - Drugs and Medicines Expenses ',
+            '5 02 03 080 - Medical, Dental and Laboratory Supplies Expenses ',
+            '5 02 03 090 - Fuel, Oil and Lubricants Expenses ',
+            '5 02 03 990 - Other Supplies and Materials Expenses ',
+            '5 02 04 010 - Water Expenses ',
+            '5 02 04 020 - Electricity Expenses ',
+            '5 02 05 010 - Postage and Courier Services ',
+            '5 02 05 020 - Telephone Expenses ',
+            '5 02 05 030 - Internet Subscription Expenses ',
+            '5 02 05 040 - Cable,Satellite,Telegraph and Radio Expenses ',
+            '5 02 10 030 - Extraordinary and Miscellaneous Expenses ',
+            '5 02 11 030 - Consultancy Services ',
+            '5 02 11 990 - Other Professional Services ',
+            '5 02 12 020 - Janitorial Services ',
+            '5 02 12 030 - Security Services ',
+            '5 02 13 040 - Repairs and Maint - Building & Other Structures ',
+            '5 02 13 050 - Repairs and Maint - Machinery and Equipment ',
+            '5 02 13 060 - Repairs and Maint - Transportation Equipment ',
+            '5 02 13 070 - Repairs and Maintenance - Furniture and Fixtures ',
+            '5 02 16 020 - Fidelity Bond Premiums ',
+            '5 02 16 030 - Insurance Expenses ',
+            '5 02 99 010 - Advertising Expenses ',
+            '5 02 99 020 - Printing and Publication Expenses ',
+            '5 02 99 030 - Representation Expenses ',
+            '5 02 99 050 - Rent Expenses ',
+            '5 02 99 060 - Membership Dues and Contribution to Org. ',
+            '5 02 99 070 - Subscription Expenses ',
+            '5 02 99 990 - Other Maintenance and Operating Expenses ',
+            '5 03 01 040 - Bank Charges ',
+            '5 05 01 040 - Depreciation - Building and Structures ',
+            '5 05 01 050 - Depreciation - Machinery and Equipment ',
+            '5 05 01 060 - Depreciation - Transportation Equipment ',
+            '5 05 01 070 - Depreciation - Furnitures and Books ',
+            '5 05 01 090 - Depreciation - Disaster Response & Rescue Equipt. ',
+            '5 05 01 990 - Depreciation - Other Property Plant and Equipment ',
+            '5 05 03 060 - Impairment Loss-Receivable ',
+            '5 05 04 990 - Other Losses ',
+            ])],
+        ];
     }
 
     public function setAccountName($value)
@@ -203,13 +253,13 @@ class LedgerSheetShow extends Component
 
     }
 
-    public function editGeneralLedger($ls_vouchernum)
+    public function editGeneralLedger($ledgersheet_no)
     {
-        $general_ledger = ledgerSheetModel::find($ls_vouchernum);
+        $general_ledger = ledgerSheetModel::find($ledgersheet_no);
         if ($general_ledger) {
-            
-            $this->ls_date = $general_ledger->ls_date;
+                 
             $this->ls_vouchernum = $general_ledger->ls_vouchernum;
+            $this->ls_date = $general_ledger->ls_date;
             $this->ls_particulars = $general_ledger->ls_particulars;
             $this->ls_balance_debit = $general_ledger->ls_balance_debit;
             $this->ls_debit = $general_ledger->ls_debit;
@@ -224,7 +274,8 @@ class LedgerSheetShow extends Component
         $validatedData = $this->validate();
         $validatedData['ls_accountname'] = $this->ls_accountname;
 
-        ledgerSheetModel::where('ls_vouchernum', $this->ls_vouchernum)->update([
+        ledgerSheetModel::where('ledgersheet_no', $this->ledgersheet_no)->update([
+            'ls_vouchernum' => $validatedData['ls_vouchernum'],
             'ls_date' => $validatedData['ls_date'],
             'ls_particulars' => $validatedData['ls_particulars'],
             'ls_balance_debit' => $validatedData['ls_balance_debit'],
@@ -262,9 +313,9 @@ class LedgerSheetShow extends Component
 
     //ITO NA YUNG DINAGSAG KO 
     // Soft delete GeneralLedger
-    public function softDeleteGeneralLedger($ls_vouchernum)
+    public function softDeleteGeneralLedger($ledgersheet_no)
     {
-        $general_ledger= ledgerSheetModel::find($ls_vouchernum);
+        $general_ledger= ledgerSheetModel::find($ledgersheet_no);
         if ( $general_ledger) {
             $general_ledger->delete();
     }
@@ -297,13 +348,12 @@ class LedgerSheetShow extends Component
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
     public function exportGL_XLSX(Request $request) 
     {
-        return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname ?? 'LedgerSheet' .'.xlsx');
+        return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname .'.xlsx');
     }
     public function exportGl_CSV(Request $request) 
     {
         return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname .'.csv');
     }
-   
 
     // Method to reset notification
     public function resetNotification()
@@ -311,12 +361,12 @@ class LedgerSheetShow extends Component
         $this->showNotification = false;
     }
 
-
     public function searchAction()
     {
         $query = ledgerSheetModel::query();
         $this->ledger_sheet = $query->where(function ($q) {
-            $q ->Where('ls_date', 'like', '%' . $this->search . '%')
+            $q ->where('ls_accountname', 'like', '%' . $this->search . '%')
+            ->orWhere('ls_date', 'like', '%' . $this->search . '%')
             ->orWhere('ls_vouchernum', 'like', '%' . $this->search . '%')
             ->orWhere('ls_particulars', 'like', '%' . $this->search . '%')
             ->orWhere('ls_balance_debit', 'like', '%' . $this->search . '%')
@@ -354,89 +404,77 @@ class LedgerSheetShow extends Component
             $this->ledger_sheet = $this->ledger_sheet->whereBetween('ls_date', [$startOfMonth, $endOfMonth]);
         }
     }
+
     public function removeSuffix($accountName)
     {
-        // Check if the string contains the suffix
-        if (strpos($accountName, ' - Petty Cash') !== false) {
-            // Remove the suffix and return the modified string
-            return str_replace(' - Petty Cash', '', $accountName);
-        } else {
-            // If the suffix is not found, return the original string
-            return $accountName;
-        }
+        // Use a regular expression to remove all non-numeric characters
+        return preg_replace('/[^0-9 ]/', '', $accountName);
     }
-    
-    public function calculateTotalsPerYear()
+    public function cleanAccountName($accountName)
     {
-        if (!$this->ls_account_title_code) {
-            $this->addError('ls_account_title_code', 'Please select an account name.');
-            return;
-        }
-        if (!$this->saveSelectedYear) {
-            $this->addError('saveSelectedYear', 'Please input a year.');
-            return;
-        }
-    
-        $this->ls_accountname = $this->ls_account_title_code;
-        $saveSelectedYear = $this->saveSelectedYear;
-        $totals = LedgerSheetModel::whereYear('ls_date', $saveSelectedYear)
-            ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
-            ->groupBy('ls_accountname')
-            ->get();
-    
-        foreach ($totals as $total) {
-            ledgerSheetTotalDebitCreditModel::updateOrCreate(
-                [
-                    'ls_account_title_code' => $this->removeSuffix($total->ls_accountname),
-                    'ls_summary_type' => 'yearly',
-                    'ls_summary_year' => $saveSelectedYear,
-                ],
-                [
-                    'ls_total_credit' => $total->total_credit ?? 0,
-                    'ls_total_debit' => $total->total_debit ?? 0,
-                ]
-            );
-        }
+        // Remove all digits and dashes from the string
+        $cleanedName = preg_replace('/[\d-]+/', '', $accountName);
+        // Replace multiple spaces with a single space and trim leading/trailing spaces
+        return trim(preg_replace('/\s+/', ' ', $cleanedName));
     }
-    
-    public function calculateTotalsPerMonth()
-    {
-        if (!$this->ls_account_title_code) {
-            $this->addError('ls_account_title_code', 'Please select an account name.');
-            return;
-        }
-        if (!$this->saveSelectedMonth) {
-            $this->addError('saveSelectedMonth', 'Please select a month.');
-            return;
-        }
-        if (!$this->saveSelectedYear) {
-            $this->addError('saveSelectedYear', 'Please input a year.');
-            return;
-        }
-    
-        $this->ls_accountname = $this->ls_account_title_code;
-        $totals = LedgerSheetModel::whereYear('ls_date', $this->saveSelectedYear)
-            ->whereMonth('ls_date', $this->saveSelectedMonth)
-            ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
-            ->groupBy('ls_accountname')
-            ->get();
 
-        foreach ($totals as $total) {
-            ledgerSheetTotalDebitCreditModel::updateOrCreate(
-                [
-                    'ls_account_title_code' => $this->removeSuffix($total->ls_accountname),
-                    'ls_summary_type' => 'monthly',
-                    'ls_summary_year' => $this->saveSelectedYear,
-                    'ls_summary_month' => $this->saveSelectedMonth,
-                ],
-                [
-                    'ls_total_credit' => $total->total_credit ?? 0,
-                    'ls_total_debit' => $total->total_debit ?? 0,
-                ]
-            );
+    public function calculateTotalDebitCredit()
+    {
+        // Validate required fields
+        $this->validate([
+            'ls_account_title_code' => 'required',
+            'selectedSummaryType' => 'required',
+            'saveSelectedMonth' => 'required_if:selectedSummaryType,monthly',
+        ]);
+
+        // Set the account name
+        $this->ls_accountname = $this->ls_account_title_code;
+
+        // Initialize error message
+        $this->notificationMessage = '';
+
+        if ($this->selectedSummaryType === 'monthly') {
+            // Parse the selected month
+            $saveSelectedMonth = Carbon::parse($this->saveSelectedMonth);
+
+            // Calculate totals for the selected month and year
+            $totals = ledgerSheetModel::whereYear('ls_date', $saveSelectedMonth->year)
+                ->whereMonth('ls_date', $saveSelectedMonth->month)
+                ->selectRaw('ls_accountname, sum(ls_balance_debit) as total_balance_debit, sum(ls_debit) as total_debit, sum(ls_credit) as total_credit, sum(ls_credit_balance) as total_credit_balance')
+                ->groupBy('ls_accountname')
+                ->get();
+
+            // Check if totals are found
+            if ($totals->isEmpty()) {
+                $this->notificationMessage = 'No data found for the selected month and year.';
+                $this->showNotification = true;
+                return;
+            }
+
+            // Process the totals...
+            foreach ($totals as $total) {
+                LedgerSheetTotalDebitCreditModel::updateOrCreate(
+                    [
+                        'ls_account_title_code' => $this->removeSuffix($total->ls_accountname),
+                        'ls_summary_type' => 'monthly',
+                        'ls_summary_month' => $saveSelectedMonth->month,
+                    ],
+                    [
+                        'ls_total_credit' => $total->total_credit ?? 0,
+                        'ls_total_debit' => $total->total_debit ?? 0,
+                    ]
+                );
+            }
         }
+
+        // Notify user of success if no errors
+        if (empty($this->notificationMessage)) {
+            $this->notificationMessage = 'Summary saved successfully!';
+        }
+        $this->showNotification = true;
+        $this->dispatch('notification-shown');
+        $this->resetInput();
     }
-    
 
     public function calculateTotals($query)
     {
@@ -457,21 +495,12 @@ class LedgerSheetShow extends Component
             $this->totalCreditBalance = $query->sum('ls_credit_balance');
         }
     }
-
-
-
-
     // Pangcheck lang to kung nassave ng tama sa DB (remove this function later)
     public function showTotals()
     {
         // Fetch totals for all months and years
         $this->monthlyTotals = LedgerSheetTotalDebitCreditModel::where('ls_summary_type', 'monthly')->get();
-        $this->yearlyTotals = LedgerSheetTotalDebitCreditModel::where('ls_summary_type', 'yearly')->get();
     }
-    
-
-
-
 
         // Render the component
     public function render()
@@ -489,8 +518,6 @@ class LedgerSheetShow extends Component
         $this->sortAction();
         $this->sortDate();
 
-        $this->showTotals();
-
         // Calculate totals
         $this->calculateTotals($query);
 
@@ -501,7 +528,4 @@ class LedgerSheetShow extends Component
 
         return view('livewire.ledger-sheet-show',['ledger_sheet' => $ledger_sheet]);
     }
-
-    
-
 }

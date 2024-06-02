@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cash_receipt_journal', function (Blueprint $table) {
-            $table->string('crj_jevnum')->primary();
+            $table->bigIncrements('cashreceiptjournal_no');
+            $table->string('crj_jevnum')->nullable();
             $table->date('crj_entrynum_date')->nullable();
             $table->string('crj_payor')->nullable();
             $table->decimal('crj_collection_debit',15,2)->nullable();

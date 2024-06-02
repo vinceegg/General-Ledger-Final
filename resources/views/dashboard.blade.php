@@ -297,11 +297,11 @@
         </svg>
       </div>
       <div>
-        <span class="white-card-title">Debit and Credit Balance per Journal</span>
+        <span class="white-card-title">2024 Ledger Sheet Debit Credit Balance</span>
       </div>
     </div>
             <!-- BAR CHART -->
-            <div class="sm:w-auto md:w-auto pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="h-70 sm:w-auto md:w-auto pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 flex justify-center">
               <canvas id="barChart"></canvas>
             </div>
   </div>
@@ -320,7 +320,7 @@
       </div>
     </div>
         <!-- LINE CHART -->
-        <div class="sm:w-auto md:w-auto  pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
+        <div class="h-70 sm:w-auto md:w-auto flex justify-center pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
           <canvas id="lineChart" style="flex:1;"></canvas>
         </div>
   </div>
@@ -334,13 +334,30 @@
 
       </div>
       <div>
-        <span class="white-card-title">Archives Shortcut</span>
+        <span class="white-card-title">Quicklinks</span>
       </div>
 
     </div>
 
+    
     @foreach([''] as $route)
-    <a href="{{ url('/CKDJ' . $route) }}" class="text-decoration-none">    
+    <a href="{{ url('https://drive.google.com/file/d/1trRAOXWNugDs-fZRGhTMzq6U4An-hZGY/view?usp=sharing' . $route) }}" target="_blank" class="text-decoration-none"> 
+      <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+        <div class="flex gap-2 items-center">
+          <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+            COA
+          </div>
+          <div class="flex-col">
+            <span class="text-gray-800 font-bold pl-2">Commission on Audit - Chart of Accounts</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    @endforeach
+    
+
+    @foreach([''] as $route)
+    <a href="{{ url('/CheckDisbursementJournalArchived' . $route) }}" class="text-decoration-none">    
     <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
       <div class="flex gap-2 items-center">
         <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
@@ -356,7 +373,7 @@
 
 
   @foreach([''] as $route)
-  <a href="{{ url('/CDJ' . $route) }}"  class="text-decoration-none">  
+  <a href="{{ url('/CashDisbursementJournalArchived' . $route) }}"  class="text-decoration-none">  
     <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
       <div class="flex gap-2 items-center">
         <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
@@ -372,7 +389,7 @@
 
 
   @foreach([''] as $route)
-  <a href="{{ url('/CRJ' . $route) }}" class="text-decoration-none">  
+  <a href="{{ url('/CashReceiptJournalArchived' . $route) }}" class="text-decoration-none">  
     <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
       <div class="flex gap-2 items-center">
         <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
@@ -388,7 +405,7 @@
 
 
   @foreach([''] as $route)
-  <a href="{{ url('/GJ' . $route) }}"  class="text-decoration-none"> 
+  <a href="{{ url('/GeneralJournalArchived' . $route) }}"  class="text-decoration-none"> 
     <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
       <div class="flex gap-2 items-center">
         <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
@@ -402,6 +419,8 @@
   </a>
   @endforeach
 
+  
+
   </div> 
 
 
@@ -412,21 +431,27 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     // Bar Chart
+    var total_ls_debit = JSON.parse('{!! json_encode($ls_total_debit)!!}');
+    var total_ls_credit = JSON.parse('{!! json_encode($ls_total_credit)!!}');
+    var total_ckdj_debit = JSON.parse('{!! json_encode($ckdj_total_debit)!!}');
+    var total_cdj_debit = JSON.parse('{!! json_encode($cdj_total_debit)!!}');
+    var total_crj_debit = JSON.parse('{!! json_encode($crj_total_debit)!!}');
+    var total_gj_debit = JSON.parse('{!! json_encode($gj_total_debit)!!}');
+
     const barCtx = document.getElementById('barChart').getContext('2d');
     new Chart(barCtx, {
       type: 'bar',
       data: {
-        labels: ['CKDJ', 'CDJ', 'CRJ', 'GJ'],
+        labels: ['Debit'],
         datasets: [{
-            label: 'Debit',
-            data: [12, 19, 3, 5],
-            // data: [debitckdj, 19, 3, 5],
+            label: 'Debit Rec',
+            data: [total_ls_debit],
             backgroundColor: '#ff4949',
             borderWidth: 1
           },
           {
             label: 'Credit',
-            data: [2, 3, 2, 3],
+            data: [total_ls_credit],
             backgroundColor: '#ffcc3d',
             borderWidth: 1
           }

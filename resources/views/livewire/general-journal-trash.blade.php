@@ -28,8 +28,8 @@
                         <thead class="text-base text-left text-black sticky shadow-md top-0 bg-white">
                             @include('livewire.general-journal-modal')
                             <tr class="text-center p-1">
-                                <th scope="col" class="border-r border-l p-2" style="width: 150px">Jev Number</th>
-                                <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>         
+                                <th scope="col" class="border-r border-l p-2" style="width: 150px">Date</th>
+                                <th scope="col" class="border-r border-l p-2" style="width: 100px">Jev No.</th>         
                                 <th scope="col" class="border-r border-l p-2">Particulars</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 200px">Account Code</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 120px">Debit</th>
@@ -49,8 +49,8 @@
                             @foreach ($gj_accountcodes_data as $index => $gj_accountcode_data)
                             <tr class="{{ $index === $lastRowIndex && $gj_accountcode_data->gj_credit ? 'border-b' : '' }} border-gray-300 ">
                                 @if ($index == 0)
-                                    <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $general_journals->gj_jevnum }}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $general_journals->gj_entrynum_date }}</td>
+                                    <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $general_journals->gj_entrynum_date }}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $general_journals->gj_jevnum }}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $general_journals->gj_particulars }}</td>
                                 @endif
                                 <td class="border-r border-l p-1 border-gray-300">{{ $gj_accountcode_data->gj_accountcode }}</td>
@@ -58,8 +58,8 @@
                                 <td class="border-l p-1 border-gray-300">₱{{ number_format($gj_accountcode_data->gj_credit, 2, '.', ',') }}</td>                              
                             @endforeach
                             @if ($gj_accountcodes_data->isEmpty())
-                                    <td class="border-r border-b p-2 border-gray-300">{{ $general_journals->gj_jevnum }}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_journals->gj_entrynum_date }}</td>
+                                    <td class="border-r border-b p-2 border-gray-300">{{ $general_journals->gj_entrynum_date }}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_journals->gj_jevnum }}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_journals->gj_particulars }}</td>
                                     <td class="border-l border-b p-1 border-gray-300" colspan="3">No Account Data</td>
                             @endif
@@ -72,10 +72,10 @@
                                             </svg>
                                         </button>                                  
                                         <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">                                                                                                                                                                                                                     
-                                            <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteGeneralJournal('{{ $general_journals->gj_jevnum }}', 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                            <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteGeneralJournal('{{ $general_journals->generaljournal_no }}', 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                 Delete
                                             </button>    
-                                            <button type="button" wire:click="restoreGeneralJournal('{{ $general_journals->gj_jevnum }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                            <button type="button" wire:click="restoreGeneralJournal('{{ $general_journals->generaljournal_no }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                 Restore
                                             </button>                                                                                                                                  
                                         </div>

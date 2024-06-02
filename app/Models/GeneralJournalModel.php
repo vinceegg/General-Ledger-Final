@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Models\User;
+use App\Models\GeneralJournal_AccountCodesModel;
 
 class GeneralJournalModel extends Model
 {
@@ -17,11 +18,11 @@ class GeneralJournalModel extends Model
     
     protected $table = 'general_journal';
 
-    protected $primaryKey = 'gj_jevnum'; 
+    protected $primaryKey = 'generaljournal_no'; 
 
-    public $incrementing = false; 
+    public $incrementing = true; 
 
-    protected $keyType = 'string';
+    protected $keyType = 'int';
  
     protected $fillable = [
         'gj_jevnum',
@@ -32,8 +33,9 @@ class GeneralJournalModel extends Model
     //@korinlv: added  this
     public function gj_accountcodes_data()
     {
-        return $this->hasMany(GeneralJournal_AccountCodesModel::class, 'gj_jevnum');
+        return $this->hasMany(GeneralJournal_AccountCodesModel::class, 'generaljournal_no');
     }
+
     protected static $logAttributes = ['*'];
 
     public function getActivitylogOptions(): LogOptions
@@ -53,5 +55,4 @@ class GeneralJournalModel extends Model
     {
         return User::find($this->employee_id);
     }
-
 }

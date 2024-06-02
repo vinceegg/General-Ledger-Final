@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('crj_sundry_data', function (Blueprint $table) {
             $table->bigIncrements('crj_id');
-            $table->string('crj_jevnum'); // Define the foreign key column
-            $table->foreign('crj_jevnum')->references('crj_jevnum')->on('cash_receipt_journal')->onDelete('cascade'); // Set the foreign key constraint
+            $table->unsignedBigInteger('cashreceiptjournal_no'); // Define the foreign key column
+            $table->foreign('cashreceiptjournal_no')->references('cashreceiptjournal_no')->on('cash_receipt_journal')->onDelete('cascade'); // Set the foreign key constraint
             $table->string('crj_accountcode')->nullable();
             $table->decimal('crj_debit', 15,2)->nullable();
             $table->decimal('crj_credit', 15,2)->nullable();

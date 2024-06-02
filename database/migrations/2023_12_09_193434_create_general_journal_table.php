@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('general_journal', function (Blueprint $table) {
-            $table->string('gj_jevnum')->primary();
+            $table->bigIncrements('generaljournal_no');
+            $table->string('gj_jevnum')->nullable();
             $table->date('gj_entrynum_date')->nullable();
             $table->string('gj_particulars')->nullable();
             $table->softDeletes();

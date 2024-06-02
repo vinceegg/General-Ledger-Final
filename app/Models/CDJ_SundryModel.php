@@ -28,6 +28,6 @@ class CDJ_SundryModel extends Model
 
     public function cashDisbursementJournal()
     {
-        return $this->belongsTo(CashDisbursementJournalModel::class, 'cdj_jevnum');
+        return $this->belongsTo(CashDisbursementJournalModel::class, 'cashdisbursementjournal_no');
     }
 }

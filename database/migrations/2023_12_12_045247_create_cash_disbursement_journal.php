@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cash_disbursement_journal', function (Blueprint $table) {
-            $table->string('cdj_jevnum')->primary();
+            $table->bigIncrements('cashdisbursementjournal_no');
+            $table->string('cdj_jevnum')->nullable();
             $table->date('cdj_entrynum_date')->nullable();
             $table->string('cdj_referencenum')->nullable();
             $table->integer('cdj_bur')->nullable();

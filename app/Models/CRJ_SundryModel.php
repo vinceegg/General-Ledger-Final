@@ -27,6 +27,6 @@ class CRJ_SundryModel extends Model
 
     public function cashReceiptJournal()
     {
-        return $this->belongsTo(CashReceiptJournalModel::class, 'crj_jevnum');
+        return $this->belongsTo(CashReceiptJournalModel::class, 'cashreceiptjournal_no');
     }
 }
