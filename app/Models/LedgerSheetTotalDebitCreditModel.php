@@ -34,7 +34,6 @@ class LedgerSheetTotalDebitCreditModel extends Model
         'ls_account_title_code',
         'ls_summary_type',
         'ls_summary_month',
-        'ls_summary_year',
         'ls_total_credit',
         'ls_total_debit',
     ];

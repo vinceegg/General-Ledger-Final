@@ -15,6 +15,7 @@ class CashReceiptJournalTrash extends Component
     $deleteType; // Added deleteType property
 
     public $search;
+    public $cashreceiptjournal_no;
     public $crj_jevnum;
     public $softDeletedData;
     public $file;
@@ -33,36 +34,36 @@ class CashReceiptJournalTrash extends Component
     }
 
     //@korinlv: edited this function
-    public function restoreCashReceiptJournal(string $crj_jevnum)
+    public function restoreCashReceiptJournal($cashreceiptjournal_no)
     {
-        $cash_receipt_journal = CashReceiptJournalModel::onlyTrashed()->find($crj_jevnum);
-        if ($cash_receipt_journal) {
+        $cashreceiptjournal_no = CashReceiptJournalModel::onlyTrashed()->find($cashreceiptjournal_no);
+        if ($cashreceiptjournal_no) {
             // Load trashed sundries
-            $trashedSundries = $cash_receipt_journal->crj_sundry_data()->onlyTrashed()->get();
+            $trashedSundries = $cashreceiptjournal_no->crj_sundry_data()->onlyTrashed()->get();
             foreach ($trashedSundries as $sundry){
                 $sundry->restore();
             }
 
-            $cash_receipt_journal->restore();
+            $cashreceiptjournal_no->restore();
             return redirect()->route('CashReceiptJournalArchived')->with('message', 'Restored Successfully');
         }
     }
 
-    public function deleteCashReceiptJournal(string $crj_jevnum, $type = 'soft')
+    public function deleteCashReceiptJournal($cashreceiptjournal_no, $type = 'soft')
     {
-        $this->crj_jevnum = $crj_jevnum;
+        $this->cashreceiptjournal_no = $cashreceiptjournal_no;
         $this->deleteType = $type; // Set the delete type
     }
 
     //permanently delete CheckDisbursementJournal
     public function destroyCashReceiptJournal()
     {
-        $crj_jevnum = CashReceiptJournalModel::withTrashed()->find($this->crj_jevnum);
+        $cashreceiptjournal_no = CashReceiptJournalModel::withTrashed()->find($this->cashreceiptjournal_no);
         if ($this->deleteType == 'force') {
-            $crj_jevnum->forceDelete();
+            $cashreceiptjournal_no->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
         } else {
-            $crj_jevnum->delete();
+            $cashreceiptjournal_no->delete();
             session()->flash('message', 'Archived Successfully');
         }
         $this->dispatch('close-modal');
@@ -72,7 +73,7 @@ class CashReceiptJournalTrash extends Component
 
     public function resetInput()
     {
-        $this->crj_jevnum = '';
+        $this->cashreceiptjournal_no = '';
     }
 
     public function render()

@@ -10,15 +10,6 @@
                 
                 <!-- SVG Icon and Link -->
                 <div class="flex items-center mt-4 md:mt-0">
-
-                    <!-- Select Account Name -->
-                    <select wire:model="ls_accountcode" wire:change="setAccountName($event.target.value)">
-                    <option value="">Select Account</option>
-                    <option value="Cash Local Treasury">Cash Local Treasury</option>
-                    <option value="Accounts Receivable">Accounts Receivable</option>
-                    <option value="Rent Income">Rent Income</option>
-                    </select>
-
                     <a href="{{ route('LedgerSheet') }}" class="btn flex btn-primary text-blue-800 font-semibold">
                     <svg class="w-5 h-5 mr-2" data-slot="icon" fill="none" stroke-width="1.8" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0L9 3M3 9h12a6 6 0 0 1 0 12h-3"></path>
@@ -39,7 +30,6 @@
                             <!-- Include message modal and session message -->
                             @include('livewire.ledger-sheet-modal')
                             <tr class="text-center shadow-md"> <!-- Table heading design -->
-                                <th scope="col" class="border-r p-2" style="width: 10px">No.</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 100px">Date</th>
                                 <th scope="col" class="border-r border-l p-2" style="width: 150px">Voucher No.</th>
                                 <th scope="col" class="border-r border-l p-2">Particulars</th>
@@ -56,9 +46,8 @@
                         <tbody class="space-y-4  overflow-y-scroll  ">
                             @forelse ($softDeletedData as  $general_ledgers)
                             <tr class = "border-b border-gray-300 ">
-                                    <td scope="row" class="border-r border-b p-2 border-gray-300 px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $general_ledgers->ls_vouchernum }}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_ledgers->ls_date}}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_ledgers->ls_vouchernum}}</td>
+                                    <td scope="row" class="border-r border-b p-2 border-gray-300 px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $general_ledgers->ls_date }}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_ledgers->ls_vouchernum}}</td>                                   
                                     <td class="border-r border-b border-l p-2 border-gray-300">{{ $general_ledgers->ls_particulars}}</td>                               
                                     <td class="border-r border-b border-l p-2 border-gray-300">₱{{ number_format($general_ledgers->ls_balance_debit, 2, '.', ',') }}</td>                                 
                                     <td class="border-r border-b border-l p-2 border-gray-300">₱{{ number_format($general_ledgers->ls_debit, 2, '.', ',') }}</td>                                 
@@ -73,10 +62,10 @@
                                                 </svg>
                                             </button>                                  
                                             <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">                                                                                                                                                                                                                     
-                                                <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteGeneralLedger('{{ $general_ledgers->ls_vouchernum }}', 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                <button type="button" data-modal-target="delete-modal" data-modal-toggle="delete-modal" wire:click="deleteGeneralLedger('{{ $general_ledgers->ledgersheet_no }}', 'force')" class="block px-4 py-2 text-base text-red-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                     Delete
                                                 </button>   
-                                                <button type="button" wire:click="restoreGeneralLedger('{{ $general_ledgers->ls_vouchernum }}'')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                <button type="button" wire:click="restoreGeneralLedger('{{ $general_ledgers->ledgersheet_no }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                     Restore
                                                 </button>                                                                                                                                  
                                             </div>

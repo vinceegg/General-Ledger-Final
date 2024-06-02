@@ -8,6 +8,7 @@ use App\Models\LedgerSheetModel;
 class LedgerSheetTrash extends Component
 {
     public $ls_vouchernum;
+    public $ledgersheet_no;
     public $deleteType;
     public $softDeletedData;
     public $showNotification = false; // Control notification visibility
@@ -22,9 +23,9 @@ class LedgerSheetTrash extends Component
     }
 
     // Method to restore soft-deleted record
-    public function restoreGeneralLedger($ls_vouchernum)
+    public function restoreGeneralLedger($ledgersheet_no)
     {
-        $general_ledger = LedgerSheetModel::onlyTrashed()->find($ls_vouchernum);
+        $general_ledger = LedgerSheetModel::onlyTrashed()->find($ledgersheet_no);
         if ($general_ledger) {
             $general_ledger->restore();
             session()->flash('message', 'Record restored successfully.');
@@ -32,16 +33,16 @@ class LedgerSheetTrash extends Component
         }
     }
 
-    public function deleteGeneralLedger(string $ls_vouchernum, $type = 'soft')
+    public function deleteGeneralLedger(string $ledgersheet_no, $type = 'soft')
     {
-        $this->ls_vouchernum = $ls_vouchernum;
+        $this->ledgersheet_no = $ledgersheet_no;
         $this->deleteType = $type; // Set the delete type
     }
 
     // Permanently delete 
     public function destroyGeneralLedger()
     {
-        $general_ledger = LedgerSheetModel::withTrashed()->find($this->ls_vouchernum);
+        $general_ledger = LedgerSheetModel::withTrashed()->find($this->ledgersheet_no);
         if ($this->deleteType == 'force') {
             $general_ledger->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
@@ -56,7 +57,7 @@ class LedgerSheetTrash extends Component
 
     public function resetInput()
     {
-        $this->ls_vouchernum = '';
+        $this->ledgersheet_no = '';
     }
 
     public function setAccountName($value)

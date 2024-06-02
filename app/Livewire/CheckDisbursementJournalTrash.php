@@ -16,6 +16,7 @@ class CheckDisbursementJournalTrash extends Component
 
     public $search;
     public $ckdj_checknum;
+    public $checkdisbursementjournal_no;
     public $softDeletedData;
     public $file;
     public $showNotification = false; // Control notification visibility
@@ -33,9 +34,9 @@ class CheckDisbursementJournalTrash extends Component
     }
 
     //@korinlv: edited this function
-    public function restoreCheckDisbursementJournal($ckdj_checknum)
+    public function restoreCheckDisbursementJournal($checkdisbursementjournal_no)
     {
-        $check_disbursement_journal = CheckDisbursementJournalModel::onlyTrashed()->find($ckdj_checknum);
+        $check_disbursement_journal = CheckDisbursementJournalModel::onlyTrashed()->find($checkdisbursementjournal_no);
         if ($check_disbursement_journal) {
             // Load trashed sundries
             $trashedSundries = $check_disbursement_journal->ckdj_sundry_data()->onlyTrashed()->get();
@@ -48,21 +49,21 @@ class CheckDisbursementJournalTrash extends Component
         }
     }
 
-    public function deleteCheckDisbursementJournal(string $ckdj_checknum, $type = 'soft')
+    public function deleteCheckDisbursementJournal($checkdisbursementjournal_no, $type = 'soft')
     {
-        $this->ckdj_checknum = $ckdj_checknum;
+        $this->checkdisbursementjournal_no = $checkdisbursementjournal_no;
         $this->deleteType = $type; // Set the delete type
     }
 
     //permanently delete CheckDisbursementJournal
     public function destroyCheckDisbursementJournal()
     {
-        $ckdj_checknum = CheckDisbursementJournalModel::withTrashed()->find($this->ckdj_checknum);
+        $checkdisbursementjournal_no = CheckDisbursementJournalModel::withTrashed()->find($this->checkdisbursementjournal_no);
         if ($this->deleteType == 'force') {
-            $ckdj_checknum->forceDelete();
+            $checkdisbursementjournal_no->forceDelete();
             session()->flash('message', 'Permanently Deleted Successfully');
         } else {
-            $ckdj_checknum->delete();
+            $checkdisbursementjournal_no->delete();
             session()->flash('message', 'Archived Successfully');
         }
         $this->dispatch('close-modal');
@@ -72,7 +73,7 @@ class CheckDisbursementJournalTrash extends Component
 
     public function resetInput()
     {
-        $this-> ckdj_checknum = '';
+        $this->checkdisbursementjournal_no = '';
     }
 
     public function render()
