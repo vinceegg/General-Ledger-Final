@@ -209,7 +209,7 @@
                     <p class="text-yellow-600 mt-2"> General Ledger <span class="text-black">> Ledger Sheet</span></p>
                 </div>
               </div>          
- <div class="ml-11 mt-2 bg-white rounded-lg">
+ <div class="ml-8 mt-2 flex items-center gap-2 bg-white rounded-lg md:justify-end">
     <!-- Flex Container for Search and Buttons -->
     <div class="flex items-center">
         <!-- Search -->
@@ -229,8 +229,8 @@
 
         <!-- Sort -->
         <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-            <option value="asc">Newest First</option>
-            <option value="desc">Oldest First</option>
+            <option value="asc">Newest Added Entry</option>
+            <option value="desc">Oldest Added Entry</option>
         </select>
         
         <!-- Import -->                    
@@ -246,10 +246,10 @@
         </button>
 
         <!-- Add -->
-        <button type="button" wire:click="resetInput" class="text-white bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold;"
-        data-modal-target="add-modal" data-modal-toggle="add-modal">
-            Add Entry
-        </button>
+<button type="button" wire:click="resetInput" class="text-white bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 rounded-lg px-4 py-2.5 text-center inline-flex items-center" style="font-weight: bold; white-space: nowrap;" data-modal-target="add-modal" data-modal-toggle="add-modal">
+    Add Entry
+</button>
+
     </div>
 </div>
     </div>
@@ -257,7 +257,7 @@
         <!-- 2ND RECTANGLE CONTAINING THE JOURNAL TABLE -->
         <div class="p-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <!-- Table Container -->
-                <div class="relative overflow-x-auto overflow-y-auto sm:rounded-lg" style="max-height:74vh">
+                <div class="relative overflow-x-auto overflow-y-auto sm:rounded-lg" style="max-height:66vh">
                     <table class="w-full text-base text-left rtl:text-right table-auto text-gray-700 dark:text-gray-400">
 
                         <!-- Table Header -->

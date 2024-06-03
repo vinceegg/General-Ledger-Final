@@ -29,8 +29,8 @@
 
                     <!-- Sort -->
                     <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="asc">Newest First</option>
-                        <option value="desc">Oldest First</option>
+                        <option value="asc">Newest Added Entry</option>
+                        <option value="desc">Oldest Added Entry</option>
                     </select>
                         
                     <!-- Import -->                    
@@ -112,9 +112,9 @@
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_bur }}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_accountable_officer}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_credit_accountcode }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_amount }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_account1 }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_account2 }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_disbursement_journals->cdj_amount }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_disbursement_journals->cdj_account1 }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_disbursement_journals->cdj_account2 }}</td>
                                     @endif
                                     <td class="border-r border-l p-1 border-gray-300">{{ $cdj_sundries_data->cdj_sundry_accountcode}}</td>
                                     <td class="border-r border-l p-1 border-gray-300">{{ $cdj_sundries_data->cdj_pr}}</td>

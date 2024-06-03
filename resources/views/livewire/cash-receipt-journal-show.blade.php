@@ -28,8 +28,8 @@
 
                     <!-- Sort -->
                     <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="asc">Newest First</option>
-                        <option value="desc">Oldest First</option>
+                        <option value="asc">Newest Added Entry</option>
+                        <option value="desc">Oldest Added Entry</option>
                     </select>
                         
                     <!-- Import -->                    
@@ -106,10 +106,10 @@
                                         <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $cash_receipt_journals->crj_entrynum_date}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_jevnum }}</td> 
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_payor}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_collection_debit}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_collection_credit}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_deposit_debit}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_deposit_credit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_collection_debit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_collection_credit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_deposit_debit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_deposit_credit}}</td>
                                     @endif
                                     <td class="border-r border-l p-1 border-gray-300">{{ $crj_sundries_data->crj_accountcode}}</td>
                                     <td class="border-r border-l p-1 border-gray-300">₱{{ number_format($crj_sundries_data->crj_debit, 2, '.', ',') }}</td>

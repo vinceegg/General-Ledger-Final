@@ -45,13 +45,15 @@
                                 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">BUR No.</label>
-                                        <input type="number" wire:model="cdj_bur" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_bur') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
+                                        <input type="number" wire:model="cdj_bur" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_bur') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        placeholder="YYYY-MM-BUR Number">
                                         @error('cdj_bur') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">JEV No.</label>
-                                        <input type="text" wire:model="cdj_jevnum" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_jevnum') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
+                                        <input type="text" wire:model="cdj_jevnum" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_jevnum') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        placeholder="YYYY-MM-JEV Number" >
                                         @error('cdj_jevnum') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
 
@@ -73,7 +75,7 @@
 
                                 
                                 <div class="grid gap-4"> <!-- Account code input field with typeahead logic ni ate korin-->
-                                            <div class="col-span-3" x-data="{ 
+                                            <div class="col-span-2" x-data="{ 
                                                         code: @entangle('cdj_credit_accountcode'),
                                                         items: [
                                                             '1 01 01 010 - Cash Local Treasury ',
@@ -266,7 +268,7 @@
                                                     </ul>
                                                 </div>
                                             </div>                                       
-                                    <div class="col-span-1">
+                                    <div class="col-span-2">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Amount </label>
                                         <input type="number" wire:model="cdj_amount" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_amount') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
@@ -645,13 +647,15 @@
                                 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">BUR No.</label>
-                                        <input type="number" wire:model="cdj_bur" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_bur') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
+                                        <input type="number" wire:model="cdj_bur" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_bur') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        placeholder="YYYY-MM-BUR Number">
                                         @error('cdj_bur') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">JEV No.</label>
-                                        <input type="text" wire:model="cdj_jevnum" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_jevnum') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
+                                        <input type="text" wire:model="cdj_jevnum" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_jevnum') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        placeholder="YYYY-MM-JEV Number">
                                         @error('cdj_jevnum') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
 

@@ -29,8 +29,8 @@
 
                     <!-- Sort -->
                     <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="asc">Newest First</option>
-                        <option value="desc">Oldest First</option>
+                        <option value="asc">Newest Added Entry</option>
+                        <option value="desc">Oldest Added Entry</option>
                     </select>
                         
                     <!-- Import -->                    

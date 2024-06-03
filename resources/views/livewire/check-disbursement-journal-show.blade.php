@@ -29,8 +29,8 @@
 
                     <!-- Sort -->
                     <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="asc">Newest First</option>
-                        <option value="desc">Oldest First</option>
+                        <option value="asc">Newest Added Entry</option>
+                        <option value="desc">Oldest Added Entry</option>
                     </select>
                         
                     <!-- Import -->                    
@@ -72,27 +72,27 @@
                         <thead class="text-base text-left shadow-md text-black sticky top-0 bg-white">
                             @include('livewire.check-disbursement-journal-modal')
                             <tr class="text-center p-1">
-                                <th rowspan="3" class="border-r border-l " style="width: 130px">Date</th>  
-                                <th rowspan="3" class="border-r border-l " style="width: 120px">Check No.</th>
-                                <th rowspan="3" class="border-r border-l " style="width: 200px">Jev No.</th>                          
-                                <th rowspan="3" class="border-r border-l " style="width: 300px">Payee</th>
-                                <th rowspan="3" class="border-r border-l " style="width: 150px">BUR</th>
+                                <th rowspan="3" class="border-r border-l border-b" style="width: 130px">Date</th>  
+                                <th rowspan="3" class="border-r border-l border-b" style="width: 120px">Check No.</th>
+                                <th rowspan="3" class="border-r border-l border-b" style="width: 200px">Jev No.</th>                          
+                                <th rowspan="3" class="border-r border-l border-b" style="width: 300px">Payee</th>
+                                <th rowspan="3" class="border-r border-l border-b" style="width: 150px">BUR</th>
                                 <th colspan="4" class="border-r border-b border-l ">Credit</th>
                                 <th colspan="2" class="border-r border-b border-l ">Debit</th>
                                 <th colspan="3" class="border-b border-l ">Sundry</th>
                                 <th rowspan="3" style="width: 10px"></th> <!--Ito yung header row sa rightmost para di tumagos 3dotmenu pag sinoscroll-->
                             </tr>
-                            <tr class="text-center ">
-                                <th rowspan="2" class="border-r border-l" style="width: 150px">CIB-LCCA<br><span class="text-sm">1-01-02-010</span></th>
+                            <tr class="text-center border-b">
+                                <th rowspan="2" class="border-r border-l border-b" style="width: 150px">CIB-LCCA<br><span class="text-sm">1-01-02-010</span></th>
                                 <th colspan="3" class="text-sm border-r border-b border-l border-t p-1">Withholding Tax</th>
-                                <th rowspan="2" class="border-r border-l" style="width: 120px">Sal & Wages</th>
-                                <th rowspan="2" class="border-r border-l" style="width: 110px">Honoraria</th>
-                                <th rowspan="2" class="border-r border-l" style="width: 200px">Account Code</th>
-                                <th rowspan="2" class="border-r border-l" style="width: 120px">Debit</th>
-                                <th rowspan="2" class="border-l" style="width: 120px">Credit</th>
+                                <th rowspan="2" class="border-r border-l border-b" style="width: 120px">Sal & Wages</th>
+                                <th rowspan="2" class="border-r border-l border-b" style="width: 110px">Honoraria</th>
+                                <th rowspan="2" class="border-r border-l border-b" style="width: 200px">Account Code</th>
+                                <th rowspan="2" class="border-r border-l border-b" style="width: 120px">Debit</th>
+                                <th rowspan="2" class="border-l border-b" style="width: 120px">Credit</th>
 
                             </tr>
-                            <tr class="text-center">
+                            <tr class="text-center border-b">
                                 <th class="border-r border-l text-sm" style="width: 120px">2-02-01-010-A</th>
                                 <th class="border-r border-l text-sm" style="width: 120px">2-02-01-010-B</th>
                                 <th class="border-r border-l text-sm" style="width: 120px">2-02-01-010-E</th>
@@ -115,12 +115,12 @@
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_jevnum}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_payee}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_bur}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_cib_lcca}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_account1}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_account2}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_account3}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_salary_wages}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $check_disbursement_journals->ckdj_honoraria}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $check_disbursement_journals->ckdj_cib_lcca}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $check_disbursement_journals->ckdj_account1}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $check_disbursement_journals->ckdj_account2}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $check_disbursement_journals->ckdj_account3}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $check_disbursement_journals->ckdj_salary_wages}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $check_disbursement_journals->ckdj_honoraria}}</td>
                                     @endif
                                     <td class="border-r border-l p-1 border-gray-300">{{ $ckdj_sundries_data->ckdj_accountcode}}</td>
                                     <td class="border-r border-l p-1 border-gray-300">₱{{ number_format($ckdj_sundries_data->ckdj_debit, 2, '.', ',') }}</td>

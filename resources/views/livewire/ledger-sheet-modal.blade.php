@@ -465,7 +465,6 @@
             </div>
                 <!-- Export body -->
                 <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" x-data="{ exportFormat: 'xlsx' }">
-                <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700" x-data="{ exportFormat: 'xlsx' }">
                     <!-- Radio buttons -->
                     <div class="flex flex-col mb-4">
                         <div class="flex items-center">
@@ -623,7 +622,6 @@
                             @endphp
                         <!-- Select Account Name -->
                         <select id="account" wire:model="ls_account_title_code" wire:change="setAccountNameforTotals($event.target.value)" class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
-                        <select id="account" wire:model="ls_account_title_code" wire:change="setAccountNameforTotals($event.target.value)" class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
                             <option value="" class="text-gray-500">Select Account</option>
                             @foreach ($accountNames as $account)
                                 <option value="{{ $account }}" class="text-gray-700">{{ $account }}</option>
@@ -631,31 +629,14 @@
                         </select>
                             @error('ls_account_title_code') <span class="text-red-500">{{ $message }}</span> @enderror
                     <div class="col-span-1 mb-4">
-                        <label class="block mb-2 mt-4 text-base font-medium text-gray-900 dark:text-white">Data to Save</label>
-                        <div class="grid gap-4 grid-cols-2">
-
-                        <div class="col-span-1 flex flex-col ps-4 border border-gray-300 rounded-md dark:border-gray-700">
-                            <div class="flex items-center">
-                                <input id="bordered-radio-1" type="radio"  value="monthly" wire:model="selectedSummaryType" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <input id="bordered-radio-1" type="radio"  value="monthly" wire:model="selectedSummaryType" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="bordered-radio-1" class="w-full py-4 ms-2 text-gray-900 dark:text-gray-300">Save monthly summary</label>
-                            </div>
-                            <div class="flex flex-col pl-6">
-                                    <div class="flex flex-col mr-2">
-                                        <label for="month-input" class="text-sm mb-1">Select month and year</label>
+                        <label class="block mb-2 mt-4 text-base font-medium text-gray-900 dark:text-white">Select Month and Year</label>
+                        <div class="flex flex-col">
                                         <input type="month" id="month-input" wire:model="saveSelectedMonth"
-                                        <input type="month" id="month-input" wire:model="saveSelectedMonth"
-                                            class="form-control mb-8 text-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 rounded-lg mr-4">
+                                        class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700">
                                             @error('saveSelectedMonth')
                                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                         @enderror
-                                            @error('saveSelectedMonth')
-                                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                            </div>
                         </div>
-                    </div> 
                     </div> 
                 </div>
                     <!-- Modal footer -->
@@ -683,13 +664,11 @@
 
                                 <!-- Add Transaction Button -->
                                 <button type="submit" wire:click="calculateTotalDebitCredit" @keydown.enter.prevent="$wire.calculateTotalDebitCredit()" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
-                                <button type="submit" wire:click="calculateTotalDebitCredit" @keydown.enter.prevent="$wire.calculateTotalDebitCredit()" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center" style="font-weight: bold;">
                                     Save
                                 </button>
                             </div>
                         </div>
                     </div>
-
 
             </div>
 </div> 
