@@ -435,15 +435,19 @@
                             <input type="file" wire:model="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" id="customFile" />
                         </label>
                     </div>
-                    <div class="col-span-2 flex justify-end mr-2 mt-4">
-                        <div>
-                        <button wire:click="downloadExcelTemplate" class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"  >Download Excel Template</button>
-                    </div>       
-                        <button class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
-                            wire:click="importGL">
-                            Import 
+                    <div class="col-span-2 flex justify-between items-center mt-4">
+                    <div>
+                        <button wire:click="downloadExcelTemplate" class="text-white inline-flex items-center bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Download Excel Template
                         </button>
                     </div>
+                    <div>
+                        <button class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" wire:click="importGL">
+                            Import
+                        </button>
+                    </div>
+                </div>
+
                 </div>
             </form>
         </div>

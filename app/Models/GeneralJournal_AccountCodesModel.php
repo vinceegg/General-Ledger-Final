@@ -20,6 +20,7 @@ class GeneralJournal_AccountCodesModel extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
+        'generaljournal_no', // This is the foreign key
         'gj_accountcode',
         'gj_debit',
         'gj_credit',

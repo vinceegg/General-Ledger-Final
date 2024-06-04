@@ -342,7 +342,7 @@ class LedgerSheetShow extends Component
         $filePath = public_path('import_templates/Template.xlsx'); // Adjusted path
 
         if (file_exists($filePath)) {
-            return response()->download($filePath)->deleteFileAfterSend(true);
+            return response()->download($filePath);
         } else {
             abort(404); // Return a 404 error if the file doesn't exist
         }

@@ -25,7 +25,6 @@ class GeneralJournalModel extends Model
     protected $keyType = 'int';
  
     protected $fillable = [
-        'generaljournal_no',
         'gj_jevnum',
         'gj_entrynum_date',
         'gj_particulars',
