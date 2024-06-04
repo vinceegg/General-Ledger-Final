@@ -4,13 +4,9 @@ namespace App\Imports;
 
 use App\Models\GeneralJournalModel;
 use App\Models\GeneralJournal_AccountCodesModel;
-use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\WithMappedCells;
 
 class GeneralJournalImport implements ToCollection, WithHeadingRow
 {
@@ -31,7 +27,7 @@ class GeneralJournalImport implements ToCollection, WithHeadingRow
 
             if (isset($row['account_code'])) {
                 GeneralJournal_AccountCodesModel::create([
-                    'general_journal_id' => $journal->id,
+                    'generaljournal_no' => $journal->generaljournal_no,
                     'gj_accountcode' => $row['account_code'],
                     'gj_debit'        => $row['debit'],
                     'gj_credit'       => $row['credit'],

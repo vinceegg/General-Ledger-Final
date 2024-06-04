@@ -767,7 +767,7 @@ class CashDisbursementJournalShow extends Component
 
         Excel::import(new CashDisbursementJournalImport, $filePath);
 
-        return redirect()->back();
+        return redirect('/CDJ');
         }
     }
 

@@ -738,7 +738,7 @@ class GeneralJournalShow extends Component
 
         Excel::import(new GeneralJournalImport, $filePath);
 
-        return redirect()->back()->with('success', 'Data imported successfully');
+        return redirect('/GJ');
         }
     }
 

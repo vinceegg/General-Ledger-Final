@@ -14,24 +14,52 @@ class CashDisbursementJournalExport implements FromCollection, WithHeadings
     */
     public function collection()
     {
-        return CashDisbursementJournalModel::select(
-        "cdj_entrynum_date",
-        "cdj_referencenum",
-        "cdj_accountable_officer",
-        "cdj_jevnum",
-        "cdj_credit_accountcode",
-        "cdj_amount",
-        "cdj_account1",
-        "cdj_account2",
-        "cdj_sundry_accountcode",
-        "cdj_pr",
-        "cdj_debit",
-        "cdj_credit" )->get();
+        $journals = CashDisbursementJournalModel::with('cdj_sundry_data')->get();
+        $flattened = collect();
+
+        foreach ($journals as $journal) {
+            if ($journal->cdj_sundry_data->isEmpty()) {
+                // Add an empty record with journal data only if no sundry data
+                $flattened->push([
+                    'Date' => $journal->cdj_entrynum_date,
+                    'Reference No.' => $journal->cdj_referencenum,
+                    'Accountable Officer' => $journal->cdj_accountable_officer,
+                    'JEV No.' => $journal->cdj_jevnum,
+                    'Account Code' => $journal->cdj_credit_accountcode,
+                    'Amount' => $journal->cdj_amount,
+                    'Account1' => $journal->cdj_account1,
+                    'Account2' => $journal->cdj_account2,
+                    'Sundry Account Code' => '',
+                    'PR' => $journal->cdj_pr,
+                    'Debit' => $journal->cdj_debit,
+                    'Credit' => $journal->cdj_credit,
+                ]);
+            } else {
+                foreach ($journal->cdj_sundry_data as $sundry) {
+                    // Push each sundry data with journal data
+                    $flattened->push([
+                        'Date' => $journal->cdj_entrynum_date,
+                        'Reference No.' => $journal->cdj_referencenum,
+                        'Accountable Officer' => $journal->cdj_accountable_officer,
+                        'JEV No.' => $journal->cdj_jevnum,
+                        'Account Code' => $journal->cdj_credit_accountcode,
+                        'Amount' => $journal->cdj_amount,
+                        'Account1' => $journal->cdj_account1,
+                        'Account2' => $journal->cdj_account2,
+                        'Sundry Account Code' => $sundry->cdj_sundry_accountcode,
+                        'PR' => $journal->cdj_pr,
+                        'Debit' => $sundry->cdj_debit,
+                        'Credit' => $sundry->cdj_credit,
+                    ]);
+                }
+            }
+        }
+
+        return $flattened;
     }
 
     public function headings(): array
     {
-    
         return [
             "Date",
             "Reference/RD No.",
@@ -41,9 +69,10 @@ class CashDisbursementJournalExport implements FromCollection, WithHeadings
             "Amount",
             "5-02-99-990",
             "5-02-02-010",
-           "Account Code",
+            "Sundry Account Code",
             "PR",
             "Debit",
-            "Credit" ];
-        }
+            "Credit",
+        ];
+    }
 }

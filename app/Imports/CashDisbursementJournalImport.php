@@ -38,7 +38,7 @@ class CashDisbursementJournalImport implements ToCollection, WithHeadingRow
             // Check if sundry data is present and create associated entries
             if (!empty($row['sundry_account_code']) || !empty($row['pr']) || !empty($row['debit']) || !empty($row['credit'])) {
                 CDJ_SundryModel::create([
-                    'cash_disbursement_journal_id' => $journal->id, // Foreign key to the journal entry
+                    'cashdisbursementjournal_no' => $journal->cashdisbursementjournal_no, // Foreign key to the journal entry
                     'cdj_sundry_accountcode' => $row['sundry_account_code'],
                     'cdj_pr' => $row['pr'],
                     'cdj_debit' => $row['debit'],

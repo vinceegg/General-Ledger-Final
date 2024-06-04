@@ -12,6 +12,7 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use App\Models\LedgerSheetTotalDebitCreditModel;
+use Illuminate\Support\Facades\Response;
 
 class LedgerSheetShow extends Component
 {
@@ -333,6 +334,20 @@ class LedgerSheetShow extends Component
             $this->sortDirection = 'asc';
         }
     }
+
+
+
+    public function downloadExcelTemplate()
+    {
+        $filePath = public_path('import_templates/Template.xlsx'); // Adjusted path
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath)->deleteFileAfterSend(true);
+        } else {
+            abort(404); // Return a 404 error if the file doesn't exist
+        }
+    }
+
 
     public function importGL()
     {
