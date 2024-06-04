@@ -346,13 +346,18 @@ class LedgerSheetShow extends Component
     }
 
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportGL_XLSX(Request $request) 
+    public function exportGL_XLSX(Request $request)
     {
-        return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname .'.xlsx');
+        $cleanAccountName = $this->ls_accountname ? $this->cleanAccountName($this->ls_accountname) : 'LedgerSheet';
+        $fileName = $cleanAccountName . '.xlsx';
+        return Excel::download(new ledgerSheetExport($this->ls_accountname), $fileName);
     }
-    public function exportGl_CSV(Request $request) 
+
+    public function exportGl_CSV(Request $request)
     {
-        return Excel::download(new ledgerSheetExport($this->ls_accountname), $this->ls_accountname .'.csv');
+        $cleanAccountName = $this->ls_accountname ? $this->cleanAccountName($this->ls_accountname) : 'LedgerSheet';
+        $fileName = $cleanAccountName . '.csv';
+        return Excel::download(new ledgerSheetExport($this->ls_accountname), $fileName);
     }
 
     // Method to reset notification

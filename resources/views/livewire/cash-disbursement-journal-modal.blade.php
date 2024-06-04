@@ -39,13 +39,13 @@
 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Reference/RD No.</label>
-                                        <input type="number" wire:model="cdj_referencenum" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_referencenum') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
+                                        <input type="number" step="any" wire:model="cdj_referencenum" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_referencenum') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
                                         @error('cdj_referencenum') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
                                 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">BUR No.</label>
-                                        <input type="number" wire:model="cdj_bur" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_bur') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        <input type="number" step="any" wire:model="cdj_bur" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_bur') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
                                         placeholder="YYYY-MM-BUR Number">
                                         @error('cdj_bur') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -270,7 +270,7 @@
                                             </div>                                       
                                     <div class="col-span-2">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Amount </label>
-                                        <input type="number" wire:model="cdj_amount" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_amount') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="cdj_amount" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_amount') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('cdj_amount') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -284,14 +284,14 @@
                                 <div class="grid gap-4 grid-cols-2">
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">5-02-99-990</label>
-                                        <input type="number" wire:model="cdj_account1" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_account1') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="cdj_account1" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_account1') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('cdj_account1') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">5-02-02-010</label>
-                                        <input type="number" wire:model="cdj_account2" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_account2') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="cdj_account2" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_account2') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('cdj_account2') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -517,7 +517,7 @@
                        
                                             <div class ="col-span-3 sm:col-span-1">
                                                 <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white ">PR</label>
-                                                <input type="number" wire:model="cdj_sundry_data.{{ $index }}.cdj_pr"  class="bg-gray-50 border 
+                                                <input type="number" step="any" wire:model="cdj_sundry_data.{{ $index }}.cdj_pr"  class="bg-gray-50 border 
                                                 {{ $errors->has('cdj_sundry_data.' . $index . '.cdj_pr') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                                 placeholder="₱">
                                                 @error('cdj_sundry_data.' . $index . '.cdj_pr') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -525,7 +525,7 @@
                                             
                                             <div class="col-span-3 sm:col-span-1">
                                                 <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Debit</label>
-                                                <input type="number" wire:model="cdj_sundry_data.{{ $index }}.cdj_debit" class="bg-gray-50 border 
+                                                <input type="number" step="any" wire:model="cdj_sundry_data.{{ $index }}.cdj_debit" class="bg-gray-50 border 
                                                  {{ $errors->has('cdj_sundry_data.' . $index . '.cdj_debit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                                 placeholder="₱">
                                                 @error('cdj_sundry_data.' . $index . '.cdj_debit') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -533,7 +533,7 @@
                                             
                                             <div class="col-span-3 sm:col-span-1">
                                                 <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credit</label>
-                                                <input type="number" wire:model="cdj_sundry_data.{{ $index }}.cdj_credit" class="bg-gray-50 border 
+                                                <input type="number" step="any" wire:model="cdj_sundry_data.{{ $index }}.cdj_credit" class="bg-gray-50 border 
                                                  {{ $errors->has('cdj_sundry_data.' . $index . '.cdj_credit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                                 placeholder="₱">
                                                 @error('cdj_sundry_data.' . $index . '.cdj_credit') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -641,13 +641,13 @@
 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Reference/RD No.</label>
-                                        <input type="number" wire:model="cdj_referencenum" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_referencenum') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
+                                        <input type="number" step="any" wire:model="cdj_referencenum" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_referencenum') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" >
                                         @error('cdj_referencenum') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
                                 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">BUR No.</label>
-                                        <input type="number" wire:model="cdj_bur" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_bur') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        <input type="number" step="any" wire:model="cdj_bur" class="mb-2 bg-gray-50 border {{ $errors->has('cdj_bur') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
                                         placeholder="YYYY-MM-BUR Number">
                                         @error('cdj_bur') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -748,7 +748,7 @@
 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Amount </label>
-                                        <input type="number" wire:model="cdj_amount" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_amount') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="cdj_amount" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_amount') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('cdj_amount') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -764,14 +764,14 @@
                                 <div class="grid gap-4 grid-cols-2">
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">5-02-99-990</label>
-                                        <input type="number" wire:model="cdj_account1" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_account1') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="cdj_account1" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_account1') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('cdj_account1') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">5-02-02-010</label>
-                                        <input type="number" wire:model="cdj_account2" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_account2') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="cdj_account2" class="mb-2 w-full bg-gray-50 border {{ $errors->has('cdj_account2') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('cdj_account2') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -997,7 +997,7 @@
                        
                                             <div class ="col-span-3 sm:col-span-1">
                                                 <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white ">PR</label>
-                                                <input type="number" wire:model="cdj_sundry_data.{{ $index }}.cdj_pr"  class="bg-gray-50 border 
+                                                <input type="number" step="any" wire:model="cdj_sundry_data.{{ $index }}.cdj_pr"  class="bg-gray-50 border 
                                                 {{ $errors->has('cdj_sundry_data.' . $index . '.cdj_pr') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                                 placeholder="₱">
                                                 @error('cdj_sundry_data.' . $index . '.cdj_pr') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -1005,7 +1005,7 @@
                                             
                                             <div class="col-span-3 sm:col-span-1">
                                                 <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Debit</label>
-                                                <input type="number" wire:model="cdj_sundry_data.{{ $index }}.cdj_debit" class="bg-gray-50 border 
+                                                <input type="number" step="any" wire:model="cdj_sundry_data.{{ $index }}.cdj_debit" class="bg-gray-50 border 
                                                  {{ $errors->has('cdj_sundry_data.' . $index . '.cdj_debit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                                 placeholder="₱">
                                                 @error('cdj_sundry_data.' . $index . '.cdj_debit') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -1013,7 +1013,7 @@
                                             
                                             <div class="col-span-3 sm:col-span-1">
                                                 <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credit</label>
-                                                <input type="number" wire:model="cdj_sundry_data.{{ $index }}.cdj_credit" class="bg-gray-50 border 
+                                                <input type="number" step="any" wire:model="cdj_sundry_data.{{ $index }}.cdj_credit" class="bg-gray-50 border 
                                                  {{ $errors->has('cdj_sundry_data.' . $index . '.cdj_credit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                                 placeholder="₱">
                                                 @error('cdj_sundry_data.' . $index . '.cdj_credit') <span class="text-red-500">{{ $message }}</span> @enderror

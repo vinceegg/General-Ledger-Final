@@ -77,7 +77,7 @@
                                 <div class="grid gap-4 grid-cols-3">
                                     <div class="col-span-3">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">CIB-LCCA</label>
-                                        <input type="number" wire:model="ckdj_cib_lcca" class=" w-full bg-gray-50 border {{ $errors->has('ckdj_cib_lcca') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="ckdj_cib_lcca" class=" w-full bg-gray-50 border {{ $errors->has('ckdj_cib_lcca') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('ckdj_cib_lcca') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -85,7 +85,7 @@
                                     <div class="col-span-1">
                                         <text class="text-sm text-gray-900">Witholding Tax</text>
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">2-02-01-010-A</label>
-                                        <input type="number" wire:model="ckdj_account1" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account1') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        <input type="number" step="any" wire:model="ckdj_account1" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account1') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
                                         placeholder="₱">
                                         @error('ckdj_account1') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -93,7 +93,7 @@
                                     <div class="col-span-1">
                                         <text class="text-sm text-gray-900">Witholding Tax</text>
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">2-02-01-010-A</label>
-                                        <input type="number" wire:model="ckdj_account2" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account2') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        <input type="number" step="any" wire:model="ckdj_account2" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account2') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
                                         placeholder="₱">
                                         @error('ckdj_account2') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -101,7 +101,7 @@
                                     <div class="col-span-1">
                                         <text class="text-sm text-gray-900">Witholding Tax</text>
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">2-02-01-010-A</label>
-                                        <input type="number" wire:model="ckdj_account3" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account3') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        <input type="number" step="any" wire:model="ckdj_account3" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account3') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
                                         placeholder="₱">
                                         @error('ckdj_account3') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -119,14 +119,14 @@
                                 <div class="grid gap-4 grid-cols-2">
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">SAL & Wages</label>
-                                        <input type="number" wire:model="ckdj_salary_wages"  class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_salary_wages') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="ckdj_salary_wages"  class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_salary_wages') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('ckdj_salary_wages') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Honoraria</label>
-                                        <input type="number" wire:model="ckdj_honoraria" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_honoraria') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="ckdj_honoraria" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_honoraria') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('ckdj_honoraria') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -350,7 +350,7 @@
                                              
                                             <div class ="col-span-2 sm:col-span-1">
                                                 <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white ">Debit</label>
-                                                <input type="number" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_debit"  class="bg-gray-50 border 
+                                                <input type="number" step="any" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_debit"  class="bg-gray-50 border 
                                                 {{ $errors->has('ckdj_sundry_data.' . $index . '.ckdj_debit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                                 placeholder="₱">
                                                 @error('ckdj_sundry_data.' . $index . '.ckdj_debit') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -358,7 +358,7 @@
                                             
                                             <div class="col-span-2 sm:col-span-1">
                                                 <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credit</label>
-                                                <input type="number" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_credit" class="bg-gray-50 border 
+                                                <input type="number" step="any" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_credit" class="bg-gray-50 border 
                                                 {{ $errors->has('ckdj_sundry_data.' . $index . '.ckdj_credit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                                 placeholder="₱">
                                                 @error('ckdj_sundry_data.' . $index . '.ckdj_credit') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -486,7 +486,7 @@
 
                                 <div class="col-span-2">
                                     <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">B.U.R. No.</label>
-                                    <input type="number" wire:model="ckdj_bur" class="mb-2 bg-gray-50 border {{ $errors->has('ckdj_bur') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                    <input type="number" step="any" wire:model="ckdj_bur" class="mb-2 bg-gray-50 border {{ $errors->has('ckdj_bur') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
                                     placeholder="YYYY-MM-BUR Number">
                                     @error('ckdj_bur') <span class="text-red-500">{{ $message }}</span> @enderror
                                 </div>
@@ -502,7 +502,7 @@
                                 <div class="grid gap-4 grid-cols-3">
                                     <div class="col-span-3">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">CIB-LCCA</label>
-                                        <input type="number" wire:model="ckdj_cib_lcca" class=" w-full bg-gray-50 border {{ $errors->has('ckdj_cib_lcca') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="ckdj_cib_lcca" class=" w-full bg-gray-50 border {{ $errors->has('ckdj_cib_lcca') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('ckdj_cib_lcca') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -510,7 +510,7 @@
                                     <div class="col-span-1">
                                         <text class="text-sm text-gray-900">Witholding Tax</text>
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">2-02-01-010-A</label>
-                                        <input type="number" wire:model="ckdj_account1" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account1') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        <input type="number" step="any" wire:model="ckdj_account1" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account1') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
                                         placeholder="₱">
                                         @error('ckdj_account1') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -518,7 +518,7 @@
                                     <div class="col-span-1">
                                         <text class="text-sm text-gray-900">Witholding Tax</text>
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">2-02-01-010-A</label>
-                                        <input type="number" wire:model="ckdj_account2" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account2') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        <input type="number" step="any" wire:model="ckdj_account2" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account2') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
                                         placeholder="₱">
                                         @error('ckdj_account2') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -526,7 +526,7 @@
                                     <div class="col-span-1">
                                         <text class="text-sm text-gray-900">Witholding Tax</text>
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">2-02-01-010-A</label>
-                                        <input type="number" wire:model="ckdj_account3" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account3') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
+                                        <input type="number" step="any" wire:model="ckdj_account3" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_account3') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" 
                                         placeholder="₱">
                                         @error('ckdj_account3') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -542,14 +542,14 @@
                                 <div class="grid gap-4 grid-cols-2">
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">SAL & Wages</label>
-                                        <input type="number" wire:model="ckdj_salary_wages"  class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_salary_wages') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="ckdj_salary_wages"  class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_salary_wages') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('ckdj_salary_wages') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
 
                                     <div class="col-span-1">
                                         <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Honoraria</label>
-                                        <input type="number" wire:model="ckdj_honoraria" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_honoraria') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                        <input type="number" step="any" wire:model="ckdj_honoraria" class="mb-2 w-full bg-gray-50 border {{ $errors->has('ckdj_honoraria') ? 'border-red-500' : 'border-gray-300 text-gray-900' }} rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                         placeholder="₱">
                                         @error('ckdj_honoraria') <span class="text-red-500">{{ $message }}</span> @enderror
                                     </div>
@@ -773,7 +773,7 @@
                                         </div>
                                             <div class ="col-span-2 sm:col-span-1">
                                                 <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white ">Debit</label>
-                                                <input type="number" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_debit"  class="bg-gray-50 border 
+                                                <input type="number" step="any" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_debit"  class="bg-gray-50 border 
                                                 {{ $errors->has('ckdj_sundry_data.' . $index . '.ckdj_debit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                                 placeholder="₱">
                                                 @error('ckdj_sundry_data.' . $index . '.ckdj_debit') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -781,7 +781,7 @@
                                             
                                             <div class="col-span-2 sm:col-span-1">
                                                 <label class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Credit</label>
-                                                <input type="number" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_credit" class="bg-gray-50 border 
+                                                <input type="number" step="any" wire:model="ckdj_sundry_data.{{ $index }}.ckdj_credit" class="bg-gray-50 border 
                                                 {{ $errors->has('ckdj_sundry_data.' . $index . '.ckdj_credit') ? 'border-red-500 ' : 'border-gray-300' }} border-gray-300 text-gray-900 text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " 
                                                 placeholder="₱">
                                                 @error('ckdj_sundry_data.' . $index . '.ckdj_credit') <span class="text-red-500">{{ $message }}</span> @enderror
