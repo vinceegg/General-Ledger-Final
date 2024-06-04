@@ -4,25 +4,20 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TwoFactorController;
 use App\Models\ledgerSheetModel;
-use App\Models\CashDisbursementJournalModel;
-use App\Models\CashReceiptJournalModel;
-use App\Models\CheckDisbursementJournalModel;
-use App\Models\GeneralJournalModel;
+use App\Models\CDJ_SundryModel;
+use App\Models\CRJ_SundryModel;
+use App\Models\CKDJ_SundryModel;
+use App\Models\GeneralJournal_AccountCodesModel;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
-    $lsDebit = ledgerSheetModel::all();
 
-    $total_debit = 0;
-    foreach($lsDebit as $num){
-        $total_debit += $num->ls_debit;
-    }
-
-    return view('dashboard',compact('test', 'total_debit'));
+    return view('dashboard');
 });
 
 Route::get('/dashboard', function () {
     // ckdj total debit
-    $ckdjTotalDebit = CheckDisbursementJournalModel::all();
+    $ckdjTotalDebit = CKDJ_SundryModel::all();
 
     $ckdj_total_debit = 0;
     foreach($ckdjTotalDebit as $num){
@@ -30,7 +25,7 @@ Route::get('/dashboard', function () {
     }
 
     // ckdj total credit
-    $ckdjTotalcredit = CheckDisbursementJournalModel::all();
+    $ckdjTotalcredit = CKDJ_SundryModel::all();
 
     $ckdj_total_credit = 0;
     foreach($ckdjTotalcredit as $num){
@@ -38,7 +33,7 @@ Route::get('/dashboard', function () {
     }
 
     // cdj total debit
-    $cdjTotalDebit = CashDisbursementJournalModel::all();
+    $cdjTotalDebit = CDJ_SundryModel::all();
 
     $cdj_total_debit = 0;
     foreach($cdjTotalDebit as $num){
@@ -46,7 +41,7 @@ Route::get('/dashboard', function () {
     }
 
     // cdj total credit
-    $cdjTotalcredit = CashDisbursementJournalModel::all();
+    $cdjTotalcredit = CDJ_SundryModel::all();
 
     $cdj_total_credit = 0;
     foreach($cdjTotalcredit as $num){
@@ -54,7 +49,7 @@ Route::get('/dashboard', function () {
     }
 
     // crj TOTAL DEBIT
-    $crjTotalDebit = CashReceiptJournalModel::all();
+    $crjTotalDebit = CRJ_SundryModel::all();
 
     $crj_total_debit = 0;
     foreach($crjTotalDebit as $num){
@@ -62,7 +57,7 @@ Route::get('/dashboard', function () {
     }
 
     // crj TOTAL credit
-    $crjTotalcredit = CashReceiptJournalModel::all();
+    $crjTotalcredit = CRJ_SundryModel::all();
 
     $crj_total_credit = 0;
     foreach($crjTotalcredit as $num){
@@ -70,7 +65,7 @@ Route::get('/dashboard', function () {
     }
 
     // gj TOTAL DEBIT
-    $gjTotalDebit = GeneralJournalModel::all();
+    $gjTotalDebit = GeneralJournal_AccountCodesModel::all();
 
     $gj_total_debit = 0;
     foreach($gjTotalDebit as $num){
@@ -78,7 +73,7 @@ Route::get('/dashboard', function () {
     }
 
     // gj TOTAL credit
-    $gjTotalcredit = GeneralJournalModel::all();
+    $gjTotalcredit = GeneralJournal_AccountCodesModel::all();
 
     $gj_total_credit = 0;
     foreach($gjTotalcredit as $num){
@@ -107,6 +102,7 @@ Route::get('/dashboard', function () {
     'ls_total_debit','ls_total_credit'
 ));
 });
+
 
 
 

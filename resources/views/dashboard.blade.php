@@ -119,19 +119,7 @@
              </a>
              @endforeach
          </li>
-         <li>
-             @foreach([''] as $route) {{ $route }}
-             <a href="{{ url('/settings' . $route) }}" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-blue-900 dark:hover:bg-gray-700 dark:text-white group">
-                 <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                     <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                         <path d="M19 11V9a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L12 2.757V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L2.929 4.343a1 1 0 0 0 0 1.414l.536.536L2.757 8H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535L8 17.243V18a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H18a1 1 0 0 0 1-1Z"/>
-                         <path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                     </g>
-                 </svg>
-                 <span class="ms-3">Settings</span>
-             </a>
-             @endforeach
-         </li>      
+   
      </ul>     
    </div>
 </aside>
@@ -316,7 +304,7 @@
         </svg>
       </div>
       <div>
-        <span class="white-card-title">Debit and Credit Balance per Journal</span>
+        <span class="white-card-title">Debit and Credit Balance per Journal for this Month</span>
       </div>
     </div>
         <!-- LINE CHART -->
@@ -437,52 +425,50 @@
     var total_cdj_debit = JSON.parse('{!! json_encode($cdj_total_debit)!!}');
     var total_crj_debit = JSON.parse('{!! json_encode($crj_total_debit)!!}');
     var total_gj_debit = JSON.parse('{!! json_encode($gj_total_debit)!!}');
+    var total_ckdj_credit = JSON.parse('{!! json_encode($ckdj_total_credit)!!}');
+    var total_cdj_credit = JSON.parse('{!! json_encode($cdj_total_credit)!!}');
+    var total_crj_credit = JSON.parse('{!! json_encode($crj_total_credit)!!}');
+    var total_gj_credit = JSON.parse('{!! json_encode($gj_total_credit)!!}');
 
     const barCtx = document.getElementById('barChart').getContext('2d');
     new Chart(barCtx, {
-      type: 'bar',
-      data: {
-        labels: ['Debit'],
-        datasets: [{
-            label: 'Debit Rec',
-            data: [total_ls_debit],
-            backgroundColor: '#ff4949',
-            borderWidth: 1
-          },
-          {
-            label: 'Credit',
-            data: [total_ls_credit],
-            backgroundColor: '#ffcc3d',
-            borderWidth: 1
-          }
-        ]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
+  type: 'bar',
+  data: {
+    labels: ['Debit', 'Credit'],
+    datasets: [{
+      label: 'Debit and Credit',
+      data: [total_ls_debit, total_ls_credit],
+      backgroundColor: ['#ff4949', '#ffcc3d'],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
       }
-    });
+    }
+  }
+});
+
   
     // Line Chart
     const lineCtx = document.getElementById('lineChart').getContext('2d');
     new Chart(lineCtx, {
       type: 'line',
       data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: ['CKDJ', 'CDJ', 'CRJ','GJ'],
         datasets: [{
-            label: 'Dataset 1',
-            data: [65, 59, 80, 81, 56, 55, 40],
+            label: 'Debit',
+            data: [total_ckdj_debit,total_cdj_debit,total_crj_debit,total_gj_debit],
             borderColor: '#ff4949',
-            backgroundColor: 'rgba(255, 73, 73, 0.5)',
+            backgroundColor: '#ff4949',
           },
           {
-            label: 'Dataset 2',
-            data: [28, 48, 40, 19, 86, 27, 90],
-            borderColor: '#36a2eb',
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            label: 'Credit',
+            data: [total_ckdj_credit,total_cdj_credit,total_crj_credit,total_gj_credit],
+            borderColor: '#ffcc3d',
+            backgroundColor: '#ffcc3d',
           }
         ]
       },
@@ -536,32 +522,40 @@
   </div>
 
 
+{{-- THIRD ROW --}}
 
 
+<div class=" grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-5">
+  <!-- Column 1 -->
+  <div class="col-span-2 ">
+      <!-- Row 1 -->
 
-
-{{-- ROW 4 --}}
-  <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-5">
-    <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
-      <div class="flex gap-2 pb-3">
-        <div>
-          <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-          </svg>
+      <!-- Row 2 -->
+      <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex gap-2 pb-3">
+          <div>
+            <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M10 6v4l3.276 3.276M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+            </svg>
+          </div>
+          <div>
+            <text class="white-card-title">Recent Activities </text> 
+          </div>
         </div>
-        <div>
-          <text class="white-card-title">Recent Activities </text> 
+        <div class="grid sm:grid-cols-1 mb-10 md:grid-cols-2 gap-4 h-30" style="max-height: 700px; overflow-y: auto;">
+          <livewire:recent-activities />
+          <livewire:recent-activities />
         </div>
       </div>
-      <div class="grid sm:grid-cols-1 mb-10 md:grid-cols-2 gap-4 h-30" style="max-height: 500px; overflow-y: auto;">
-        <livewire:recent-activities />
-      </div>
-    </div>
-
-<div>
-  
+  </div>
+  <!-- Column 2 -->
+  <div>
     <livewire:todo-component />
+  </div>
 </div>
+
+
+
 
 @livewireScripts
 @stack('scripts')
