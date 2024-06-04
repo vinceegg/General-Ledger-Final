@@ -20,6 +20,7 @@ class CKDJ_SundryModel extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
+        'checkdisbursementjournal_no',
         'ckdj_accountcode',
         'ckdj_debit',
         'ckdj_credit',

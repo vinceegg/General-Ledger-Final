@@ -20,6 +20,7 @@ class CDJ_SundryModel extends Model
     protected $keyType = 'int'; 
 
     protected $fillable = [
+        'cashdisbursementjournal_no',
         'cdj_pr',
         'cdj_sundry_accountcode',
         'cdj_debit',

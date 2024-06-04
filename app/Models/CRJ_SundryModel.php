@@ -20,6 +20,7 @@ class CRJ_SundryModel extends Model
     protected $keyType = 'int'; // Set the type of the primary key
 
     protected $fillable = [
+        'cashreceiptjournal_no',
         'crj_accountcode',
         'crj_debit',
         'crj_credit',
