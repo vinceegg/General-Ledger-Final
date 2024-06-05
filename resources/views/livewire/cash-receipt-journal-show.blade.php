@@ -28,8 +28,8 @@
 
                     <!-- Sort -->
                     <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="asc">Newest First</option>
-                        <option value="desc">Oldest First</option>
+                        <option value="asc">Newest Added Entry</option>
+                        <option value="desc">Oldest Added Entry</option>
                     </select>
                         
                     <!-- Import -->                    
@@ -106,10 +106,10 @@
                                         <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $cash_receipt_journals->crj_entrynum_date}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_jevnum }}</td> 
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_payor}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_collection_debit}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_collection_credit}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_deposit_debit}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_deposit_credit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_collection_debit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_collection_credit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_deposit_debit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_deposit_credit}}</td>
                                     @endif
                                     <td class="border-r border-l p-1 border-gray-300">{{ $crj_sundries_data->crj_accountcode}}</td>
                                     <td class="border-r border-l p-1 border-gray-300">₱{{ number_format($crj_sundries_data->crj_debit, 2, '.', ',') }}</td>
@@ -136,9 +136,7 @@
                                                 </button>
                                                 <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
                                                     <!-- Show Edit and Archive only for active records -->
-                                                    <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editCashReceiptJournal('{{ $cash_receipt_journals->cashreceiptjournal_no }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                        Edit
-                                                    </button>
+                                                    
                                                     <button type="button" wire:click="softDeleteCashReceiptJournal('{{  $cash_receipt_journals->cashreceiptjournal_no }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                             Archive
                                                     </button>                                                 

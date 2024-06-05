@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\CashDisbursementJournalModel;
 
 class CDJ_SundryModel extends Model
 {
@@ -20,8 +21,8 @@ class CDJ_SundryModel extends Model
     protected $keyType = 'int'; 
 
     protected $fillable = [
-        'cdj_pr',
         'cdj_sundry_accountcode',
+        'cdj_pr',
         'cdj_debit',
         'cdj_credit',
     ];

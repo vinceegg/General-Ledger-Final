@@ -63,10 +63,10 @@
                                         <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $cash_receipt_journals->crj_entrynum_date}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_jevnum}}</td>
                                         <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_payor}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_collection_debit}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_collection_credit}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_deposit_debit}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_receipt_journals->crj_deposit_credit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_collection_debit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_collection_credit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_deposit_debit}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_receipt_journals->crj_deposit_credit}}</td>
                                     @endif
                                     <td class="border-r border-l p-1 border-gray-300">{{ $crj_sundries_data->crj_accountcode}}</td>
                                     <td class="border-r border-l p-1 border-gray-300">₱{{ number_format($crj_sundries_data->crj_debit, 2, '.', ',') }}</td>

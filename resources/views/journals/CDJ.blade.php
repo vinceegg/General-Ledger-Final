@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link href ="/css/main.css" rel ="stylesheet">
+  <link rel="icon" href="/images/PLM-LOGO.png" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <title>Cash Disbursement Journal</title>
     @livewireStyles
     @vite('resources/css/app.css')
@@ -76,9 +80,9 @@
   <!-- Responsive Navigation Menu -->
   <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
       <div class="pt-2 pb-3 space-y-1">
-          <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+          {{-- <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
               {{ __('Dashboard') }}
-          </x-responsive-nav-link>
+          </x-responsive-nav-link> --}}
       </div>
 
       <!-- Responsive Settings Options -->

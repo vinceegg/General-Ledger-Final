@@ -7,7 +7,7 @@
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
-        "alpinejs": "^3.4.2",
+        "alpinejs": "^3.14.0",
         "autoprefixer": "^10.4.19",
         "axios": "^1.6.1",
         "flowbite": "^2.3.0",

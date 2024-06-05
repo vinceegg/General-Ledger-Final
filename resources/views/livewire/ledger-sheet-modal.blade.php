@@ -632,7 +632,7 @@
                         <label class="block mb-2 mt-4 text-base font-medium text-gray-900 dark:text-white">Data to Save</label>
                         <div class="grid gap-4 grid-cols-2">
 
-                        <div class="col-span-1 flex flex-col ps-4 border border-gray-300 rounded-md dark:border-gray-700">
+                        <div class="col-span-2 flex flex-col ps-4 border border-gray-300 rounded-md dark:border-gray-700">
                             <div class="flex items-center">
                                 <input id="bordered-radio-1" type="radio"  value="monthly" wire:model="selectedSummaryType" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                 <label for="bordered-radio-1" class="w-full py-4 ms-2 text-gray-900 dark:text-gray-300">Save monthly summary</label>

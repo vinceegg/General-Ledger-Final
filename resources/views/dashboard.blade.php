@@ -78,9 +78,9 @@
   <!-- Responsive Navigation Menu -->
   <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
       <div class="pt-2 pb-3 space-y-1">
-          <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+          {{-- <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
               {{ __('Dashboard') }}
-          </x-responsive-nav-link>
+          </x-responsive-nav-link> --}}
       </div>
 
       <!-- Responsive Settings Options -->
@@ -198,101 +198,389 @@
    </div>
 </aside>
 
-<div class="p-4 sm:ml-64">
-  <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-  <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com --> 
-<!-- Grid wrapper -->
-
-<div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
-  <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">  
-   <div class="flex gap-2 pb-3">
-      <div class="">
-         <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-         <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1-1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
-         </svg>
-      </div>
-      <div class="">
-         <text class="white-card-title">  Journals </text> 
-      </div>
+{{-- ROW 1 --}}
+<div class="p-5 sm:ml-64">
+    <div class="p-4 rounded-lg dark:border-gray-700 mt-14">
+    <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com --> 
+ <!-- Grid wrapper -->
+ 
+ <div class="grid sm:grid-cols-1 md:grid-cols-1 mb-3 gap-4 ">
+   <div class="header-item  col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">  
+     <div class="flex gap-2">
+       <text class="white-card-title-lg">Welcome</text>
+     </div>
+     
+     <div class="flex gap-2 pb-3 pt-3">
+       <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"/>
+       </svg>
+       
+       <text id="current-date" class="white-card-title-sm"> --/--/----</text>
+       <text id="current-time" class="white-card-title-sm"> --:--:--</text>
+     </div>
+     
+     <div class="flex gap-2 pb-3">
+ 
+     </div>
    </div>
-<div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
-   <div>
-      @foreach([''] as $route)
-         <a href="{{ url('/CKDJ' . $route) }}" target="_blank" class="text-decoration-none">
-      <div class="journal-item">
-      <div class="journal-title">
-            <div class="journal-title">CKDJ</div>
-            <div class="journal-subtitle"><br>Check Disbursement</div>
-      </div>
-         </a>
-      @endforeach
-          </div> 
-        </div>     
-      <div>
-          @foreach([''] as $route)
-            <a href="{{ url('/CDJ' . $route) }}" target="_blank" class="text-decoration-none">
-            <div class="journal-item">
-              <div class="journal-title">
-                  <div class="journal-title">CDJ</div>
-                  <div class="journal-subtitle"><br>Cash Disbursement</div>
-              </div>
-            </a>
-            @endforeach
-          </div> 
-        </div>
-      <div>
-      @foreach([''] as $route)
-        <a href="{{ url('/CRJ' . $route) }}" target="_blank" class="text-decoration-none">
-      <div class="journal-item">
-            <div class="journal-title">
-                <div class="journal-title">CRJ</div>
-                <div class="journal-subtitle"><br>Cash Receipt</div>
-            </div>
-            </a>
-          @endforeach
-        </div> 
-        </div>
-      <div>
-      @foreach([''] as $route)
-        <a href="{{ url('/GJ' . $route) }}" target="_blank" class="text-decoration-none">
-      <div class="journal-item">
-            <div class="journal-title">
-                <div class="journal-title">GJ</div>
-                <div class="journal-subtitle"><br>General Journal</div>
-            </div>
-            </a>
-          @endforeach
-        </div> 
-      </div>
-    </div>
-  </div>
-  <div class="p-6 grid sm:col-span-1 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
+ </div>
+ 
+ {{-- TIME DATE JS LOGIC --}}
+ <script>
+   function updateTimeAndDate() {
+     const currentTimeElement = document.getElementById('current-time');
+     const currentDateElement = document.getElementById('current-date');
+     const now = new Date();
+     
+     const hours = String(now.getHours()).padStart(2, '0');
+     const minutes = String(now.getMinutes()).padStart(2, '0');
+     const seconds = String(now.getSeconds()).padStart(2, '0');
+     currentTimeElement.textContent = ` ${hours}:${minutes}:${seconds}`;
+     
+     const year = now.getFullYear();
+     const monthNames = [
+       "January", "February", "March", "April", "May", "June",
+       "July", "August", "September", "October", "November", "December"
+     ];
+     const month = monthNames[now.getMonth()];
+     const day = now.getDate();
+     currentDateElement.textContent = ` ${month} ${day}, ${year}`;
+   }
+ 
+   setInterval(updateTimeAndDate, 1000);
+   updateTimeAndDate();  // Initial call to set the time and date immediately when the page loads
+ </script>
+ 
+ <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4">
+   <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">  
     <div class="flex gap-2 pb-3">
-      <div class="">
-         <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-         <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1-1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
-         </svg>
-      </div>
-      <div class="">
-         <text class="white-card-title">  General Ledger </text> 
-      </div>
-    </div>     
-   <div>
-      @foreach([''] as $route)
-        <a href="{{ url('/LedgerSheets' . $route) }}" target="_blank" class="text-decoration-none">
-          <div class="journal-item">
-            <div class="journal-title">
-              <div class="journal-title">LS</div>
-              <div class="journal-subtitle"><br>Ledger Sheets</div>
-          </div>
-        </a>
-      @endforeach
-      </div> 
+       <div class="">
+          <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1-1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
+          </svg>
+       </div>
+       <div class="">
+          <text class="white-card-title">  Journals </text> 
+       </div>
     </div>
-  </div>
+ <div class="grid sm:grid-cols-1 md:grid-cols-4 gap-4">
+    <div>
+       @foreach([''] as $route)
+          <a href="{{ url('/CKDJ' . $route) }}" target="_blank" class="text-decoration-none">
+       <div class="journal-item">
+       <div class="journal-title">
+             <div class="journal-title">CKDJ</div>
+             <div class="journal-subtitle"><br>Check Disbursement</div>
+       </div>
+          </a>
+       @endforeach
+    </div> 
+       </div>     
+       <div>
+       @foreach([''] as $route)
+         <a href="{{ url('/CDJ' . $route) }}" target="_blank" class="text-decoration-none">
+       <div class="journal-item">
+             <div class="journal-title">
+                 <div class="journal-title">CDJ</div>
+                 <div class="journal-subtitle"><br>Cash Disbursement</div>
+             </div>
+         </a>
+       @endforeach
+       </div> 
+       </div>
+       <div>
+       @foreach([''] as $route)
+         <a href="{{ url('/CRJ' . $route) }}" target="_blank" class="text-decoration-none">
+       <div class="journal-item">
+ 
+             <div class="journal-title">
+                 <div class="journal-title">CRJ</div>
+                 <div class="journal-subtitle"><br>Cash Receipt</div>
+             </div>
+         </a>
+       @endforeach
+       </div> 
+       </div>
+       <div>
+       @foreach([''] as $route)
+         <a href="{{ url('/GJ' . $route) }}" target="_blank" class="text-decoration-none">
+       <div class="journal-item">
+ 
+             <div class="journal-title">
+                 <div class="journal-title">GJ</div>
+                 <div class="journal-subtitle"><br>General Journal</div>
+             </div>
+         </a>
+       @endforeach
+       </div> 
+       </div>
+       </div>
+       </div>
+   <div class="p-6 grid sm:col-span-1 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
+    <div class="flex gap-2 pb-3">
+       <div class="">
+          <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1-1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
+          </svg>
+       </div>
+       <div class="">
+          <text class="white-card-title">  General Ledger </text> 
+       </div>
+    </div>
+       <div>
+       @foreach([''] as $route)
+         <a href="{{ url('/LedgerSheets' . $route) }}" target="_blank" class="text-decoration-none">
+       <div class="journal-item">
+ 
+             <div class="journal-title">
+                 <div class="journal-title">LS</div>
+                 <div class="journal-subtitle"><br>Ledger Sheets</div>
+             </div>
+         </a>
+       @endforeach
+       </div> 
+       </div>
+    </div>
 </div>
 
+{{-- ROW 3 --}}
+<div class="grid sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-5">
+    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div class="flex gap-2 pb-3">
+        <div>
+          <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1 1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
+          </svg>
+        </div>
+        <div>
+          <span class="white-card-title">2024 Ledger Sheet Debit Credit Balance</span>
+        </div>
+      </div>
+              <!-- BAR CHART -->
+              <div class="h-70 sm:w-auto md:w-auto pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700 flex justify-center">
+                <canvas id="barChart"></canvas>
+              </div>
+    </div>
+    
+    
   
+    <div class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div class="flex gap-2 pb-3">
+        <div>
+          <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M17 10H4a1 1 0 0 0-1 1v9m14-10a1 1 0 0 1 1 1m-1-1h-5.057M17 10a1 1 0 0 1 1 1m0 0v9m0 0a1 1 0 0 1-1 1m1-1a1 1 0 0 1-1 1m0 0H4m0 0a1 1 0 0 1-1-1m1 1a1 1 0 0 1-1 1m0 0V7m0 0a1 1 0 0 1 1-1h4.443a1 1 0 0 1 .8.4l2.7 3.6M3 7v3h8.943M18 18h2a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1h-5.057l-2.7-3.6a1 1 0 0 0-.8-.4H7a1 1 0 0 0-1 1v1"/>
+          </svg>
+        </div>
+        <div>
+          <span class="white-card-title">Debit and Credit Balance per Journal</span>
+        </div>
+      </div>
+          <!-- LINE CHART -->
+          <div class="h-70 sm:w-auto md:w-auto flex justify-center pt-3 pt-6 p-6 grid bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
+            <canvas id="lineChart" style="flex:1;"></canvas>
+          </div>
+    </div>
+  
+    <div class="pt-6 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div class="flex gap-2 pb-3">
+        <div>
+          <svg class="w-6 h-6 text-blue-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+          </svg>
+  
+        </div>
+        <div>
+          <span class="white-card-title">Quicklinks</span>
+        </div>
+  
+      </div>
+  
+      
+      @foreach([''] as $route)
+      <a href="{{ url('https://drive.google.com/file/d/1trRAOXWNugDs-fZRGhTMzq6U4An-hZGY/view?usp=sharing' . $route) }}" target="_blank" class="text-decoration-none"> 
+        <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+          <div class="flex gap-2 items-center">
+            <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+              COA
+            </div>
+            <div class="flex-col">
+              <span class="text-gray-800 font-bold pl-2">Commission on Audit - Chart of Accounts</span>
+            </div>
+          </div>
+        </div>
+      </a>
+      @endforeach
+      
+  
+      @foreach([''] as $route)
+      <a href="{{ url('/CheckDisbursementJournalArchived' . $route) }}" class="text-decoration-none">    
+      <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+        <div class="flex gap-2 items-center">
+          <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+            CKD
+          </div>
+          <div class="flex-col">
+            <span class="text-gray-800 font-bold pl-2">Check Disbursements Journal Archive</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    @endforeach
+  
+  
+    @foreach([''] as $route)
+    <a href="{{ url('/CashDisbursementJournalArchived' . $route) }}"  class="text-decoration-none">  
+      <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+        <div class="flex gap-2 items-center">
+          <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+            CDJ
+          </div>
+          <div class="flex-col">
+            <span class="text-gray-800 font-bold pl-2">Cash Disbursement Journal Archive</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    @endforeach
+  
+  
+    @foreach([''] as $route)
+    <a href="{{ url('/CashReceiptJournalArchived' . $route) }}" class="text-decoration-none">  
+      <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+        <div class="flex gap-2 items-center">
+          <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+            CRJ
+          </div>
+          <div class="flex-col">
+            <span class="text-gray-800 font-bold pl-2">Cash Receipt Journal Archive</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    @endforeach
+  
+  
+    @foreach([''] as $route)
+    <a href="{{ url('/GeneralJournalArchived' . $route) }}"  class="text-decoration-none"> 
+      <div class="mb-2 mt-2 pt-2 p-2 bg-white border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100">
+        <div class="flex gap-2 items-center">
+          <div class="p-2 text-xs text-white bg-blue-800 border-2 border rounded-md dark:bg-gray-800 dark:border-gray-700">
+            GJA
+          </div>
+          <div class="flex-col">
+            <span class="text-gray-800 font-bold pl-2">General Journal Archive</span>
+          </div>
+        </div>
+      </div>
+    </a>
+    @endforeach
+</div> 
+ 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Bar Chart
+  var total_ls_debit = JSON.parse('{!! json_encode($ls_total_debit)!!}');
+  var total_ls_credit = JSON.parse('{!! json_encode($ls_total_credit)!!}');
+  var total_ckdj_debit = JSON.parse('{!! json_encode($ckdj_total_debit)!!}');
+  var total_cdj_debit = JSON.parse('{!! json_encode($cdj_total_debit)!!}');
+  var total_crj_debit = JSON.parse('{!! json_encode($crj_total_debit)!!}');
+  var total_gj_debit = JSON.parse('{!! json_encode($gj_total_debit)!!}');
+  var total_ckdj_credit = JSON.parse('{!! json_encode($ckdj_total_credit)!!}');
+  var total_cdj_credit = JSON.parse('{!! json_encode($cdj_total_credit)!!}');
+  var total_crj_credit = JSON.parse('{!! json_encode($crj_total_credit)!!}');
+  var total_gj_credit = JSON.parse('{!! json_encode($gj_total_credit)!!}');
+
+  const barCtx = document.getElementById('barChart').getContext('2d');
+  new Chart(barCtx, {
+type: 'bar',
+data: {
+  labels: ['Debit', 'Credit'],
+  datasets: [{
+    label: 'Debit and Credit',
+    data: [total_ls_debit, total_ls_credit],
+    backgroundColor: ['#ff4949', '#ffcc3d'],
+    borderWidth: 1
+  }]
+},
+options: {
+  scales: {
+    y: {
+      beginAtZero: true
+    }
+  }
+}
+});
+
+
+  // Line Chart
+  const lineCtx = document.getElementById('lineChart').getContext('2d');
+  new Chart(lineCtx, {
+    type: 'line',
+    data: {
+      labels: ['CKDJ', 'CDJ', 'CRJ','GJ'],
+      datasets: [{
+          label: 'Debit',
+          data: [total_ckdj_debit,total_cdj_debit,total_crj_debit,total_gj_debit],
+          borderColor: '#ff4949',
+          backgroundColor: '#ff4949',
+        },
+        {
+          label: 'Credit',
+          data: [total_ckdj_credit,total_cdj_credit,total_crj_credit,total_gj_credit],
+          borderColor: '#ffcc3d',
+          backgroundColor: '#ffcc3d',
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Monthly Data Trends'
+        }
+      }
+    }
+  });
+
+  // Pie Chart
+  const pieCtx = document.getElementById('pieChart').getContext('2d');
+  new Chart(pieCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'Dataset 1',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          '#ff4949',
+          '#36a2eb',
+          '#ffcc3d',
+          '#4bc0c0',
+          '#9966ff',
+          '#ff9f40'
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Distribution of Colors'
+        }
+      }
+    }
+  });
+</script>
+</div>
+
 
 <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-4 mt-5">
 <div class="col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> 
@@ -329,5 +617,3 @@
 <script src="../path/to/flowbite/dist/datepicker.js"></script>
 <!-- space for the logout code -->
 </html>
-
- 

@@ -258,6 +258,7 @@ class LedgerSheetShow extends Component
         $general_ledger = LedgerSheetModel::find($ledgersheet_no);
         if ($general_ledger) {
                  
+            $this->ledgersheet_no = $general_ledger->ledgersheet_no;
             $this->ls_vouchernum = $general_ledger->ls_vouchernum;
             $this->ls_date = $general_ledger->ls_date;
             $this->ls_particulars = $general_ledger->ls_particulars;

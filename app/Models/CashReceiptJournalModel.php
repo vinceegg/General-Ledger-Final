@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Models\User;
+use App\Models\CRJ_SundryModel;
 
 class CashReceiptJournalModel extends Model
 {
@@ -31,9 +32,6 @@ class CashReceiptJournalModel extends Model
         'crj_collection_credit',
         'crj_deposit_debit',
         'crj_deposit_credit',
-        'crj_accountcode',
-        'crj_debit',
-        'crj_credit',
     ];
 
     //@korinlv: added  this

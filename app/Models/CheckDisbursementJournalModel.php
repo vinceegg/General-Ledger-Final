@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Models\User;
+use App\Models\CKDJ_SundryModel;
 
 class CheckDisbursementJournalModel extends Model
 {
@@ -25,8 +26,8 @@ class CheckDisbursementJournalModel extends Model
     protected $keyType = 'int'; 
 
     protected $fillable = [
-        'ckdj_jevnum',
         'ckdj_checknum',
+        'ckdj_jevnum',
         'ckdj_entrynum_date',
         'ckdj_payee',
         'ckdj_bur',
@@ -36,9 +37,6 @@ class CheckDisbursementJournalModel extends Model
         'ckdj_account3',
         'ckdj_salary_wages',
         'ckdj_honoraria',
-        'ckdj_sundry_accountcode',
-        'ckdj_debit',
-        'ckdj_credit',
     ];
 
     //@korinlv: added this function
