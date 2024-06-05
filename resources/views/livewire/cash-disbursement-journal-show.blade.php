@@ -29,8 +29,8 @@
 
                     <!-- Sort -->
                     <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="asc">Newest Added Entry</option>
-                        <option value="desc">Oldest Added Entry</option>
+                        <option value="asc">Oldest Added Entry</option>
+                        <option value="desc">Newest Added Entry</option>
                     </select>
                         
                     <!-- Import -->                    
@@ -71,9 +71,9 @@
                         <!-- Table Header -->
                         <thead class="text-base text-left text-black sticky shadow-md top-0 bg-white">
                             @include('livewire.cash-disbursement-journal-modal')
-                            <tr class="text-center p-1">         
-                                <th rowspan="3" class="border-r border-l " style="width: 130px">Date</th>
+                            <tr class="text-center p-1">
                                 <th rowspan="3" class="border-r border-l " style="width: 120px">JEV No.</th>
+                                <th rowspan="3" class="border-r border-l " style="width: 130px">Date</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 120px">Reference/<br>RD No.</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 120px">BUR No.</th>
                                 <th rowspan="3" class="border-r border-l " style="width: 400px">Accountable Officer</th>
@@ -106,15 +106,15 @@
                             @foreach ($cdj_sundry_data as $index => $cdj_sundries_data)
                             <tr class="{{ $index === $lastRowIndex && $cdj_sundries_data->cdj_credit ? 'border-b' : '' }} border-gray-300 ">
                                     @if ($index == 0) {{-- Only display these cells on the first iteration --}}
-                                        <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $cash_disbursement_journals->cdj_entrynum_date }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_jevnum  }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_referencenum }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_bur }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_accountable_officer}}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals->cdj_credit_accountcode }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_disbursement_journals->cdj_amount }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_disbursement_journals->cdj_account1 }}</td>
-                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">₱{{ $cash_disbursement_journals->cdj_account2 }}</td>
+                                        <td class="border-r border-b p-2 border-gray-300" rowspan="{{ $rowSpan }}" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $cash_disbursement_journals->cdj_jevnum }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_entrynum_date }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_referencenum }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_bur }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_accountable_officer}}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_credit_accountcode }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_amount }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_account1 }}</td>
+                                        <td class="border-r border-b border-l p-2 border-gray-300" rowspan="{{ $rowSpan }}">{{ $cash_disbursement_journals-> cdj_account2 }}</td>
                                     @endif
                                     <td class="border-r border-l p-1 border-gray-300">{{ $cdj_sundries_data->cdj_sundry_accountcode}}</td>
                                     <td class="border-r border-l p-1 border-gray-300">{{ $cdj_sundries_data->cdj_pr}}</td>
@@ -122,8 +122,8 @@
                                     <td class=" border-l p-1 border-gray-300">₱{{ number_format($cdj_sundries_data->cdj_credit, 2, '.', ',') }}</td>
                             @endforeach
                             @if ($cdj_sundry_data->isEmpty()) {{-- If there are no account codes, show a single row --}}
-                                <td class="border-r border-b p-2 border-gray-300">{{ $cash_disbursment_journals->cdj_entrynum_date }}</td>
-                                    <td class="border-r border-b border-l p-2 border-gray-300"{{ $cash_disbursement_journals->cdj_jevnum }}</td>
+                                <td class="border-r border-b p-2 border-gray-300">{{ $cash_disbursment_journals->cdj_jevnum }}</td>
+                                    <td class="border-r border-b border-l p-2 border-gray-300"{{ $cash_disbursement_journals->cdj_entrynum_date }}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300"{{ $cash_disbursement_journals->cdj_referencenum }}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300"{{ $cash_disbursement_journals->cdj_bur }}</td>
                                     <td class="border-r border-b border-l p-2 border-gray-300"{{ $cash_disbursement_journals->cdj_accountable_officer }}</td>
@@ -142,10 +142,7 @@
                                                     </svg>
                                                 </button>
                                                 <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
-                                                    <button data-modal-target="edit-modal" data-modal-toggle="edit-modal"  wire:click="editCashDisbursementJournal('{{ $cash_disbursement_journals->cashdisbursementjournal_no }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                        Edit
-                                                    </button>
-                                                    <button type="button" wire:click="softDeleteCashDisbursementJournal('{{ $cash_disbursement_journals->cashdisbursementjournal_no }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
+                                                    <button type="button" wire:click="softDeleteCashDisbursementJournal('{{ $cash_disbursement_journals->cdj_jevnum }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                         Archive
                                                     </button>
                                             </div>

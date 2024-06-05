@@ -32,7 +32,7 @@ class ledgerSheetModel extends Model
     ];
 
     protected static $logAttributes = ['*'];
-        
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
@@ -43,7 +43,7 @@ class ledgerSheetModel extends Model
     {
 
         $tableName = "Ledger Sheet";
-        
+
         return "{$tableName}";
     }
 

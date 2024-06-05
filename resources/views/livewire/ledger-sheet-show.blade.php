@@ -99,7 +99,6 @@
             '4 04 02 010 - Grants & Donations in Cash ',
             '4 04 02 020 - Grants & Donations in Kind ',
             '4 06 01 010 - Miscellaneous Income ',
-            '4 03 01 020 - Subsidy from LGUs ',
             '5 01 01 010 - Salaries and Wages - Regular ',
             '5 01 01 020 - Salaries and Wages - Casual/Contractual ',
             '5 01 02 010 - Personnel Economic Relief Allowance ( PERA ) ',
@@ -168,25 +167,25 @@
         @endphp
     
         <!-- Flex Container for Dropdown and Buttons -->
-<div class="flex items-center gap-2">
-    <!-- Select Account Name -->
-    <select id="account" wire:model="ls_accountcode" wire:change="setAccountName($event.target.value)" class="border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700" style="width: 692px;">
-        <option value="" class="text-gray-500">Select Account</option>
-        @foreach ($accountNames as $account)
-            <option value="{{ $account }}" class="text-gray-700">{{ $account }}</option>
-        @endforeach
-    </select>
-    <!-- Save Button -->
-    <label class="hover:cursor-pointer group-hover relative group border border-gray-300 bg-white hover:bg-gray-100 hover:text-black rounded-lg px-3 py-2 text-center inline-flex items-center"
-            data-modal-target="save-modal" data-modal-toggle="save-modal">
-        <svg class="w-6 h-6 text-gray-700 group-hover:text-green-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-            <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
-            <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
-        </svg>
-        <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-15 bg-white border border-gray-300 text-black shadow:md text-center text-sm rounded-lg px-1 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            Save
-        </div>
-    </label>
+        <div class="flex items-center gap-2">
+            <!-- Select Account Name -->
+            <select id="account" wire:model="ls_accountcode" wire:change="setAccountName($event.target.value)" class="border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-gray-700" style="width: 746px;">
+                <option value="" class="text-gray-500">Select Account</option>
+                @foreach ($accountNames as $account)
+                    <option value="{{ $account }}" class="text-gray-700">{{ $account }}</option>
+                @endforeach
+            </select>
+            <!-- Save Button -->
+            <label class="hover:cursor-pointer group-hover relative group border border-gray-300 bg-white hover:bg-gray-100 hover:text-black rounded-lg px-3 py-2 text-center inline-flex items-center"
+                    data-modal-target="save-modal" data-modal-toggle="save-modal">
+                <svg class="w-6 h-6 text-gray-700 group-hover:text-green-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
+                    <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
+                </svg>
+                <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-15 bg-white border border-gray-300 text-black shadow:md text-center text-sm rounded-lg px-1 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Save
+                </div>
+            </label>
                      <!-- Archive Button -->
                     <a href="{{ route('LedgerSheetArchive') }}" class="relative group group-hover border border-gray-300 bg-white hover:bg-gray-100 hover:text-black rounded-lg px-3 py-2.5 text-center inline-flex items-center">
                         <svg class="w-5 h-5 group-hover:text-red-400" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -229,8 +228,8 @@
 
         <!-- Sort -->
         <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-            <option value="asc">Newest Added Entry</option>
-            <option value="desc">Oldest Added Entry</option>
+            <option value="asc">Oldest Added Entry</option>
+            <option value="desc">Newest Added Entry</option>
         </select>
         
         <!-- Import -->                    

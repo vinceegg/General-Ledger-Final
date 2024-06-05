@@ -28,46 +28,12 @@
             </svg>
          </button>
         @foreach([''] as $route) {{ $route }}
-        <a href="{{ url('/' . $route) }}" class="flex ms-2 md:me-24">
+        <a href="{{ url('/dashboard' . $route) }}" class="flex ms-2 md:me-24">
         @endforeach
         <img src="/images/PLM-LOGO.png" class="h-8 me-3" alt="FlowBite Logo" />
           <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-blue-800">PLM LEDGER</span>
-        </a>1
+        </a>
       </div>
-      <div class="flex items-center">
-          <div class="flex items-center ms-3">
-            <div>
-              <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-              </button>
-            </div>
-            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
-              <div class="px-4 py-3" role="none">
-                <p class="text-sm text-gray-900 dark:text-white" role="none">
-                  Mara Calinao
-                </p>
-                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                  maracalinao@plm.edu.ph
-                </p>
-              </div>
-              <ul class="py-1" role="none">
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Home</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
     </div>
   </div>
 </nav>
@@ -78,7 +44,7 @@
       <ul class="space-y-2 font-medium">
          <li>
             @foreach([''] as $route) {{ $route }}
-               <a href="{{ url('/' . $route) }}" class="flex items-center p-2 text-white rounded-lg dark:text-white  hover:bg-blue-900 dark:hover:bg-gray-700 group">
+               <a href="{{ url('/dashboard' . $route) }}" class="flex items-center p-2 text-white rounded-lg dark:text-white  hover:bg-blue-900 dark:hover:bg-gray-700 group">
                @endforeach
                <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8v10a1 1 0 0 0 1 1h4v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5h4a1 1 0 0 0 1-1V8M1 10l9-9 9 9"/>
@@ -135,7 +101,7 @@
             </button>
             <ul id="dropdown-example2" class="py-2 space-y-2">
                   <li>
-                  @foreach(['gl'] as $route)
+                  @foreach(['ledgersheet'] as $route)
                      <a href="{{ url('/' . $route) }}" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-blue-900 dark:text-white dark:hover:bg-gray-700">Ledger Sheet</a>
                   @endforeach
                     </li>

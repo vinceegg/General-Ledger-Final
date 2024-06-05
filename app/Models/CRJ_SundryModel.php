@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\CashReceiptJournalModel;
 
 class CRJ_SundryModel extends Model
 {
@@ -20,7 +21,7 @@ class CRJ_SundryModel extends Model
     protected $keyType = 'int'; // Set the type of the primary key
 
     protected $fillable = [
-        'cashreceiptjournal_no',
+        'cashreceiptjournal_no', // changed from 'crj_id' to 'cashreceiptjournal_no
         'crj_accountcode',
         'crj_debit',
         'crj_credit',

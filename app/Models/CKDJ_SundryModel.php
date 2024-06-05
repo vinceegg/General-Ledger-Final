@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\CheckDisbursementJournalModel;
 
 class CKDJ_SundryModel extends Model
 {
@@ -20,7 +21,7 @@ class CKDJ_SundryModel extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
-        'checkdisbursementjournal_no',
+        'checkdisbursementjournal_no', // changed from 'ckdj_id' to 'checkdisbursementjournal_no
         'ckdj_accountcode',
         'ckdj_debit',
         'ckdj_credit',

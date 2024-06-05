@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use App\Models\User;
-
+use App\Models\CDJ_SundryModel;
 
 class CashDisbursementJournalModel extends Model
 {
@@ -34,10 +34,6 @@ class CashDisbursementJournalModel extends Model
         'cdj_amount',
         'cdj_account1',
         'cdj_account2',
-        'cdj_sundry_accountcode',
-        'cdj_pr',
-        'cdj_debit',
-        'cdj_credit',
     ];
 
     //@korinlv: added  this

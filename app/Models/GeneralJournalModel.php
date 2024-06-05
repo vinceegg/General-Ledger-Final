@@ -15,7 +15,7 @@ class GeneralJournalModel extends Model
     use HasFactory;
     use SoftDeletes;
     use LogsActivity;
-    
+
     protected $table = 'general_journal';
 
     protected $primaryKey = 'generaljournal_no'; 
@@ -25,6 +25,7 @@ class GeneralJournalModel extends Model
     protected $keyType = 'int';
  
     protected $fillable = [
+        'generaljournal_no',
         'gj_jevnum',
         'gj_entrynum_date',
         'gj_particulars',
@@ -47,7 +48,7 @@ class GeneralJournalModel extends Model
     public function getDescriptionForEvent(string $eventName): string
     {
         $tableName = "General Journal";
-        
+
         return "{$tableName}";
     }
 

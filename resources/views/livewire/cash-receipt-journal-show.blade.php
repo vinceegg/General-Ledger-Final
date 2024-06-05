@@ -28,8 +28,8 @@
 
                     <!-- Sort -->
                     <select wire:model="sortDirection" wire:change="sortAction" id="sortBy" class="ml-2 mr-2 rounded-lg border-gray-300 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="asc">Newest Added Entry</option>
-                        <option value="desc">Oldest Added Entry</option>
+                        <option value="asc">Oldest Added Entry</option>
+                        <option value="desc">Newest Added Entry</option>
                     </select>
                         
                     <!-- Import -->                    
@@ -136,9 +136,6 @@
                                                 </button>
                                                 <div x-show="open" x-transition:enter="transition-transform transition-opacity ease-out duration-300 transform opacity-0 scale-95" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition-transform transition-opacity ease-in duration-200 transform opacity-100 scale-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute right-0 mt-2 py-2 w-48 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-md shadow-lg z-10">
                                                     <!-- Show Edit and Archive only for active records -->
-                                                    <button type="button" data-modal-target="edit-modal" data-modal-toggle="edit-modal" wire:click="editCashReceiptJournal('{{ $cash_receipt_journals->cashreceiptjournal_no }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
-                                                        Edit
-                                                    </button>
                                                     <button type="button" wire:click="softDeleteCashReceiptJournal('{{  $cash_receipt_journals->cashreceiptjournal_no }}')" class="block px-4 py-2 text-base text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left">
                                                             Archive
                                                     </button>                                                 

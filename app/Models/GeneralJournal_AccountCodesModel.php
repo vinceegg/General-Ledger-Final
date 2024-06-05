@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\GeneralJournalModel;
 
 class GeneralJournal_AccountCodesModel extends Model
 {
@@ -20,7 +21,7 @@ class GeneralJournal_AccountCodesModel extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
-        'generaljournal_no', // This is the foreign key
+        'generaljournal_no', // changed from 'gj_id' to 'generaljournal_no
         'gj_accountcode',
         'gj_debit',
         'gj_credit',
