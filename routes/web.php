@@ -9,7 +9,6 @@ use App\Models\CRJ_SundryModel;
 use App\Models\CKDJ_SundryModel;
 use App\Models\GeneralJournal_AccountCodesModel;
 
-
 Route::get('/', function () {
     return view('auth.register');
 });
@@ -129,7 +128,7 @@ Route::get('/AC', function () {
     return view('accounthomepage');
 });
 
-//RoutesAccountCode
+//RoutesLedgerSheet
 Route::get('/LedgerSheets', [App\Http\Controllers\LedgerSheetController::class, 'index'])->name('LedgerSheet');
 Route::get('/LedgerSheetArchived', [App\Http\Controllers\LedgerSheetTrash::class, 'index'])->name('LedgerSheetArchived');
 
