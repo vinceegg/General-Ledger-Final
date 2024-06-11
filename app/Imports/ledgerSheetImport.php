@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\LedgerSheetModel;
+use App\Models\ledgerSheetModel;
 use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -21,7 +21,7 @@ class ledgersheetImport implements WithCalculatedFormulas, WithChunkReading, ToA
             $row = $this->prepareForValidation($row);
             
             // Create and save the model
-            LedgerSheetModel::create([
+            ledgerSheetModel::create([
                 'ls_date'            => $row['date'],
                 'ls_accountname'     => $row['account_name'],
                 'ls_vouchernum'      => $row['voucher_no'],

@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\LedgerSheetModel;
+use App\Models\ledgerSheetModel;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -37,7 +37,7 @@ class ledgerSheetExport implements WithHeadings, WithStyles, WithMapping, WithEv
 
     public function collection()
     {
-        return LedgerSheetModel::select(
+        return ledgerSheetModel::select(
             "ls_date",
             "ls_vouchernum",
             "ls_particulars",

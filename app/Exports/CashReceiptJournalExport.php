@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 
-class CashReceiptJournalExport implements FromCollection
+class CashReceiptJournalExport implements FromCollection, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection

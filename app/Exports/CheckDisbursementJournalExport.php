@@ -23,6 +23,7 @@ class CheckDisbursementJournalExport implements FromCollection, WithHeadings
                 $flattened->push([
                     'Date' => $journal->ckdj_entrynum_date,
                     'Check No.' => $journal->ckdj_checknum,
+					'Jev No.' => $journal->ckdj_jevnum,
                     'Payee' => $journal->ckdj_payee,
                     'BUR' => $journal->ckdj_bur,
                     'CIB-LCCA' => $journal->ckdj_cib_lcca,
@@ -41,6 +42,7 @@ class CheckDisbursementJournalExport implements FromCollection, WithHeadings
                     $flattened->push([
                         'Date' => $journal->ckdj_entrynum_date,
                         'Check No.' => $journal->ckdj_checknum,
+                      	'Jev No.' => $journal->ckdj_jevnum,
                         'Payee' => $journal->ckdj_payee,
                         'BUR' => $journal->ckdj_bur,
                         'CIB-LCCA' => $journal->ckdj_cib_lcca,
@@ -66,6 +68,7 @@ class CheckDisbursementJournalExport implements FromCollection, WithHeadings
         return [
             "Date",
             "Check No.",
+          	"Jev No.",
             "Payee",
             "BUR",
             "CIB-LCCA",

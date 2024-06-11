@@ -25,10 +25,11 @@ class CashDisbursementJournalImport implements ToCollection, WithHeadingRow
         foreach ($rows as $row) {
             // Create the journal entry
             $journal = CashDisbursementJournalModel::create([
+              	'cdj_jevnum' => $row['jev_no'],
                 'cdj_entrynum_date' => $row['date'],
                 'cdj_referencenum' => $row['reference_num'],
+              	'cdj_bur' => $row['bur_no'],
                 'cdj_accountable_officer' => $row['accountable_officer'],
-                'cdj_jevnum' => $row['jev_no'],
                 'cdj_credit_accountcode' => $row['credit_account_code'],
                 'cdj_amount' => $row['amount'],
                 'cdj_account1' => $row['account1'],
@@ -51,10 +52,11 @@ class CashDisbursementJournalImport implements ToCollection, WithHeadingRow
     public function map($row): array
     {
         return [
+            'cdj_jevnum' => $row['jev_num'],
             'cdj_date' => $row['date'],
             'cdj_reference_num' => $row['reference_num'],
+          	'cdj_bur' => $row['bur_no'],
             'cdj_accountable_officer' => $row['accountable_officer'],
-            'cdj_jev_num' => $row['jev_num'],
             'cdj_credit_accountcode' => $row['credit_account_code'],
             'cdj_amount' => $row['amount'],
             'cdj_account1' => $row['account1'],
@@ -73,10 +75,11 @@ class CashDisbursementJournalImport implements ToCollection, WithHeadingRow
     public function rules(): array
     {
         return [
+          	'*.jev_no' => 'required|string',
             '*.date' => 'required|date',
             '*.reference_num' => 'required|string',
             '*.accountable_officer' => 'required|string',
-            '*.jev_no' => 'required|integer',
+            '*.bur_no' => 'required|integer',
             '*.credit_account_code' => 'required|string',
             '*.amount' => 'required|numeric',
             '*.account1' => 'required|integer',

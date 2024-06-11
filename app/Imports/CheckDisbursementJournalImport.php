@@ -28,6 +28,7 @@ class CheckDisbursementJournalImport implements ToCollection, WithHeadingRow
             $journal = CheckDisbursementJournalModel::create([
                 'ckdj_entrynum_date' => $row['date'],
                 'ckdj_checknum'      => $row['check_no'],
+              	'ckdj_jevnum'      => $row['jev_no'],
                 'ckdj_payee'         => $row['payee'],
                 'ckdj_bur'           => $row['bur'],
                 'ckdj_cib_lcca'      => $row['cib_lcca'],
@@ -54,6 +55,7 @@ class CheckDisbursementJournalImport implements ToCollection, WithHeadingRow
         return [
             'date'        => $row['ckdj_entrynum_date'],
             'check_no'    => $row['ckdj_checknum'],
+          	'jev_no'      => $row['jev_no'],
             'payee'       => $row['ckdj_payee'],
             'bur'         => $row['ckdj_bur'],
             'cib_lcca'    => $row['ckdj_cib_lcca'],
@@ -73,6 +75,7 @@ class CheckDisbursementJournalImport implements ToCollection, WithHeadingRow
         return [
             '*.ckdj_entrynum_date' => 'required|date',
             '*.ckdj_checknum'      => 'required|string',
+          	'*.ckdj_jevnum'        => 'required|string',
             '*.ckdj_payee'         => 'required|string',
             '*.ckdj_bur'           => 'required|integer',
             '*.ckdj_cib_lcca'      => 'nullable|numeric',
