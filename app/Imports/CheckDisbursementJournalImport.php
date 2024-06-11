@@ -21,7 +21,6 @@ class CheckDisbursementJournalImport implements ToCollection, WithHeadingRow
     * @return \Illuminate\Database\Eloquent\Model|null
     */
 
-    
 
     public function collection(Collection $rows)
     {
@@ -29,64 +28,68 @@ class CheckDisbursementJournalImport implements ToCollection, WithHeadingRow
             $journal = CheckDisbursementJournalModel::create([
                 'ckdj_entrynum_date' => $row['date'],
                 'ckdj_checknum'      => $row['check_no'],
+              	'ckdj_jevnum'      => $row['jev_no'],
                 'ckdj_payee'         => $row['payee'],
                 'ckdj_bur'           => $row['bur'],
                 'ckdj_cib_lcca'      => $row['cib_lcca'],
-                'ckdj_account1'      => $row['account1'],
-                'ckdj_account2'      => $row['account2'],
-                'ckdj_account3'      => $row['account3'],
+                'ckdj_account1'      => $row['account_1'],
+                'ckdj_account2'      => $row['account_2'],
+                'ckdj_account3'      => $row['account_3'],
                 'ckdj_salary_wages'  => $row['sal_wages'],
                 'ckdj_honoraria'     => $row['honoraria'],
             ]);
 
             if (isset($row['account_code'])) {
                 $sundry = CKDJ_SundryModel::create([
-                    'check_disbursement_journal_id' => $journal->id, // Set the foreign key
+                    'checkdisbursementjournal_no' => $journal->checkdisbursementjournal_no, // Ensure this is the correct key
                     'ckdj_accountcode' => $row['account_code'],
-                    'ckdj_debit'        => $row['debit'],
-                    'ckdj_credit'       => $row['credit'],
+                    'ckdj_debit'       => $row['debit'],
+                    'ckdj_credit'      => $row['credit'],
                 ]);
             }
         }
     }
 
-
-
-
     public function map($row): array
     {
         return [
-                'ckdj_entrynum_date' => $row['date'],
-                'ckdj_checknum' => $row['check_no'],
-                'ckdj_payee' => $row['payee'],
-                'ckdj_bur' => $row['bur'],
-                'ckdj_cib_lcca' => $row['cib_lcca'],
-                'ckdj_account1' => $row['account1'],
-                'ckdj_account2' => $row['account2'],
-                'ckdj_account3' => $row['account3'],
-                'ckdj_salary_wages' => $row['sal_wages'],
-                'ckdj_honoraria' => $row['honoraria'],
+            'date'        => $row['ckdj_entrynum_date'],
+            'check_no'    => $row['ckdj_checknum'],
+          	'jev_no'      => $row['jev_no'],
+            'payee'       => $row['ckdj_payee'],
+            'bur'         => $row['ckdj_bur'],
+            'cib_lcca'    => $row['ckdj_cib_lcca'],
+            'account_1'   => $row['ckdj_account1'],
+            'account_2'   => $row['ckdj_account2'],
+            'account_3'   => $row['ckdj_account3'],
+            'sal_wages'   => $row['ckdj_salary_wages'],
+            'honoraria'   => $row['ckdj_honoraria'],
+            'account_code'=> $row['ckdj_accountcode'],
+            'debit'       => $row['ckdj_debit'],
+            'credit'      => $row['ckdj_credit'],
         ];
     }
 
     public function rules(): array
     {
         return [
-            '*.date' => 'required|date',
-            '*.check_no' => 'required|string',
-            '*.payee' => 'required|string',
-            '*.bur' => 'required|integer',
-            '*.cib_lcca' => 'nullable|numeric',
-            '*.account1' => 'nullable|numeric',
-            '*.account2' => 'nullable|numeric',
-            '*.account3' => 'nullable|numeric',
-            '*.sal_wages' => 'nullable|numeric',
-            '*.honoraria' => 'nullable|numeric',
-            '*.account_code' => 'sometimes|required',
-            '*.debit' => 'required_with:account_code|numeric',
-            '*.credit' => 'required_with:account_code|numeric',
+            '*.ckdj_entrynum_date' => 'required|date',
+            '*.ckdj_checknum'      => 'required|string',
+          	'*.ckdj_jevnum'        => 'required|string',
+            '*.ckdj_payee'         => 'required|string',
+            '*.ckdj_bur'           => 'required|integer',
+            '*.ckdj_cib_lcca'      => 'nullable|numeric',
+            '*.ckdj_account1'      => 'nullable|numeric',
+            '*.ckdj_account2'      => 'nullable|numeric',
+            '*.ckdj_account3'      => 'nullable|numeric',
+            '*.ckdj_salary_wages'  => 'nullable|numeric',
+            '*.ckdj_honoraria'     => 'nullable|numeric',
+            '*.ckdj_accountcode'   => 'sometimes|required',
+            '*.ckdj_debit'         => 'required_with:*.ckdj_accountcode|numeric',
+            '*.ckdj_credit'        => 'required_with:*.ckdj_accountcode|numeric',
         ];
     }
+
 
 
     public function prepareForValidation($data, $index)

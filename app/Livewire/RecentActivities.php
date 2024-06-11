@@ -33,6 +33,4 @@ class RecentActivities extends Component
     {
         return view('livewire.recent-activities');
     }
-
-
 }

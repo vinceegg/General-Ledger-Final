@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\Importable;
 
+
 class LedgerSheetImport implements WithCalculatedFormulas, WithChunkReading, ToArray, WithHeadingRow
 {
     use Importable;
@@ -18,7 +19,7 @@ class LedgerSheetImport implements WithCalculatedFormulas, WithChunkReading, ToA
         foreach ($rows as $row) {
             // Prepare the row data
             $row = $this->prepareForValidation($row);
-
+            
             // Create and save the model
             LedgerSheetModel::create([
                 'ls_date'            => $row['date'],

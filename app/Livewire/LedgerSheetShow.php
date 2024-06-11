@@ -335,6 +335,17 @@ class LedgerSheetShow extends Component
         }
     }
 
+    public function downloadExcelTemplate()
+    {
+        $filePath = public_path('import_templates/Template.xlsx'); // Adjusted path
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        } else {
+            abort(404); // Return a 404 error if the file doesn't exist
+        }
+    }
+
     public function importGL()
     {
     // Ensure that a file has been uploaded
@@ -342,18 +353,25 @@ class LedgerSheetShow extends Component
         $filePath = $this->file->store('files');
         Excel::import(new LedgerSheetImport, $filePath);
 
-        return redirect()->route('LedgerSheet')->with('message', 'File Imported Successfully');
+        return redirect()->route('LedgerSheets')->with('message', 'File Imported Successfully');
         }
     }
 
     //ITO NAMAN SA EXPORT GUMAGANA TO SO CHANGE THE VARIABLES ACCORDING TO THE JOURNALS
-    public function exportGL_XLSX(Request $request) 
+    public function exportGL_XLSX(Request $request)
     {
-        return Excel::download(new LedgerSheetExport($this->ls_accountname), $this->ls_accountname .'.xlsx');
+        
+        $cleanAccountName = $this->ls_accountname ? $this->cleanAccountName($this->ls_accountname) : 'LedgerSheet';
+        $fileName = $cleanAccountName . '.xlsx';
+        return Excel::download(new LedgerSheetExport($this->ls_accountname), $fileName);
     }
-    public function exportGl_CSV(Request $request) 
+
+    public function exportGl_CSV(Request $request)
     {
-        return Excel::download(new LedgerSheetExport($this->ls_accountname), $this->ls_accountname .'.csv');
+
+        $cleanAccountName = $this->ls_accountname ? $this->cleanAccountName($this->ls_accountname) : 'LedgerSheet';
+        $fileName = $cleanAccountName . '.csv';
+        return Excel::download(new LedgerSheetExport($this->ls_accountname), $fileName);
     }
 
     // Method to reset notification

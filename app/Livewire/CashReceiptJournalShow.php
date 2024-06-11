@@ -374,7 +374,7 @@ class CashReceiptJournalShow extends Component
 
         Excel::import(new CashReceiptJournalImport, $filePath);
 
-        return redirect()->route('CRJ')->with('message', 'File Imported Successfully');
+        return redirect('/CRJ');
         }
     }
 

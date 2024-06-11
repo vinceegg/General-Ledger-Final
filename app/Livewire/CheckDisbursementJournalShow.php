@@ -384,7 +384,7 @@ class CheckDisbursementJournalShow extends Component
 
         Excel::import(new CheckDisbursementJournalImport, $filePath);
 
-        return redirect()->back();
+        return redirect('/CKDJ');
         }
     }
     

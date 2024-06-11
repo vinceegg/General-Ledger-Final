@@ -35,7 +35,7 @@ class CashReceiptJournalImport implements ToCollection, WithHeadingRow
 
             if (isset($row['account_code'])) {
                 CRJ_SundryModel::create([
-                    'cash_receipt_journal_id' => $journal->id,
+                    'cashreceiptjournal_no' => $journal->cashreceiptjournal_no,
                     'crj_accountcode' => $row['account_code'],
                     'crj_debit'        => $row['debit'],
                     'crj_credit'       => $row['credit'],

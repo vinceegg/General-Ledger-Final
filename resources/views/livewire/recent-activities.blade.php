@@ -2,7 +2,7 @@
     @foreach ($activity_logs as $activity_log)
         <ul>
             @php
-                $user = $this->getUser($activity_log->causer_id);
+                $user = $this->getUser($activity_log->employee_id);
                 $tableRoute = url('/' . $this->formatRoute($activity_log->description));
             @endphp
 
@@ -10,7 +10,7 @@
                 <div class="flex">
                     <!-- First Column -->
                     <div class="w-full">
-                        <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $user->email ?? 'N/A'}}</h5>
+                        <h5 class="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ $user->school_email ?? 'N/A'}}</h5>
                     </div>
 
                     <!-- Second Column -->
